@@ -28,6 +28,10 @@
 #include <boost/lexical_cast.hpp>
 #include <vector>
 
+#include <GraphMol/RDKitQueries.h>
+#include <GraphMol/Substruct/SubstructMatch.h>
+#include <GraphMol/Substruct/SubstructUtils.h>
+
 
 
 
@@ -40,7 +44,7 @@ class Molecule {
 public:
     
     
-    Molecule(RWMol* mol): rdmol(mol) {};
+    Molecule(RWMol* mol): rdmol(mol), rdquery(mol) {};
     
     unsigned int getNumAtoms() {
         return rdmol->getNumAtoms();
@@ -142,11 +146,12 @@ public:
         return RDKit::Descriptors::calcAMW(*rdmol);
     };
     
-   /*
+   
     std::string GetSubstructMatches()
     {
-   
-       int matched = RDKit::SubstructMatch(*rdmol,*rdquery);
+        RDKit::MatchVectType matchV;
+        std::vector< RDKit::MatchVectType > matches;
+       int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
        std::string res = "";
         for(int idx=0;idx<matched;idx++){
             res +=".";
@@ -154,7 +159,7 @@ public:
         return res;
     
     }
-    */
+    
     
     static Molecule *fromSmiles(std::string smiles) {
         rdErrorLog->df_enabled = false;
@@ -191,10 +196,17 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
     .function("getproplist", &Molecule::getproplist, allow_raw_pointers())
-   // .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
+    .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
     .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
+    register_vector<std::string>("VectorString");
 
 }
+
+
+
+
+
+
 
 // /emscripten/emscripten/em++  --bind -o rdmol.js ../rdmol.cpp -Icode -Iinclude lib/libGraphMol.so lib/libDescriptors.so lib/libRDGeneral.so lib/libRDGeometryLib.so lib/libSmilesParse.so lib/libDataStructs.so lib/libFingerprints.so lib/libSubgraphs.so  -O2
