@@ -10,9 +10,14 @@
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
+// comments thegodone & Paolo => MMFF.h and Builder.h need to be patch to avoid class issues! 13_05_2015
+#include <GraphMol/ForceFieldHelpers/MMFF/MMFF.h>
+#include <GraphMol/ForceFieldHelpers/MMFF/Builder.h>
+#include <GraphMol/ForceFieldHelpers/MMFF/AtomTyper.h>
+
+
 #include <GraphMol/FileParsers/MolWriters.h>
 
-#include <ForceField/MMFF/Params.h>
 #include <ForceField/MMFF/Params.h>
 
 #include <boost/cstdint.hpp>
@@ -39,7 +44,7 @@ public:
         ExplicitBitVect* finger =  RDKit::RDKFingerprintMol(*rdmol);
         return BitVectToText(*finger);
     };
-    /*
+    
     
     std::pair<int, double> MMFFoptimizeMolecule()
     {
@@ -47,20 +52,32 @@ public:
     }
     
     
-    */
-    std::string molfile()
-     {
-         std::stringstream ss;
-         RDKit::SmilesWriter *writer = new RDKit::SmilesWriter(&ss, " ","Name",false);
-         writer->write(*rdmol);
-         writer->flush();
-         return ss.str();
-     }
+    
+    std::string smilewrite()
+    {
+        std::stringstream ss;
+        RDKit::SmilesWriter *writer = new RDKit::SmilesWriter(&ss, " ","Name",false);
+        writer->write(*rdmol);
+        writer->flush();
+        return ss.str();
+    }
+   
+    
+    
+     std::string sdwrite()
+    {
+        std::stringstream ss;
+        RDKit::SDWriter *writer = new RDKit::SDWriter(&ss,false);
+        writer->write(*rdmol);
+        writer->flush();
+        return ss.str();
+    }
+   
     
     
     int Embedmolecule3D()
     {
-       return RDKit::DGeomHelpers::EmbedMolecule(*rdmol);
+        return RDKit::DGeomHelpers::EmbedMolecule(*rdmol);
         
     }
     
@@ -92,9 +109,10 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getFP", &Molecule::getFP, allow_raw_pointers())
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
     .function("Embedmolecule3D", &Molecule::Embedmolecule3D, allow_raw_pointers())
-    //.function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
-    .function("molfile", &Molecule::molfile, allow_raw_pointers())
-
+    .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
+    .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
+    .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
+    
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers());
 }
 
