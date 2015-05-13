@@ -4,12 +4,17 @@
 #include <GraphMol/RWMol.h>
 #include <GraphMol/Descriptors/MolDescriptors.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
+#include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <DataStructs/ExplicitBitVect.h>
 #include <GraphMol/Fingerprints/Fingerprints.h>
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
+#include <GraphMol/FileParsers/MolWriters.h>
+
 #include <ForceField/MMFF/Params.h>
+#include <ForceField/MMFF/Params.h>
+
 #include <boost/cstdint.hpp>
 
 
@@ -34,14 +39,23 @@ public:
         ExplicitBitVect* finger =  RDKit::RDKFingerprintMol(*rdmol);
         return BitVectToText(*finger);
     };
-    
+    /*
     
     std::pair<int, double> MMFFoptimizeMolecule()
     {
         return RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
     }
-    */
     
+    
+    */
+    std::string molfile()
+     {
+         std::stringstream ss;
+         RDKit::SmilesWriter *writer = new RDKit::SmilesWriter(&ss, " ","Name",false);
+         writer->write(*rdmol);
+         writer->flush();
+         return ss.str();
+     }
     
     
     int Embedmolecule3D()
@@ -78,7 +92,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getFP", &Molecule::getFP, allow_raw_pointers())
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
     .function("Embedmolecule3D", &Molecule::Embedmolecule3D, allow_raw_pointers())
-   // .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
+    //.function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
+    .function("molfile", &Molecule::molfile, allow_raw_pointers())
 
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers());
 }
