@@ -14,6 +14,7 @@
 #include <GraphMol/ForceFieldHelpers/MMFF/MMFF.h>
 #include <GraphMol/ForceFieldHelpers/MMFF/Builder.h>
 #include <GraphMol/ForceFieldHelpers/MMFF/AtomTyper.h>
+#include <utility>      // std::pair, std::get
 
 
 #include <GraphMol/FileParsers/MolWriters.h>
@@ -21,6 +22,9 @@
 #include <ForceField/MMFF/Params.h>
 
 #include <boost/cstdint.hpp>
+#include <boost/algorithm/string/join.hpp>
+#include <boost/lexical_cast.hpp>
+#include <vector>
 
 
 
@@ -32,6 +36,7 @@ using RDKit::RWMol;
 class Molecule {
     
 public:
+    
     
     Molecule(RWMol* mol): rdmol(mol) {};
     
@@ -45,16 +50,34 @@ public:
         return BitVectToText(*finger);
     };
     
-    
-    double MMFFoptimizeMolecule()
+    /*
+    int MMFFoptimizeMolecule()
     {
-        return RDKit::MMFF::MMFFOptimizeMolecule(*rdmol).second;
+        std::pair<int, double> p= RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
+        
+       // std::vector<double> g;
+       // g.push_back((double)std::get<0>(p));
+       // g.push_back(std::get<0>(p));
+        
+        return std::get<0>(p);
+    }*/
+    
+    std::string MMFFoptimizeMolecule()
+    {
+        std::string res="";
+        std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
+        res += boost::lexical_cast<std::string>(p.first);
+        res += boost::lexical_cast<std::string>(",");
+        res += boost::lexical_cast<std::string>(p.second);
+        return res;
     }
+    
     
     
     std::vector< std::string > getproplist()
     
     {
+        
         return rdmol->getPropList();
     
     }
@@ -107,6 +130,8 @@ private:
     RWMol* rdmol;
     
 };
+
+
 
 // Binding code
 EMSCRIPTEN_BINDINGS(rdmol) {
