@@ -72,21 +72,18 @@ public:
     };
 
     
-    /*
-    std::pair<int, double> MMFFoptimizeMolecule()
+    
+    std::vector<double> MMFFoptimizeMolecule()
     {
-        std::pair<int, double> p= RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
-        
-       // std::vector<double> g;
-       // g.push_back((double)std::get<0>(p));
-       // g.push_back(std::get<0>(p));
-        
-        //return std::get<0>(p);
-        return p;
+        std::vector<double> res(2);
+        std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
+        res[0] = static_cast<double>(p.first);
+        res[1] = p.second;
+        return res;
     }
-    */
     
     
+    /*
     std::string MMFFoptimizeMolecule()
     {
         std::string res="";
@@ -96,15 +93,13 @@ public:
         res += boost::lexical_cast<std::string>(p.second);
         return res;
     }
-    
+    */
     
     
     std::vector<std::string> getproplist()
     
     {
-        
         return rdmol->getPropList();
-    
     }
     
     
@@ -200,6 +195,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
     .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
     register_vector<std::string>("VectorString");
+    register_vector<double>("VectorDouble");
 
 }
 
