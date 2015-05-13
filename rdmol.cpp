@@ -7,6 +7,8 @@
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <DataStructs/ExplicitBitVect.h>
 #include <GraphMol/Fingerprints/Fingerprints.h>
+#include <GraphMol/Fingerprints/MorganFingerprints.h>
+
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
@@ -50,8 +52,24 @@ public:
         return BitVectToText(*finger);
     };
     
+    
+    std::string getMorganFP2()
+    {
+        ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,2,2048);
+        return BitVectToText(*finger);
+    };
+    
+    
+    
+    std::string getMorganFP3()
+    {
+        ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,3,2048);
+        return BitVectToText(*finger);
+    };
+
+    
     /*
-    int MMFFoptimizeMolecule()
+    std::pair<int, double> MMFFoptimizeMolecule()
     {
         std::pair<int, double> p= RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
         
@@ -59,8 +77,11 @@ public:
        // g.push_back((double)std::get<0>(p));
        // g.push_back(std::get<0>(p));
         
-        return std::get<0>(p);
-    }*/
+        //return std::get<0>(p);
+        return p;
+    }
+    */
+    
     
     std::string MMFFoptimizeMolecule()
     {
@@ -74,7 +95,7 @@ public:
     
     
     
-    std::vector< std::string > getproplist()
+    std::vector<std::string> getproplist()
     
     {
         
@@ -121,13 +142,36 @@ public:
         return RDKit::Descriptors::calcAMW(*rdmol);
     };
     
+   /*
+    std::string GetSubstructMatches()
+    {
+   
+       int matched = RDKit::SubstructMatch(*rdmol,*rdquery);
+       std::string res = "";
+        for(int idx=0;idx<matched;idx++){
+            res +=".";
+        }
+        return res;
+    
+    }
+    */
+    
     static Molecule *fromSmiles(std::string smiles) {
         rdErrorLog->df_enabled = false;
         return new Molecule(RDKit::SmilesToMol(smiles));
     };
     
+    
+    static Molecule *fromSmarts(std::string smarts) {
+        rdErrorLog->df_enabled = false;
+        return new Molecule(RDKit::SmartsToMol(smarts));
+    };
+    
+    
+    
 private:
     RWMol* rdmol;
+    RWMol* rdquery;
     
 };
 
@@ -139,13 +183,18 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getNumAtoms", &Molecule::getNumAtoms, allow_raw_pointers())
     .function("getMW", &Molecule::getMW, allow_raw_pointers())
     .function("getFP", &Molecule::getFP, allow_raw_pointers())
+    .function("getMorganFP2", &Molecule::getMorganFP2, allow_raw_pointers())
+    .function("getMorganFP3", &Molecule::getMorganFP3, allow_raw_pointers())
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
     .function("Embedmolecule3D", &Molecule::Embedmolecule3D, allow_raw_pointers())
     .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
-    .function("getproplist", &Molecule::smilewrite, allow_raw_pointers())
-    .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers());
+    .function("getproplist", &Molecule::getproplist, allow_raw_pointers())
+   // .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
+    .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
+    .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
+
 }
 
 // /emscripten/emscripten/em++  --bind -o rdmol.js ../rdmol.cpp -Icode -Iinclude lib/libGraphMol.so lib/libDescriptors.so lib/libRDGeneral.so lib/libRDGeometryLib.so lib/libSmilesParse.so lib/libDataStructs.so lib/libFingerprints.so lib/libSubgraphs.so  -O2
