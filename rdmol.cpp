@@ -9,9 +9,6 @@
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
-#include <GraphMol/ForceFieldHelpers/MMFF/MMFF.h>
-#include <GraphMol/ForceFieldHelpers/MMFF/Builder.h>
-#include <GraphMol/ForceFieldHelpers/MMFF/AtomTyper.h>
 #include <ForceField/MMFF/Params.h>
 #include <boost/cstdint.hpp>
 
@@ -43,6 +40,8 @@ public:
     {
         return RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
     }
+    */
+    
     
     
     int Embedmolecule3D()
@@ -79,7 +78,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getFP", &Molecule::getFP, allow_raw_pointers())
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
     .function("Embedmolecule3D", &Molecule::Embedmolecule3D, allow_raw_pointers())
-    .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
+   // .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
 
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers());
 }
