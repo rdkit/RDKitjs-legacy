@@ -46,11 +46,18 @@ public:
     };
     
     
-    std::pair<int, double> MMFFoptimizeMolecule()
+    double MMFFoptimizeMolecule()
     {
-        return RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
+        return RDKit::MMFF::MMFFOptimizeMolecule(*rdmol).second;
     }
     
+    
+    std::vector< std::string > getproplist()
+    
+    {
+        return rdmol->getPropList();
+    
+    }
     
     
     std::string smilewrite()
@@ -112,7 +119,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
-    
+    .function("getproplist", &Molecule::smilewrite, allow_raw_pointers())
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers());
 }
 
