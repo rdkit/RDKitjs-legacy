@@ -26,7 +26,7 @@ public:
   
    std::string getFP()
     {
-        ExplicitBitVect* finger =  RDKit::RDKFingerprintMol(*rdmol);
+        ExplicitBitVect *finger =  RDKit::RDKFingerprintMol(*rdmol);
         return BitVectToText(*finger);      
    };
   
