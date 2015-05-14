@@ -141,7 +141,7 @@ public:
         return RDKit::Descriptors::calcAMW(*rdmol);
     };
     
-   
+   /*
     std::string GetSubstructMatches()
     {
         RDKit::MatchVectType matchV;
@@ -154,6 +154,29 @@ public:
         return res;
     
     }
+    */
+   
+    
+    
+     std::string GetSubstructMatches(std::string smilesref)
+     {
+         RDKit::MatchVectType matchV;
+         std::vector< RDKit::MatchVectType > matches;
+         //RWMol* rdquery = fromSmarts(smilesref);
+         
+         rdErrorLog->df_enabled = false;
+         rdquery = RDKit::SmartsToMol(smilesref);
+         
+         
+         
+         int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
+         std::string res = "";
+         for(int idx=0;idx<matched;idx++){
+             res +=".";
+            }
+         return res;
+     
+     }
     
     
     static Molecule *fromSmiles(std::string smiles) {
@@ -166,8 +189,23 @@ public:
         rdErrorLog->df_enabled = false;
         return new Molecule(RDKit::SmartsToMol(smarts));
     };
-    
-    
+   
+    /*
+    static Molecule GetSubstructMatches(std::string smilesref, std::string smilesquery) {
+        rdErrorLog->df_enabled = false;
+        RWMol  molref = new Molecule(RDKit::SmilesToMol(smilesref));
+        RWMol molquery = new Molecule(RDKit::SmartsToMol(smilesquery));
+        RDKit::MatchVectType matchV;
+        std::vector< RDKit::MatchVectType > matches;
+        int matched = RDKit::SubstructMatch(*molref,*molquery,matches,true);
+        std::string res = "";
+        for(int idx=0;idx<matched;idx++){
+            res +=".";
+        }
+        return res;
+
+    };
+    */
     
 private:
     RWMol* rdmol;
@@ -194,6 +232,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
     .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
+    //.class_function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers());
+
     register_vector<std::string>("VectorString");
     register_vector<double>("VectorDouble");
 
