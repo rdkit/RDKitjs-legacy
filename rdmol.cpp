@@ -137,6 +137,28 @@ public:
     }
     
     
+    void removeHs()
+    {
+        return RDKit::MolOps::removeHs(*rdmol);
+    }
+    
+    
+    void sanitizeMol()
+    {
+        return RDKit::MolOps::sanitizeMol(*rdmol);
+    }
+    
+    void cleanUp()
+    {
+        return RDKit::MolOps::cleanUp(*rdmol);
+    }
+    
+    void Kekulize()
+    {
+        return RDKit::MolOps::Kekulize(*rdmol);
+    }
+    
+    
     int getMW()
     {
         return RDKit::Descriptors::calcAMW(*rdmol);
@@ -426,6 +448,11 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getMorganFP2", &Molecule::getMorganFP2, allow_raw_pointers())
     .function("getMorganFP3", &Molecule::getMorganFP3, allow_raw_pointers())
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
+    .function("removeHs", &Molecule::removeHs, allow_raw_pointers())
+    .function("sanitizeMol", &Molecule::sanitizeMol, allow_raw_pointers())
+    .function("cleanUp", &Molecule::cleanUp, allow_raw_pointers())
+    .function("Kekulize", &Molecule::Kekulize, allow_raw_pointers())
+
     .function("Embedmolecule3D", &Molecule::Embedmolecule3D, allow_raw_pointers())
     .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())

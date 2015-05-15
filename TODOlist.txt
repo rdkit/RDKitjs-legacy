@@ -18,7 +18,7 @@ Writing molecules: ok, don't need to implement files writers for the moment
 Writing sets of molecules: need to do that!
 Looping over Atoms and Bonds: to do (not priority)
 Ring Information: to do
-Modifying molecules: RemoveHs, Kekulize, SanitizeMol
+Modifying molecules: done
 Working with 2D molecules: Compute2DCoords, GenerateDepictionMatching2DStructure, GenerateDepictionMatching3DStructure
 Working with 3D Molecules: UFFOptimizeMolecule, EmbedMultipleConfs, AlignMolConformers,GetConformerRMS
 Preserving Molecules: can we do that ToBinary,  cPickle.dumps or should we use json instead?
