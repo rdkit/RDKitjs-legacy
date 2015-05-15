@@ -49,6 +49,8 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 #include <vector>
+#include <string>
+
 
 #include <GraphMol/RDKitQueries.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
@@ -65,20 +67,19 @@ class Molecule {
     
 public:
     
-    
     Molecule(RWMol* mol): rdmol(mol), rdquery(mol) {};
     
     unsigned int getNumAtoms() {
         return rdmol->getNumAtoms();
     };
     
-    /*
-    std::string MolToBinary()
+    
+    void MolToBinary()
     {
         std::string res;
-        return RDKit::MolPickler::pickleMol(*rdmol);
+        RDKit::MolPickler::pickleMol(*rdmol,res);
     }
-    */
+    
     
     
     std::string getFP()
@@ -539,7 +540,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
 
     // murcko
     .function("Murcko", &Molecule::Murcko, allow_raw_pointers())
-    //.function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
+    .function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
 
     
     

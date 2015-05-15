@@ -89,8 +89,7 @@ ln -fs /emscripten/rdkit-Release_2015_03_1/lib/ /emscripten/rdmol/build/lib
   
   #ifdef RDK_THREADSAFE_SSS
 
-
-
+After the path you can compile the code:
 to recompile your own rdmol.cpp:  
 $ cd /path/to/rdmol  
 $ mkdir build  
