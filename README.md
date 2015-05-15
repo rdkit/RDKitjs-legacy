@@ -54,34 +54,21 @@ $ make -j5 (of course if you have only 2 cores replace -j5 by -j2)
 $ make install  
 
 
-%%%% path of RDKit files for emscripten
+%%%% pacth of RDKit files for emscripten
 *** ./Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h       Wed May 13 09:32:12 2015
---- ./Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h    Wed May 13 09:32:18 2015
-***************
-*** 26,31 ****
---- 26,32 ----
   namespace RDKit {
     class ROMol;
     namespace MMFF {
 +     class MMFFMolProperties;
   
-      //! Builds and returns a MMFF force field for a molecule
-      /*!
-
 *** /build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h        Wed May 13 10:09:29 2015
---- /build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h     Wed May 13 10:10:19 2015
-***************
-*** 10,15 ****
---- 10,16 ----
-  #ifndef RD_MMFFCONVENIENCE_H
-  #define RD_MMFFCONVENIENCE_H
   #include <ForceField/ForceField.h>
 + #include "AtomTyper.h"
   #include "Builder.h"
-  
-  #ifdef RDK_THREADSAFE_SSS
 
-After the path you can compile the code:  
+
+
+After the patch you can compile the code:  
 to recompile your own rdkit.cpp:  
 $ cd /path/to/rdkit  
 $ sh build.sh (don't forget to rename your paths to the rdkit & boost/include & path/to/build/boost/boost.1.57/include/ 
