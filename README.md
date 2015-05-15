@@ -6,6 +6,9 @@ http://baoilleach.blogspot.ch/2015/02/cheminformaticsjs-rdkit.html
 
 http://gmrand.blogspot.ch/2015/03/howto-install-rdkit-and-emscripten-on.html
 
+### Install emscripten
+http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html
+
 
 I. Setup your development environmemt (for mac os x):
 Required for compilation of emscripten
