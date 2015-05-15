@@ -76,3 +76,9 @@ $ sh build.sh (don't forget to rename your paths to the rdkit & boost/include & 
 /path/to/emscripten/em++ in the build.sh -- remark build_fast.sh use -O1 faster)
 
 you should obtain one new file => rdkit.js 
+
+
+the current module is available for npm/nodje:
+https://www.npmjs.com/package/rdkit
+
+
