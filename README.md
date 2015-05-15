@@ -53,33 +53,39 @@ then execute the folowing commands (the first one takes 5-10 min)
 $ make -j5 (of course if you have only 2 cores replace -j5 by -j2)  
 $ make install  
 
-II. link rdmol folder with the emscripten/rdkit/boost folders  
-the best solution is to create 3 symbolic links into rdmol folder    
-$ ln -fs /path/to/build/boost/boost.1.57/include/ path/to/rdmol/include  
-$ ln -fs /path/to/build/rdkit-Release_2014_09_2/code/ path/to/rdmol/code  
-ln -fs /emscripten/rdkit-Release_2015_03_1/code/ /emscripten/rdmol/build/code  
-$ ln -fs /path/to/build/rdkit-Release_2014_09_2/lib/ path/to/rdmol/lib  
-ln -fs /emscripten/rdkit-Release_2015_03_1/lib/ /emscripten/rdmol/build/lib  
 
-to recompile your own rdmol.cpp:  
-$ cd /path/to/rdmol  
-$ mkdir build  
-$ cd build  
-$ path/to/emscripten/em++  --bind -o rdmol.js ../rdmol.cpp -Icode -Iinclude lib/libGraphMol.so lib/libDescriptors.so lib/libRDGeneral.so lib/libRDGeometryLib.so lib/libSmilesParse.so lib/libDataStructs.so lib/libFingerprints.so lib/libSubgraphs.so lib/libDistGeomHelpers.so lib/libForceField.so lib/libDepictor.so lib/libDistGeometry.so lib/libEigenSolvers.so lib/libAlignment.so lib/libForceFieldHelpers.so lib/libFileParsers.so lib/libSubstructMatch.so lib/libPartialCharges.so  lib/libMolDraw2D.so lib/libMolTransforms.so lib/libChemTransforms.so -O2  
+%%%% path of RDKit files for emscripten
+*** ./Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h       Wed May 13 09:32:12 2015
+--- ./Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h    Wed May 13 09:32:18 2015
+***************
+*** 26,31 ****
+--- 26,32 ----
+  namespace RDKit {
+    class ROMol;
+    namespace MMFF {
++     class MMFFMolProperties;
+  
+      //! Builds and returns a MMFF force field for a molecule
+      /*!
 
-you should obtain 2 files => rdmol.js & rdmol.js.mem  
+*** /build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h        Wed May 13 10:09:29 2015
+--- /build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h     Wed May 13 10:10:19 2015
+***************
+*** 10,15 ****
+--- 10,16 ----
+  #ifndef RD_MMFFCONVENIENCE_H
+  #define RD_MMFFCONVENIENCE_H
+  #include <ForceField/ForceField.h>
++ #include "AtomTyper.h"
+  #include "Builder.h"
+  
+  #ifdef RDK_THREADSAFE_SSS
 
+After the path you can compile the code:  
+to recompile your own rdkit.cpp:  
+$ cd /path/to/rdkit  
+$ sh build.sh (don't forget to rename your paths to the rdkit & boost/include & path/to/build/boost/boost.1.57/include/ 
+/path/to/build/rdkit-Release_2014_09_2/
+/path/to/emscripten/em++ in the build.sh -- remark build_fast.sh use -O1 faster)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+you should obtain one new file => rdkit.js 
