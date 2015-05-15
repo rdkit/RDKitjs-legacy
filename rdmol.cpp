@@ -23,6 +23,10 @@
 #include <GraphMol/Depictor/RDDepictor.h>
 
 
+// murko
+#include <GraphMol/ChemTransforms/ChemTransforms.h>
+
+
 #include <GraphMol/DistGeomHelpers/Embedder.h>
 // comments thegodone & Paolo => MMFF.h and Builder.h need to be patch to avoid class issues! 13_05_2015
 #include <GraphMol/ForceFieldHelpers/MMFF/MMFF.h>
@@ -103,33 +107,18 @@ public:
     
     std::vector<double> UFFOptimizeMolecule()
     {
-        
         std::vector<double> res(2);
         std::pair<int, double> p = RDKit::UFF::UFFOptimizeMolecule(*rdmol);
         res[0] = static_cast<double>(p.first);
         res[1] = p.second;
         return res;
-
-        
-        
-        
-        
     }
     
-
     
-    
-    /*
-     std::string MMFFoptimizeMolecule()
-     {
-     std::string res="";
-     std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
-     res += boost::lexical_cast<std::string>(p.first);
-     res += boost::lexical_cast<std::string>(",");
-     res += boost::lexical_cast<std::string>(p.second);
-     return res;
-     }
-     */
+    void Murcko()
+    {
+        RDKit::MurckoDecompose(*rdmol);
+    }
     
     
     std::vector<std::string> getproplist()
@@ -527,6 +516,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
 
+    // murcko
+    .function("Murcko", &Molecule::Murcko, allow_raw_pointers())
+    
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())

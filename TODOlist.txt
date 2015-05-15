@@ -31,11 +31,11 @@ DONE Modifying molecules: DONE
 
 IN Progress (thegodone) Working with 2D molecules: GenerateDepictionMatching2DStructure, GenerateDepictionMatching3DStructure
 
-IN Progress (thegodone) Working with 3D Molecules: UFFOptimizeMolecule, EmbedMultipleConfs, AlignMolConformers,GetConformerRMS
+IN Progress (thegodone) Working with 3D Molecules: EmbedMultipleConfs, AlignMolConformers,GetConformerRMS
 
 Preserving Molecules: can we do that ToBinary,  cPickle.dumps or should we use json instead?
 
-Drawing Molecules: Draw, we need to svg for chrome not the files... ? MolsToGridImage can be interesting need to check for interaction with visualizer ?
+IN Progress (thegodone) Drawing Molecules: Draw2D, we need to svg for chrome not the files... ? MolsToGridImage can be interesting need to check for interaction with visualizer ?
 
 In Progress (thegodone) [need helps] Substructure Searching: HasSubstructMatch, in progress GetSubstructMatches "how to return the lists like in python/should we return a list like in python ?"
 
