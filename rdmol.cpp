@@ -22,6 +22,9 @@
 // 2D
 #include <GraphMol/Depictor/RDDepictor.h>
 
+// cpickle
+#include <GraphMol/MolPickler.h>
+
 
 // murko
 #include <GraphMol/ChemTransforms/ChemTransforms.h>
@@ -69,6 +72,15 @@ public:
     unsigned int getNumAtoms() {
         return rdmol->getNumAtoms();
     };
+    
+    
+    std::string MolToBinary()
+    {
+        std::string res;
+        return MolPickler::pickleMol(*rdmol);
+    }
+    
+    
     
     std::string getFP()
     {
@@ -467,6 +479,19 @@ public:
     }
     
     
+    bool HasSubstructMatchStr(std::string smilesref)
+    {
+        rdErrorLog->df_enabled = false;
+        rdquery = RDKit::SmartsToMol(smilesref);
+       
+        RDKit::MatchVectType res;
+        
+        return RDKit::SubstructMatch(*rdmol,*rdquery,res);
+    }
+
+    
+    
+    
     static Molecule *fromSmiles(std::string smiles) {
         rdErrorLog->df_enabled = false;
         return new Molecule(RDKit::SmilesToMol(smiles));
@@ -528,6 +553,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // susbtructure
     .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
+    .function("HasSubstructMatchStr", &Molecule::HasSubstructMatchStr, allow_raw_pointers())
     
     // descriptors
     .function("getMW", &Molecule::getMW, allow_raw_pointers())
