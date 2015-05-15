@@ -12,7 +12,14 @@
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
 
+// Drawing
+//#include <GraphMol/MolDrawing/MolDrawing.h>
+//#include <GraphMol/MolDrawing/DrawingToSVG.h>
+#include <GraphMol/MolDraw2D/MolDraw2D.h>
+#include <GraphMol/MolDraw2D/MolDraw2DSVG.h>
+#include <GraphMol/FileParsers/MolFileStereochem.h>
 
+// 2D
 #include <GraphMol/Depictor/RDDepictor.h>
 
 
@@ -133,6 +140,25 @@ public:
     {
         return RDDepict::compute2DCoords(*rdmol);
     }
+    
+    
+    std::string Drawing2D()
+    {
+        
+        
+        RDDepict::compute2DCoords(*rdmol);
+        WedgeMolBonds(*rdmol,&(rdmol->getConformer()));
+        RDKit::MolDraw2DSVG drawer(300,300);
+        drawer.drawMolecule(*rdmol);
+        drawer.finishDrawing();
+        return drawer.getDrawingText();
+
+        //return  RDKit::Drawing::MolToDrawing(*mol);
+    }
+    //svg = RDKit::Drawing::DrawingToSVG(drawing, 4);
+
+    
+    
     
     
     
@@ -474,6 +500,10 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("compute2DCoords", &Molecule::compute2DCoords, allow_raw_pointers())
     .function("Embedmolecule3D", &Molecule::Embedmolecule3D, allow_raw_pointers())
     .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
+    
+    // drawing molecules
+    .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
+    
     
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
