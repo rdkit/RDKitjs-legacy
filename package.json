@@ -6,7 +6,7 @@
   "main": "dist/rdkit.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cp build/rdmol.js dist/rdkit.js && cp build/rdmol.js.mem dist/rdkit.js.mem"
+    "build": "cp rdkit.js dist/rdkit.js"
   },
   "repository": "thegodone/RDKitjs",
   "author": "Guillaume Godin",
