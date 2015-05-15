@@ -61,6 +61,36 @@ ln -fs /emscripten/rdkit-Release_2015_03_1/code/ /emscripten/rdmol/build/code
 $ ln -fs /path/to/build/rdkit-Release_2014_09_2/lib/ path/to/rdmol/lib  
 ln -fs /emscripten/rdkit-Release_2015_03_1/lib/ /emscripten/rdmol/build/lib  
 
+
+%%%% path of RDKit files for emscripten
+*** ./Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h       Wed May 13 09:32:12 2015
+--- ./Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h    Wed May 13 09:32:18 2015
+***************
+*** 26,31 ****
+--- 26,32 ----
+  namespace RDKit {
+    class ROMol;
+    namespace MMFF {
++     class MMFFMolProperties;
+  
+      //! Builds and returns a MMFF force field for a molecule
+      /*!
+
+*** /build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h        Wed May 13 10:09:29 2015
+--- /build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h     Wed May 13 10:10:19 2015
+***************
+*** 10,15 ****
+--- 10,16 ----
+  #ifndef RD_MMFFCONVENIENCE_H
+  #define RD_MMFFCONVENIENCE_H
+  #include <ForceField/ForceField.h>
++ #include "AtomTyper.h"
+  #include "Builder.h"
+  
+  #ifdef RDK_THREADSAFE_SSS
+
+
+
 to recompile your own rdmol.cpp:  
 $ cd /path/to/rdmol  
 $ mkdir build  

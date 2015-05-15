@@ -1,5 +1,4 @@
 #include <emscripten/bind.h>
-
 #include <GraphMol/ROMol.h>
 #include <GraphMol/RWMol.h>
 #include <GraphMol/Descriptors/MolDescriptors.h>
@@ -12,7 +11,7 @@
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
 
-// Drawing
+//Drawing
 //#include <GraphMol/MolDrawing/MolDrawing.h>
 //#include <GraphMol/MolDrawing/DrawingToSVG.h>
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
@@ -73,13 +72,13 @@ public:
         return rdmol->getNumAtoms();
     };
     
-    
+    /*
     std::string MolToBinary()
     {
         std::string res;
-        return MolPickler::pickleMol(*rdmol);
+        return RDKit::MolPickler::pickleMol(*rdmol);
     }
-    
+    */
     
     
     std::string getFP()
@@ -490,8 +489,6 @@ public:
     }
 
     
-    
-    
     static Molecule *fromSmiles(std::string smiles) {
         rdErrorLog->df_enabled = false;
         return new Molecule(RDKit::SmilesToMol(smiles));
@@ -502,7 +499,6 @@ public:
         rdErrorLog->df_enabled = false;
         return new Molecule(RDKit::SmartsToMol(smarts));
     };
-    
     
     
 private:
@@ -543,6 +539,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
 
     // murcko
     .function("Murcko", &Molecule::Murcko, allow_raw_pointers())
+    //.function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
+
+    
     
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
