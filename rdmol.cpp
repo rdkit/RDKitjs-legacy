@@ -31,6 +31,10 @@
 #include <utility>      // std::pair, std::get
 
 
+#include <GraphMol/ForceFieldHelpers/UFF/UFF.h>
+
+
+
 #include <GraphMol/FileParsers/MolWriters.h>
 
 #include <ForceField/MMFF/Params.h>
@@ -93,6 +97,26 @@ public:
         res[1] = p.second;
         return res;
     }
+    
+   
+    
+    
+    std::vector<double> UFFOptimizeMolecule()
+    {
+        
+        std::vector<double> res(2);
+        std::pair<int, double> p = RDKit::UFF::UFFOptimizeMolecule(*rdmol);
+        res[0] = static_cast<double>(p.first);
+        res[1] = p.second;
+        return res;
+
+        
+        
+        
+        
+    }
+    
+
     
     
     /*
@@ -498,6 +522,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("compute2DCoords", &Molecule::compute2DCoords, allow_raw_pointers())
     .function("Embedmolecule3D", &Molecule::Embedmolecule3D, allow_raw_pointers())
     .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
+    .function("UFFOptimizeMolecule", &Molecule::UFFOptimizeMolecule, allow_raw_pointers())
     
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())

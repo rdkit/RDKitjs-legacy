@@ -376,3 +376,95 @@ width='300px' height='300px' >
 </svg:svg>
 "
 
+UFF 3D forcefield implementation
+m.UFFOptimizeMolecule()
+Object {$$: Object, push_back: function, resize: function, size: function, get: function…}$$: Objectcount: Objectptr: 6906360ptrType: RegisteredPointer__proto__: Object__proto__: VectorDoubleconstructor: function VectorDouble() {get: function VectorDouble$get(arg0) {arguments: nullcaller: nulllength: 1name: "VectorDouble$get"prototype: VectorDouble$getconstructor: function VectorDouble$get(arg0) {__proto__: Object__proto__: function Empty() {}apply: function apply() { [native code] }arguments: nullbind: function bind() { [native code] }call: function call() { [native code] }caller: nullconstructor: function Function() { [native code] }length: 0name: "Empty"toString: function toString() { [native code] }__proto__: Object<function scope><function scope>push_back: function VectorDouble$push_back(arg0) {resize: function VectorDouble$resize(arg0, arg1) {set: function VectorDouble$set(arg0, arg1) {size: function VectorDouble$size() {__proto__: ClassHandle
+m.sdwrite()
+"
+     RDKit          3D
+
+ 33 32  0  0  0  0  0  0  0  0999 V2000
+   -3.3811    0.5259    1.4309 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8390    0.4382   -0.0250 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8777   -0.3678   -0.9183 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6217    0.4246   -1.3559 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8837   -0.2676   -2.4794 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5381   -1.4352   -2.3876 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7333    0.7683   -0.2259 N   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0221   -0.3632    0.4083 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.4776   -0.3944    0.0561 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.2854    0.6272    0.8755 C   0  0  0  0  0  0  0  0  0  0  0  0
+    3.7523    0.7137    0.4271 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.5539   -0.5391    0.7793 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2080    0.9300    2.0522 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5169    1.2121    1.5336 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1092   -0.4787    1.8189 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8287   -0.0684   -0.0387 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9864    1.4612   -0.4337 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6129   -1.3261   -0.4258 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4421   -0.6407   -1.8376 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9887    1.3838   -1.7856 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6756    0.2746   -3.3961 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0671    1.5129   -0.5375 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1403   -0.2787    1.5097 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4680   -1.3407    0.1362 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.6142   -0.2092   -1.0311 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.8593   -1.4141    0.2764 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.2387    0.3648    1.9552 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.8358    1.6361    0.7599 H   0  0  0  0  0  0  0  0  0  0  0  0
+    4.2239    1.5826    0.9353 H   0  0  0  0  0  0  0  0  0  0  0  0
+    3.8071    0.8955   -0.6683 H   0  0  0  0  0  0  0  0  0  0  0  0
+    4.2028   -1.4097    0.1876 H   0  0  0  0  0  0  0  0  0  0  0  0
+    5.6252   -0.3701    0.5414 H   0  0  0  0  0  0  0  0  0  0  0  0
+    4.4645   -0.7664    1.8629 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0
+  2  3  1  0
+  3  4  1  0
+  4  5  1  0
+  5  6  2  0
+  4  7  1  0
+  7  8  1  0
+  8  9  1  0
+  9 10  1  0
+ 10 11  1  0
+ 11 12  1  0
+  1 13  1  0
+  1 14  1  0
+  1 15  1  0
+  2 16  1  0
+  2 17  1  0
+  3 18  1  0
+  3 19  1  0
+  4 20  1  0
+  5 21  1  0
+  7 22  1  0
+  8 23  1  0
+  8 24  1  0
+  9 25  1  0
+  9 26  1  0
+ 10 27  1  0
+ 10 28  1  0
+ 11 29  1  0
+ 11 30  1  0
+ 12 31  1  0
+ 12 32  1  0
+ 12 33  1  0
+M  END
+$$$$
+"
+
+Access to vector object in JS example:
+var t = m.UFFOptimizeMolecule()
+t.get(0)
+return 0
+t.get(1)
+return 22.830754642577084
+or 
+var t2= m.MMFFoptimizeMolecule()
+t2.get(0)
+return 0
+t2.get(1)
+return 32.386329978576335
+t2.size()
+return 2
+
