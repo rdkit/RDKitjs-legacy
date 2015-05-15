@@ -70,7 +70,7 @@ public:
         ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,3,2048);
         return BitVectToText(*finger);
     };
-
+    
     
     
     std::vector<double> MMFFoptimizeMolecule()
@@ -84,16 +84,16 @@ public:
     
     
     /*
-    std::string MMFFoptimizeMolecule()
-    {
-        std::string res="";
-        std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
-        res += boost::lexical_cast<std::string>(p.first);
-        res += boost::lexical_cast<std::string>(",");
-        res += boost::lexical_cast<std::string>(p.second);
-        return res;
-    }
-    */
+     std::string MMFFoptimizeMolecule()
+     {
+     std::string res="";
+     std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
+     res += boost::lexical_cast<std::string>(p.first);
+     res += boost::lexical_cast<std::string>(",");
+     res += boost::lexical_cast<std::string>(p.second);
+     return res;
+     }
+     */
     
     
     std::vector<std::string> getproplist()
@@ -111,10 +111,10 @@ public:
         writer->flush();
         return ss.str();
     }
-   
     
     
-     std::string sdwrite()
+    
+    std::string sdwrite()
     {
         std::stringstream ss;
         RDKit::SDWriter *writer = new RDKit::SDWriter(&ss,false);
@@ -122,7 +122,7 @@ public:
         writer->flush();
         return ss.str();
     }
-   
+    
     
     
     int Embedmolecule3D()
@@ -137,46 +137,264 @@ public:
     }
     
     
-    int getMW() {
+    int getMW()
+    {
         return RDKit::Descriptors::calcAMW(*rdmol);
     };
     
-   /*
-    std::string GetSubstructMatches()
+    
+    double ExactMW()
+    {
+        return RDKit::Descriptors::calcExactMW(*rdmol);
+    }
+    
+    
+    std::string Formula()
+    {
+        return RDKit::Descriptors::calcMolFormula(*rdmol);
+    }
+    
+    
+    double Chi0v()
+    {
+        return   RDKit::Descriptors::calcChi0v(*rdmol);
+    }
+    
+    
+    double Chi1v()
+    {
+        return   RDKit::Descriptors::calcChi1v (*rdmol);
+    }
+    
+    double Chi2v()
+    {
+        return   RDKit::Descriptors::calcChi2v (*rdmol);
+    }
+    
+    
+    double Chi3v()
+    {
+        return   RDKit::Descriptors::calcChi3v (*rdmol);
+    }
+    
+    
+    
+    double Chi4v()
+    {
+        return   RDKit::Descriptors::calcChi4v (*rdmol);
+    }
+    
+    
+    double Chi0n()
+    {
+        return   RDKit::Descriptors::calcChi0n (*rdmol);
+    }
+    
+    
+    double Chi1n()
+    {
+        return   RDKit::Descriptors::calcChi1n (*rdmol);
+    }
+    
+    
+    double Chi2n()
+    {
+        return   RDKit::Descriptors::calcChi2n (*rdmol);
+    }
+    
+    
+    double Chi3n()
+    {
+        return   RDKit::Descriptors::calcChi3n (*rdmol);
+    }
+    
+    double Chi4n()
+    {
+        return   RDKit::Descriptors::calcChi4n (*rdmol);
+    }
+    
+    
+    double HallKierAlpha()
+    {
+        return RDKit::Descriptors::calcHallKierAlpha (*rdmol);
+    }
+    
+    double Kappa1()
+    {
+        return    RDKit::Descriptors::calcKappa1 (*rdmol);
+    }
+    
+    double Kappa2()
+    {
+        return    RDKit::Descriptors::calcKappa2 (*rdmol);
+    }
+    
+    double Kappa3()
+    {
+        return    RDKit::Descriptors::calcKappa3 (*rdmol);
+    }
+    
+    void logp_mr()
+    {
+        
+        double logp;
+        double mr;
+        
+        return RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
+    }
+    
+    
+    unsigned int LipinskiHBA()
+    {
+        return RDKit::Descriptors::calcLipinskiHBA (*rdmol);
+    }
+    
+    unsigned int LipinskiHBD()
+    {
+        return RDKit::Descriptors::calcLipinskiHBD (*rdmol);
+    }
+    
+    unsigned int NumRotatableBonds()
+    {
+        return RDKit::Descriptors::calcNumRotatableBonds (*rdmol);
+    }
+    
+    unsigned int NumHBD()
+    {
+        return RDKit::Descriptors::calcNumHBD (*rdmol);
+    }
+    
+    unsigned int NumHBA()
+    {
+        return RDKit::Descriptors::calcNumHBA (*rdmol);
+    }
+    
+    unsigned int NumHeteroatoms()
+    {
+        return RDKit::Descriptors::calcNumHeteroatoms (*rdmol);
+    }
+    
+    unsigned int NumAmideBonds()
+    {
+        return RDKit::Descriptors::calcNumAmideBonds (*rdmol);
+    }
+    
+    double FractionCSP3()
+    {
+        return RDKit::Descriptors::calcFractionCSP3 (*rdmol);
+    }
+    
+    unsigned int NumRings()
+    {
+        return RDKit::Descriptors::calcNumRings (*rdmol);
+    }
+    
+    unsigned int NumAromaticRings()
+    {
+        return   RDKit::Descriptors::calcNumAromaticRings (*rdmol);
+    }
+    
+    unsigned int NumAliphaticRings()
+    {
+        return   RDKit::Descriptors::calcNumAliphaticRings (*rdmol);
+    }
+    
+    unsigned int NumSaturatedRings ()
+    {
+        return  RDKit::Descriptors::calcNumSaturatedRings (*rdmol);
+    }
+    
+    unsigned int NumHeterocycles()
+    {
+        return   RDKit::Descriptors::calcNumHeterocycles (*rdmol);
+    }
+    
+    unsigned int NumAromaticHeterocycles()
+    {
+        return    RDKit::Descriptors::calcNumAromaticHeterocycles (*rdmol);
+    }
+    
+    unsigned int NumAromaticCarbocycles ()
+    {
+        return RDKit::Descriptors::calcNumAromaticCarbocycles (*rdmol);
+    }
+    
+    
+    unsigned int NumSaturatedHeterocycles()
+    {
+        return   RDKit::Descriptors::calcNumSaturatedHeterocycles (*rdmol);
+    }
+    
+    unsigned int NumSaturatedCarbocycles()
+    {
+        return RDKit::Descriptors::calcNumSaturatedCarbocycles (*rdmol);
+    }
+    
+    unsigned int NumAliphaticHeterocycles()
+    {
+        return RDKit::Descriptors::calcNumAliphaticHeterocycles (*rdmol);
+    }
+    unsigned int NumAliphaticCarbocycles()
+    {
+        return RDKit::Descriptors::calcNumAliphaticCarbocycles (*rdmol);
+    }
+    double LabuteASA()
+    {
+        return RDKit::Descriptors::calcLabuteASA (*rdmol);
+    }
+    
+    double TPSA()
+    {
+        return RDKit::Descriptors::calcTPSA (*rdmol);
+    }
+    
+    std::vector< double > SlogP_VSA()
+    {
+        return RDKit::Descriptors::calcSlogP_VSA (*rdmol);
+        
+    }
+    
+    
+    std::vector< double > SMR_VSA() {
+        return RDKit::Descriptors::calcSMR_VSA (*rdmol);
+    }
+    
+    
+    std::vector< double > PEO_VSA()
+    {
+        return RDKit::Descriptors::calcPEOE_VSA (*rdmol);
+        
+    }
+    
+    
+    std::vector< unsigned int > MQNs()
+    {
+        return RDKit::Descriptors::calcMQNs (*rdmol);
+    }
+    
+    
+    
+    
+    
+    std::string GetSubstructMatches(std::string smilesref)
     {
         RDKit::MatchVectType matchV;
         std::vector< RDKit::MatchVectType > matches;
-       int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
-       std::string res = "";
+        //RWMol* rdquery = fromSmarts(smilesref);
+        
+        rdErrorLog->df_enabled = false;
+        rdquery = RDKit::SmartsToMol(smilesref);
+        
+        
+        
+        int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
+        std::string res = "";
         for(int idx=0;idx<matched;idx++){
             res +=".";
         }
         return res;
-    
+        
     }
-    */
-   
-    
-    
-     std::string GetSubstructMatches(std::string smilesref)
-     {
-         RDKit::MatchVectType matchV;
-         std::vector< RDKit::MatchVectType > matches;
-         //RWMol* rdquery = fromSmarts(smilesref);
-         
-         rdErrorLog->df_enabled = false;
-         rdquery = RDKit::SmartsToMol(smilesref);
-         
-         
-         
-         int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
-         std::string res = "";
-         for(int idx=0;idx<matched;idx++){
-             res +=".";
-            }
-         return res;
-     
-     }
     
     
     static Molecule *fromSmiles(std::string smiles) {
@@ -189,23 +407,8 @@ public:
         rdErrorLog->df_enabled = false;
         return new Molecule(RDKit::SmartsToMol(smarts));
     };
-   
-    /*
-    static Molecule GetSubstructMatches(std::string smilesref, std::string smilesquery) {
-        rdErrorLog->df_enabled = false;
-        RWMol  molref = new Molecule(RDKit::SmilesToMol(smilesref));
-        RWMol molquery = new Molecule(RDKit::SmartsToMol(smilesquery));
-        RDKit::MatchVectType matchV;
-        std::vector< RDKit::MatchVectType > matches;
-        int matched = RDKit::SubstructMatch(*molref,*molquery,matches,true);
-        std::string res = "";
-        for(int idx=0;idx<matched;idx++){
-            res +=".";
-        }
-        return res;
-
-    };
-    */
+    
+    
     
 private:
     RWMol* rdmol;
@@ -219,7 +422,6 @@ private:
 EMSCRIPTEN_BINDINGS(rdmol) {
     class_<Molecule>("Molecule")
     .function("getNumAtoms", &Molecule::getNumAtoms, allow_raw_pointers())
-    .function("getMW", &Molecule::getMW, allow_raw_pointers())
     .function("getFP", &Molecule::getFP, allow_raw_pointers())
     .function("getMorganFP2", &Molecule::getMorganFP2, allow_raw_pointers())
     .function("getMorganFP3", &Molecule::getMorganFP3, allow_raw_pointers())
@@ -230,19 +432,65 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
     .function("getproplist", &Molecule::getproplist, allow_raw_pointers())
     .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
+    .function("getMW", &Molecule::getMW, allow_raw_pointers())
+    .function("ExactMW",&Molecule::ExactMW ,allow_raw_pointers())
+    .function("Formula",&Molecule::Formula ,allow_raw_pointers())
+    .function("Chi0v",&Molecule::Chi0v ,allow_raw_pointers())
+    .function("Chi1v",&Molecule::Chi1v ,allow_raw_pointers())
+    .function("Chi2v",&Molecule::Chi2v ,allow_raw_pointers())
+    .function("Chi3v",&Molecule::Chi3v ,allow_raw_pointers())
+    .function("Chi4v",&Molecule::Chi4v ,allow_raw_pointers())
+    .function("Chi0n",&Molecule::Chi0n ,allow_raw_pointers())
+    .function("Chi1n",&Molecule::Chi1n ,allow_raw_pointers())
+    .function("Chi2n",&Molecule::Chi2n ,allow_raw_pointers())
+    .function("Chi3n",&Molecule::Chi3n ,allow_raw_pointers())
+    .function("Chi4n",&Molecule::Chi4n ,allow_raw_pointers())
+    .function("HallKierAlpha",&Molecule::HallKierAlpha ,allow_raw_pointers())
+    .function("Kappa1",&Molecule::Kappa1 ,allow_raw_pointers())
+    .function("Kappa2",&Molecule::Kappa2 ,allow_raw_pointers())
+    .function("Kappa3",&Molecule::Kappa3 ,allow_raw_pointers())
+    .function("logp_mr",&Molecule::logp_mr ,allow_raw_pointers())
+    .function("LipinskiHBA",&Molecule::LipinskiHBA ,allow_raw_pointers())
+    .function("LipinskiHBD",&Molecule::LipinskiHBD ,allow_raw_pointers())
+    .function("NumRotatableBonds",&Molecule::NumRotatableBonds ,allow_raw_pointers())
+    .function("NumHBD",&Molecule::NumHBD ,allow_raw_pointers())
+    .function("NumHBA",&Molecule::NumHBA ,allow_raw_pointers())
+    .function("NumHeteroatoms",&Molecule::NumHeteroatoms ,allow_raw_pointers())
+    .function("NumAmideBonds",&Molecule::NumAmideBonds ,allow_raw_pointers())
+    .function("FractionCSP3",&Molecule::FractionCSP3 ,allow_raw_pointers())
+    .function("NumRings",&Molecule::NumRings ,allow_raw_pointers())
+    .function("NumAromaticRings",&Molecule::NumAromaticRings ,allow_raw_pointers())
+    .function("NumAliphaticRings",&Molecule::NumAliphaticRings ,allow_raw_pointers())
+    .function("NumSaturatedRings ",&Molecule::NumSaturatedRings ,allow_raw_pointers())
+    .function("NumHeterocycles",&Molecule::NumHeterocycles ,allow_raw_pointers())
+    .function("NumAromaticHeterocycles",&Molecule::NumAromaticHeterocycles ,allow_raw_pointers())
+    .function("NumAromaticCarbocycles ",&Molecule::NumAromaticCarbocycles ,allow_raw_pointers())
+    .function("NumSaturatedHeterocycles",&Molecule::NumSaturatedHeterocycles ,allow_raw_pointers())
+    .function("NumSaturatedCarbocycles",&Molecule::NumSaturatedCarbocycles ,allow_raw_pointers())
+    .function("NumAliphaticHeterocycles",&Molecule::NumAliphaticHeterocycles ,allow_raw_pointers())
+    .function("NumAliphaticCarbocycles",&Molecule::NumAliphaticCarbocycles ,allow_raw_pointers())
+    .function("LabuteASA",&Molecule::LabuteASA ,allow_raw_pointers())
+    .function("TPSA",&Molecule::TPSA ,allow_raw_pointers())
+    .function("SlogP_VSA",&Molecule::SlogP_VSA ,allow_raw_pointers())
+    .function("SMR_VSA ",&Molecule::SMR_VSA ,allow_raw_pointers())
+    .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
+    .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
     .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
-    //.class_function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers());
-
     register_vector<std::string>("VectorString");
     register_vector<double>("VectorDouble");
-
+    register_vector<unsigned int>("VectorUint");
+    
 }
 
 
 
-
-
-
-
-// /emscripten/emscripten/em++  --bind -o rdmol.js ../rdmol.cpp -Icode -Iinclude lib/libGraphMol.so lib/libDescriptors.so lib/libRDGeneral.so lib/libRDGeometryLib.so lib/libSmilesParse.so lib/libDataStructs.so lib/libFingerprints.so lib/libSubgraphs.so  -O2
+// compilation of the functions & classes ...
+// /emscripten//emscripten/em++  --bind -o rdmol.js ../rdmol.cpp -Icode -Iinclude lib/libGraphMol.so lib/libDescriptors.so lib/libRDGeneral.so lib/libRDGeometryLib.so lib/libSmilesParse.so lib/libDataStructs.so lib/libFingerprints.so lib/libSubgraphs.so lib/libDistGeomHelpers.so lib/libForceField.so lib/libDepictor.so lib/libDistGeometry.so lib/libEigenSolvers.so lib/libAlignment.so lib/libForceFieldHelpers.so lib/libFileParsers.so lib/libSubstructMatch.so lib/libPartialCharges.so  -s DISABLE_EXCEPTION_CATCHING=0  -O2
+// testing the js script:
+// copy 2 files to your webpage folder
+// cp  rdmol.js.mem //Applications/XAMPP/xamppfiles/htdocs/test/rdmol.js.mem
+// cp  rdmol.js //Applications/XAMPP/xamppfiles/htdocs/test/rdmol.js
+// test.hmtl is define like this
+//
+//
