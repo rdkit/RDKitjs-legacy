@@ -1,5 +1,4 @@
 #include <emscripten/bind.h>
-
 #include <GraphMol/ROMol.h>
 #include <GraphMol/RWMol.h>
 #include <GraphMol/Descriptors/MolDescriptors.h>
@@ -12,7 +11,7 @@
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
 
-// Drawing
+//Drawing
 //#include <GraphMol/MolDrawing/MolDrawing.h>
 //#include <GraphMol/MolDrawing/DrawingToSVG.h>
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
@@ -50,6 +49,8 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 #include <vector>
+#include <string>
+
 
 #include <GraphMol/RDKitQueries.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
@@ -66,7 +67,6 @@ class Molecule {
     
 public:
     
-    
     Molecule(RWMol* mol): rdmol(mol), rdquery(mol) {};
     
     unsigned int getNumAtoms() {
@@ -74,10 +74,10 @@ public:
     };
     
     
-    std::string MolToBinary()
+    void MolToBinary()
     {
         std::string res;
-        return MolPickler::pickleMol(*rdmol);
+        RDKit::MolPickler::pickleMol(*rdmol,res);
     }
     
     
@@ -490,8 +490,6 @@ public:
     }
 
     
-    
-    
     static Molecule *fromSmiles(std::string smiles) {
         rdErrorLog->df_enabled = false;
         return new Molecule(RDKit::SmilesToMol(smiles));
@@ -502,7 +500,6 @@ public:
         rdErrorLog->df_enabled = false;
         return new Molecule(RDKit::SmartsToMol(smarts));
     };
-    
     
     
 private:
@@ -543,6 +540,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
 
     // murcko
     .function("Murcko", &Molecule::Murcko, allow_raw_pointers())
+    .function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
+
+    
     
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
@@ -609,15 +609,3 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     register_vector<unsigned int>("VectorUint");
     
 }
-
-
-
-// compilation of the functions & classes ...
-// /emscripten//emscripten/em++  --bind -o rdmol.js ../rdmol.cpp -Icode -Iinclude lib/libGraphMol.so lib/libDescriptors.so lib/libRDGeneral.so lib/libRDGeometryLib.so lib/libSmilesParse.so lib/libDataStructs.so lib/libFingerprints.so lib/libSubgraphs.so lib/libDistGeomHelpers.so lib/libForceField.so lib/libDepictor.so lib/libDistGeometry.so lib/libEigenSolvers.so lib/libAlignment.so lib/libForceFieldHelpers.so lib/libFileParsers.so lib/libSubstructMatch.so lib/libPartialCharges.so  -s DISABLE_EXCEPTION_CATCHING=0  -O2
-// testing the js script:
-// copy 2 files to your webpage folder
-// cp  rdmol.js.mem //Applications/XAMPP/xamppfiles/htdocs/test/rdmol.js.mem
-// cp  rdmol.js //Applications/XAMPP/xamppfiles/htdocs/test/rdmol.js
-// test.hmtl is define like this
-//
-//
