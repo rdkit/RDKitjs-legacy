@@ -588,7 +588,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("NumSaturatedRings ",&Molecule::NumSaturatedRings ,allow_raw_pointers())
     .function("NumHeterocycles",&Molecule::NumHeterocycles ,allow_raw_pointers())
     .function("NumAromaticHeterocycles",&Molecule::NumAromaticHeterocycles ,allow_raw_pointers())
-    .function("NumAromaticCarbocycles ",&Molecule::NumAromaticCarbocycles ,allow_raw_pointers())
+    .function("NumAromaticCarbocycles",&Molecule::NumAromaticCarbocycles ,allow_raw_pointers())
     .function("NumSaturatedHeterocycles",&Molecule::NumSaturatedHeterocycles ,allow_raw_pointers())
     .function("NumSaturatedCarbocycles",&Molecule::NumSaturatedCarbocycles ,allow_raw_pointers())
     .function("NumAliphaticHeterocycles",&Molecule::NumAliphaticHeterocycles ,allow_raw_pointers())
@@ -596,7 +596,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("LabuteASA",&Molecule::LabuteASA ,allow_raw_pointers())
     .function("TPSA",&Molecule::TPSA ,allow_raw_pointers())
     .function("SlogP_VSA",&Molecule::SlogP_VSA ,allow_raw_pointers())
-    .function("SMR_VSA ",&Molecule::SMR_VSA ,allow_raw_pointers())
+    .function("SMR_VSA",&Molecule::SMR_VSA ,allow_raw_pointers())
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
     
