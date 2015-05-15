@@ -11,6 +11,11 @@
 
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
+
+
+#include <GraphMol/Depictor/RDDepictor.h>
+
+
 #include <GraphMol/DistGeomHelpers/Embedder.h>
 // comments thegodone & Paolo => MMFF.h and Builder.h need to be patch to avoid class issues! 13_05_2015
 #include <GraphMol/ForceFieldHelpers/MMFF/MMFF.h>
@@ -121,6 +126,12 @@ public:
         writer->write(*rdmol);
         writer->flush();
         return ss.str();
+    }
+    
+    
+    unsigned int compute2DCoords()
+    {
+        return RDDepict::compute2DCoords(*rdmol);
     }
     
     
@@ -443,22 +454,38 @@ private:
 // Binding code
 EMSCRIPTEN_BINDINGS(rdmol) {
     class_<Molecule>("Molecule")
+    
+    //
     .function("getNumAtoms", &Molecule::getNumAtoms, allow_raw_pointers())
+    
+    // fingerprints
     .function("getFP", &Molecule::getFP, allow_raw_pointers())
     .function("getMorganFP2", &Molecule::getMorganFP2, allow_raw_pointers())
     .function("getMorganFP3", &Molecule::getMorganFP3, allow_raw_pointers())
+    
+    // molops basic functions
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
     .function("removeHs", &Molecule::removeHs, allow_raw_pointers())
     .function("sanitizeMol", &Molecule::sanitizeMol, allow_raw_pointers())
     .function("cleanUp", &Molecule::cleanUp, allow_raw_pointers())
     .function("Kekulize", &Molecule::Kekulize, allow_raw_pointers())
 
+    // 2D & 3D molecules
+    .function("compute2DCoords", &Molecule::compute2DCoords, allow_raw_pointers())
     .function("Embedmolecule3D", &Molecule::Embedmolecule3D, allow_raw_pointers())
     .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
+    
+    // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
+    
+    // properties
     .function("getproplist", &Molecule::getproplist, allow_raw_pointers())
+    
+    // susbtructure
     .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
+    
+    // descriptors
     .function("getMW", &Molecule::getMW, allow_raw_pointers())
     .function("ExactMW",&Molecule::ExactMW ,allow_raw_pointers())
     .function("Formula",&Molecule::Formula ,allow_raw_pointers())
@@ -502,8 +529,11 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("SMR_VSA ",&Molecule::SMR_VSA ,allow_raw_pointers())
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
+    
+    // create class from smiles or smarts
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
     .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
+    // register the vectors
     register_vector<std::string>("VectorString");
     register_vector<double>("VectorDouble");
     register_vector<unsigned int>("VectorUint");
