@@ -159,9 +159,7 @@ public:
 
     
     
-    
-    
-    
+
     int Embedmolecule3D()
     {
         return RDKit::DGeomHelpers::EmbedMolecule(*rdmol);
@@ -503,8 +501,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
-    
-    
+
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
