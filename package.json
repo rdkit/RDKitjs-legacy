@@ -1,0 +1,21 @@
+{
+  "name": "rdkit",
+  "version": "0.0.4",
+  "description": "port RDKit to js using emscripten",
+  "keywords": [],
+  "main": "dist/rdkit.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cat pre.js rdkit.js post.js > dist/rdkit.js"
+  },
+  "repository": "thegodone/RDKitjs",
+  "author": "Guillaume Godin",
+  "contributors": [
+    "Michaël Zasso"
+  ],
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/thegodone/RDKitjs/issues"
+  },
+  "homepage": "https://github.com/thegodone/RDKitjs"
+}

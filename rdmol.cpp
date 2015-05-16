@@ -11,6 +11,16 @@
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
 
+// stream Mol2File
+#include <RDGeneral/StreamOps.h>
+#include <GraphMol/FileParsers/FileParsers.h>
+#include <RDGeneral/FileParseException.h>
+#include <RDGeneral/BadFileException.h>
+#include <GraphMol/RDKitBase.h>
+#include <string>
+#include <fstream>
+
+
 //Drawing
 //#include <GraphMol/MolDrawing/MolDrawing.h>
 //#include <GraphMol/MolDrawing/DrawingToSVG.h>
@@ -495,6 +505,21 @@ public:
         return new Molecule(RDKit::SmilesToMol(smiles));
     };
     
+   
+    static Molecule *Mol2BlockToMol(std::string molBlock)
+    {  // std::istringstream inStream(molBlock);
+       // return new Molecule(RDKit::Mol2DataStreamToMol(inStream));
+        return new Molecule(RDKit::Mol2BlockToMol(molBlock));
+    }
+    
+   /*
+    static Molecule *Mol2FileToMol(std::string fname)
+    {
+        return new Molecule(Mol2FileToMol(fname));
+      
+    }
+    */
+    
     
     static Molecule *fromSmarts(std::string smarts) {
         rdErrorLog->df_enabled = false;
@@ -588,7 +613,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("NumSaturatedRings ",&Molecule::NumSaturatedRings ,allow_raw_pointers())
     .function("NumHeterocycles",&Molecule::NumHeterocycles ,allow_raw_pointers())
     .function("NumAromaticHeterocycles",&Molecule::NumAromaticHeterocycles ,allow_raw_pointers())
-    .function("NumAromaticCarbocycles ",&Molecule::NumAromaticCarbocycles ,allow_raw_pointers())
+    .function("NumAromaticCarbocycles",&Molecule::NumAromaticCarbocycles ,allow_raw_pointers())
     .function("NumSaturatedHeterocycles",&Molecule::NumSaturatedHeterocycles ,allow_raw_pointers())
     .function("NumSaturatedCarbocycles",&Molecule::NumSaturatedCarbocycles ,allow_raw_pointers())
     .function("NumAliphaticHeterocycles",&Molecule::NumAliphaticHeterocycles ,allow_raw_pointers())
@@ -596,11 +621,14 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("LabuteASA",&Molecule::LabuteASA ,allow_raw_pointers())
     .function("TPSA",&Molecule::TPSA ,allow_raw_pointers())
     .function("SlogP_VSA",&Molecule::SlogP_VSA ,allow_raw_pointers())
-    .function("SMR_VSA ",&Molecule::SMR_VSA ,allow_raw_pointers())
+    .function("SMR_VSA",&Molecule::SMR_VSA ,allow_raw_pointers())
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
     
     // create class from smiles or smarts
+   // .class_function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
+
+    .class_function("Mol2BlockToMol", &Molecule::Mol2BlockToMol, allow_raw_pointers())
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
     .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
     // register the vectors
@@ -609,15 +637,3 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     register_vector<unsigned int>("VectorUint");
     
 }
-
-
-
-// compilation of the functions & classes ...
-// /emscripten//emscripten/em++  --bind -o rdmol.js ../rdmol.cpp -Icode -Iinclude lib/libGraphMol.so lib/libDescriptors.so lib/libRDGeneral.so lib/libRDGeometryLib.so lib/libSmilesParse.so lib/libDataStructs.so lib/libFingerprints.so lib/libSubgraphs.so lib/libDistGeomHelpers.so lib/libForceField.so lib/libDepictor.so lib/libDistGeometry.so lib/libEigenSolvers.so lib/libAlignment.so lib/libForceFieldHelpers.so lib/libFileParsers.so lib/libSubstructMatch.so lib/libPartialCharges.so  -s DISABLE_EXCEPTION_CATCHING=0  -O2
-// testing the js script:
-// copy 2 files to your webpage folder
-// cp  rdmol.js.mem //Applications/XAMPP/xamppfiles/htdocs/test/rdmol.js.mem
-// cp  rdmol.js //Applications/XAMPP/xamppfiles/htdocs/test/rdmol.js
-// test.hmtl is define like this
-//
-//

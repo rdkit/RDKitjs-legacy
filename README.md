@@ -53,6 +53,7 @@ then execute the folowing commands (the first one takes 5-10 min)
 $ make -j5 (of course if you have only 2 cores replace -j5 by -j2)  
 $ make install  
 
+<<<<<<< HEAD
 
 %%%% pacth of RDKit files for emscripten
 *** ./Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h       Wed May 13 09:32:12 2015
@@ -82,12 +83,34 @@ you should obtain one new file => rdkit.js
 
 
 
+=======
+>>>>>>> b0a76079df6befbddb5bb3ac2f03914d68946c26
+
+%%%% pacth of RDKit files for emscripten
+*** ./Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h       Wed May 13 09:32:12 2015
+  namespace RDKit {
+    class ROMol;
+    namespace MMFF {
++     class MMFFMolProperties;
+  
+*** /build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h        Wed May 13 10:09:29 2015
+  #include <ForceField/ForceField.h>
++ #include "AtomTyper.h"
+  #include "Builder.h"
 
 
 
+After the patch you can compile the code:  
+to recompile your own rdkit.cpp:  
+$ cd /path/to/rdkit  
+$ sh build.sh (don't forget to rename your paths to the rdkit & boost/include & path/to/build/boost/boost.1.57/include/ 
+/path/to/build/rdkit-Release_2014_09_2/
+/path/to/emscripten/em++ in the build.sh -- remark build_fast.sh use -O1 faster)
+
+you should obtain one new file => rdkit.js 
 
 
-
-
+the current module is available for npm/nodje:
+https://www.npmjs.com/package/rdkit
 
 
