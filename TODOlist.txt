@@ -5,9 +5,6 @@ Need to find a way to have hierarchical Classes for example Molecule.Descriptors
 
 Need to have a Molecule.AllDescriptors to generate all of them (... list key:value).
 
-How to use the  -s "EXPORT_NAME='RDKitjs'" to rename Module to RDKitjs in the js script also need to look at pre.js / post.js?
-(http://stackoverflow.com/questions/30152622/changing-the-default-namespace-module-in-emscripten/30153119#30153119)
-
 General question: how to /can we handle two molecules in JS (for Tanimotosimilarity(mol1,mol2) = 0.78) ?
 
 
@@ -17,7 +14,7 @@ Look at the python getstart rdkit page for a list of missing functionnalities.
 
 Status:
 
-DONE Reading and Writing Molecules: DONE, ok, we don't need to implement files readers for the moment
+DONE Reading and Writing Molecules: DONE, ok, we don't need to implement files readers for the moment, one request to implement MolBlockReader… but not working as expected
 Reading sets of molecules: need to do that (not a priority)
 
 DONE Writing molecules: DONE, we don't need to implement files writers for the moment
@@ -33,7 +30,7 @@ IN Progress (thegodone) Working with 2D molecules: GenerateDepictionMatching2DSt
 
 IN Progress (thegodone) Working with 3D Molecules: EmbedMultipleConfs, AlignMolConformers,GetConformerRMS
 
-Preserving Molecules: can we do that ToBinary,  cPickle.dumps or should we use json instead?
+IN Progress (thegodone) [issue return undefined] Preserving Molecules: can we do MolToBinary ,  cPickle.dumps or should we use json instead?
 
 IN Progress (thegodone) Drawing Molecules: Drawing2D (done), we need to svg for chrome not the files... ? MolsToGridImage can be interesting need to check for interaction with visualizer ?
 
@@ -43,17 +40,17 @@ Stereochemistry in substructure matches: need to test
 
 Chemical Transformations: DeleteSubstructs, ReplaceSubstructs, ReplaceSidechains, ReplaceCore, GetMolFrags
 
-In progress (thegodone) [how to clone a molecule and keep it before murcko?] Murcko Decomposition: GetScaffoldForMol, MakeScaffoldGeneric
+In progress (thegodone) [issue return the same molecule ???] Murcko Decomposition: GetScaffoldForMol, MakeScaffoldGeneric
 
 Maximum Common Substructure: FindMCS, smartsString,
 
-Fingerprinting and Molecular Similarity: FingerprintMol, FingerprintSimilarity, DiceSimilarity
+Fingerprinting and Molecular Similarity: FingerprintMol done, FingerprintSimilarity, DiceSimilarity
 
 MACCS Keys: GenMACCSKeys
 
 Atom Pairs and Topological Torsions: GetAtomPairFingerprint,
 
-almost DONE Morgan Fingerprints (Circular Fingerprints): GetMorganFingerprint, GetMorganFingerprintAsBitVect, in progress GetNonzeroElements
+In progress (thegodone) [] Morgan Fingerprints (Circular Fingerprints): GetMorganFingerprint done, GetMorganFingerprintAsBitVect done, GetNonzeroElements
 
 Picking Diverse Molecules Using Fingerprints: to do not a priority
 

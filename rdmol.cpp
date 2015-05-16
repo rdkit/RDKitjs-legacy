@@ -17,8 +17,10 @@
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
 #include <GraphMol/RDKitBase.h>
-#include <string>
-#include <fstream>
+//#include <string>
+//#include <fstream>
+#include <GraphMol/FileParsers/MolFileStereochem.h>
+
 
 
 //Drawing
@@ -507,10 +509,25 @@ public:
     
    
     static Molecule *Mol2BlockToMol(std::string molBlock)
+    
     {  // std::istringstream inStream(molBlock);
        // return new Molecule(RDKit::Mol2DataStreamToMol(inStream));
-        return new Molecule(RDKit::Mol2BlockToMol(molBlock));
+        rdErrorLog->df_enabled = false;
+
+        return new Molecule(RDKit::Mol2BlockToMol(molBlock,true,true));
     }
+    
+    static Molecule *MolBlockToMol(std::string molBlock)
+    {  // std::istringstream inStream(molBlock);
+        // return new Molecule(RDKit::Mol2DataStreamToMol(inStream));
+        rdErrorLog->df_enabled = false;
+
+        return new Molecule(RDKit::MolBlockToMol(molBlock,true,true));
+    }
+    
+
+    
+    
     
    /*
     static Molecule *Mol2FileToMol(std::string fname)
@@ -627,7 +644,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // create class from smiles or smarts
    // .class_function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
-
+    .class_function("MolBlockToMol", &Molecule::MolBlockToMol, allow_raw_pointers())
     .class_function("Mol2BlockToMol", &Molecule::Mol2BlockToMol, allow_raw_pointers())
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
     .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
