@@ -502,6 +502,29 @@ public:
     }
 
     
+    
+    /// get & set & has properties
+    
+    
+    std::string getProp(std::string key) {
+        std::string res;
+        rdmol->getProp(key,res);
+        return res;
+    }
+    
+    
+    int setProp(std::string key, std::string value) {
+        rdmol->setProp(key,value);
+        return 0;
+    }
+
+    bool hasProp(std::string key) {
+        return rdmol->hasProp(key);
+        
+    }
+
+    
+    
     static Molecule *fromSmiles(std::string smiles) {
         rdErrorLog->df_enabled = false;
         return new Molecule(RDKit::SmilesToMol(smiles));
@@ -592,6 +615,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // properties
     .function("getproplist", &Molecule::getproplist, allow_raw_pointers())
+    .function("getProp", &Molecule::getProp, allow_raw_pointers())
+    .function("setProp", &Molecule::setProp, allow_raw_pointers())
+    .function("hasProp", &Molecule::hasProp, allow_raw_pointers())
     
     // susbtructure
     .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())

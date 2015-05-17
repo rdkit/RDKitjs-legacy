@@ -468,3 +468,34 @@ return 32.386329978576335
 t2.size()
 return 2
 
+
+/// adding get set & has properties functions
+T= R.Molecule.MolBlockToMol('CCCO\nJME 2015-05-03 Sat May 16 17:16:55 GMT+200 2015\n \n  4  3  0  0  0  0  0  0  0  0999 V2000\n    3.6373    0.7000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.4249    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2124    0.7000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  2  1  1  0  0  0  0\n  3  2  1  0  0  0  0\n  4  3  1  0  0  0  0\nM  END\n')
+Object {$$: Object, getNumAtoms: function, getFP: function, getMorganFP2: function, getMorganFP3: function…}
+T.setProp('MP','45')
+0
+T.hasProp('MP')
+true
+T.sdwrite()
+"CCCO
+     RDKit          3D
+
+  4  3  0  0  0  0  0  0  0  0999 V2000
+    3.6373    0.7000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.4249    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2124    0.7000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0
+  3  2  1  0
+  4  3  1  0
+M  END
+>  <MP>  (1) 
+45
+
+$$$$
+"
+T.getProp('MP')
+"45"
+
+
+
