@@ -66,6 +66,37 @@ using namespace std;
 using RDKit::ROMol;
 using RDKit::RWMol;
 
+Molecule::Molecule(RWMol* mol): rdmol(mol), rdquery(0) {
+}
+
+Molecule::~Molecule() {
+  if(rdmol != 0)
+    delete rdmol;
+
+  if(rdquery != 0)
+    delete rdquery;
+}
+
+Molecule* Molecule::fromSmiles(std::string smiles) {
+  rdErrorLog->df_enabled = false;
+  return new Molecule(RDKit::SmilesToMol(smiles));
+}
+
+Molecule* Molecule::Mol2BlockToMol(std::string molBlock) {
+  rdErrorLog->df_enabled = false;
+  return new Molecule(RDKit::Mol2BlockToMol(molBlock,true,true));
+}
+
+Molecule* Molecule::MolBlockToMol(std::string molBlock) {
+  rdErrorLog->df_enabled = false;
+  return new Molecule(RDKit::MolBlockToMol(molBlock, true, true));
+}
+
+Molecule* Molecule::fromSmarts(std::string smarts) {
+  rdErrorLog->df_enabled = false;
+  return new Molecule(RDKit::SmartsToMol(smarts));
+}
+
 unsigned int Molecule::getNumAtoms()
 {
     return rdmol->getNumAtoms();

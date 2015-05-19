@@ -17,19 +17,8 @@ using RDKit::RWMol;
 class Molecule
 {
     public:
-      Molecule(RWMol *mol){
-        if(rdmol != 0)
-            delete rdmol;
-        rdmol = mol;
-        rdquery = 0;
-      }
-      ~Molecule(){
-            if(rdmol != 0)
-              delete rdmol;
-
-            if(rdquery != 0)
-              delete rdquery;
-       };
+      Molecule(RWMol *mol);
+      ~Molecule();
 
       unsigned int getNumAtoms();
       void MolToBinary();
@@ -101,34 +90,11 @@ class Molecule
       int setProp(std::string key, std::string value);
       bool hasProp(std::string key);
 
-      static Molecule* fromSmiles(std::string smiles) {
-          rdErrorLog->df_enabled = false;
-          return new Molecule(RDKit::SmilesToMol(smiles));
-      }
-
-
-      static Molecule* Mol2BlockToMol(std::string molBlock) {
-        rdErrorLog->df_enabled = false;
-        return new Molecule(RDKit::Mol2BlockToMol(molBlock,true,true));
-      }
-
-      static Molecule* MolBlockToMol(std::string molBlock)
-      {
-        rdErrorLog->df_enabled = false;
-        return new Molecule(RDKit::MolBlockToMol(molBlock, true, true));
-      }
-
-      static Molecule* fromSmarts(std::string smarts) {
-        rdErrorLog->df_enabled = false;
-        return new Molecule(RDKit::SmartsToMol(smarts));
-      }
-
-    /*
-      static Molecule *Mol2FileToMol(std::string fname)
-      {
-          return new Molecule(Mol2FileToMol(fname));
-      }
-      */
+      // static constructors
+      static Molecule* fromSmiles(std::string smiles);
+      static Molecule* Mol2BlockToMol(std::string molBlock);
+      static Molecule* MolBlockToMol(std::string molBlock);
+      static Molecule* fromSmarts(std::string smarts);
 
     private:
         RWMol* rdmol;
