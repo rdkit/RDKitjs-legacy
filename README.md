@@ -55,6 +55,7 @@ cmake .. \
 -DRDKIT_INCLUDE_DIR=${HOME}/Toolchain/rdkit-Release_2014_09_2/Code \
 -DBoost_INCLUDE_DIR=${HOME}/Toolchain/boost.1.57.0/include/ \
 -DRDKIT_LIB_DIR=${HOME}/Toolchain/rdkit-Release_2015_03_1/lib/
+-DEMSCRIPTEN_BIN=${HOME}/Toolchain/emsdk_portable/emscripten/master
 
 make
 ```
