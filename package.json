@@ -6,16 +6,20 @@
   "main": "dist/rdkit.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cat pre.js rdkit.js post.js > dist/rdkit.js"
+    "build": "cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js"
   },
   "repository": "thegodone/RDKitjs",
   "author": "Guillaume Godin",
   "contributors": [
     "Michaël Zasso"
+    "Giuseppe Marco Randazzo"
   ],
   "license": "BSD",
   "bugs": {
     "url": "https://github.com/thegodone/RDKitjs/issues"
   },
-  "homepage": "https://github.com/thegodone/RDKitjs"
+  "homepage": "https://github.com/thegodone/RDKitjs",
+  "dependencies": {
+    "package": "^1.0.1"
+  }
 }
