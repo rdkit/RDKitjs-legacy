@@ -66,21 +66,6 @@ using namespace std;
 using RDKit::ROMol;
 using RDKit::RWMol;
 
-Molecule::Molecule()
-{
-  rdmol = 0;
-  rdquery = 0; 
-}
-
-Molecule::~Molecule()
-{
-  if(rdmol != 0)
-    delete rdmol;
-
-  if(rdquery != 0)
-    delete rdquery;
-}
-
 unsigned int Molecule::getNumAtoms()
 {
     return rdmol->getNumAtoms();
@@ -491,32 +476,4 @@ int Molecule::setProp(std::string key, std::string value) {
 
 bool Molecule::hasProp(std::string key) {
     return rdmol->hasProp(key);
-}
-
-void Molecule::fromSmiles(std::string smiles) {
-    rdErrorLog->df_enabled = false;
-    if(rdmol != 0)
-      delete rdmol;
-    rdmol = RDKit::SmilesToMol(smiles);
-}
-
-
-void Molecule::Mol2BlockToMol(std::string molBlock) {
-  rdErrorLog->df_enabled = false;
-    if(rdmol != 0)
-      delete rdmol;
-  rdmol = RDKit::Mol2BlockToMol(molBlock,true,true);
-}
-
-void Molecule::MolBlockToMol(std::string molBlock)
-{
-  rdErrorLog->df_enabled = false;
-    if(rdmol != 0)
-      delete rdmol;
-  rdmol = RDKit::MolBlockToMol(molBlock, true, true);
-}
-
-void Molecule::fromSmarts(std::string smarts) {
-  rdErrorLog->df_enabled = false;
-  rdmol = RDKit::SmartsToMol(smarts);
 }
