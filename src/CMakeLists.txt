@@ -9,3 +9,4 @@ if(Boost_FOUND)
         )
     add_custom_target(rdkitjs ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/rdkit.js)
 endif()
+
