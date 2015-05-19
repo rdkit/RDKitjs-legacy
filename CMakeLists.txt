@@ -7,7 +7,7 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.50.0 COMPONENTS ) 
 
 
-set(CMAKE_C_FLAGS "-O3")
+set(CMAKE_C_FLAGS "-O2")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
 
 add_subdirectory(src)
