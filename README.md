@@ -38,6 +38,7 @@ cd RDKitjs
 * cd build
 
 ### Commandline for OSX
+
 * cmake ..  \
 -DCMAKE_TOOLCHAIN_FILE=/usr/local/Cellar/emscripten/1.32.4/libexec/cmake/Modules/Platform/Emscripten.cmake  \
 -DRDKIT_INCLUDE_DIR=/Users/marco/Toolchain/rdkit-Release_2015_03_1/Code/  \
@@ -45,7 +46,9 @@ cd RDKitjs
 -DRDKIT_LIB_DIR=/Users/marco/Toolchain/rdkit-Release_2015_03_1/lib/ \
 -DEMSCRIPTEN_BIN=/usr/local/Cellar/emscripten/1.32.4/bin/
 
+
 ### Commandline for Linux
+
 * cmake .. \
 -DCMAKE_TOOLCHAIN_FILE=${HOME}/Toolchain/emsdk_portable/emscripten/master/cmake/Modules/Platform/Emscripten.cmake \
 -DRDKIT_INCLUDE_DIR=${HOME}/Toolchain/rdkit-Release_2014_09_2/Code \
