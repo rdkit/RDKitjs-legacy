@@ -34,17 +34,26 @@ git clone https://github.com/thegodone/RDKitjs.git
 
 cd RDKitjs
 
-mkdir build
-cd build
+* mkdir build
+* cd build
 
-# Commandline for OSX
-cmake .. -DCMAKE_TOOLCHAIN_FILE=/usr/local/Cellar/emscripten/1.32.0/libexec/cmake/Modules/Platform/Emscripten.cmake  -DRDKIT_INCLUDE_DIR=/Users/marco/Toolchain/rdkit-Release_2015_03_1/Code/ -DBoost_INCLUDE_DIR=/usr/local/Cellar/boost155/1.55.0_1/include/ -DRDKIT_LIB_DIR=/Users/marco/Toolchain/rdkit-Release_2015_03_1/lib/
+### Commandline for OSX
+* cmake ..  \
+-DCMAKE_TOOLCHAIN_FILE=/usr/local/Cellar/emscripten/1.32.4/libexec/cmake/Modules/Platform/Emscripten.cmake  \
+-DRDKIT_INCLUDE_DIR=/Users/marco/Toolchain/rdkit-Release_2015_03_1/Code/  \
+-DBoost_INCLUDE_DIR=/usr/local/Cellar/boost155/1.55.0_1/include/  \
+-DRDKIT_LIB_DIR=/Users/marco/Toolchain/rdkit-Release_2015_03_1/lib/ \
+-DEMSCRIPTEN_BIN=/usr/local/Cellar/emscripten/1.32.4/bin/
 
-# Commandline for Linux
+### Commandline for Linux
+* cmake .. \
+-DCMAKE_TOOLCHAIN_FILE=${HOME}/Toolchain/emsdk_portable/emscripten/master/cmake/Modules/Platform/Emscripten.cmake \
+-DRDKIT_INCLUDE_DIR=${HOME}/Toolchain/rdkit-Release_2014_09_2/Code \
+-DBoost_INCLUDE_DIR=${HOME}/Toolchain/boost.1.57.0/include/ \
+-DRDKIT_LIB_DIR=${HOME}/Toolchain/rdkit-Release_2015_03_1/lib/ \
+-DEMSCRIPTEN_BIN=${HOME}/Toolchain/emsdk_portable/emscripten/master/
 
-cmake .. -DCMAKE_TOOLCHAIN_FILE=${HOME}/Toolchain/emsdk_portable/emscripten/master/cmake/Modules/Platform/Emscripten.cmake -DRDKIT_INCLUDE_DIR=${HOME}/Toolchain/rdkit-Release_2014_09_2/Code -DBoost_INCLUDE_DIR=${HOME}/Toolchain/boost.1.57.0/include/ -DRDKIT_LIB_DIR=${HOME}/Toolchain/rdkit-Release_2015_03_1/lib/
-
-make
+* make
 
 Then you should obtain one new file => src/rdkit.js 
 
