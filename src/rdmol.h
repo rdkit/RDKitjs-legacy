@@ -17,7 +17,9 @@ using RDKit::RWMol;
 class Molecule
 {
     public:
-      Molecule(RWMol* mol): rdmol(mol), rdquery(mol) {};
+      Molecule();
+      ~Molecule();
+
       unsigned int getNumAtoms();
       void MolToBinary();
       std::string getFP();
@@ -88,41 +90,17 @@ class Molecule
       int setProp(std::string key, std::string value);
       bool hasProp(std::string key);
 
+      void fromSmiles(std::string smiles);
+      void Mol2BlockToMol(std::string molBlock);
+      void MolBlockToMol(std::string molBlock);
+      void fromSmarts(std::string smarts);
 
-      static Molecule *fromSmiles(std::string smiles) {
-          rdErrorLog->df_enabled = false;
-          return new Molecule(RDKit::SmilesToMol(smiles));
-      };
-
-      static Molecule *Mol2BlockToMol(std::string molBlock)
-      {  // std::istringstream inStream(molBlock);
-        // return new Molecule(RDKit::Mol2DataStreamToMol(inStream));
-          rdErrorLog->df_enabled = false;
-
-          return new Molecule(RDKit::Mol2BlockToMol(molBlock,true,true));
-      }
-      
-      static Molecule *MolBlockToMol(std::string molBlock)
-      {  // std::istringstream inStream(molBlock);
-          // return new Molecule(RDKit::Mol2DataStreamToMol(inStream));
-          rdErrorLog->df_enabled = false;
-
-          return new Molecule(RDKit::MolBlockToMol(molBlock,true,true));
-      }
-      
     /*
       static Molecule *Mol2FileToMol(std::string fname)
       {
           return new Molecule(Mol2FileToMol(fname));
-        
       }
       */
-      
-      
-      static Molecule *fromSmarts(std::string smarts) {
-          rdErrorLog->df_enabled = false;
-          return new Molecule(RDKit::SmartsToMol(smarts));
-      };
 
     private:
         RWMol* rdmol;
@@ -224,11 +202,11 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
     
     // create class from smiles or smarts
-   // .class_function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
-    .class_function("MolBlockToMol", &Molecule::MolBlockToMol, allow_raw_pointers())
-    .class_function("Mol2BlockToMol", &Molecule::Mol2BlockToMol, allow_raw_pointers())
-    .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
-    .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
+   // .function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
+    .function("MolBlockToMol", &Molecule::MolBlockToMol, allow_raw_pointers())
+    .function("Mol2BlockToMol", &Molecule::Mol2BlockToMol, allow_raw_pointers())
+    .function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
+    .function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
     // register the vectors
     register_vector<std::string>("VectorString");
     register_vector<double>("VectorDouble");
