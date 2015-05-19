@@ -11,15 +11,12 @@
   "repository": "thegodone/RDKitjs",
   "author": "Guillaume Godin",
   "contributors": [
-    "Michaël Zasso"
+    "Michaël Zasso",
     "Giuseppe Marco Randazzo"
   ],
   "license": "BSD",
   "bugs": {
     "url": "https://github.com/thegodone/RDKitjs/issues"
   },
-  "homepage": "https://github.com/thegodone/RDKitjs",
-  "dependencies": {
-    "package": "^1.0.1"
-  }
+  "homepage": "https://github.com/thegodone/RDKitjs"
 }
