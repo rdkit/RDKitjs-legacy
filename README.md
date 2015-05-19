@@ -15,13 +15,13 @@ http://gmrand.blogspot.ch/2015/05/howto-install-rdkit-and-emscripten-on.html
 P.S.: due to a bug report we suggest to apply this patch to rdkit
 
 %%%% pacth of RDKit files for emscripten
-*** ./Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h       Wed May 13 09:32:12 2015
+/Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h       Wed May 13 09:32:12 2015
   namespace RDKit {
     class ROMol;
     namespace MMFF {
 +     class MMFFMolProperties;
   
-*** /build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h        Wed May 13 10:09:29 2015
+/build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h        Wed May 13 10:09:29 2015
   #include <ForceField/ForceField.h>
 + #include "AtomTyper.h"
   #include "Builder.h"
@@ -51,7 +51,7 @@ cd RDKitjs
 
 * cmake .. \
 -DCMAKE_TOOLCHAIN_FILE=${HOME}/Toolchain/emsdk_portable/emscripten/master/cmake/Modules/Platform/Emscripten.cmake \
--DRDKIT_INCLUDE_DIR=${HOME}/Toolchain/rdkit-Release_2014_09_2/Code \
+-DRDKIT_INCLUDE_DIR=${HOME}/Toolchain/rdkit-Release_2015_03_1/Code \
 -DBoost_INCLUDE_DIR=${HOME}/Toolchain/boost.1.57.0/include/ \
 -DRDKIT_LIB_DIR=${HOME}/Toolchain/rdkit-Release_2015_03_1/lib/ \
 -DEMSCRIPTEN_BIN=${HOME}/Toolchain/emsdk_portable/emscripten/master/
