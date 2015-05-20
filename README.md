@@ -14,17 +14,24 @@ http://gmrand.blogspot.ch/2015/05/howto-install-rdkit-and-emscripten-on.html
 
 P.S.: due to a bug report we suggest to apply this patch to rdkit
 
-%%%% pacth of RDKit files for emscripten
-/Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h       Wed May 13 09:32:12 2015
+Patching of RDKit files for emscripten binding
+===============================================
+
+. adding class MMFFMolProperties in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h
+```bash  
   namespace RDKit {
     class ROMol;
     namespace MMFF {
 +     class MMFFMolProperties;
-  
-/build/common/rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h        Wed May 13 10:09:29 2015
+```
+
+. adding AtomTyper.h in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h
+```bash  
+rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h
   #include <ForceField/ForceField.h>
 + #include "AtomTyper.h"
   #include "Builder.h"
+```
 
   
 Install RDKitjs
@@ -41,11 +48,11 @@ cd RDKitjs
 
 ```bash
 cmake ..  \
--DCMAKE_TOOLCHAIN_FILE=/usr/local/Cellar/emscripten/1.32.4/libexec/cmake/Modules/Platform/Emscripten.cmake  \
+-DCMAKE_TOOLCHAIN_FILE=/usr/local/Cellar/emscripten/1.32.0/libexec/cmake/Modules/Platform/Emscripten.cmake  \
 -DRDKIT_INCLUDE_DIR=/Users/marco/Toolchain/rdkit-Release_2015_03_1/Code/  \
 -DBoost_INCLUDE_DIR=/usr/local/Cellar/boost155/1.55.0_1/include/  \
 -DRDKIT_LIB_DIR=/Users/marco/Toolchain/rdkit-Release_2015_03_1/lib/ \
--DEMSCRIPTEN_BIN=/usr/local/Cellar/emscripten/1.32.4/bin/
+-DEMSCRIPTEN_BIN=/usr/local/Cellar/emscripten/1.32.0/bin/
 ```
 
 ### Commandline for Linux
