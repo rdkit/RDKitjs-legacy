@@ -17,7 +17,7 @@ P.S.: due to a bug report we suggest to apply this patch to rdkit
 Patching of RDKit files for emscripten binding
 ===============================================
 
-. adding class MMFFMolProperties in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h
+* adding class MMFFMolProperties in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h
 ```bash  
   namespace RDKit {
     class ROMol;
@@ -25,9 +25,8 @@ Patching of RDKit files for emscripten binding
 +     class MMFFMolProperties;
 ```
 
-. adding AtomTyper.h in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h
+* adding AtomTyper.h in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h
 ```bash  
-rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h
   #include <ForceField/ForceField.h>
 + #include "AtomTyper.h"
   #include "Builder.h"
