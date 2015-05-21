@@ -26,6 +26,9 @@ class Molecule
       std::string getMorganFP2();
       std::string getMorganFP3();
       std::vector<double> MMFFoptimizeMolecule();
+      std::vector<double> MMFFoptimizeMolecule(int maxIters, std::string mmffVariant);
+      vector<double> MMFFOptimizeMoleculeConfs(unsigned int numThreads,int  maxIters, std::string mmffVariant);
+
       std::vector<double> UFFOptimizeMolecule();
       void Murcko();
       std::vector<std::string> getproplist();
@@ -33,7 +36,11 @@ class Molecule
       std::string sdwrite();
       unsigned int compute2DCoords();
       std::string Drawing2D();
-      int Embedmolecule3D();
+      int EmbedMolecule();
+      int EmbedMolecule(unsigned int maxIterations,int seed);
+      vector<int> EmbedMultipleConfs();
+      vector<int> EmbedMultipleConfs(unsigned int numConfs, unsigned int maxIterations, int seed);
+
       void addHs();
       void removeHs();
       void sanitizeMol();
@@ -123,8 +130,15 @@ EMSCRIPTEN_BINDINGS(rdmol) {
 
     // 2D & 3D molecules
     .function("compute2DCoords", &Molecule::compute2DCoords, allow_raw_pointers())
-    .function("Embedmolecule3D", &Molecule::Embedmolecule3D, allow_raw_pointers())
-    .function("MMFFoptimizeMolecule", &Molecule::MMFFoptimizeMolecule, allow_raw_pointers())
+    .function("EmbedMolecule", select_overload<int()>(&Molecule::EmbedMolecule), allow_raw_pointers())
+    .function("EmbedMoleculearg", select_overload<int(unsigned int,int)>(&Molecule::EmbedMolecule), allow_raw_pointers())
+    .function("EmbedMultipleConfs", select_overload<vector<int>()>(&Molecule::EmbedMultipleConfs), allow_raw_pointers())
+    .function("EmbedMultipleConfsarg", select_overload<vector<int>(unsigned int,unsigned int,int)>(&Molecule::EmbedMultipleConfs), allow_raw_pointers())
+
+    .function("MMFFoptimizeMolecule", select_overload<vector<double>()>(&Molecule::MMFFoptimizeMolecule), allow_raw_pointers())
+    .function("MMFFoptimizeMoleculearg", select_overload<vector<double>(int,std::string)>(&Molecule::MMFFoptimizeMolecule), allow_raw_pointers())
+   
+    .function("MMFFOptimizeMoleculeConfs", &Molecule::MMFFOptimizeMoleculeConfs, allow_raw_pointers())
     .function("UFFOptimizeMolecule", &Molecule::UFFOptimizeMolecule, allow_raw_pointers())
     
     // drawing molecules
@@ -205,4 +219,6 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     register_vector<std::string>("VectorString");
     register_vector<double>("VectorDouble");
     register_vector<unsigned int>("VectorUint");
+    register_vector<int>("Vectorint");
+
 }

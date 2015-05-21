@@ -48,8 +48,8 @@
 
 #include <GraphMol/DistGeomHelpers/Embedder.h>
 // comments thegodone & Paolo => MMFF.h and Builder.h need to be patch to avoid class issues! 13_05_2015
-// #include <GraphMol/ForceFieldHelpers/MMFF/MMFF.h>
-// #include <GraphMol/ForceFieldHelpers/MMFF/Builder.h>
+#include <GraphMol/ForceFieldHelpers/MMFF/MMFF.h>
+#include <GraphMol/ForceFieldHelpers/MMFF/Builder.h>
 #include <GraphMol/ForceFieldHelpers/MMFF/AtomTyper.h>
 #include <GraphMol/ForceFieldHelpers/UFF/UFF.h>
 
@@ -132,11 +132,44 @@ std::string Molecule::getMorganFP3()
 std::vector<double> Molecule::MMFFoptimizeMolecule()
 {
     std::vector<double> res(2);
-    /*std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
+    std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
     res[0] = static_cast<double>(p.first);
-    res[1] = p.second;*/
+    res[1] = p.second;
     return res;
 }
+
+
+std::vector<double> Molecule::MMFFoptimizeMolecule(int maxIters, std::string mmffVariant)
+{
+    std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol,maxIters,mmffVariant);
+    std::vector<double> res(2);
+    res[0] = static_cast<double>(p.first);
+    res[1] = p.second;
+    return res;
+}
+
+
+
+vector<double> Molecule::MMFFOptimizeMoleculeConfs (unsigned int numThreads,int  maxIters,std::string mmffVariant)
+{
+   vector<pair< int, double>> p;
+   RDKit::MMFF::MMFFOptimizeMoleculeConfs(*rdmol,p,numThreads,maxIters,mmffVariant);
+   vector<double> res(2*p.size());
+   for (int i = 0; i < 2*p.size(); i++) {
+        if ( i % 2== 0 )
+            res[i] = static_cast<double>(p[i].first);
+        else
+            res[p.size()+i] = p[i].second;
+
+    }
+
+    return res;
+}
+
+
+
+
+
 
 std::vector<double> Molecule::UFFOptimizeMolecule()
 {
@@ -193,10 +226,37 @@ std::string Molecule::Drawing2D()
 //svg = RDKit::Drawing::DrawingToSVG(drawing, 4);
 
 
-int Molecule::Embedmolecule3D()
-{
+int Molecule::EmbedMolecule(unsigned int maxIterations, int seed)
+
+{   
+ 
+    return RDKit::DGeomHelpers::EmbedMolecule(*rdmol,maxIterations,seed);
+}
+
+
+int Molecule::EmbedMolecule()
+
+{   
+ 
     return RDKit::DGeomHelpers::EmbedMolecule(*rdmol);
 }
+
+
+vector<int> Molecule::EmbedMultipleConfs(unsigned int numConfs, unsigned int maxIterations, int seed)
+{   
+ 
+    return RDKit::DGeomHelpers::EmbedMultipleConfs(*rdmol,numConfs,maxIterations,seed);
+}
+
+
+vector<int> Molecule::EmbedMultipleConfs()
+{   
+ 
+    return RDKit::DGeomHelpers::EmbedMultipleConfs(*rdmol);
+}
+
+
+
 
 void Molecule::addHs()
 {
