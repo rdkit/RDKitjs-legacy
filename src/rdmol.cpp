@@ -69,6 +69,8 @@ using RDKit::ROMol;
 using RDKit::RWMol;
 
 Molecule::Molecule(RWMol* mol): rdmol(mol), rdquery(0) {
+
+
 }
 
 Molecule::~Molecule() {
@@ -98,6 +100,17 @@ Molecule* Molecule::fromSmarts(string smarts) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::SmartsToMol(smarts));
 }
+
+
+Molecule* Molecule::molFromPickle(string pickle) {
+  rdErrorLog->df_enabled = false;
+  RWMol* mol;
+  RDKit::MolPickler::molFromPickle(pickle,*mol);
+  return new Molecule(mol);
+}
+
+
+
 
 unsigned int Molecule::getNumAtoms()
 {

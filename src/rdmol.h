@@ -108,6 +108,7 @@ class Molecule
       static Molecule* Mol2BlockToMol(string molBlock);
       static Molecule* MolBlockToMol(string molBlock);
       static Molecule* fromSmarts(string smarts);
+      static Molecule* molFromPickle(string pickle);
 
     private:
         RWMol* rdmol;
@@ -119,7 +120,7 @@ Molecule* passThrough(Molecule* ptr) { return ptr; }
 // Binding code
 EMSCRIPTEN_BINDINGS(rdmol) {
     class_<Molecule>("Molecule")
-    //
+    
     .function("getNumAtoms", &Molecule::getNumAtoms, allow_raw_pointers())
     
     // fingerprints
@@ -224,7 +225,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .class_function("MolBlockToMol", &Molecule::MolBlockToMol, allow_raw_pointers())
     .class_function("Mol2BlockToMol", &Molecule::Mol2BlockToMol, allow_raw_pointers())
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
-    .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
+    .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers())
+    .class_function("molFromPickle", &Molecule::molFromPickle, allow_raw_pointers());
+
     // register the vectors
     register_vector<string>("VectorString");
     register_vector<double>("VectorDouble");
