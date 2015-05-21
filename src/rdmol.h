@@ -18,24 +18,28 @@ class Molecule
 {
     public:
       Molecule(RWMol *mol);
+
       ~Molecule();
 
       unsigned int getNumAtoms();
-      void MolToBinary();
-      std::string getFP();
-      std::string getMorganFP2();
-      std::string getMorganFP3();
-      std::vector<double> MMFFoptimizeMolecule();
-      std::vector<double> MMFFoptimizeMolecule(int maxIters, std::string mmffVariant);
-      vector<double> MMFFOptimizeMoleculeConfs(unsigned int numThreads,int  maxIters, std::string mmffVariant);
+      string MolToBinary();
+      string getFP();
+      string getMorganFP2();
+      string getMorganFP3();
+      vector<double> MMFFoptimizeMolecule();
+      vector<double> MMFFoptimizeMolecule(int maxIters, string mmffVariant);
+      vector<double> MMFFOptimizeMoleculeConfs(unsigned int numThreads,int  maxIters, string mmffVariant);
 
-      std::vector<double> UFFOptimizeMolecule();
+      vector<double> UFFOptimizeMolecule();
       void Murcko();
-      std::vector<std::string> getproplist();
-      std::string smilewrite();
-      std::string sdwrite();
+      vector<string> getproplist();
+      string smilewrite();
+      string sdwrite();
+      string sdwriteConfs();
+
+
       unsigned int compute2DCoords();
-      std::string Drawing2D();
+      string Drawing2D();
       int EmbedMolecule();
       int EmbedMolecule(unsigned int maxIterations,int seed);
       vector<int> EmbedMultipleConfs();
@@ -48,7 +52,7 @@ class Molecule
       void Kekulize();
       int getMW();
       double ExactMW();
-      std::string Formula();
+      string Formula();
       double Chi0v();
       double Chi1v();
       double Chi2v();
@@ -86,22 +90,24 @@ class Molecule
       double LabuteASA();
 
       double TPSA();
-      std::vector< double > SlogP_VSA();
-      std::vector< double > SMR_VSA();
-      std::vector< double > PEO_VSA();
-      std::vector< unsigned int > MQNs();
-      std::string GetSubstructMatches(std::string smilesref);
-      bool HasSubstructMatchStr(std::string smilesref);
+      vector< double > SlogP_VSA();
+      vector< double > SMR_VSA();
+      vector< double > PEO_VSA();
+      vector< unsigned int > MQNs();
+      string GetSubstructMatches(string smilesref);
+      bool HasSubstructMatchStr(string smilesref);
       /// get & set & has properties
-      std::string getProp(std::string key);
-      int setProp(std::string key, std::string value);
-      bool hasProp(std::string key);
+      string getProp(string key);
+      int setProp(string key, string value);
+      int getNumConformers();
+
+      bool hasProp(string key);
 
       // static constructors
-      static Molecule* fromSmiles(std::string smiles);
-      static Molecule* Mol2BlockToMol(std::string molBlock);
-      static Molecule* MolBlockToMol(std::string molBlock);
-      static Molecule* fromSmarts(std::string smarts);
+      static Molecule* fromSmiles(string smiles);
+      static Molecule* Mol2BlockToMol(string molBlock);
+      static Molecule* MolBlockToMol(string molBlock);
+      static Molecule* fromSmarts(string smarts);
 
     private:
         RWMol* rdmol;
@@ -136,7 +142,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("EmbedMultipleConfsarg", select_overload<vector<int>(unsigned int,unsigned int,int)>(&Molecule::EmbedMultipleConfs), allow_raw_pointers())
 
     .function("MMFFoptimizeMolecule", select_overload<vector<double>()>(&Molecule::MMFFoptimizeMolecule), allow_raw_pointers())
-    .function("MMFFoptimizeMoleculearg", select_overload<vector<double>(int,std::string)>(&Molecule::MMFFoptimizeMolecule), allow_raw_pointers())
+    .function("MMFFoptimizeMoleculearg", select_overload<vector<double>(int,string)>(&Molecule::MMFFoptimizeMolecule), allow_raw_pointers())
    
     .function("MMFFOptimizeMoleculeConfs", &Molecule::MMFFOptimizeMoleculeConfs, allow_raw_pointers())
     .function("UFFOptimizeMolecule", &Molecule::UFFOptimizeMolecule, allow_raw_pointers())
@@ -152,11 +158,15 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
+    .function("sdwriteConfs", &Molecule::sdwriteConfs, allow_raw_pointers())
+
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
     
     // properties
     .function("getproplist", &Molecule::getproplist, allow_raw_pointers())
     .function("getProp", &Molecule::getProp, allow_raw_pointers())
+    .function("getNumConformers", &Molecule::getNumConformers, allow_raw_pointers())
+
     .function("setProp", &Molecule::setProp, allow_raw_pointers())
     .function("hasProp", &Molecule::hasProp, allow_raw_pointers())
     
@@ -216,7 +226,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
     .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers());
     // register the vectors
-    register_vector<std::string>("VectorString");
+    register_vector<string>("VectorString");
     register_vector<double>("VectorDouble");
     register_vector<unsigned int>("VectorUint");
     register_vector<int>("Vectorint");

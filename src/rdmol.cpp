@@ -3,7 +3,7 @@
 //standard libraries
 #include <string>
 #include <vector>
-#include <utility>  // std::pair, std::get
+#include <utility>  // pair, get
 
 // Boost include for rdkit dependence
 #include <boost/cstdint.hpp>
@@ -20,6 +20,8 @@
 #include <GraphMol/Fingerprints/MorganFingerprints.h>
 #include <DataStructs/BitOps.h>
 #include <GraphMol/MolOps.h>
+#include <GraphMol/Conformer.h>
+
 
 // stream Mol2File
 #include <RDGeneral/StreamOps.h>
@@ -77,22 +79,22 @@ Molecule::~Molecule() {
     delete rdquery;
 }
 
-Molecule* Molecule::fromSmiles(std::string smiles) {
+Molecule* Molecule::fromSmiles(string smiles) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::SmilesToMol(smiles));
 }
 
-Molecule* Molecule::Mol2BlockToMol(std::string molBlock) {
+Molecule* Molecule::Mol2BlockToMol(string molBlock) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::Mol2BlockToMol(molBlock,true,true));
 }
 
-Molecule* Molecule::MolBlockToMol(std::string molBlock) {
+Molecule* Molecule::MolBlockToMol(string molBlock) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::MolBlockToMol(molBlock, true, true));
 }
 
-Molecule* Molecule::fromSmarts(std::string smarts) {
+Molecule* Molecule::fromSmarts(string smarts) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::SmartsToMol(smarts));
 }
@@ -102,47 +104,48 @@ unsigned int Molecule::getNumAtoms()
     return rdmol->getNumAtoms();
 }
 
-void Molecule::MolToBinary()
+string Molecule::MolToBinary()
 {
-    std::string res;
+    string res;
     RDKit::MolPickler::pickleMol(*rdmol,res);
+    return res;
 }
 
 
-std::string Molecule::getFP()
+string Molecule::getFP()
 {
     ExplicitBitVect* finger =  RDKit::RDKFingerprintMol(*rdmol);
     return BitVectToText(*finger);
 }
 
 
-std::string Molecule::getMorganFP2()
+string Molecule::getMorganFP2()
 {
     ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,2,2048);
     return BitVectToText(*finger);
 }
 
 
-std::string Molecule::getMorganFP3()
+string Molecule::getMorganFP3()
 {
     ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,3,2048);
     return BitVectToText(*finger);
 }
 
-std::vector<double> Molecule::MMFFoptimizeMolecule()
+vector<double> Molecule::MMFFoptimizeMolecule()
 {
-    std::vector<double> res(2);
-    std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
+    vector<double> res(2);
+    pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol);
     res[0] = static_cast<double>(p.first);
     res[1] = p.second;
     return res;
 }
 
 
-std::vector<double> Molecule::MMFFoptimizeMolecule(int maxIters, std::string mmffVariant)
+vector<double> Molecule::MMFFoptimizeMolecule(int maxIters, string mmffVariant)
 {
-    std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol,maxIters,mmffVariant);
-    std::vector<double> res(2);
+    pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol,maxIters,mmffVariant);
+    vector<double> res(2);
     res[0] = static_cast<double>(p.first);
     res[1] = p.second;
     return res;
@@ -150,7 +153,7 @@ std::vector<double> Molecule::MMFFoptimizeMolecule(int maxIters, std::string mmf
 
 
 
-vector<double> Molecule::MMFFOptimizeMoleculeConfs (unsigned int numThreads,int  maxIters,std::string mmffVariant)
+vector<double> Molecule::MMFFOptimizeMoleculeConfs (unsigned int numThreads,int  maxIters,string mmffVariant)
 {
    vector<pair< int, double>> p;
    RDKit::MMFF::MMFFOptimizeMoleculeConfs(*rdmol,p,numThreads,maxIters,mmffVariant);
@@ -171,10 +174,10 @@ vector<double> Molecule::MMFFOptimizeMoleculeConfs (unsigned int numThreads,int 
 
 
 
-std::vector<double> Molecule::UFFOptimizeMolecule()
+vector<double> Molecule::UFFOptimizeMolecule()
 {
-    std::vector<double> res(2);
-    std::pair<int, double> p = RDKit::UFF::UFFOptimizeMolecule(*rdmol);
+    vector<double> res(2);
+    pair<int, double> p = RDKit::UFF::UFFOptimizeMolecule(*rdmol);
     res[0] = static_cast<double>(p.first);
     res[1] = p.second;
     return res;
@@ -185,35 +188,57 @@ void Molecule::Murcko()
     RDKit::MurckoDecompose(*rdmol);
 }
 
-std::vector<std::string> Molecule::getproplist()
+vector<string> Molecule::getproplist()
 {
     return rdmol->getPropList();
 }
 
-std::string Molecule::smilewrite()
+string Molecule::smilewrite()
 {
-    std::stringstream ss;
+    stringstream ss;
     RDKit::SmilesWriter *writer = new RDKit::SmilesWriter(&ss, " ","Name",false);
     writer->write(*rdmol);
     writer->flush();
     return ss.str();
 }
 
-std::string Molecule::sdwrite()
+string Molecule::sdwrite()
 {
-    std::stringstream ss;
+    stringstream ss;
     RDKit::SDWriter *writer = new RDKit::SDWriter(&ss,false);
     writer->write(*rdmol);
     writer->flush();
     return ss.str();
 }
 
+
+
+
+string Molecule::sdwriteConfs()
+{
+    stringstream ss;
+    RDKit::SDWriter *writer = new RDKit::SDWriter(&ss,false);
+    
+    for(int i=0; i<rdmol->getNumConformers(); ++i){
+         writer->write(*rdmol,i);
+     }
+
+   /* for (int i = 0; i<confsize ;++i)
+    {
+        writer->write(*rdmol,i);
+    }
+*/
+    //writer->flush();
+    return ss.str();
+}
+
+
 unsigned int Molecule::compute2DCoords()
 {
     return RDDepict::compute2DCoords(*rdmol);
 }
 
-std::string Molecule::Drawing2D()
+string Molecule::Drawing2D()
 {
     RDDepict::compute2DCoords(*rdmol);
     WedgeMolBonds(*rdmol,&(rdmol->getConformer()));
@@ -298,7 +323,7 @@ double Molecule::Molecule::ExactMW()
 }
 
 
-std::string Molecule::Formula()
+string Molecule::Formula()
 {
     return RDKit::Descriptors::calcMolFormula(*rdmol);
 }
@@ -499,39 +524,39 @@ double Molecule::TPSA()
     return RDKit::Descriptors::calcTPSA (*rdmol);
 }
 
-std::vector< double > Molecule::SlogP_VSA()
+vector< double > Molecule::SlogP_VSA()
 {
     return RDKit::Descriptors::calcSlogP_VSA (*rdmol);
 }
 
 
-std::vector< double > Molecule::SMR_VSA() {
+vector< double > Molecule::SMR_VSA() {
     return RDKit::Descriptors::calcSMR_VSA (*rdmol);
 }
 
 
-std::vector< double > Molecule::PEO_VSA()
+vector< double > Molecule::PEO_VSA()
 {
     return RDKit::Descriptors::calcPEOE_VSA (*rdmol);
 }
 
 
-std::vector< unsigned int > Molecule::MQNs()
+vector< unsigned int > Molecule::MQNs()
 {
     return RDKit::Descriptors::calcMQNs (*rdmol);
 }
 
-std::string Molecule::GetSubstructMatches(std::string smilesref)
+string Molecule::GetSubstructMatches(string smilesref)
 {
     RDKit::MatchVectType matchV;
-    std::vector< RDKit::MatchVectType > matches;
+    vector< RDKit::MatchVectType > matches;
     //RWMol* rdquery = fromSmarts(smilesref);
 
     rdErrorLog->df_enabled = false;
     rdquery = RDKit::SmartsToMol(smilesref);
 
     int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
-    std::string res = "";
+    string res = "";
     for(int idx=0;idx<matched;idx++){
         res +=".";
     }
@@ -539,7 +564,7 @@ std::string Molecule::GetSubstructMatches(std::string smilesref)
 }
 
 
-bool Molecule::HasSubstructMatchStr(std::string smilesref)
+bool Molecule::HasSubstructMatchStr(string smilesref)
 {
     rdErrorLog->df_enabled = false;
     rdquery = RDKit::SmartsToMol(smilesref);
@@ -553,18 +578,28 @@ bool Molecule::HasSubstructMatchStr(std::string smilesref)
 /// get & set & has properties
 
 
-std::string Molecule::getProp(std::string key) {
-    std::string res;
+string Molecule::getProp(string key) {
+    string res;
     rdmol->getProp(key,res);
     return res;
 }
 
+int Molecule::getNumConformers() {
+    return rdmol->getNumConformers();
+}
 
-int Molecule::setProp(std::string key, std::string value) {
+/*
+int Molecule::getConformer() {
+    return rdmol->getConformer();
+}
+*/
+
+
+int Molecule::setProp(string key, string value) {
     rdmol->setProp(key,value);
     return 0;
 }
 
-bool Molecule::hasProp(std::string key) {
+bool Molecule::hasProp(string key) {
     return rdmol->hasProp(key);
 }
