@@ -68,7 +68,7 @@ using namespace std;
 using RDKit::ROMol;
 using RDKit::RWMol;
 
-Molecule::Molecule(RWMol* mol): rdmol(mol), rdquery(0) {
+Molecule::Molecule(RWMol* mol): rdmol(mol), rdquery(mol) {
 
 
 }
@@ -104,9 +104,9 @@ Molecule* Molecule::fromSmarts(string smarts) {
 
 Molecule* Molecule::molFromPickle(string pickle) {
   rdErrorLog->df_enabled = false;
-  RWMol* mol;
-  RDKit::MolPickler::molFromPickle(pickle,*mol);
-  return new Molecule(mol);
+  RWMol* rdquery =  new RWMol();
+  RDKit::MolPickler::molFromPickle(pickle,*rdquery);
+  return new Molecule(rdquery);
 }
 
 
@@ -563,7 +563,6 @@ string Molecule::GetSubstructMatches(string smilesref)
 {
     RDKit::MatchVectType matchV;
     vector< RDKit::MatchVectType > matches;
-    //RWMol* rdquery = fromSmarts(smilesref);
 
     rdErrorLog->df_enabled = false;
     rdquery = RDKit::SmartsToMol(smilesref);
