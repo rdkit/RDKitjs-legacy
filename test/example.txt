@@ -499,3 +499,15 @@ T.getProp('MP')
 
 
 
+/// adding Murcko decomposition
+R=rdk();
+t = R.Molecule.MurckofromSmiles('OC2C(C)C21C(N)C1C');
+t.smilewrite()
+"C1CC12CC2 0"
+t = R.Molecule.MurckofromSmiles('O=S(CNCNC)(=O)CNC1CC1S(=O)(=O)C1CC1C=CNNCO');
+t.smilewrite()
+"O=S(=O)(C1CC1)C1CC1 0"
+
+
+
+
