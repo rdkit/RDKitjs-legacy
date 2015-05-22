@@ -101,13 +101,28 @@ Molecule* Molecule::fromSmarts(string smarts) {
   return new Molecule(RDKit::SmartsToMol(smarts));
 }
 
-
 Molecule* Molecule::molFromPickle(string pickle) {
   rdErrorLog->df_enabled = false;
   RWMol* rdquery =  new RWMol();
+  //RWMol* rdquery = RWMol(*RDKit::ROMol::ROMol(pickle));
   RDKit::MolPickler::molFromPickle(pickle,*rdquery);
   return new Molecule(rdquery);
 }
+
+
+Molecule* Molecule::MurckofromSmiles(string smi)
+{
+
+//     ROMol *mol=static_cast<RWMol &>(RDKit::SmilesToMol(smi));
+     ROMol *mol=RDKit::SmilesToMol(smi);
+     return new Molecule(dynamic_cast<RWMol *>(RDKit::MurckoDecompose(*mol)));
+
+    //return RDKit::MolToSmiles(*nmol);
+
+
+}
+
+
 
 
 
@@ -123,6 +138,11 @@ string Molecule::MolToBinary()
     RDKit::MolPickler::pickleMol(*rdmol,res);
     return res;
 }
+
+
+
+
+
 
 
 string Molecule::getFP()

@@ -103,6 +103,9 @@ class Molecule
 
       bool hasProp(string key);
 
+      static Molecule* MurckofromSmiles(string smi);
+
+
       // static constructors
       static Molecule* fromSmiles(string smiles);
       static Molecule* Mol2BlockToMol(string molBlock);
@@ -152,7 +155,6 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
 
     // murcko
-    .function("Murcko", &Molecule::Murcko, allow_raw_pointers())
     .function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
 
     
@@ -222,6 +224,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // create class from smiles or smarts
    // .function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
+    .class_function("MurckofromSmiles", &Molecule::MurckofromSmiles, allow_raw_pointers())
+
     .class_function("MolBlockToMol", &Molecule::MolBlockToMol, allow_raw_pointers())
     .class_function("Mol2BlockToMol", &Molecule::Mol2BlockToMol, allow_raw_pointers())
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
