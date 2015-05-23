@@ -103,10 +103,17 @@ class Molecule
 
       bool hasProp(string key);
 
-      static Molecule* MurckofromSmiles(string smi);
+      // atom & bond manipulations
+      unsigned int addAtom (int atomid);
+      unsigned int addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,RDKit::Bond::BondType bondtype);
+      void setBondDir (int Bondid, RDKit::Bond::BondDir bonddir);
+
+
 
 
       // static constructors
+      static Molecule* newmolecule();
+      static Molecule* MurckofromSmiles(string smi); 
       static Molecule* fromSmiles(string smiles);
       static Molecule* Mol2BlockToMol(string molBlock);
       static Molecule* MolBlockToMol(string molBlock);
@@ -124,6 +131,14 @@ Molecule* passThrough(Molecule* ptr) { return ptr; }
 EMSCRIPTEN_BINDINGS(rdmol) {
     class_<Molecule>("Molecule")
     
+
+
+    .function("addAtom",&Molecule::addAtom, allow_raw_pointers())
+    .function("addBond",&Molecule::addBond, allow_raw_pointers())
+    .function("setBondDir",&Molecule::setBondDir, allow_raw_pointers())
+
+
+
     .function("getNumAtoms", &Molecule::getNumAtoms, allow_raw_pointers())
     
     // fingerprints
@@ -224,8 +239,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // create class from smiles or smarts
    // .function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
+    .class_function("newmolecule", &Molecule::newmolecule, allow_raw_pointers())
     .class_function("MurckofromSmiles", &Molecule::MurckofromSmiles, allow_raw_pointers())
-
     .class_function("MolBlockToMol", &Molecule::MolBlockToMol, allow_raw_pointers())
     .class_function("Mol2BlockToMol", &Molecule::Mol2BlockToMol, allow_raw_pointers())
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())

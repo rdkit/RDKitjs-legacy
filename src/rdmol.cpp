@@ -103,10 +103,14 @@ Molecule* Molecule::fromSmarts(string smarts) {
 
 Molecule* Molecule::molFromPickle(string pickle) {
   rdErrorLog->df_enabled = false;
-  RWMol* rdquery =  new RWMol();
+
+  ROMol* mol =  new ROMol;
+  RDKit::MolPickler::molFromPickle(pickle, mol);
+
+  //RWMol* rdquery =  new RWMol();
   //RWMol* rdquery = RWMol(*RDKit::ROMol::ROMol(pickle));
-  RDKit::MolPickler::molFromPickle(pickle,*rdquery);
-  return new Molecule(rdquery);
+  //RDKit::MolPickler::molFromPickle(pickle,*rdquery);
+  return new Molecule(dynamic_cast<RWMol *>(mol));
 }
 
 
@@ -122,8 +126,39 @@ Molecule* Molecule::MurckofromSmiles(string smi)
 
 }
 
+Molecule* Molecule::newmolecule()
+{
+
+     RWMol *mol= new RWMol();
+     return new Molecule(mol);
 
 
+
+}
+
+
+
+
+unsigned int Molecule::addAtom (int atomid)
+{
+   RDKit::Atom* atom= new RDKit::Atom(atomid);  
+   return rdmol->addAtom(atom);
+
+}       
+
+
+unsigned int Molecule::addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,RDKit::Bond::BondType bondtype)
+{
+   return rdmol->addBond(beginAtomIdx,endAtomIdx,bondtype);
+
+}       
+
+
+void Molecule::setBondDir (int Bondid, RDKit::Bond::BondDir bonddir)
+{
+   rdmol->getBondWithIdx(Bondid)->setBondDir(bonddir);
+
+}       
 
 
 
