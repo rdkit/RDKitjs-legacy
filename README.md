@@ -72,9 +72,32 @@ Then you should obtain one new file => src/rdkit.js
 the current module is available for npm/nodje:
 https://www.npmjs.com/package/rdkit
 
+When to try it
+=================
+
 Thers is a first example in the visualizer project there:
 
 http://www.lactame.com/visualizer/head/index.html?viewURL=http://visualizer.epfl.ch/x/urhBCrzbZ0r75WWbEmRp/view.json&dataURL=http://visualizer.epfl.ch/x/urhBCrzbZ0r75WWbEmRp/data.json
 
 You can draw a molecule in the botton module which will generate the 3D model using MMFF force field.
+
+another example of javascript can be found there:
+https://iwatobipen.wordpress.com/2015/05/21/rdkit-in-javascript/
+thanks to iwatobipen!
+source code there:
+https://github.com/iwatobipen/rdkit_javascript
+
+Current stability status
+===============
+This project is not stable but lot of basic RDKit functions are already ported look at the test/exemple.txt file for a example of function availables
+
+to have a complete list of available function look at the EMSCRIPTEN_BINDINGS section in rdmol.h
+
+there are two type of methods:
+* create a molecule (class_function)
+* apply functions on a created molecule (function)
+
+If you want to contributate or need functions not already map please add a comment in the issues of this project.
+
+Guillaume Godin
 
