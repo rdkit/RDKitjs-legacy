@@ -65,11 +65,16 @@ cmake .. \
 -DEMSCRIPTEN_BIN=${HOME}/Toolchain/emsdk_portable/emscripten/master
 ```
 
-* make
+* finally $ make
 
 Then you should obtain one new file => src/rdkit.js 
 
 the current module is available for npm/nodje:
 https://www.npmjs.com/package/rdkit
 
+Thers is a first example in the visualizer project there:
+
+http://www.lactame.com/visualizer/head/index.html?viewURL=http://visualizer.epfl.ch/x/urhBCrzbZ0r75WWbEmRp/view.json&dataURL=http://visualizer.epfl.ch/x/urhBCrzbZ0r75WWbEmRp/data.json
+
+You can draw a molecule in the botton module which will generate the 3D model using MMFF force field.
 
