@@ -69,12 +69,8 @@ cmake .. \
 
 Then you should obtain one new file => src/rdkit.js 
 
-the current module is available for npm/nodje:
-https://www.npmjs.com/package/rdkit
-
-When to try it
+What to try it without compilation ? It's already possible
 =================
-
 Thers is a first example in the visualizer project there:
 
 http://www.lactame.com/visualizer/head/index.html?viewURL=http://visualizer.epfl.ch/x/urhBCrzbZ0r75WWbEmRp/view.json&dataURL=http://visualizer.epfl.ch/x/urhBCrzbZ0r75WWbEmRp/data.json
@@ -86,6 +82,10 @@ https://iwatobipen.wordpress.com/2015/05/21/rdkit-in-javascript/
 thanks to iwatobipen!
 source code there:
 https://github.com/iwatobipen/rdkit_javascript
+
+You can also use nodejs:
+the current module is available for npm / nodejs:
+https://www.npmjs.com/package/rdkit
 
 Current stability status
 ===============
