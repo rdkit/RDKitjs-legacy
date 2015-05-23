@@ -43,6 +43,8 @@
 // cpickle
 #include <GraphMol/MolPickler.h>
 
+// bond
+#include <GraphMol/Bond.h>
 
 // murko
 #include <GraphMol/ChemTransforms/ChemTransforms.h>
@@ -101,6 +103,7 @@ Molecule* Molecule::fromSmarts(string smarts) {
   return new Molecule(RDKit::SmartsToMol(smarts));
 }
 
+/// this is not stable!
 Molecule* Molecule::molFromPickle(string pickle) {
   rdErrorLog->df_enabled = false;
 
@@ -137,8 +140,6 @@ Molecule* Molecule::newmolecule()
 }
 
 
-
-
 unsigned int Molecule::addAtom (int atomid)
 {
    RDKit::Atom* atom= new RDKit::Atom(atomid);  
@@ -146,9 +147,12 @@ unsigned int Molecule::addAtom (int atomid)
 
 }       
 
+//// need to enumerate the BondType & BondDir lists ... fro emscripten ???
+unsigned int Molecule::addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx, RDKit::Bond::BondType bondtype)
+{  
+ //  bondtype = "Bond::"+bondtype;
+ //  RDKit::Bond::BondType bondtypes = bondtype; 
 
-unsigned int Molecule::addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,RDKit::Bond::BondType bondtype)
-{
    return rdmol->addBond(beginAtomIdx,endAtomIdx,bondtype);
 
 }       

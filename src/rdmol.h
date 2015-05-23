@@ -28,7 +28,7 @@ class Molecule
       string getMorganFP3();
       vector<double> MMFFoptimizeMolecule();
       vector<double> MMFFoptimizeMolecule(int maxIters, string mmffVariant);
-      vector<double> MMFFOptimizeMoleculeConfs(unsigned int numThreads,int  maxIters, string mmffVariant);
+      vector<double> MMFFOptimizeMoleculeConfs(unsigned int numThreads,int maxIters, string mmffVariant);
 
       vector<double> UFFOptimizeMolecule();
       void Murcko();
@@ -105,6 +105,7 @@ class Molecule
 
       // atom & bond manipulations
       unsigned int addAtom (int atomid);
+      // this is in development stage caution not working for the moment!!!!
       unsigned int addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,RDKit::Bond::BondType bondtype);
       void setBondDir (int Bondid, RDKit::Bond::BondDir bonddir);
 
