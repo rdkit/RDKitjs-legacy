@@ -510,4 +510,36 @@ t.smilewrite()
 
 
 
+/// create a empty molecule than adding Atoms & Bonds
+R=rdk();
+t = R.Molecule.newmolecule()
+t.addAtom(6)
+0
+t.addAtom(6)
+1
+t.addAtom(6)
+2
+t.addAtom(6)
+3
+t.addAtom(6)
+4
+t.addAtom(6)
+5
+t.addBond(0,1,1)
+1
+t.addBond(1,2,2)
+2
+t.addBond(2,3,1)
+3
+t.addBond(3,4,1)
+4
+t.addBond(4,5,1)
+5
+t.smilewrite()
+"CC=CCCC 0
+"
+
+
+
+
 
