@@ -75,6 +75,16 @@ Molecule::Molecule(RWMol* mol): rdmol(mol), rdquery(mol) {
 
 }
 
+
+//enum class EnumBondType : char { Bond::SIMPLE, Bond::DOUBLE };
+
+/*
+EnumClass emval_BondType(EnumBondType e) {
+    return e;
+}
+*/
+
+
 Molecule::~Molecule() {
   if(rdmol != 0)
     delete rdmol;
@@ -140,6 +150,9 @@ Molecule* Molecule::newmolecule()
 }
 
 
+
+
+
 unsigned int Molecule::addAtom (int atomid)
 {
    RDKit::Atom* atom= new RDKit::Atom(atomid);  
@@ -147,20 +160,29 @@ unsigned int Molecule::addAtom (int atomid)
 
 }       
 
-//// need to enumerate the BondType & BondDir lists ... fro emscripten ???
-unsigned int Molecule::addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx, RDKit::Bond::BondType bondtype)
-{  
- //  bondtype = "Bond::"+bondtype;
- //  RDKit::Bond::BondType bondtypes = bondtype; 
 
-   return rdmol->addBond(beginAtomIdx,endAtomIdx,bondtype);
+
+
+
+//// need to enumerate the BondType & BondDir lists ... fro emscripten ???
+unsigned int Molecule::addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx, int bondtypeid)
+{  
+ 
+   // RDKit::Bond::BondType realbondtype = (RDKit::Bond::BondType)enum.Parse(typeof(RDKit::Bond::BondType), bondtype);
+ RDKit::Bond::BondType castEnum = (RDKit::Bond::BondType)bondtypeid;
+   
+
+   return rdmol->addBond(beginAtomIdx,endAtomIdx,castEnum);
 
 }       
 
 
-void Molecule::setBondDir (int Bondid, RDKit::Bond::BondDir bonddir)
+void Molecule::setBondDir (int Bondid, int bonddirid)
 {
-   rdmol->getBondWithIdx(Bondid)->setBondDir(bonddir);
+
+ RDKit::Bond::BondDir castEnum = (RDKit::Bond::BondDir)bonddirid;
+
+   rdmol->getBondWithIdx(Bondid)->setBondDir(castEnum);
 
 }       
 

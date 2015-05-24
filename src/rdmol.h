@@ -14,6 +14,14 @@ using namespace emscripten;
 using RDKit::ROMol;
 using RDKit::RWMol;
 
+/*
+enum class NewStyle {
+    RDKit::Bond::BondType::SINGLE,
+    RDKit::Bond::BondType::DOUBLE
+};
+*/
+
+
 class Molecule
 {
     public:
@@ -21,6 +29,8 @@ class Molecule
 
       ~Molecule();
 
+
+   
       unsigned int getNumAtoms();
       string MolToBinary();
       string getFP();
@@ -106,8 +116,8 @@ class Molecule
       // atom & bond manipulations
       unsigned int addAtom (int atomid);
       // this is in development stage caution not working for the moment!!!!
-      unsigned int addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,RDKit::Bond::BondType bondtype);
-      void setBondDir (int Bondid, RDKit::Bond::BondDir bonddir);
+      unsigned int addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,int bondtypeid);
+      void setBondDir (int Bondid, int bonddirid);
 
 
 
@@ -238,6 +248,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
     
+
+
+
     // create class from smiles or smarts
    // .function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
     .class_function("newmolecule", &Molecule::newmolecule, allow_raw_pointers())
@@ -254,4 +267,15 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     register_vector<unsigned int>("VectorUint");
     register_vector<int>("Vectorint");
 
+
+
 }
+
+/*
+EMSCRIPTEN_BINDINGS(my_enum_e) {
+    enum_<NewStyle>("NewStyle")
+        .value("SINGLE", NewStyle::RDKit::Bond::BondType::SINGLE)
+        .value("DOUBLE", NewStyle::RDKit::Bond::BondType::DOUBLE)
+        ;
+}
+*/
