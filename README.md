@@ -97,9 +97,9 @@ there are two type of methods:
 * create a molecule (class_function)  
 * apply functions on a created molecule (function)  
 
-Future requests or help
+Future requests / help / missing RDKit functions
 ================
-If you want to contributate or need RDKit functions not already mapped please add a comment in the issues of this project.  
+If you want to contribute or need RDKit functions not already mapped please add a comment in the issues of this project.  
 
 Guillaume Godin  
 
