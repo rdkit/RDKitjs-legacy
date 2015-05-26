@@ -55,6 +55,7 @@ class Molecule
       vector<int> EmbedMultipleConfs();
       vector<int> EmbedMultipleConfs(unsigned int numConfs, unsigned int maxIterations, int seed);
 
+      int findSSSR(std::vector< std::vector< int > > res );
       void addHs();
       void removeHs();
       void sanitizeMol();
@@ -161,6 +162,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
     .function("removeHs", &Molecule::removeHs, allow_raw_pointers())
     .function("sanitizeMol", &Molecule::sanitizeMol, allow_raw_pointers())
+    .function("findSSSR", &Molecule::findSSSR, allow_raw_pointers())
+
     .function("cleanUp", &Molecule::cleanUp, allow_raw_pointers())
     .function("Kekulize", &Molecule::Kekulize, allow_raw_pointers())
 

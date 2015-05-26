@@ -76,6 +76,8 @@ Molecule::Molecule(RWMol* mol): rdmol(mol), rdquery(mol) {
 }
 
 
+
+
 //enum class EnumBondType : char { Bond::SIMPLE, Bond::DOUBLE };
 
 /*
@@ -115,15 +117,11 @@ Molecule* Molecule::fromSmarts(string smarts) {
 
 /// this is not stable!
 Molecule* Molecule::molFromPickle(string pickle) {
-  rdErrorLog->df_enabled = false;
 
-  ROMol* mol =  new ROMol;
-  RDKit::MolPickler::molFromPickle(pickle, mol);
+  RWMol *mol = new RWMol();
+  RDKit::MolPickler::molFromPickle(pickle, *mol);
 
-  //RWMol* rdquery =  new RWMol();
-  //RWMol* rdquery = RWMol(*RDKit::ROMol::ROMol(pickle));
-  //RDKit::MolPickler::molFromPickle(pickle,*rdquery);
-  return new Molecule(dynamic_cast<RWMol *>(mol));
+  return new Molecule(mol);
 }
 
 
@@ -159,7 +157,6 @@ unsigned int Molecule::addAtom (int atomid)
    return rdmol->addAtom(atom);
 
 }       
-
 
 
 
@@ -374,6 +371,11 @@ vector<int> Molecule::EmbedMultipleConfs()
     return RDKit::DGeomHelpers::EmbedMultipleConfs(*rdmol);
 }
 
+
+int Molecule::findSSSR (std::vector< std::vector< int >> res)
+{
+    return RDKit::MolOps::findSSSR(*rdmol,res);
+}
 
 
 
