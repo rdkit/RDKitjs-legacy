@@ -19,6 +19,8 @@
 #include <GraphMol/Fingerprints/Fingerprints.h>
 #include <GraphMol/Fingerprints/MorganFingerprints.h>
 #include <DataStructs/BitOps.h>
+#include <DataStructs/SparseIntVect.h>
+
 #include <GraphMol/MolOps.h>
 #include <GraphMol/Conformer.h>
 
@@ -182,6 +184,171 @@ void Molecule::setBondDir (int Bondid, int bonddirid)
    rdmol->getBondWithIdx(Bondid)->setBondDir(castEnum);
 
 }       
+
+
+double  Molecule::TanimotoSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return TanimotoSimilarity (*v1,*v2);
+}
+
+
+double  Molecule::DiceSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return DiceSimilarity (*v1,*v2);
+}
+
+
+
+double  Molecule::TverskySimilarityfromSmile ( string smilesref, double a, double b)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return TverskySimilarity (*v1,*v2,a,b);
+}
+
+/*
+double  Molecule::RusselSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return RusselSimilarityfromSmile (*v1,*v2);
+}
+
+
+double  Molecule::CosineSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return CosineSimilarity (*v1,*v2);
+}
+
+
+double  Molecule::KulczynskiSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return KulczynskiSimilarity (*v1,*v2);
+}
+
+
+double  Molecule::McConnaugheySimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return McConnaugheySimilarity (*v1,*v2);
+}
+
+
+double  Molecule::SokalSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return SokalSimilarity (*v1,*v2);
+}
+
+
+
+double  Molecule::AsymmetricSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return AsymmetricSimilarity (*v1,*v2);
+}
+
+
+
+double  Molecule::BraunBlanquetSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return BraunBlanquetSimilarity (*v1,*v2);
+}
+*/
+
+
+/*
+double  Molecule::RogotGoldbergSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return RogotGoldbergSimilarity (*v1,*v2);
+}
+*/
+/*
+double  Molecule::OnBitSimilarityfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return OnBitSimilarity (*v1,*v2);
+}
+
+
+int  Molecule::NumBitsInCommonfromSmile ( string smilesref)       
+{
+
+
+   ROMol *mol=RDKit::SmilesToMol(smilesref);
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
+
+   return NumBitsInCommon (*v1,*v2);
+}
+
+*/
+
+
 
 
 

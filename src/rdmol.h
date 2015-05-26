@@ -7,6 +7,9 @@
 #include <GraphMol/RWMol.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/FileParsers/FileParsers.h>
+#include <DataStructs/SparseBitVect.h>
+#include <DataStructs/BitOps.h>
+
 
 
 using namespace std;
@@ -20,6 +23,10 @@ enum class NewStyle {
     RDKit::Bond::BondType::DOUBLE
 };
 */
+
+
+
+
 
 
 class Molecule
@@ -54,6 +61,24 @@ class Molecule
       int EmbedMolecule(unsigned int maxIterations,int seed);
       vector<int> EmbedMultipleConfs();
       vector<int> EmbedMultipleConfs(unsigned int numConfs, unsigned int maxIterations, int seed);
+
+      
+      double TanimotoSimilarityfromSmile (string smilesref);
+      double DiceSimilarityfromSmile (string smilesref);
+      double TverskySimilarityfromSmile( string smilesref,double a, double b);
+     //double RusselSimilarityfromSmile( string smilesref);
+     /* double OnBitSimilarityfromSmile ( string smilesref);
+      double RogotGoldbergSimilarityfromSmile( string smilesref);
+     
+      double BraunBlanquetSimilarityfromSmile( string smilesref);
+      double AsymmetricSimilarityfromSmile( string smilesref);
+      double SokalSimilarityfromSmile( string smilesref);
+      double McConnaugheySimilarityfromSmile( string smilesref);
+      double CosineSimilarityfromSmile( string smilesref);
+      double KulczynskiSimilarityfromSmile( string smilesref);
+      int  NumBitsInCommonfromSmile ( string smilesref) ;      
+     */
+
 
       int findSSSR(std::vector< std::vector< int > > res );
       void addHs();
@@ -206,6 +231,28 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
     .function("HasSubstructMatchStr", &Molecule::HasSubstructMatchStr, allow_raw_pointers())
     
+
+    // similarity
+    .function("TanimotoSimilarityfromSmile", &Molecule::TanimotoSimilarityfromSmile, allow_raw_pointers())
+    .function("DiceSimilarityfromSmile", &Molecule::DiceSimilarityfromSmile, allow_raw_pointers())
+    .function("TverskySimilarityfromSmile", &Molecule::TverskySimilarityfromSmile, allow_raw_pointers())
+   // .function("RusselSimilarityfromSmile", &Molecule::RusselSimilarityfromSmile, allow_raw_pointers())
+
+/*
+    .function("AsymmetricSimilarityfromSmile", &Molecule::AsymmetricSimilarityfromSmile, allow_raw_pointers())
+    .function("OnBitSimilarityfromSmile", &Molecule::OnBitSimilarityfromSmile, allow_raw_pointers())
+    .function("NumBitsInCommonfromSmile", &Molecule::NumBitsInCommonfromSmile, allow_raw_pointers())
+    .function("McConnaugheySimilarityfromSmile", &Molecule::McConnaugheySimilarityfromSmile, allow_raw_pointers())   
+    .function("CosineSimilarityfromSmile", &Molecule::CosineSimilarityfromSmile, allow_raw_pointers())
+    .function("KulczynskiSimilarityfromSmile", &Molecule::KulczynskiSimilarityfromSmile, allow_raw_pointers())
+    .function("BraunBlanquetSimilarityfromSmile", &Molecule::BraunBlanquetSimilarityfromSmile, allow_raw_pointers())
+    .function("SokalSimilarityfromSmile", &Molecule::SokalSimilarityfromSmile, allow_raw_pointers())
+    .function("RogotGoldbergSimilarityfromSmile", &Molecule::RogotGoldbergSimilarityfromSmile, allow_raw_pointers())
+     */ 
+
+
+
+
     // descriptors
     .function("getMW", &Molecule::getMW, allow_raw_pointers())
     .function("ExactMW",&Molecule::ExactMW ,allow_raw_pointers())
