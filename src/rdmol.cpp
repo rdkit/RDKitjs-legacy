@@ -15,9 +15,16 @@
 #include <GraphMol/Descriptors/MolDescriptors.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
+#include <GraphMol/FileParsers/MolSupplier.h>
+#include <GraphMol/FileParsers/MolWriters.h>
+#include <GraphMol/FileParsers/FileParsers.h>
+// fkingreprints
 #include <DataStructs/ExplicitBitVect.h>
+#include <GraphMol/Fingerprints/AtomPairs.h>
 #include <GraphMol/Fingerprints/Fingerprints.h>
 #include <GraphMol/Fingerprints/MorganFingerprints.h>
+#include <GraphMol/Fingerprints/MACCS.h>
+
 #include <DataStructs/BitOps.h>
 #include <DataStructs/SparseIntVect.h>
 
@@ -66,6 +73,11 @@
 #include <GraphMol/RDKitQueries.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <GraphMol/Substruct/SubstructUtils.h>
+
+#include <boost/tokenizer.hpp>
+typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
+
+
 
 
 using namespace std;
@@ -159,6 +171,9 @@ unsigned int Molecule::addAtom (int atomid)
    return rdmol->addAtom(atom);
 
 }       
+
+
+
 
 
 
@@ -365,30 +380,51 @@ string Molecule::MolToBinary()
 }
 
 
-
-
-
-
-
-string Molecule::getFP()
+string Molecule::getRDKFP()
 {
     ExplicitBitVect* finger =  RDKit::RDKFingerprintMol(*rdmol);
     return BitVectToText(*finger);
 }
 
 
-string Molecule::getMorganFP2()
+string Molecule::getMorganFP(unsigned int sizes,unsigned int lengths)
 {
-    ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,2,2048);
+    ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,sizes, lengths);
     return BitVectToText(*finger);
 }
 
 
-string Molecule::getMorganFP3()
+
+string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths)
 {
-    ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,3,2048);
+    ExplicitBitVect* finger =  RDKit::LayeredFingerprintMol(*rdmol,layer, sizes,lengths);
     return BitVectToText(*finger);
 }
+
+
+
+string Molecule::getMACCSFP()
+{
+    ExplicitBitVect* finger =  RDKit::MACCSFingerprints::getFingerprintAsBitVect(*rdmol);
+    return BitVectToText(*finger);
+}
+
+string Molecule::getPatternFP()
+{
+    ExplicitBitVect* finger =  RDKit::PatternFingerprintMol(*rdmol);
+    return BitVectToText(*finger);
+}
+
+
+/*
+SparseIntVect<boost::int32_t> *fp1;fp1 = AtomPairs::getAtomPairFingerprint(*m1);
+fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
+SparseIntVect<boost::int64_t> *fp1; fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m3,4096);
+SparseIntVect<boost::uint32_t> *iv; iv = MorganFingerprints::getHashedFingerprint(*mol,2,2048,0,0,false,true,false,&bitInfo2);
+  */
+
+
+
 
 vector<double> Molecule::MMFFoptimizeMolecule()
 {
@@ -441,10 +477,7 @@ vector<double> Molecule::UFFOptimizeMolecule()
     return res;
 }
 
-void Molecule::Murcko()
-{
-    RDKit::MurckoDecompose(*rdmol);
-}
+
 
 vector<string> Molecule::getproplist()
 {
@@ -470,6 +503,67 @@ string Molecule::sdwrite()
 }
 
 
+string Molecule::sdwritefile(string filename)
+{
+
+string smiString = "CN([CH](Cc3ccc(OS(c2cccc1c2ccnc1)(=O)=O)cc3)C(=O)N5CCN(c4ccccc4)CC5)S(c7cccc6c7ccnc6)(=O)=O \
+                           C[n](n1)ccc1NC(=O)C(/C#N)=C/c2[s]cc(c2)Br O=C2C1CC3CC(C1)CC2C3 \
+                           c8cc9cc3c5c(c(=O)cc4n1nc6c2c(ccc(c12)c(cc3)c45)cc7c6cc(=O)cc7)c9cc8 \
+                           c1cccc(c1)CCCCNC(=O)C(/C#N)=C/c2ccc(O)c(c2)O \
+                           COc(cc1)ccc1C(=C2)C=C(NC2=C)c3ccc(OC)cc3O \
+                           CC(OC1C(CCCC3)C3C(CCCC2)C2C1OC(C)=O)=O \
+                           Cl.C[N+](C)(C)CCO O=C2C1CC3CC(C1)CC2C3 \
+                           CN3CCC25[CH]4CCC(=O)C5(C)Oc1c(O)ccc(c12)C[CH]34 \
+                           c1ccccc1\\C=C/C=C\\Cl.c1ccccc1C=C(Cl)C1SCCC1.Cl\\C=C1/SCCC1 Cl\\C=C/Br \
+                           c1ccccc1\\C=C/C=C\\C=C/Cl c1ccccc1C=C(Cl)C1SCCC1 Cl\\C=C1/SCCC1 Cl\\C=C/Br \
+                           CN2C3CC(OC(=O)C(CO)c1ccccc1)CC2CC3 \
+                           N2C3CC(OC(=O)C(CO)c1ccccc1)CC2CC3 \
+                           C2C3CC(OC(=O)C(CO)c1ccccc1)CC2CC3 \
+                           ClC=C1SCCC1 C/C=C/C(C1CCCCCC1)=O c1ccccc1\\C=C/C=C\\C=C/Cl \
+                           C[n](n1)ccc1NC(=O)C(/C#N)=C/c2[s]cc(c2)Br \
+                           C1CC(C(Cl)(Br)F)CC1 \
+                           C1(C2)CCC2C=C1 \
+                           OC2C1(C)CCCCC1CCC2 \
+                           CC12CCCC3OC1CCCC23 \
+                           CC(OC1C(CCCC3)C3C(CCCC2)C2C1OC(C)=O)=O \
+                           ON=C(CC1=CC=CC=C1)[CH](C#N)C2=CC=CC=C2 \
+                           COc(cc1)ccc1C(=C2/C#N)\\C=C(NC2=C(C#N)C#N)\\c3ccc(OC)cc3O \
+                           COc(cc1)ccc1C(=C2)C=C(NC2=C)c3ccc(OC)cc3O";
+
+
+
+    string ofile = filename;
+    RDKit::SDWriter *sdfWriter = new RDKit::SDWriter(ofile);
+    boost::char_separator<char> spaceSep(" ");
+    tokenizer tokens(smiString,spaceSep);
+    int j=0;
+    for(tokenizer::iterator token=tokens.begin();token!=tokens.end(); ++token){
+        ++j;
+        std::string smi=*token;
+        RWMol *m = RDKit::SmilesToMol(smi, 0, 1); 
+        sdfWriter->write(*m);
+        delete m;
+    }
+
+    sdfWriter->flush();
+    delete sdfWriter;
+
+
+ 
+  RDKit::SDMolSupplier reader(ofile);
+  int i = 0;
+  while (!reader.atEnd()) {
+    ROMol *mol = reader.next();
+    std::string mname;
+    delete mol;
+    i++;
+  }
+
+
+    return filename+":"+to_string(i);
+
+}
+
 
 
 string Molecule::sdwriteConfs()
@@ -481,12 +575,6 @@ string Molecule::sdwriteConfs()
          writer->write(*rdmol,i);
      }
 
-   /* for (int i = 0; i<confsize ;++i)
-    {
-        writer->write(*rdmol,i);
-    }
-*/
-    //writer->flush();
     return ss.str();
 }
 

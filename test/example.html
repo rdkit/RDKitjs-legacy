@@ -1,9 +1,42 @@
-<!doctype html>
-<html>
-<<<<<<< HEAD
-  <script src="../rdmol.js"></script>
+<!DOCTYPE HTML>
+<head>
+<script type='text/javascript' src='rdkit.js'></script>
+<script>
+function molwt( smi ){
+    RDKit = rdk();
+    var mol = RDKit.Molecule.fromSmiles(smi);
+    var mw = mol.getMW();
+    document.getElementById( 'MW' ).innerHTML = 'The molweight is '+ '  '+ mw;
+   // mol.delete();
+
+}
+function moldraw( smi ){
+    RDKit = rdk();
+    var mol = RDKit.Molecule.fromSmiles(smi);
+    var mol2d = mol.Drawing2D();
+    var remol = mol2d.replace( /svg:/g, '' );
+    document.getElementById( 'moldraw' ).innerHTML = remol;
+   // mol.delete();
+
+}
+</script>
+ 
+</head>
+<body>
+<h>rdkitjs test</h><br><br>
+ 
+<form name='rdkitjs'>
+    Input smile string<br> 
+        <textarea name='smi'></textarea>
+    <br><br>
+        <input name='calc' value='compute MW' type='button' onClick='molwt( document.rdkitjs.smi.value )'><br><br>
+    show my 2D molecule<br>
+        <input name='getimage' value='mouseover' type='button' onMouseover='moldraw(document.rdkitjs.smi.value )'>
+</form>
+ 
+<div id='MW'></div><br>
+<div id='moldraw'></div><br>
+ 
+ 
+</body>
 </html>
-=======
-  <script src="rdkit.js"></script>
-</html>
->>>>>>> b0a76079df6befbddb5bb3ac2f03914d68946c26

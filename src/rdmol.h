@@ -17,17 +17,6 @@ using namespace emscripten;
 using RDKit::ROMol;
 using RDKit::RWMol;
 
-/*
-enum class NewStyle {
-    RDKit::Bond::BondType::SINGLE,
-    RDKit::Bond::BondType::DOUBLE
-};
-*/
-
-
-
-
-
 
 class Molecule
 {
@@ -35,34 +24,55 @@ class Molecule
       Molecule(RWMol *mol);
 
       ~Molecule();
-
-
    
-      unsigned int getNumAtoms();
-      string MolToBinary();
-      string getFP();
-      string getMorganFP2();
-      string getMorganFP3();
+      
+      // new fingerprints    
+      string getRDKFP();
+      string getMorganFP(unsigned int sizes,unsigned int lengths);
+      string getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths);
+      string getMACCSFP();
+      string getPatternFP();
+
+
+
+      // 3D Force Field minimization 
       vector<double> MMFFoptimizeMolecule();
       vector<double> MMFFoptimizeMolecule(int maxIters, string mmffVariant);
       vector<double> MMFFOptimizeMoleculeConfs(unsigned int numThreads,int maxIters, string mmffVariant);
-
       vector<double> UFFOptimizeMolecule();
-      void Murcko();
-      vector<string> getproplist();
-      string smilewrite();
-      string sdwrite();
-      string sdwriteConfs();
-
-
-      unsigned int compute2DCoords();
-      string Drawing2D();
+      
+      // generate 3D non optimized molecule
       int EmbedMolecule();
       int EmbedMolecule(unsigned int maxIterations,int seed);
       vector<int> EmbedMultipleConfs();
       vector<int> EmbedMultipleConfs(unsigned int numConfs, unsigned int maxIterations, int seed);
 
-      
+
+
+      // Pickle molecule representation
+      string MolToBinary();
+
+
+  
+
+      // string output in console
+      string smilewrite();
+      string sdwrite();
+      string sdwritefile(string filename);
+      string sdwriteConfs();
+
+
+      // input file
+
+
+      // output file
+
+
+      // Drawing molecule
+      unsigned int compute2DCoords();
+      string Drawing2D();
+   
+      // similarity
       double TanimotoSimilarityfromSmile (string smilesref);
       double DiceSimilarityfromSmile (string smilesref);
       double TverskySimilarityfromSmile( string smilesref,double a, double b);
@@ -80,12 +90,20 @@ class Molecule
      */
 
 
+
+
       int findSSSR(std::vector< std::vector< int > > res );
+      
+      // molecule manipulation & cleaning, ...
       void addHs();
       void removeHs();
       void sanitizeMol();
       void cleanUp();
       void Kekulize();
+      
+
+
+      // descriptors 
       int getMW();
       double ExactMW();
       string Formula();
@@ -135,10 +153,13 @@ class Molecule
       /// get & set & has properties
       string getProp(string key);
       int setProp(string key, string value);
+      unsigned int getNumAtoms();
       int getNumConformers();
-
       bool hasProp(string key);
+      vector<string> getproplist();
+      
 
+        
       // atom & bond manipulations
       unsigned int addAtom (int atomid);
       // this is in development stage caution not working for the moment!!!!
@@ -162,6 +183,10 @@ class Molecule
         RWMol* rdquery;
 };
 
+
+
+
+
 Molecule* passThrough(Molecule* ptr) { return ptr; }
 
 // Binding code
@@ -179,10 +204,18 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getNumAtoms", &Molecule::getNumAtoms, allow_raw_pointers())
     
     // fingerprints
-    .function("getFP", &Molecule::getFP, allow_raw_pointers())
-    .function("getMorganFP2", &Molecule::getMorganFP2, allow_raw_pointers())
-    .function("getMorganFP3", &Molecule::getMorganFP3, allow_raw_pointers())
+    .function("getRDKFP", &Molecule::getRDKFP, allow_raw_pointers())
+    .function("getMorganFP", &Molecule::getMorganFP, allow_raw_pointers())
+    .function("getLayeredFP", &Molecule::getLayeredFP, allow_raw_pointers())
+    .function("getMACCSFP", &Molecule::getMACCSFP, allow_raw_pointers())
+    .function("getPatternFP", &Molecule::getPatternFP, allow_raw_pointers())
     
+
+
+
+
+
+
     // molops basic functions
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
     .function("removeHs", &Molecule::removeHs, allow_raw_pointers())
@@ -215,6 +248,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
+
+    .function("sdwritefile", &Molecule::sdwritefile, allow_raw_pointers())
     .function("sdwriteConfs", &Molecule::sdwriteConfs, allow_raw_pointers())
 
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
@@ -317,15 +352,5 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     register_vector<unsigned int>("VectorUint");
     register_vector<int>("Vectorint");
 
-
-
 }
 
-/*
-EMSCRIPTEN_BINDINGS(my_enum_e) {
-    enum_<NewStyle>("NewStyle")
-        .value("SINGLE", NewStyle::RDKit::Bond::BondType::SINGLE)
-        .value("DOUBLE", NewStyle::RDKit::Bond::BondType::DOUBLE)
-        ;
-}
-*/
