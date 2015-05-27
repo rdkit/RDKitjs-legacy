@@ -1,3 +1,10 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <iostream>
+#include <fstream>
+
+
 #include "rdmol.h"
 
 //standard libraries
@@ -75,6 +82,11 @@
 #include <GraphMol/Substruct/SubstructUtils.h>
 
 #include <boost/tokenizer.hpp>
+
+
+#include <emscripten/emscripten.h>
+
+
 typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 
 
@@ -503,8 +515,24 @@ string Molecule::sdwrite()
 }
 
 
+string Molecule::getPath()
+
+{
+
+    char cCurrentPath[FILENAME_MAX];
+    int size =sizeof(cCurrentPath);
+
+    getcwd(cCurrentPath, size);
+    string res = string(cCurrentPath);
+
+    return res;
+
+}
+
+
 string Molecule::sdwritefile(string filename)
 {
+
 
 string smiString = "CN([CH](Cc3ccc(OS(c2cccc1c2ccnc1)(=O)=O)cc3)C(=O)N5CCN(c4ccccc4)CC5)S(c7cccc6c7ccnc6)(=O)=O \
                            C[n](n1)ccc1NC(=O)C(/C#N)=C/c2[s]cc(c2)Br O=C2C1CC3CC(C1)CC2C3 \
@@ -548,8 +576,16 @@ string smiString = "CN([CH](Cc3ccc(OS(c2cccc1c2ccnc1)(=O)=O)cc3)C(=O)N5CCN(c4ccc
     sdfWriter->flush();
     delete sdfWriter;
 
+    return to_string(j);
+}
 
- 
+
+
+string Molecule::sdreadfile(string filename)
+
+ {
+    string ofile = filename;
+
   RDKit::SDMolSupplier reader(ofile);
   int i = 0;
   while (!reader.atEnd()) {
@@ -559,10 +595,155 @@ string smiString = "CN([CH](Cc3ccc(OS(c2cccc1c2ccnc1)(=O)=O)cc3)C(=O)N5CCN(c4ccc
     i++;
   }
 
+    return to_string(i);
+}
 
-    return filename+":"+to_string(i);
+
+
+void Molecule::save(string path, string data)
+{
+ std::string asm_code;
+    asm_code += "localStorage.setItem( '";
+    asm_code += path;
+    asm_code += "', '";
+    asm_code += data;
+    asm_code += "' );";
+    emscripten_run_script( asm_code.data() );
 
 }
+
+
+string Molecule::load(string path) 
+{
+    std::string asm_code;
+    asm_code += "localStorage.getItem( '";
+    asm_code += path;
+    asm_code += "' );";
+    std::string buffer = emscripten_run_script_string( asm_code.data() );
+    return buffer;
+
+}
+
+
+
+int Molecule::readfile(string filename)
+
+ {
+  string line;
+
+  ifstream myfile;
+  myfile.open(filename);
+  int j=0;
+  if (myfile.is_open())
+   {
+     while ( getline (myfile,line)  && j<100)
+     { 
+       ++j;
+       cout << line << '\n' ;
+    }
+    myfile.close();
+  }
+
+  else 
+    std::cout << "Unable to open file" << std::endl; 
+
+  return 1;
+
+
+}
+
+
+int Molecule::nodereadwrite() {
+    
+  FILE *file;
+  int res;
+  char buffer[512];
+
+  // write something locally with node
+  EM_ASM(
+    var fs = require('fs');
+    fs.writeFileSync('foobar.txt', 'yeehaw');
+  );
+
+  // mount the current folder as a NODEFS instance
+  // inside of emscripten
+  EM_ASM(
+    FS.mkdir('/working');
+    FS.mount(NODEFS, { root: '.' }, '/working');
+  );
+
+  // read and validate the contents of the file
+  file = fopen("/working/foobar.txt", "r");
+  res = fread(buffer, sizeof(char), 6, file);
+  fclose(file);
+
+  assert(!strcmp(buffer, "yeehaw"));
+
+  // write out something new
+  file = fopen("/working/foobar.txt", "w");
+  res = fwrite("cheez", sizeof(char), 5, file);
+  fclose(file);
+
+  // validate the changes were persisted to the underlying fs
+  EM_ASM(
+    var fs = require('fs');
+    var contents = fs.readFileSync('foobar.txt', { encoding: 'utf8' });
+
+  );
+
+  puts("success");
+
+  return 0;
+}
+
+
+
+
+
+
+
+
+
+int Molecule::writefile(string filename, string data)
+
+ {
+    std::string asm_code;
+    asm_code += "FS.writeFile('";
+    asm_code += filename;
+    asm_code += "', '";
+    asm_code += data;
+    asm_code += "' );";
+    emscripten_run_script_string( asm_code.data() );
+
+
+    std::ifstream file(filename);
+
+    while(!file.eof() && !file.fail())
+    {
+        std::string line;
+        getline(file, line);
+        std::string name;
+    
+        std::cout << "read " << line << std::endl;
+
+    }
+
+
+/*
+  ofstream myfile;
+  myfile.open (filename);
+  myfile << data;
+  myfile.close();
+  */
+
+   return 1;
+}
+
+
+
+
+
+
 
 
 

@@ -54,13 +54,22 @@ class Molecule
 
 
   
-
+      string getPath();
       // string output in console
       string smilewrite();
       string sdwrite();
       string sdwritefile(string filename);
+      int writefile(string filename, string data);
+      int readfile(string filename);
+
+      string sdreadfile(string filename);
       string sdwriteConfs();
 
+
+      // indexedDB storage
+      void save(string path, string data);
+      string load(string path);
+      int nodereadwrite();
 
       // input file
 
@@ -241,18 +250,27 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
 
-    // murcko
+    // 
     .function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
 
     
+    .function("getPath", &Molecule::getPath, allow_raw_pointers())
+
     
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
+    .function("save", &Molecule::save, allow_raw_pointers())
+    .function("load", &Molecule::load, allow_raw_pointers())
+    .function("nodereadwrite", &Molecule::nodereadwrite, allow_raw_pointers())
 
     .function("sdwritefile", &Molecule::sdwritefile, allow_raw_pointers())
+    .function("sdreadfile", &Molecule::sdreadfile, allow_raw_pointers())
+
     .function("sdwriteConfs", &Molecule::sdwriteConfs, allow_raw_pointers())
 
-    .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
+    .function("sdwriteConfs", &Molecule::sdwriteConfs, allow_raw_pointers())
+    .function("writefile", &Molecule::writefile, allow_raw_pointers())
+    .function("readfile", &Molecule::readfile, allow_raw_pointers())
     
     // properties
     .function("getproplist", &Molecule::getproplist, allow_raw_pointers())
