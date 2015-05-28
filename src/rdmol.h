@@ -58,18 +58,19 @@ class Molecule
       // string output in console
       string smilewrite();
       string sdwrite();
-      string sdwritefile(string filename);
-      int writefile(string filename, string data);
-      int readfile(string filename);
+     // string sdwritefile(string filename);
+     // int writefile(string filename, string data);
+     // int readfile(string filename);
 
-      string sdreadfile(string filename);
+     // string sdreadfile(string filename);
       string sdwriteConfs();
 
 
       // indexedDB storage
-      void save(string path, string data);
-      string load(string path);
-      int nodereadwrite();
+     // void save(string path, string data);
+     // string load(string path);
+     // int nodereadwrite();
+     // int nodereadwritewithdata(string path, string data);
 
       // input file
 
@@ -168,7 +169,7 @@ class Molecule
       vector<string> getproplist();
       
 
-        
+      
       // atom & bond manipulations
       unsigned int addAtom (int atomid);
       // this is in development stage caution not working for the moment!!!!
@@ -189,7 +190,6 @@ class Molecule
 
     private:
         RWMol* rdmol;
-        RWMol* rdquery;
 };
 
 
@@ -259,18 +259,21 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
-    .function("save", &Molecule::save, allow_raw_pointers())
-    .function("load", &Molecule::load, allow_raw_pointers())
-    .function("nodereadwrite", &Molecule::nodereadwrite, allow_raw_pointers())
+    .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
 
-    .function("sdwritefile", &Molecule::sdwritefile, allow_raw_pointers())
-    .function("sdreadfile", &Molecule::sdreadfile, allow_raw_pointers())
+    //.function("save", &Molecule::save, allow_raw_pointers())
+    //.function("load", &Molecule::load, allow_raw_pointers())
+    //.function("nodereadwrite", &Molecule::nodereadwrite, allow_raw_pointers())
+    //.function("nodereadwritewithdata", &Molecule::nodereadwritewithdata, allow_raw_pointers())
+
+    //.function("sdwritefile", &Molecule::sdwritefile, allow_raw_pointers())
+    //.function("sdreadfile", &Molecule::sdreadfile, allow_raw_pointers())
 
     .function("sdwriteConfs", &Molecule::sdwriteConfs, allow_raw_pointers())
 
     .function("sdwriteConfs", &Molecule::sdwriteConfs, allow_raw_pointers())
-    .function("writefile", &Molecule::writefile, allow_raw_pointers())
-    .function("readfile", &Molecule::readfile, allow_raw_pointers())
+    //.function("writefile", &Molecule::writefile, allow_raw_pointers())
+    //.function("readfile", &Molecule::readfile, allow_raw_pointers())
     
     // properties
     .function("getproplist", &Molecule::getproplist, allow_raw_pointers())

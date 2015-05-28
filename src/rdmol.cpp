@@ -96,29 +96,12 @@ using namespace std;
 using RDKit::ROMol;
 using RDKit::RWMol;
 
-Molecule::Molecule(RWMol* mol): rdmol(mol), rdquery(mol) {
-
-
-}
-
-
-
-
-//enum class EnumBondType : char { Bond::SIMPLE, Bond::DOUBLE };
-
-/*
-EnumClass emval_BondType(EnumBondType e) {
-    return e;
-}
-*/
+Molecule::Molecule(RWMol* mol): rdmol(mol) {}
 
 
 Molecule::~Molecule() {
   if(rdmol != 0)
     delete rdmol;
-
-  if(rdquery != 0)
-    delete rdquery;
 }
 
 Molecule* Molecule::fromSmiles(string smiles) {
@@ -128,54 +111,39 @@ Molecule* Molecule::fromSmiles(string smiles) {
 
 Molecule* Molecule::Mol2BlockToMol(string molBlock) {
   rdErrorLog->df_enabled = false;
-  return new Molecule(RDKit::Mol2BlockToMol(molBlock,true,true));
+  return new Molecule(RDKit::Mol2BlockToMol(molBlock,true,false));
 }
 
 Molecule* Molecule::MolBlockToMol(string molBlock) {
   rdErrorLog->df_enabled = false;
-  return new Molecule(RDKit::MolBlockToMol(molBlock, true, true));
+  return new Molecule(RDKit::MolBlockToMol(molBlock, true, false));
 }
+
+
+
 
 Molecule* Molecule::fromSmarts(string smarts) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::SmartsToMol(smarts));
 }
-
-/// this is not stable!
-Molecule* Molecule::molFromPickle(string pickle) {
-
+  Molecule* Molecule::molFromPickle(string pickle) {
   RWMol *mol = new RWMol();
   RDKit::MolPickler::molFromPickle(pickle, *mol);
-
   return new Molecule(mol);
 }
 
 
 Molecule* Molecule::MurckofromSmiles(string smi)
 {
-
-//     ROMol *mol=static_cast<RWMol &>(RDKit::SmilesToMol(smi));
      ROMol *mol=RDKit::SmilesToMol(smi);
      return new Molecule(dynamic_cast<RWMol *>(RDKit::MurckoDecompose(*mol)));
-
-    //return RDKit::MolToSmiles(*nmol);
-
-
 }
 
 Molecule* Molecule::newmolecule()
 {
-
      RWMol *mol= new RWMol();
      return new Molecule(mol);
-
-
-
 }
-
-
-
-
 
 unsigned int Molecule::addAtom (int atomid)
 {
@@ -183,11 +151,6 @@ unsigned int Molecule::addAtom (int atomid)
    return rdmol->addAtom(atom);
 
 }       
-
-
-
-
-
 
 
 //// need to enumerate the BondType & BondDir lists ... fro emscripten ???
@@ -529,7 +492,7 @@ string Molecule::getPath()
 
 }
 
-
+/*
 string Molecule::sdwritefile(string filename)
 {
 
@@ -653,8 +616,26 @@ int Molecule::readfile(string filename)
 }
 
 
-int Molecule::nodereadwrite() {
+
+
+int Molecule::nodereadwritewithdata(string path, string data) {
     
+
+    string asm_code;
+    asm_code += "var fs = require('fs');";
+    asm_code += "fs.writeFileSync('";
+    asm_code += path;
+    asm_code += "','";
+    asm_code += data;
+    asm_code += "');";
+    emscripten_run_script( asm_code.data() );
+    return 1;
+}
+*/
+
+/*
+int Molecule::nodereadwrite() {
+
   FILE *file;
   int res;
   char buffer[512];
@@ -676,8 +657,6 @@ int Molecule::nodereadwrite() {
   file = fopen("/working/foobar.txt", "r");
   res = fread(buffer, sizeof(char), 6, file);
   fclose(file);
-
-  assert(!strcmp(buffer, "yeehaw"));
 
   // write out something new
   file = fopen("/working/foobar.txt", "w");
@@ -729,19 +708,19 @@ int Molecule::writefile(string filename, string data)
     }
 
 
-/*
+
   ofstream myfile;
   myfile.open (filename);
   myfile << data;
   myfile.close();
-  */
+  
 
    return 1;
 }
 
 
 
-
+*/
 
 
 
@@ -1084,7 +1063,7 @@ string Molecule::GetSubstructMatches(string smilesref)
     vector< RDKit::MatchVectType > matches;
 
     rdErrorLog->df_enabled = false;
-    rdquery = RDKit::SmartsToMol(smilesref);
+    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
 
     int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
     string res = "";
@@ -1098,7 +1077,7 @@ string Molecule::GetSubstructMatches(string smilesref)
 bool Molecule::HasSubstructMatchStr(string smilesref)
 {
     rdErrorLog->df_enabled = false;
-    rdquery = RDKit::SmartsToMol(smilesref);
+    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
     
     RDKit::MatchVectType res;
     return RDKit::SubstructMatch(*rdmol,*rdquery,res);
