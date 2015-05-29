@@ -1,36 +1,36 @@
-This is the ToDo list
+Improve the API:
+1. Need to find a way to have hierarchical Classes for example Molecule.Descriptors.
 
+2. Need to have a Molecule.AllDescriptors to generate all of them (... list key:value).
 
-Need to find a way to have hierarchical Classes for example Molecule.Descriptors.
+3. Can we have two molecules like for  Tanimotosimilarity(mol1,mol2) ?
 
-Need to have a Molecule.AllDescriptors to generate all of them (... list key:value).
-
-General question: how to /can we handle two molecules in JS (for Tanimotosimilarity(mol1,mol2) = 0.78) ?
-
-
+Some examples to implement in the development stage:
 Look at the python getstart rdkit page for a list of missing functionnalities.
 (http://www.rdkit.org/docs/GettingStartedInPython.html)
 
 
-Status:
+Status : 28/05/2015 THEGODONE
 
-DONE Reading and Writing Molecules: DONE, ok, we don't need to implement files readers for the moment, one request to implement MolBlockReader… but not working as expected
-Reading sets of molecules: need to do that (not a priority)
+FIX: create a empty molecule (but this is a workaround!)
+
+DONE Reading and Writing Molecules: DONE, ok, we don't need to implement files readers for the moment, need to be done in Nodejs
+Reading sets of molecules: need to do that (not a priority) need to be done in Nodejs
 
 DONE Writing molecules: DONE, we don't need to implement files writers for the moment
 Writing sets of molecules: need to do that (not a priority)
 
-Looping over Atoms and Bonds: need to do that (not a priority)
+In progress: Looping over Atoms and Bonds: need to do that (not a priority) addAtom, addBond
 
 Ring Information: need to do that (not a priority)
 
-DONE Modifying molecules: DONE
+DONE Modifying molecules: done (MolOps)
 
 IN Progress (thegodone) Working with 2D molecules: GenerateDepictionMatching2DStructure, GenerateDepictionMatching3DStructure
 
-IN Progress (thegodone) Working with 3D Molecules: EmbedMultipleConfs, AlignMolConformers,GetConformerRMS
+IN Progress (thegodone) Working with 3D Molecules: AlignMolConformers,GetConformerRMS
 
-IN Progress (thegodone) [issue return undefined] Preserving Molecules: can we do MolToBinary ,  cPickle.dumps or should we use json instead?
+Done (thegodone) [issue return undefined] Preserving Molecules: MolToBinary
 
 IN Progress (thegodone) Drawing Molecules: Drawing2D (done), we need to svg for chrome not the files... ? MolsToGridImage can be interesting need to check for interaction with visualizer ?
 
@@ -40,37 +40,35 @@ Stereochemistry in substructure matches: need to test
 
 Chemical Transformations: DeleteSubstructs, ReplaceSubstructs, ReplaceSidechains, ReplaceCore, GetMolFrags
 
-In progress (thegodone) [issue return the same molecule ???] Murcko Decomposition: GetScaffoldForMol, MakeScaffoldGeneric
+Done (thegodone):  Murcko Decomposition
 
 Maximum Common Substructure: FindMCS, smartsString,
 
-Fingerprinting and Molecular Similarity: FingerprintMol done, FingerprintSimilarity, DiceSimilarity
+Almost done: Fingerprinting and Molecular Similarity: FingerprintMol done, FingerprintSimilarity done,MACCS done
 
-MACCS Keys: GenMACCSKeys
+to do : Atom Pairs and Topological Torsions: GetAtomPairFingerprint 
 
-Atom Pairs and Topological Torsions: GetAtomPairFingerprint,
+Done (thegodone) Morgan Fingerprints (Circular Fingerprints): GetMorganFingerprint done, GetMorganFingerprintAsBitVect done
 
-In progress (thegodone) [] Morgan Fingerprints (Circular Fingerprints): GetMorganFingerprint done, GetMorganFingerprintAsBitVect done, GetNonzeroElements
+to do: Picking Diverse Molecules Using Fingerprints: to do not a priority
 
-Picking Diverse Molecules Using Fingerprints: to do not a priority
-
-Generating Similarity Maps Using Fingerprints: to do not a priority
+to do: Generating Similarity Maps Using Fingerprints: to do not a priority
 
 DONE Descriptor Calculation: DONE, look if we can add others descriptors from obabel, cdk (not a priority) ???
 
-Visualization of Descriptors: interesting!
+to do: Visualization of Descriptors: interesting!
 
-Chemical Reactions: very interesting!
+to do: Chemical Reactions: very interesting!
 
-BRICS Implementation: very interesting!
+to do: BRICS Implementation: very interesting!
 
-Chemical Features and Pharmacophores: very interesting!
+to do: Chemical Features and Pharmacophores: very interesting!
 
-2D Pharmacophore Fingerprints: idem
+to do: 2D Pharmacophore Fingerprints: idem
 
-Molecular Fragments
+to do: Molecular Fragments
 
-Database functionnalities: indexedDB interaction... (http://blog.gmane.org/gmane.science.chemistry.rdkit.user/month=20140301 like for ORCALE ?)
+testing : Database functionnalities: indexedDB interaction... (http://blog.gmane.org/gmane.science.chemistry.rdkit.user/month=20140301 like for ORCALE ?)
 
 Inchi: to do not a priority
 

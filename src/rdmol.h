@@ -29,6 +29,7 @@ class Molecule
       // new fingerprints    
       string getRDKFP();
       string getMorganFP(unsigned int sizes,unsigned int lengths);
+      vector<int> getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths);
       string getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths);
       string getMACCSFP();
       string getPatternFP();
@@ -215,15 +216,12 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // fingerprints
     .function("getRDKFP", &Molecule::getRDKFP, allow_raw_pointers())
     .function("getMorganFP", &Molecule::getMorganFP, allow_raw_pointers())
+    .function("getMorganFP_GetOnBits", &Molecule::getMorganFP_GetOnBits, allow_raw_pointers())
+
     .function("getLayeredFP", &Molecule::getLayeredFP, allow_raw_pointers())
     .function("getMACCSFP", &Molecule::getMACCSFP, allow_raw_pointers())
     .function("getPatternFP", &Molecule::getPatternFP, allow_raw_pointers())
     
-
-
-
-
-
 
     // molops basic functions
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
@@ -261,6 +259,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
 
+
+    // testing functions ... not working correctly
     //.function("save", &Molecule::save, allow_raw_pointers())
     //.function("load", &Molecule::load, allow_raw_pointers())
     //.function("nodereadwrite", &Molecule::nodereadwrite, allow_raw_pointers())

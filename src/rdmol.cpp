@@ -369,6 +369,20 @@ string Molecule::getMorganFP(unsigned int sizes,unsigned int lengths)
 }
 
 
+vector<int> Molecule::getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths)
+{
+    ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,sizes, lengths);
+    IntVect onBits;
+    finger->getOnBits(onBits);
+    return onBits;
+}
+
+
+
+
+
+
+
 
 string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths)
 {
