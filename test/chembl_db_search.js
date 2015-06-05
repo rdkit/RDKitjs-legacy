@@ -13,7 +13,7 @@ var databaseMongo;
 //###################################################################
  
 var mongourl = 'mongodb://localhost:27017/rdkit';
-var collectionName = "molecules";
+var collectionName = "molecules1";
 var timestamp = (new Date()).getTime();
 var limitRefresh = 200000000;
 var limitCompared = 10;
@@ -28,7 +28,11 @@ MongoClient.connect(mongourl,
     databaseMongo=db;
     moleculesCollection = databaseMongo.collection(collectionName);
     mfp_countsCollection = databaseMongo.collection("mfp_counts");
+    
+    //countDo();
   
+    
+    console.log('Query DB');
     benchmarkFPfrequency(limitCompared, function(err,res){
         if(err){console.log(err,res);}else{
           for (var i = res.length - 1; i >= 0; i--) {
@@ -37,12 +41,18 @@ MongoClient.connect(mongourl,
         }
         endProcess();
     });
-    // countDo();
+    
   }
 );
  
  
-function countDo(){//3min26s
+function countDo(){//3min26s for 1.3M of molecules on Redhat .... 8min33 in Mac
+  //console.log('index creation');
+  //moleculesCollection.createIndex({'mfp.bits':1});
+  //moleculesCollection.createIndex({'mfp.count':1});
+
+  //console.log('CountDO');
+  
   mfp_countsCollection.remove();//remove all
   var counts = {};
  
@@ -176,8 +186,8 @@ function FPfrequency(smile, threshold, callback){
  
 function endProcess(){
  
-  var date1 = new Date(timestamp);
   var date2 = new Date();
+  var date1 = new Date(timestamp);
   var timeDiff = Math.abs(date2.getTime() - date1.getTime());
   var time = gf.toTimeString(timeDiff);
   gf.resumeTime("### end in "+time);

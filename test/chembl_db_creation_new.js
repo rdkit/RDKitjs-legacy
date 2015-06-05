@@ -1,10 +1,10 @@
 var mongourl = 'mongodb://localhost:27017/rdkit';
-// var collectionName = "molecules";
-var collectionName = "molecules-"+new Date().getTime();
-var start = 1300001;//start = 1
-var end = 1500000;//include it
-var stepToShow = 50000;
-var fileToRead = 'chembl_18.sdf';//File to process
+var collectionName = "molecules1";
+//var collectionName = "molecules-"+new Date().getTime();
+var start = 1200001;//start = 1
+var end = 1400000;//include it
+var stepToShow = 10000;
+var fileToRead = '/Users/guilllaumegodin/Downloads/chembl_18.sdf';//File to process
 var errorFile = 'errors.txt';
 var encoding = 'ascii';
 var dolineInputStream = true;
@@ -16,7 +16,7 @@ var fs = require('fs');
 var rdk = require('rdkit');
 var util = require('util');
 var os = require('os');
-var memwatch = require('memwatch');
+var memwatch = require('memwatch-next');
  
 var hd;
 memwatch.on('leak', function(info) {
@@ -101,6 +101,8 @@ MongoClient.connect(mongourl,
         if(err){fs.appendFileSync(errorFile, "\r\n"+JSON.stringify(err)+"\r\n");}
         databaseMongo=db;
         moleculesCollection = databaseMongo.collection(collectionName);
+        //moleculesCollection.remove();//remove all
+
         processFile();
     }
 );
