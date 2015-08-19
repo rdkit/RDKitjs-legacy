@@ -938,10 +938,10 @@ vector<double> Molecule::logp_mr()
     vector< double> v(2); 
     double logp;
     double mr;
-    RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr)
+    RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
 
     v[0]=logp;
-    v[1]=mr
+    v[1]=mr;
     return v;
 }
 
