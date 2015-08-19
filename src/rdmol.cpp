@@ -933,9 +933,9 @@ double Molecule::Kappa3()
     return    RDKit::Descriptors::calcKappa3 (*rdmol);
 }
 
-vector< double > Molecule::logp_mr()
+vector<double> Molecule::logp_mr()
 {
-    vector< double > v = new vector< double >[2]; 
+    vector< double> v(2); 
     double logp;
     double mr;
     RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr)
