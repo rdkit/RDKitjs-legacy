@@ -1,8 +1,6 @@
 #include <emscripten/bind.h>
-
 #include <string>
 #include <vector>
-
 #include <GraphMol/ROMol.h>
 #include <GraphMol/RWMol.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
@@ -132,7 +130,7 @@ class Molecule
       double Kappa1();
       double Kappa2();
       double Kappa3();
-      void logp_mr();
+      vector<double>  logp_mr();
       unsigned int LipinskiHBA();
       unsigned int LipinskiHBD();
       unsigned int NumRotatableBonds();
@@ -155,10 +153,10 @@ class Molecule
       double LabuteASA();
 
       double TPSA();
-      vector< double > SlogP_VSA();
-      vector< double > SMR_VSA();
-      vector< double > PEO_VSA();
-      vector< unsigned int > MQNs();
+      vector<double> SlogP_VSA();
+      vector<double> SMR_VSA();
+      vector<double> PEO_VSA();
+      vector<unsigned int> MQNs();
       string GetSubstructMatches(string smilesref);
       bool HasSubstructMatchStr(string smilesref);
       /// get & set & has properties
