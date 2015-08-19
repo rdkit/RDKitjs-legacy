@@ -13,7 +13,8 @@ var m=R.Molecule.fromSmiles('CCCC(C=O)NCCCCC')
 ```
 
 # GET DESCRIPTORS FROM MOLECULE OBJECT #
-# for a complete list of descriptors see ...#
+for a complete list of descriptors see http://www.rdkit.org/docs/GettingStartedInPython.html#list-of-available-descriptors
+
 ```js
 m.Chi0n()
 => 8.305589515962401
