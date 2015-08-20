@@ -926,22 +926,6 @@ vector<double> Molecule::logp_mr()
 }
 
 
-double Molecule::logp()
-{
-    
-    double logp, mr;
-    RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
-    return logp;
-}
-
-double Molecule::mr()
-{   
-    double logp, mr;
-    RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
-    return mr;
-}
-
-
 unsigned int Molecule::LipinskiHBA()
 {
     return RDKit::Descriptors::calcLipinskiHBA (*rdmol);

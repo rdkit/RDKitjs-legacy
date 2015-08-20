@@ -131,8 +131,7 @@ class Molecule
       double Kappa2();
       double Kappa3();
       vector<double>  logp_mr();
-      double logp();
-      double mr();
+
 
       unsigned int LipinskiHBA();
       unsigned int LipinskiHBD();
@@ -334,9 +333,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("Kappa1",&Molecule::Kappa1 ,allow_raw_pointers())
     .function("Kappa2",&Molecule::Kappa2 ,allow_raw_pointers())
     .function("Kappa3",&Molecule::Kappa3 ,allow_raw_pointers())
-    .function("logp",&Molecule::logp ,allow_raw_pointers())
     .function("logp_mr",&Molecule::logp_mr ,allow_raw_pointers())
-    .function("mr",&Molecule::mr ,allow_raw_pointers())    
     .function("LipinskiHBA",&Molecule::LipinskiHBA ,allow_raw_pointers())
     .function("LipinskiHBD",&Molecule::LipinskiHBD ,allow_raw_pointers())
     .function("NumRotatableBonds",&Molecule::NumRotatableBonds ,allow_raw_pointers())
@@ -348,7 +345,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("NumRings",&Molecule::NumRings ,allow_raw_pointers())
     .function("NumAromaticRings",&Molecule::NumAromaticRings ,allow_raw_pointers())
     .function("NumAliphaticRings",&Molecule::NumAliphaticRings ,allow_raw_pointers())
-    .function("NumSaturatedRings ",&Molecule::NumSaturatedRings ,allow_raw_pointers())
+    .function("NumSaturatedRings",&Molecule::NumSaturatedRings ,allow_raw_pointers())
     .function("NumHeterocycles",&Molecule::NumHeterocycles ,allow_raw_pointers())
     .function("NumAromaticHeterocycles",&Molecule::NumAromaticHeterocycles ,allow_raw_pointers())
     .function("NumAromaticCarbocycles",&Molecule::NumAromaticCarbocycles ,allow_raw_pointers())

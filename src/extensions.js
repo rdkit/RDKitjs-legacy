@@ -36,7 +36,7 @@ function calc_all_desc(smi){
     var NumRings = mol.NumRings();
     var NumAromaticRings = mol.NumAromaticRings();
     var NumAliphaticRings = mol.NumAliphaticRings();
-    //var NumSaturatedRings = mol.NumSaturatedRings(); // not working ???
+    var NumSaturatedRings = mol.NumSaturatedRings();
     var NumHeterocycles = mol.NumHeterocycles();
     var NumAromaticHeterocycles = mol.NumAromaticHeterocycles();
     var NumAromaticCarbocycles = mol.NumAromaticCarbocycles();
@@ -88,7 +88,8 @@ function calc_all_desc(smi){
    		NumHeterocycles:NumHeterocycles,NumRings:NumRings,NumHeteroatoms:NumHeteroatoms,NumHBA:NumHBA,
    		NumHBD:NumHBD,NumAliphaticCarbocycles:NumAliphaticCarbocycles,NumAliphaticHeterocycles:NumAliphaticHeterocycles,
    		NumSaturatedCarbocycles:NumSaturatedCarbocycles,NumSaturatedHeterocycles:NumSaturatedHeterocycles,
-   		NumAliphaticRings:NumAliphaticRings, NumAromaticRings:NumAromaticRings, NumAmideBonds:NumAmideBonds,
+   		NumAliphaticRings:NumAliphaticRings, NumAromaticRings:NumAromaticRings, NumSaturatedRings:NumSaturatedRings,
+   		NumAmideBonds:NumAmideBonds, 
    		NumRotatableBonds:NumRotatableBonds,NumAromaticHeterocycles:NumAromaticHeterocycles,
    		Chi0n:Chi0n,Chi1n:Chi1n,Chi2n:Chi2n,Chi3n:Chi3n,Chi4n:Chi4n,
    		Chi0v:Chi0v, Chi1v:Chi1v, Chi2v:Chi2v, Chi3v:Chi3v, Chi4v:Chi4v, Kappa1:Kappa1,Kappa2:Kappa2, Kappa3:Kappa3,
