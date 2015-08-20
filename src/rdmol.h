@@ -101,7 +101,10 @@ class Molecule
 
 
 
-      int findSSSR(std::vector< std::vector< int > > res );
+      int findSSSR(std::vector<std::vector<int>> res );
+      double AlignMolecules(string smilesref);
+
+
       
       // molecule manipulation & cleaning, ...
       void addHs();
@@ -208,27 +211,18 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     register_vector<int>("Vectorint");
     
     class_<Molecule>("Molecule")
-    
-
-
     .function("addAtom",&Molecule::addAtom, allow_raw_pointers())
     .function("addBond",&Molecule::addBond, allow_raw_pointers())
     .function("setBondDir",&Molecule::setBondDir, allow_raw_pointers())
-
-
-
     .function("getNumAtoms", &Molecule::getNumAtoms, allow_raw_pointers())
-    
     // fingerprints
     .function("getRDKFP", &Molecule::getRDKFP, allow_raw_pointers())
     .function("getMorganFP", &Molecule::getMorganFP, allow_raw_pointers())
     .function("getMorganFP_GetOnBits", &Molecule::getMorganFP_GetOnBits, allow_raw_pointers())
-
     .function("getLayeredFP", &Molecule::getLayeredFP, allow_raw_pointers())
     .function("getMACCSFP", &Molecule::getMACCSFP, allow_raw_pointers())
     .function("getPatternFP", &Molecule::getPatternFP, allow_raw_pointers())
     
-
     // molops basic functions
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
     .function("removeHs", &Molecule::removeHs, allow_raw_pointers())
@@ -244,23 +238,20 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("EmbedMoleculearg", select_overload<int(unsigned int,int)>(&Molecule::EmbedMolecule), allow_raw_pointers())
     .function("EmbedMultipleConfs", select_overload<vector<int>()>(&Molecule::EmbedMultipleConfs), allow_raw_pointers())
     .function("EmbedMultipleConfsarg", select_overload<vector<int>(unsigned int,unsigned int,int)>(&Molecule::EmbedMultipleConfs), allow_raw_pointers())
-
     .function("MMFFoptimizeMolecule", select_overload<vector<double>()>(&Molecule::MMFFoptimizeMolecule), allow_raw_pointers())
     .function("MMFFoptimizeMoleculearg", select_overload<vector<double>(int,string)>(&Molecule::MMFFoptimizeMolecule), allow_raw_pointers())
-   
     .function("MMFFOptimizeMoleculeConfs", &Molecule::MMFFOptimizeMoleculeConfs, allow_raw_pointers())
     .function("UFFOptimizeMolecule", &Molecule::UFFOptimizeMolecule, allow_raw_pointers())
     
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
 
-    // 
+    // Data compression
     .function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
 
     
     .function("getPath", &Molecule::getPath, allow_raw_pointers())
 
-    
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
@@ -300,7 +291,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("TverskySimilarityfromSmile", &Molecule::TverskySimilarityfromSmile, allow_raw_pointers())
    // .function("RusselSimilarityfromSmile", &Molecule::RusselSimilarityfromSmile, allow_raw_pointers())
 
-/*
+   /*
     .function("AsymmetricSimilarityfromSmile", &Molecule::AsymmetricSimilarityfromSmile, allow_raw_pointers())
     .function("OnBitSimilarityfromSmile", &Molecule::OnBitSimilarityfromSmile, allow_raw_pointers())
     .function("NumBitsInCommonfromSmile", &Molecule::NumBitsInCommonfromSmile, allow_raw_pointers())
@@ -311,11 +302,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("SokalSimilarityfromSmile", &Molecule::SokalSimilarityfromSmile, allow_raw_pointers())
     .function("RogotGoldbergSimilarityfromSmile", &Molecule::RogotGoldbergSimilarityfromSmile, allow_raw_pointers())
      */ 
+    .function("AlignMolecules", &Molecule::AlignMolecules, allow_raw_pointers())
 
-
-
-
-    // descriptors
+    // descriptors used in calc_all_desc
     .function("getMW", &Molecule::getMW, allow_raw_pointers())
     .function("ExactMW",&Molecule::ExactMW ,allow_raw_pointers())
     .function("Formula",&Molecule::Formula ,allow_raw_pointers())
@@ -360,9 +349,6 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
     
-
-
-
     // create class from smiles or smarts
    // .function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
     .class_function("newmolecule", &Molecule::newmolecule, allow_raw_pointers())

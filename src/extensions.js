@@ -88,11 +88,9 @@ function calc_all_desc(mol){
    		numHBD:NumHBD,numAliphaticCarbocycles:NumAliphaticCarbocycles,numAliphaticHeterocycles:NumAliphaticHeterocycles,
    		numSaturatedCarbocycles:NumSaturatedCarbocycles,numSaturatedHeterocycles:NumSaturatedHeterocycles,
    		numAliphaticRings:NumAliphaticRings,numAromaticRings:NumAromaticRings,numSaturatedRings:NumSaturatedRings,
-   		numAmideBonds:NumAmideBonds, 
-   		numRotatableBonds:NumRotatableBonds,numAromaticHeterocycles:NumAromaticHeterocycles,
-   		chi0n:Chi0n,chi1n:Chi1n,chi2n:Chi2n,chi3n:Chi3n,chi4n:Chi4n,
-   		chi0v:Chi0v,chi1v:Chi1v,chi2v:Chi2v,chi3v:Chi3v,chi4v:Chi4v,kappa1:Kappa1,kappa2:Kappa2,kappa3:Kappa3,
-   		hallKierAlpha:HallKierAlpha
+   		numAmideBonds:NumAmideBonds,numRotatableBonds:NumRotatableBonds,numAromaticHeterocycles:NumAromaticHeterocycles,
+   		chi0n:Chi0n,chi1n:Chi1n,chi2n:Chi2n,chi3n:Chi3n,chi4n:Chi4n,chi0v:Chi0v,chi1v:Chi1v,chi2v:Chi2v,chi3v:Chi3v,chi4v:Chi4v,
+        kappa1:Kappa1,kappa2:Kappa2,kappa3:Kappa3,hallKierAlpha:HallKierAlpha
    }; 
 };
 
@@ -100,6 +98,18 @@ function calc_all_desc(mol){
 var smi = 'CCCCCOC';
 var mol = RDKit.Molecule.fromSmiles(smi);
 var c = calc_all_desc(mol);
-console.log(c)
+console.log(c);
+
+
+var p = mol.AlignMolecules('CCCCCO');
+console.log(p);
+
+
+
+
+
+
+
+
 
 

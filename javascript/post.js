@@ -4,7 +4,7 @@ var RDKit = rdk();
 
 RDKit.hello = 'world';
 
-function RDKit.calc_all_desc(mol){
+function calc_all_desc(mol){
     var mw = mol.getMW();
     var fr_sp3 = mol.FractionCSP3();
     var ExactMW = mol.ExactMW();
@@ -100,6 +100,7 @@ function RDKit.calc_all_desc(mol){
    }; 
 };
 
+RDKit.calc_all_desc = calc_all_desc;
 
 // END custom JS methods
 

@@ -16,4 +16,4 @@ cat ../javascript/pre.js ../build/src/rdkit.js ../javascript/post.js > ../dist/r
 
 cp ../dist/rdkit.js ../../node_modules/rdkit/dist/rdkit.js
 
-cp ../build/src/rdkit.js ../../../Sites/rdkitjs/rdkit.js
+cp ../dist/rdkit.js ../../../Sites/rdkitjs/rdkit.js

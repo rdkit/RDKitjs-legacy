@@ -86,6 +86,10 @@
 
 #include <emscripten/emscripten.h>
 
+#include <GraphMol/molAlign/AlignMolecules.h>
+
+
+
 
 typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 
@@ -173,6 +177,11 @@ void Molecule::setBondDir (int Bondid, int bonddirid)
    rdmol->getBondWithIdx(Bondid)->setBondDir(castEnum);
 
 }       
+
+
+
+
+
 
 
 double  Molecule::TanimotoSimilarityfromSmile ( string smilesref)       
@@ -1071,6 +1080,19 @@ int Molecule::GetSubstructMatches(string smilesref)
 }
 
 
+
+
+double Molecule::AlignMolecules(string smilesref){
+
+    rdErrorLog->df_enabled = false;
+    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
+    return RDKit::MolAlign::alignMol(*rdquery, *rdmol);
+
+}
+
+
+
+
 bool Molecule::HasSubstructMatchStr(string smilesref)
 {
     rdErrorLog->df_enabled = false;
@@ -1091,13 +1113,15 @@ string Molecule::getProp(string key) {
     return res;
 }
 
+
+
 int Molecule::getNumConformers() {
     return rdmol->getNumConformers();
 }
 
 /*
-int Molecule::getConformer() {
-    return rdmol->getConformer();
+RDKit::Conformer Molecule::getConformer(int id) {
+    return rdmol->getConformer(id);
 }
 */
 
