@@ -1,3 +1,10 @@
+var RDKit = rdk();
 
-return rdk();
+// custom JS methods
+
+RDKit.hello = 'world';
+
+// END custom JS methods
+
+return RDKit;
 });
