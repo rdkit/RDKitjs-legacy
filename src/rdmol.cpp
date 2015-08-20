@@ -92,6 +92,7 @@ typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 
 
 
+
 using namespace std;
 using RDKit::ROMol;
 using RDKit::RWMol;
@@ -118,8 +119,6 @@ Molecule* Molecule::MolBlockToMol(string molBlock) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::MolBlockToMol(molBlock, true, false));
 }
-
-
 
 
 Molecule* Molecule::fromSmarts(string smarts) {
@@ -187,10 +186,8 @@ double  Molecule::TanimotoSimilarityfromSmile ( string smilesref)
    return TanimotoSimilarity (*v1,*v2);
 }
 
-
 double  Molecule::DiceSimilarityfromSmile ( string smilesref)       
 {
-
 
    ROMol *mol=RDKit::SmilesToMol(smilesref);
    RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
@@ -199,12 +196,8 @@ double  Molecule::DiceSimilarityfromSmile ( string smilesref)
    return DiceSimilarity (*v1,*v2);
 }
 
-
-
 double  Molecule::TverskySimilarityfromSmile ( string smilesref, double a, double b)       
 {
-
-
    ROMol *mol=RDKit::SmilesToMol(smilesref);
    RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
    RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
@@ -378,12 +371,6 @@ vector<int> Molecule::getMorganFP_GetOnBits(unsigned int sizes,unsigned int leng
 }
 
 
-
-
-
-
-
-
 string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths)
 {
     ExplicitBitVect* finger =  RDKit::LayeredFingerprintMol(*rdmol,layer, sizes,lengths);
@@ -411,8 +398,6 @@ fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
 SparseIntVect<boost::int64_t> *fp1; fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m3,4096);
 SparseIntVect<boost::uint32_t> *iv; iv = MorganFingerprints::getHashedFingerprint(*mol,2,2048,0,0,false,true,false,&bitInfo2);
   */
-
-
 
 
 vector<double> Molecule::MMFFoptimizeMolecule()
@@ -451,11 +436,6 @@ vector<double> Molecule::MMFFOptimizeMoleculeConfs (unsigned int numThreads,int 
 
     return res;
 }
-
-
-
-
-
 
 vector<double> Molecule::UFFOptimizeMolecule()
 {
@@ -933,16 +913,32 @@ double Molecule::Kappa3()
     return    RDKit::Descriptors::calcKappa3 (*rdmol);
 }
 
+/* cannot access the data of this vector in js! need to split it! */
 vector<double> Molecule::logp_mr()
 {
-    vector< double> v(2); 
-    double logp;
-    double mr;
+    
+    vector<double> res(2); 
+    double logp, mr;
     RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
+    res[0] = logp;
+    res[1] = mr;
+    return res;
+}
 
-    v[0]=logp;
-    v[1]=mr;
-    return v;
+
+double Molecule::logp()
+{
+    
+    double logp, mr;
+    RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
+    return logp;
+}
+
+double Molecule::mr()
+{   
+    double logp, mr;
+    RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
+    return mr;
 }
 
 
@@ -1001,7 +997,7 @@ unsigned int Molecule::NumAliphaticRings()
     return   RDKit::Descriptors::calcNumAliphaticRings (*rdmol);
 }
 
-unsigned int Molecule::NumSaturatedRings ()
+unsigned int Molecule::NumSaturatedRings()
 {
     return  RDKit::Descriptors::calcNumSaturatedRings (*rdmol);
 }
@@ -1016,7 +1012,7 @@ unsigned int Molecule::NumAromaticHeterocycles()
     return    RDKit::Descriptors::calcNumAromaticHeterocycles (*rdmol);
 }
 
-unsigned int Molecule::NumAromaticCarbocycles ()
+unsigned int Molecule::NumAromaticCarbocycles()
 {
     return RDKit::Descriptors::calcNumAromaticCarbocycles (*rdmol);
 }
@@ -1074,7 +1070,7 @@ vector< unsigned int > Molecule::MQNs()
     return RDKit::Descriptors::calcMQNs (*rdmol);
 }
 
-string Molecule::GetSubstructMatches(string smilesref)
+int Molecule::GetSubstructMatches(string smilesref)
 {
     RDKit::MatchVectType matchV;
     vector< RDKit::MatchVectType > matches;
@@ -1083,11 +1079,11 @@ string Molecule::GetSubstructMatches(string smilesref)
     RWMol* rdquery = RDKit::SmartsToMol(smilesref);
 
     int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
-    string res = "";
+  /*  vector< int > res;
     for(int idx=0;idx<matched;idx++){
         res +=".";
-    }
-    return res;
+    }*/
+    return matched;
 }
 
 
