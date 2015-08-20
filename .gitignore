@@ -2,3 +2,5 @@
 .DS_Store
 *.log
 test/rdkit.js
+node_modules
+
