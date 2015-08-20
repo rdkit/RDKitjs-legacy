@@ -5,7 +5,8 @@
   "keywords": [],
   "main": "dist/rdkit.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run build-test && mocha test/unit --require should --reporter mocha-better-spec-reporter --recursive",
+    "build-test": "cat javascript/pre.js build/src/rdkit.js javascript/post.js > test/rdkit.js",
     "build": "cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js"
   },
   "repository": "thegodone/RDKitjs",
@@ -18,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/thegodone/RDKitjs/issues"
   },
-  "homepage": "https://github.com/thegodone/RDKitjs"
+  "homepage": "https://github.com/thegodone/RDKitjs",
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "mocha-better-spec-reporter": "^2.1.1",
+    "should": "^7.0.4"
+  }
 }
