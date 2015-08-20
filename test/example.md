@@ -1,9 +1,11 @@
-1 Build a Apache testing web folder:
+#Some instructions to test the library#
 
-2 Copy this 2 files in an Apache or other webpage server:
-test/example.html  build/rdmol.js in 
+In order to set up a Chrome development web page you need to have access an Apache testing web folder:
 
-3 Open localhost/example.html with Chrome and type in the console
+- Copy this 2 files in an Apache or other webpage server:
+test/example.html  build/rdkit.js in 
+
+- Open localhost/example.html with Chrome and access the console
 
 
 # GENERATE A RDKitjs MOLECULE OBJECT FROM SMILE #
