@@ -1,7 +1,9 @@
 'use strict';
 
+var RDKit = require('../rdkit');
+
 describe('test', function () {
     it('should work', function () {
-        true.should.be.true();
+        RDKit.hello.should.equal('world');
     });
 });
