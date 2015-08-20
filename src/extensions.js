@@ -1,7 +1,6 @@
-var rdkit = require('rdkit');
+var RDKit = require('rdkit');
 
-function calc_all_desc(smi){
-	var mol = rdkit.Molecule.fromSmiles(smi);
+function calc_all_desc(mol){
 	var mw = mol.getMW();
 	var fr_sp3 = mol.FractionCSP3();
     var ExactMW = mol.ExactMW();
@@ -21,7 +20,7 @@ function calc_all_desc(smi){
     var Kappa2 = mol.Kappa2();
     var Kappa3 = mol.Kappa3();
     
-    var t = new rdkit.VectorDouble();
+    var t = new RDKit.VectorDouble();
     t = mol.logp_mr(); 
     var logp = t.get(0);
     var mr = t.get(1);
@@ -48,7 +47,7 @@ function calc_all_desc(smi){
     var TPSA = mol.TPSA();
 
     // get array values
-   var slogp = new rdkit.VectorDouble();
+   var slogp = new RDKit.VectorDouble();
     slogp = mol.SlogP_VSA();	
     SlogP_VSA = [];
     for (i =0;i<slogp.size();i++)
@@ -57,7 +56,7 @@ function calc_all_desc(smi){
     }
 
 
-    var smr = new rdkit.VectorDouble();
+    var smr = new RDKit.VectorDouble();
     smr = mol.SMR_VSA();	
     SMR_VSA = [];
     for (i =0;i<smr.size();i++)
@@ -66,7 +65,7 @@ function calc_all_desc(smi){
     }
 
 
-    var peo = new rdkit.VectorDouble();
+    var peo = new RDKit.VectorDouble();
     peo = mol.PEO_VSA();	
     PEO_VSA = [];
     for (i =0;i<peo.size();i++)
@@ -75,7 +74,7 @@ function calc_all_desc(smi){
     }
 
 
-    var mqn = new rdkit.VectorUint();
+    var mqn = new RDKit.VectorUint();
     mqn = mol.MQNs();	
     MQNs = [];
     for (i =0;i<mqn.size();i++)
@@ -83,22 +82,24 @@ function calc_all_desc(smi){
     	MQNs.push(mqn.get(i));
     }
    
-   	return {smi: smi, mw:mw, ExactMW:ExactMW,Formula:Formula, fr_sp3: fr_sp3,MQNs:MQNs,PEO_VSA:PEO_VSA,SMR_VSA:SMR_VSA, 
-   		TPSA:TPSA,SlogP_VSA:SlogP_VSA,logp:logp,mr:mr, LabuteASA:LabuteASA, LipinskiHBD:LipinskiHBD, LipinskiHBA:LipinskiHBA,
-   		NumHeterocycles:NumHeterocycles,NumRings:NumRings,NumHeteroatoms:NumHeteroatoms,NumHBA:NumHBA,
-   		NumHBD:NumHBD,NumAliphaticCarbocycles:NumAliphaticCarbocycles,NumAliphaticHeterocycles:NumAliphaticHeterocycles,
-   		NumSaturatedCarbocycles:NumSaturatedCarbocycles,NumSaturatedHeterocycles:NumSaturatedHeterocycles,
-   		NumAliphaticRings:NumAliphaticRings, NumAromaticRings:NumAromaticRings, NumSaturatedRings:NumSaturatedRings,
-   		NumAmideBonds:NumAmideBonds, 
-   		NumRotatableBonds:NumRotatableBonds,NumAromaticHeterocycles:NumAromaticHeterocycles,
-   		Chi0n:Chi0n,Chi1n:Chi1n,Chi2n:Chi2n,Chi3n:Chi3n,Chi4n:Chi4n,
-   		Chi0v:Chi0v, Chi1v:Chi1v, Chi2v:Chi2v, Chi3v:Chi3v, Chi4v:Chi4v, Kappa1:Kappa1,Kappa2:Kappa2, Kappa3:Kappa3,
-   		HallKierAlpha:HallKierAlpha
+   	return {smi:smi,mw:mw,exactMW:ExactMW,formula:Formula,frsp3:fr_sp3,mqn:MQNs,peovsa:PEO_VSA,smrvsa:SMR_VSA, 
+   		tpsa:TPSA,slogpvsa:SlogP_VSA,logp:logp,mr:mr,labuteASA:LabuteASA,lipinskiHBD:LipinskiHBD,lipinskiHBA:LipinskiHBA,
+   		numHeterocycles:NumHeterocycles,numRings:NumRings,numHeteroatoms:NumHeteroatoms,numHBA:NumHBA,
+   		numHBD:NumHBD,numAliphaticCarbocycles:NumAliphaticCarbocycles,numAliphaticHeterocycles:NumAliphaticHeterocycles,
+   		numSaturatedCarbocycles:NumSaturatedCarbocycles,numSaturatedHeterocycles:NumSaturatedHeterocycles,
+   		numAliphaticRings:NumAliphaticRings,numAromaticRings:NumAromaticRings,numSaturatedRings:NumSaturatedRings,
+   		numAmideBonds:NumAmideBonds, 
+   		numRotatableBonds:NumRotatableBonds,numAromaticHeterocycles:NumAromaticHeterocycles,
+   		chi0n:Chi0n,chi1n:Chi1n,chi2n:Chi2n,chi3n:Chi3n,chi4n:Chi4n,
+   		chi0v:Chi0v,chi1v:Chi1v,chi2v:Chi2v, Chi3v:Chi3v,chi4v:Chi4v,kappa1:Kappa1,kappa2:Kappa2,kappa3:Kappa3,
+   		hallKierAlpha:HallKierAlpha
    }; 
 };
 
 
-var c = calc_all_desc('CCCCCOC');
+var smi = 'CCCCCOC';
+var mol = RDKit.Molecule.fromSmiles(smi);
+var c = calc_all_desc(mol);
 console.log(c)
 
 
