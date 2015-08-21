@@ -102,7 +102,7 @@ class Molecule
 
 
       int findSSSR(std::vector<std::vector<int>> res );
-      double AlignMolecules(string smilesref);
+      void AlignMolConformers();
 
 
       
@@ -302,7 +302,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("SokalSimilarityfromSmile", &Molecule::SokalSimilarityfromSmile, allow_raw_pointers())
     .function("RogotGoldbergSimilarityfromSmile", &Molecule::RogotGoldbergSimilarityfromSmile, allow_raw_pointers())
      */ 
-    .function("AlignMolecules", &Molecule::AlignMolecules, allow_raw_pointers())
+    .function("AlignMolConformers", &Molecule::AlignMolConformers, allow_raw_pointers())
 
     // descriptors used in calc_all_desc
     .function("getMW", &Molecule::getMW, allow_raw_pointers())

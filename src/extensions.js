@@ -94,16 +94,30 @@ function calc_all_desc(mol){
    }; 
 };
 
-
+/*
 var smi = 'CCCCCOC';
 var mol = RDKit.Molecule.fromSmiles(smi);
 var c = calc_all_desc(mol);
 console.log(c);
+mol.delete()
+*/
 
+var m = RDKit.Molecule.fromSmiles('CC(C)=C(C)C(=O)c1ccccc1')
+m.sdwrite()
+m.addHs(); 
+//m.sdwrite();
+var c = m.EmbedMultipleConfs(); //=> generate Conformers
+m.sdwriteConfs()
+//var p = m.sdwriteConfs();
+var d = m.MMFFOptimizeMoleculeConfs(1,100,'MMFF94'); //=> gave the Conformers optimization result in d!
+m.sdwriteConfs()
+//m.sdwrite()
+m.AlignMolConformers();
+//m.removeHs();
+//var p = m.sdwriteConfs();
+m.sdwriteConfs() //=> gave the 3D conformers list in a SDF format
 
-var p = mol.AlignMolecules('CCCCCO');
-console.log(p);
-
+m.delete()
 
 
 

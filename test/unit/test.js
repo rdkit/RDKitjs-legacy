@@ -18,3 +18,13 @@ describe('calc_all_desc', function () {
     });
 });
 
+
+describe('calc_all_desc', function () {
+    it('calc_all_desc', function () {
+		var smi = 'CCCCCOC(CO)';
+		var mol = RDKit.Molecule.fromSmiles(smi);	
+		var c = RDKit.calc_all_desc(mol);
+        c.should.equal('');
+    });
+});
+

@@ -1,0 +1,1 @@
+/Users/mbp/Github/RDKitjs/src/src/CMakeFiles/rdkitjs.dir

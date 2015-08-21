@@ -468,15 +468,17 @@ string Molecule::smilewrite()
     RDKit::SmilesWriter *writer = new RDKit::SmilesWriter(&ss, " ","Name",false);
     writer->write(*rdmol);
     writer->flush();
+    delete writer;
     return ss.str();
 }
 
 string Molecule::sdwrite()
 {
     stringstream ss;
-    RDKit::SDWriter *writer = new RDKit::SDWriter(&ss,false);
+    RDKit::SDWriter *writer = new RDKit::SDWriter(&ss);
     writer->write(*rdmol);
     writer->flush();
+    delete writer;
     return ss.str();
 }
 
@@ -724,20 +726,19 @@ int Molecule::writefile(string filename, string data)
 
 
 */
-
-
-
-
+    
 
 string Molecule::sdwriteConfs()
 {
     stringstream ss;
-    RDKit::SDWriter *writer = new RDKit::SDWriter(&ss,false);
+    RDKit::SDWriter *writer = new RDKit::SDWriter(&ss); // remove false argument!
     
     for(int i=0; i<rdmol->getNumConformers(); ++i){
          writer->write(*rdmol,i);
      }
 
+    writer->flush();
+    delete writer;
     return ss.str();
 }
 
@@ -1080,14 +1081,9 @@ int Molecule::GetSubstructMatches(string smilesref)
 }
 
 
-
-
-double Molecule::AlignMolecules(string smilesref){
-
-    rdErrorLog->df_enabled = false;
-    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
-    return RDKit::MolAlign::alignMol(*rdquery, *rdmol);
-
+void Molecule::AlignMolConformers(){
+    // can return the rmds values need to look at that closely... in python not there
+    return RDKit::MolAlign::alignMolConformers(*rdmol);
 }
 
 
