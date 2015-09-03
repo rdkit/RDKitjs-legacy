@@ -560,14 +560,14 @@ string Molecule::Drawing2D()
 
 //svg = RDKit::Drawing::DrawingToSVG(drawing, 4);
 
-
+/*
 vector<double>  Molecule::computeGasteigerCharges()
 {
     vector<double> charges(rdmol->getNumAtoms(),0);
     RDKit::computeGasteigerCharges(*rdmol,charges,12,false);
     return charges;
 }
-
+*/
 
 
 /*

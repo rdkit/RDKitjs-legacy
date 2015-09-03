@@ -171,7 +171,7 @@ public:
 
 
 
-    vector<double>  computeGasteigerCharges();
+    //void computeGasteigerCharges();
 
 
     int GetSubstructMatches(string smilesref);
@@ -382,7 +382,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("SMR_VSA",&Molecule::SMR_VSA ,allow_raw_pointers())
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
-    .function("computeGasteigerCharges",&Molecule::computeGasteigerCharges ,allow_raw_pointers())
+   // .function("computeGasteigerCharges",&Molecule::computeGasteigerCharges ,allow_raw_pointers())
 
 
     // create class from smiles or smarts
