@@ -1185,6 +1185,28 @@ vector< unsigned int > Molecule::MQNs()
     return RDKit::Descriptors::calcMQNs (*rdmol);
 }
 
+
+vector<double> Molecule::getCrippenAtomContribslogp() {
+    vector<double> logp(rdmol->getNumAtoms());
+    vector<double> mr(rdmol->getNumAtoms());
+    RDKit::Descriptors::getCrippenAtomContribs(*rdmol,logp,mr,true);
+    return logp;
+}
+
+vector<double> Molecule::getCrippenAtomContribsmr() {
+    vector<double> logp(rdmol->getNumAtoms());
+    vector<double> mr(rdmol->getNumAtoms());
+    RDKit::Descriptors::getCrippenAtomContribs(*rdmol,logp,mr,true);
+    return mr;
+}
+
+vector<double> Molecule::getTPSAAtomContribs() {
+    double nTPSA = RDKit::Descriptors::calcTPSA(*rdmol);
+    vector<double> contribs(rdmol->getNumAtoms());
+    RDKit::Descriptors::getTPSAAtomContribs(*rdmol,contribs);
+    return contribs;
+}
+
 int Molecule::GetSubstructMatches(string smilesref)
 {
     RDKit::MatchVectType matchV;

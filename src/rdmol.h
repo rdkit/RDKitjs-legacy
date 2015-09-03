@@ -141,6 +141,9 @@ public:
     double Kappa3();
     vector<double>  logp_mr();
     
+    vector<double> getCrippenAtomContribslogp();
+    vector<double> getCrippenAtomContribsmr();
+
     
     unsigned int LipinskiHBA();
     unsigned int LipinskiHBD();
@@ -164,6 +167,8 @@ public:
     double LabuteASA();
     
     double TPSA();
+    vector<double> getTPSAAtomContribs();
+
     vector<double> SlogP_VSA();
     vector<double> SMR_VSA();
     vector<double> PEO_VSA();
@@ -356,6 +361,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("Kappa2",&Molecule::Kappa2 ,allow_raw_pointers())
     .function("Kappa3",&Molecule::Kappa3 ,allow_raw_pointers())
     .function("logp_mr",&Molecule::logp_mr ,allow_raw_pointers())
+    .function("getCrippenAtomContribslogp",&Molecule::getCrippenAtomContribslogp ,allow_raw_pointers())
+    .function("getCrippenAtomContribsmr",&Molecule::getCrippenAtomContribsmr ,allow_raw_pointers())
     .function("LipinskiHBA",&Molecule::LipinskiHBA ,allow_raw_pointers())
     .function("LipinskiHBD",&Molecule::LipinskiHBD ,allow_raw_pointers())
     .function("NumRotatableBonds",&Molecule::NumRotatableBonds ,allow_raw_pointers())
@@ -377,6 +384,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("NumAliphaticCarbocycles",&Molecule::NumAliphaticCarbocycles ,allow_raw_pointers())
     .function("LabuteASA",&Molecule::LabuteASA ,allow_raw_pointers())
     .function("TPSA",&Molecule::TPSA ,allow_raw_pointers())
+    .function("getTPSAAtomContribs",&Molecule::getTPSAAtomContribs ,allow_raw_pointers())
+
     .function("SlogP_VSA",&Molecule::SlogP_VSA ,allow_raw_pointers())
     .function("SMR_VSA",&Molecule::SMR_VSA ,allow_raw_pointers())
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())

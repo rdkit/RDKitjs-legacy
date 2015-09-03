@@ -80,23 +80,52 @@ describe('Compute all descriptors', function () {
         mol.delete();
     });
 
-   it('computeGasteigerCharges', function () {
+    it('getCrippenAtomContribslogp', function () {
         var smi="CCCCCCOCCN";
         var mol = RDKit.Molecule.fromSmiles(smi);
-        mol.computeGasteigerCharges();
-
-        for (i=0;i<mol.getNumAtoms();i++)
+        var cp = mol.getCrippenAtomContribslogp();
+        for (i=0;i<cp.size();i++)
         {
 
-            process.stdout.write(mol.getAtomProp('_GasteigerCharge',i));
-            process.stdout.write(';');
-            process.stdout.write(mol.getAtomProp('_GasteigerHCharge',i));
+            process.stdout.write(cp.get(i));
             process.stdout.write(';');
 
         }
-        d.should.eql();
+        cp.should.eql();
         mol.delete();
     });
+
+
+    it('getCrippenAtomContribsmr', function () {
+        var smi="CCCCCCOCCN";
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        var cp = mol.getCrippenAtomContribsmr();
+        for (i=0;i<cp.size();i++)
+        {
+            process.stdout.write(cp.get(i));
+            process.stdout.write(';');
+
+        }
+        cp.should.eql();
+        mol.delete();
+    });
+
+    it('getTPSAAtomContribs', function () {
+        var smi="CCCCCCOCCN";
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol.calcTPSA();
+        var cp = mol.getTPSAAtomContribs();
+        for (i=0;i<cp.size();i++)
+        {
+            process.stdout.write(cp.get(i));
+            process.stdout.write(';');
+
+        }
+        cp.should.eql();
+        mol.delete();
+    });
+
+
 });
 
 
