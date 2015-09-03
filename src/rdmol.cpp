@@ -25,6 +25,7 @@
 #include <GraphMol/FileParsers/MolSupplier.h>
 #include <GraphMol/FileParsers/MolWriters.h>
 #include <GraphMol/FileParsers/FileParsers.h>
+
 // fkingreprints
 #include <DataStructs/ExplicitBitVect.h>
 #include <GraphMol/Fingerprints/AtomPairs.h>
@@ -52,6 +53,11 @@
 //#include <GraphMol/MolDrawing/DrawingToSVG.h>
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
 #include <GraphMol/MolDraw2D/MolDraw2DSVG.h>
+
+
+
+
+
 
 // 2D
 #include <GraphMol/Depictor/RDDepictor.h>
@@ -88,12 +94,12 @@
 
 #include <GraphMol/molAlign/AlignMolecules.h>
 
+#include <GraphMol/PartialCharges/GasteigerCharges.h>
+#include <GraphMol/PartialCharges/GasteigerParams.h>
 
 
 
 typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
-
-
 
 
 
@@ -519,6 +525,50 @@ string Molecule::getPath()
     return res;
 
 }
+    
+
+string Molecule::sdwriteConfs()
+{
+    stringstream ss;
+    RDKit::SDWriter *writer = new RDKit::SDWriter(&ss); // remove false argument!
+    
+    for(int i=0; i<rdmol->getNumConformers(); ++i){
+         writer->write(*rdmol,i);
+     }
+
+    writer->flush();
+    delete writer;
+    return ss.str();
+}
+
+
+unsigned int Molecule::compute2DCoords()
+{
+    return RDDepict::compute2DCoords(*rdmol);
+}
+
+string Molecule::Drawing2D()
+{
+    RDDepict::compute2DCoords(*rdmol);
+    WedgeMolBonds(*rdmol,&(rdmol->getConformer()));
+    RDKit::MolDraw2DSVG drawer(300,300);
+    drawer.drawMolecule(*rdmol);
+    drawer.finishDrawing();
+    return drawer.getDrawingText();
+    //return  RDKit::Drawing::MolToDrawing(*mol);
+}
+
+//svg = RDKit::Drawing::DrawingToSVG(drawing, 4);
+
+
+vector<double>  Molecule::computeGasteigerCharges()
+{
+    vector<double> charges(rdmol->getNumAtoms(),0);
+    RDKit::computeGasteigerCharges(*rdmol,charges,12,false);
+    return charges;
+}
+
+
 
 /*
 string Molecule::sdwritefile(string filename)
@@ -749,40 +799,86 @@ int Molecule::writefile(string filename, string data)
 
 
 */
+
+//////////////////////////////// new drawing
+/*
+ std::map<int,DrawColour> *pyDictToColourMap(python::object pyo){
+      std::map<int,DrawColour> *res=NULL;
+      if(pyo){
+        res = new std::map<int,DrawColour>;
+        python::dict tDict = python::extract<python::dict>(pyo);
+        for(unsigned int i=0;i<python::extract<unsigned int>(tDict.keys().attr("__len__")());++i){
+          python::tuple tpl=python::extract<python::tuple>(tDict.values()[i]);
+          float r=python::extract<float>(tpl[0]);
+          float g=python::extract<float>(tpl[1]);
+          float b=python::extract<float>(tpl[2]);
+          DrawColour clr(r,g,b);
+          (*res)[python::extract<int>(tDict.keys()[i])]=clr;
+        }
+      }
+      return res;
+    }
+
+
+std::map<int,double> *pyDictToDoubleMap(python::object pyo){
+      std::map<int,double> *res=NULL;
+      if(pyo){
+        res = new std::map<int,double>;
+        python::dict tDict = python::extract<python::dict>(pyo);
+        for(unsigned int i=0;i<python::extract<unsigned int>(tDict.keys().attr("__len__")());++i){
+          double r = python::extract<double>(tDict.values()[i]);
+          (*res)[python::extract<int>(tDict.keys()[i])]=r;
+        }
+      }
+      return res;
+    }
+  }
+
+
+  void drawMoleculeHelper1(MolDraw2D &self,
+                          const ROMol &mol ,
+                          python::object highlight_atoms,
+                          python::object highlight_atom_map,
+                          python::object highlight_atom_radii,
+                          int confId=-1){
+    std::vector<int> *highlightAtoms=pythonObjectToVect(highlight_atoms,static_cast<int>(mol.getNumAtoms()));
+    std::map<int,DrawColour> *ham=pyDictToColourMap(highlight_atom_map);
+    std::map<int,double> *har=pyDictToDoubleMap(highlight_atom_radii);
+
+    self.drawMolecule(mol,highlightAtoms,ham,har,confId);
     
+    delete highlightAtoms;
+    delete ham;
+    delete har;
+  }
 
-string Molecule::sdwriteConfs()
-{
-    stringstream ss;
-    RDKit::SDWriter *writer = new RDKit::SDWriter(&ss); // remove false argument!
+
+  void drawMoleculeHelper2(MolDraw2D &self,
+                          const ROMol &mol ,
+                          python::object highlight_atoms,
+                          python::object highlight_bonds,
+                          python::object highlight_atom_map,
+                          python::object highlight_bond_map,
+                          python::object highlight_atom_radii,
+                          int confId=-1){
+    std::vector<int> *highlightAtoms=pythonObjectToVect(highlight_atoms,static_cast<int>(mol.getNumAtoms()));
+    std::vector<int> *highlightBonds=pythonObjectToVect(highlight_bonds,static_cast<int>(mol.getNumBonds()));
+    // FIX: support these
+    std::map<int,DrawColour> *ham=pyDictToColourMap(highlight_atom_map);
+    std::map<int,DrawColour> *hbm=pyDictToColourMap(highlight_bond_map);
+    std::map<int,double> *har=pyDictToDoubleMap(highlight_atom_radii);
+
+    self.drawMolecule(mol,highlightAtoms,highlightBonds,ham,hbm,har,confId);
     
-    for(int i=0; i<rdmol->getNumConformers(); ++i){
-         writer->write(*rdmol,i);
-     }
+    delete highlightAtoms;
+    delete highlightBonds;
+    delete ham;
+    delete hbm;
+    delete har;
+  }
 
-    writer->flush();
-    delete writer;
-    return ss.str();
-}
-
-
-unsigned int Molecule::compute2DCoords()
-{
-    return RDDepict::compute2DCoords(*rdmol);
-}
-
-string Molecule::Drawing2D()
-{
-    RDDepict::compute2DCoords(*rdmol);
-    WedgeMolBonds(*rdmol,&(rdmol->getConformer()));
-    RDKit::MolDraw2DSVG drawer(300,300);
-    drawer.drawMolecule(*rdmol);
-    drawer.finishDrawing();
-    return drawer.getDrawingText();
-    //return  RDKit::Drawing::MolToDrawing(*mol);
-}
-//svg = RDKit::Drawing::DrawingToSVG(drawing, 4);
-
+////////////////// new rendering 
+*/
 
 int Molecule::EmbedMolecule(unsigned int maxIterations, int seed)
 
@@ -946,7 +1042,9 @@ double Molecule::Kappa3()
     return    RDKit::Descriptors::calcKappa3 (*rdmol);
 }
 
-/* cannot access the data of this vector in js! need to split it! */
+//cannot access the data of this vector in js! need to split it! 
+
+
 vector<double> Molecule::logp_mr()
 {
     

@@ -168,6 +168,12 @@ public:
     vector<double> SMR_VSA();
     vector<double> PEO_VSA();
     vector<unsigned int> MQNs();
+
+
+
+    vector<double>  computeGasteigerCharges();
+
+
     int GetSubstructMatches(string smilesref);
     bool HasSubstructMatchStr(string smilesref);
     /// get & set & has properties
@@ -376,7 +382,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("SMR_VSA",&Molecule::SMR_VSA ,allow_raw_pointers())
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
-    
+    .function("computeGasteigerCharges",&Molecule::computeGasteigerCharges ,allow_raw_pointers())
+
+
     // create class from smiles or smarts
     // .function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
     .class_function("newmolecule", &Molecule::newmolecule, allow_raw_pointers())
