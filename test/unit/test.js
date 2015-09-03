@@ -80,14 +80,23 @@ describe('Compute all descriptors', function () {
         mol.delete();
     });
 
-/*    it('computeGasteigerCharges', function () {
-
-        var smi="CCCCC(C)C";
+   it('computeGasteigerCharges', function () {
+        var smi="CCCCCCOCCN";
         var mol = RDKit.Molecule.fromSmiles(smi);
         mol.computeGasteigerCharges();
-        mol.delete();
 
-    });*/
+        for (i=0;i<mol.getNumAtoms();i++)
+        {
+
+            process.stdout.write(mol.getAtomProp('_GasteigerCharge',i));
+            process.stdout.write(';');
+            process.stdout.write(mol.getAtomProp('_GasteigerHCharge',i));
+            process.stdout.write(';');
+
+        }
+        d.should.eql();
+        mol.delete();
+    });
 });
 
 
@@ -177,7 +186,8 @@ describe('3D Force Field minimization', function () {
         var smi = 'CCCCCOC(CO)';
         this.timeout(50000);
 
-        for (i=0;i<50;i++){
+        /*
+        for (i=0;i<10;i++){
             var mol = RDKit.Molecule.fromSmiles(smi);  
             mol.addHs(); 
             mol.EmbedMultipleConfsarg(2,200,2015);   
@@ -185,11 +195,12 @@ describe('3D Force Field minimization', function () {
             process.stdout.write('.');
             mol.delete();
         }
-        mol = RDKit.Molecule.fromSmiles(smi);  
+        */
+        var mol = RDKit.Molecule.fromSmiles(smi);  
         mol.addHs(); 
-        mol.removeHs()
         mol.EmbedMultipleConfsarg(3,1000,2015);   
         mol.MMFFOptimizeMoleculeConfs(8,1000,'MMFF94');
+        mol.removeHs()
         mol.sdwriteConfs().should.equal('\n     RDKit          3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    4.2049   -0.1343   -0.0700 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.7636    0.1674   -0.4518 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.8530    0.1802    0.7765 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.4134    0.5914    0.4625 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.3280   -0.4062   -0.4258 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.6681    0.0257   -0.6665 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.5743   -0.3641    0.3649 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.9713    0.1350    0.0157 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.8966   -0.2437    1.0272 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n\n     RDKit          3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n   -3.8544   -0.0601   -0.7140 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.0532    1.0931   -0.1298 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.7683    0.6501    0.5730 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7396    0.0371   -0.3759 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.5628   -0.2933    0.3465 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.4641   -0.8645   -0.6010 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.7225   -1.2189   -0.0276 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.6792   -0.0304    0.0174 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.9275   -0.4269    0.5719 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n\n     RDKit          3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n   -3.4103    0.9186   -0.5602 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.9693    0.3926    0.7969 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.9105   -0.7087    0.7105 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5777   -0.2243    0.1392 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.4764   -1.3299    0.1717 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.6805   -0.9212   -0.4768 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.5109   -0.0983    0.3386 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.8150    0.1867   -0.3998 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.6449    1.0642    0.3526 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
         mol.delete();
     });

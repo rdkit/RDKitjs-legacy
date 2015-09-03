@@ -169,23 +169,20 @@ public:
     vector<double> PEO_VSA();
     vector<unsigned int> MQNs();
 
-
-
-    //void computeGasteigerCharges();
-
+    void computeGasteigerCharges();
 
     int GetSubstructMatches(string smilesref);
     bool HasSubstructMatchStr(string smilesref);
     /// get & set & has properties
     string getProp(string key);
+    string getAtomProp(string key,int atomid);
+
     int setProp(string key, string value);
     unsigned int getNumAtoms();
     int getNumConformers();
     RDKit::Conformer getConformer(int id);
     bool hasProp(string key);
     vector<string> getproplist();
-    
-    
     
     // atom & bond manipulations
     unsigned int addAtom (int atomid);
@@ -306,6 +303,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // properties
     .function("getproplist", &Molecule::getproplist, allow_raw_pointers())
     .function("getProp", &Molecule::getProp, allow_raw_pointers())
+    .function("getAtomProp", &Molecule::getAtomProp, allow_raw_pointers())
+
     .function("getNumConformers", &Molecule::getNumConformers, allow_raw_pointers())
     .function("getConformer", &Molecule::getConformer, allow_raw_pointers())
     .function("setProp", &Molecule::setProp, allow_raw_pointers())
@@ -382,7 +381,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("SMR_VSA",&Molecule::SMR_VSA ,allow_raw_pointers())
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
-   // .function("computeGasteigerCharges",&Molecule::computeGasteigerCharges ,allow_raw_pointers())
+    .function("computeGasteigerCharges",&Molecule::computeGasteigerCharges ,allow_raw_pointers())
 
 
     // create class from smiles or smarts

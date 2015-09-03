@@ -560,14 +560,14 @@ string Molecule::Drawing2D()
 
 //svg = RDKit::Drawing::DrawingToSVG(drawing, 4);
 
-/*
-vector<double>  Molecule::computeGasteigerCharges()
+
+void Molecule::computeGasteigerCharges()
 {
     vector<double> charges(rdmol->getNumAtoms(),0);
-    RDKit::computeGasteigerCharges(*rdmol,charges,12,false);
-    return charges;
+    RDKit::computeGasteigerCharges(*rdmol, charges,12,false);
+    // return charges;
 }
-*/
+
 
 
 /*
@@ -1282,6 +1282,12 @@ string Molecule::getProp(string key) {
     return res;
 }
 
+
+string Molecule::getAtomProp(string key,int atomid) {
+    string res;
+    rdmol->getAtomWithIdx(atomid)->getProp(key,res);
+    return res;
+}
 
 
 int Molecule::getNumConformers() {
