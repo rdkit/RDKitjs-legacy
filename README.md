@@ -2,17 +2,20 @@ RDKitjs
 =======
 Port RDKit to js using emscripten
 
-First of all we need to install emscripten and RDKit. To do this please read the following articles.
+First of all we need to install emscripten (1.32 or 1.34.6) and RDKit 2015.3.1. 
+Please take a look at those references:
 
-There are two possibles installation guides (for Ubuntu 14.04):  
+=> Ubuntu 14.04:  
 http://baoilleach.blogspot.ch/2015/02/cheminformaticsjs-rdkit.html  
 
 http://gmrand.blogspot.ch/2015/03/howto-install-rdkit-and-emscripten-on.html  
 
-For OSX
+=> OSX
 http://gmrand.blogspot.ch/2015/05/howto-install-rdkit-and-emscripten-on.html
 
-P.S.: due to a bug report we suggest to apply this patch to rdkit
+
+
+P.S.: CAUTION due to a bug report we suggest to apply this patch to rdkit
 
 Patching of RDKit files for emscripten binding
 ===============================================
