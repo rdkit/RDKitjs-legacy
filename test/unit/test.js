@@ -70,12 +70,13 @@ describe('Molecule Creations', function () {
 
 
 
-describe.skip('Compute all descriptors', function () {
+describe('Compute all descriptors', function () {
     it('calc_all_desc', function () {
 		var smi = 'CCCCCOC(CO)';
 		var mol = RDKit.Molecule.fromSmiles(smi);	
 		var c = RDKit.calc_all_desc(mol);
-        c.should.equal('');
+        c=JSON.stringify(c);
+        c.should.eql('{"mw":132,"exactMW":132.115029752,"formula":"C7H16O2","frsp3":1,"mqn":[7,0,0,0,0,0,0,0,0,2,0,0,8,0,0,0,0,0,6,4,2,1,1,0,0,2,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"peovsa":[9.843390348640755,0,0,0,0,19.765380445542643,6.4208216229260096,6.606881964512918,13.213763929025836,0,0,0,0,0],"smrvsa":[9.843390348640755,0,0,0,26.186202068468653,19.820645893538753,0,0,0,0],"tpsa":29.46,"slogpvsa":[0,24.927173288379457,4.736862953800049,0,26.186202068468653,0,0,0,0,0,0,0],"logp":1.1855,"mr":37.42979999999999,"labuteASA":56.83668269591208,"lipinskiHBD":1,"lipinskiHBA":2,"numHeterocycles":0,"numRings":0,"numHeteroatoms":2,"numHBA":2,"numHBD":1,"numAliphaticCarbocycles":0,"numAliphaticHeterocycles":0,"numSaturatedCarbocycles":0,"numSaturatedHeterocycles":0,"numAliphaticRings":0,"numAromaticRings":0,"numSaturatedRings":0,"numAmideBonds":0,"numRotatableBonds":6,"numAromaticHeterocycles":0,"chi0n":6.098102573083107,"chi1n":3.6006848163930116,"chi2n":2.043086014632321,"chi3n":1.1278531854030205,"chi4n":0.6207359402846874,"chi0v":6.098102573083107,"chi1v":3.6006848163930116,"chi2v":2.043086014632321,"chi3v":1.1278531854030205,"chi4v":0.6207359402846874,"kappa1":8.92,"kappa2":7.919999999999998,"kappa3":7.920000000000001,"hallKierAlpha":-0.08}');
         mol.delete();
     });
 });
@@ -106,7 +107,7 @@ describe('FingerPrints', function () {
         for(var j=0;j < mpflen;j++){
                 mpf.push(mpf2.get(j));
             }
-        mpf.should.equal('[ 13, 80, 222, 294, 473, 591, 691, 695, 794, 807, 1057, 1069, 1249, 1325, 1369, 1444, 1911, 1992 ]');
+        mpf.should.eql([ 13, 80, 222, 294, 473, 591, 691, 695, 794, 807, 1057, 1069, 1249, 1325, 1369, 1444, 1911, 1992 ]);
         mol.delete();
     });
     
