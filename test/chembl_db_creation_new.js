@@ -1,10 +1,10 @@
 var mongourl = 'mongodb://localhost:27017/rdkit';
-var collectionName = "molecules1";
-//var collectionName = "molecules-"+new Date().getTime();
-var start = 1200001;//start = 1
-var end = 1400000;//include it
+//var collectionName = "molecules1";
+var collectionName = "molecules-"+new Date().getTime();
+var start = 1;//start = 1
+var end = 100000;//include it
 var stepToShow = 10000;
-var fileToRead = '/Users/guilllaumegodin/Downloads/chembl_18.sdf';//File to process
+var fileToRead = '/Users/mbp/Downloads/chembl_20.sdf';//File to process
 var errorFile = 'errors.txt';
 var encoding = 'ascii';
 var dolineInputStream = true;
@@ -154,9 +154,16 @@ function processFile(){
         if(i >= start){//define point for start
             try {
                 var mol= rdk.Molecule.MolBlockToMol(line);
+                console.log(".");
                 var smile = mol.smilewrite();
+                console.log(".");
+
                 var binarymol = mol.MolToBinary();
+                console.log(".");
+
                 var mpf2 = mol.getMorganFP_GetOnBits(2,2048);
+                console.log(".");
+
                 var mpf = [];
                 var mpflen = mpf2.size();
                 for(var j=0;j < mpflen;j++){

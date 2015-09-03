@@ -7,6 +7,8 @@
 #include <GraphMol/FileParsers/FileParsers.h>
 #include <DataStructs/SparseBitVect.h>
 #include <DataStructs/BitOps.h>
+#include <GraphMol/Conformer.h>
+
 
 
 
@@ -18,193 +20,218 @@ using RDKit::RWMol;
 
 class Molecule
 {
-    public:
-      Molecule(RWMol *mol);
-
-      ~Molecule();
-   
-      
-      // new fingerprints    
-      string getRDKFP();
-      string getMorganFP(unsigned int sizes,unsigned int lengths);
-      vector<int> getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths);
-      string getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths);
-      string getMACCSFP();
-      string getPatternFP();
-
-
-
-      // 3D Force Field minimization 
-      vector<double> MMFFoptimizeMolecule();
-      vector<double> MMFFoptimizeMolecule(int maxIters, string mmffVariant);
-      vector<double> MMFFOptimizeMoleculeConfs(unsigned int numThreads,int maxIters, string mmffVariant);
-      vector<double> UFFOptimizeMolecule();
-      
-      // generate 3D non optimized molecule
-      int EmbedMolecule();
-      int EmbedMolecule(unsigned int maxIterations,int seed);
-      vector<int> EmbedMultipleConfs();
-      vector<int> EmbedMultipleConfs(unsigned int numConfs, unsigned int maxIterations, int seed);
-
-
-
-      // Pickle molecule representation
-      string MolToBinary();
-
-
-  
-      string getPath();
-      // string output in console
-      string smilewrite();
-      string sdwrite();
-     // string sdwritefile(string filename);
-     // int writefile(string filename, string data);
-     // int readfile(string filename);
-
-     // string sdreadfile(string filename);
-      string sdwriteConfs();
-
-
-      // indexedDB storage
-     // void save(string path, string data);
-     // string load(string path);
-     // int nodereadwrite();
-     // int nodereadwritewithdata(string path, string data);
-
-      // input file
-
-
-      // output file
-
-
-      // Drawing molecule
-      unsigned int compute2DCoords();
-      string Drawing2D();
-   
-      // similarity
-      double TanimotoSimilarityfromSmile (string smilesref);
-      double DiceSimilarityfromSmile (string smilesref);
-      double TverskySimilarityfromSmile( string smilesref,double a, double b);
-     //double RusselSimilarityfromSmile( string smilesref);
-     /* double OnBitSimilarityfromSmile ( string smilesref);
-      double RogotGoldbergSimilarityfromSmile( string smilesref);
+public:
+    Molecule(RWMol *mol);
+    
+    ~Molecule();
+    
+    
+    // new fingerprints
+    string getRDKFP();
+    string getMorganFP(unsigned int sizes,unsigned int lengths);
+    vector<int> getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths);
+    string getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths);
+    string getMACCSFP();
+    string getPatternFP();
+    
+    
+    
+    // 3D Force Field minimization
+    vector<double> MMFFoptimizeMolecule();
+    vector<double> MMFFoptimizeMolecule(int maxIters, string mmffVariant);
+    vector<double> MMFFOptimizeMoleculeConfs(unsigned int numThreads,int maxIters, string mmffVariant);
+    vector<double> UFFOptimizeMolecule();
+    
+    // generate 3D non optimized molecule
+    int EmbedMolecule();
+    int EmbedMolecule(unsigned int maxIterations,int seed);
+    vector<int> EmbedMultipleConfs();
+    vector<int> EmbedMultipleConfs(unsigned int numConfs, unsigned int maxIterations, int seed);
+    
+    
+    
+    // Pickle molecule representation
+    string MolToBinary();
+    
+    
+    
+    string getPath();
+    // string output in console
+    string smilewrite();
+    string sdwrite();
+    // string sdwritefile(string filename);
+    // int writefile(string filename, string data);
+    // int readfile(string filename);
+    
+    // string sdreadfile(string filename);
+    string sdwriteConfs();
+    
+    
+    // indexedDB storage
+    // void save(string path, string data);
+    // string load(string path);
+    // int nodereadwrite();
+    // int nodereadwritewithdata(string path, string data);
+    
+    // input file
+    
+    
+    // output file
+    
+    
+    // Drawing molecule
+    unsigned int compute2DCoords();
+    string Drawing2D();
+    
+    // similarity
+    double TanimotoSimilarityfromSmile (string smilesref);
+    double DiceSimilarityfromSmile (string smilesref);
+    double TverskySimilarityfromSmile( string smilesref,double a, double b);
+    //double RusselSimilarityfromSmile( string smilesref);
+    /* double OnBitSimilarityfromSmile ( string smilesref);
+     double RogotGoldbergSimilarityfromSmile( string smilesref);
      
-      double BraunBlanquetSimilarityfromSmile( string smilesref);
-      double AsymmetricSimilarityfromSmile( string smilesref);
-      double SokalSimilarityfromSmile( string smilesref);
-      double McConnaugheySimilarityfromSmile( string smilesref);
-      double CosineSimilarityfromSmile( string smilesref);
-      double KulczynskiSimilarityfromSmile( string smilesref);
-      int  NumBitsInCommonfromSmile ( string smilesref) ;      
+     double BraunBlanquetSimilarityfromSmile( string smilesref);
+     double AsymmetricSimilarityfromSmile( string smilesref);
+     double SokalSimilarityfromSmile( string smilesref);
+     double McConnaugheySimilarityfromSmile( string smilesref);
+     double CosineSimilarityfromSmile( string smilesref);
+     double KulczynskiSimilarityfromSmile( string smilesref);
+     int  NumBitsInCommonfromSmile ( string smilesref) ;
      */
+    
+    
+    
+    
+    int findSSSR(std::vector<std::vector<int>> res );
+    //vector<double> AlignMolConformersRMSlist();
+    void AlignMolConformers();
+    //double GetConformersRMS(int id1, int id2);
+    double AlignMol(string smilesref);
 
-
-
-
-      int findSSSR(std::vector<std::vector<int>> res );
-      void AlignMolConformers();
-
-
-      
-      // molecule manipulation & cleaning, ...
-      void addHs();
-      void removeHs();
-      void sanitizeMol();
-      void cleanUp();
-      void Kekulize();
-      
-
-
-      // descriptors 
-      int getMW();
-      double ExactMW();
-      string Formula();
-      double Chi0v();
-      double Chi1v();
-      double Chi2v();
-      double Chi3v();
-      double Chi4v();
-      double Chi0n();
-      double Chi1n();
-      double Chi2n();
-      double Chi3n();
-      double Chi4n();
-      double HallKierAlpha();
-      double Kappa1();
-      double Kappa2();
-      double Kappa3();
-      vector<double>  logp_mr();
-
-
-      unsigned int LipinskiHBA();
-      unsigned int LipinskiHBD();
-      unsigned int NumRotatableBonds();
-      unsigned int NumHBD();
-      unsigned int NumHBA();
-      unsigned int NumHeteroatoms();
-      unsigned int NumAmideBonds();
-      double FractionCSP3();
-      unsigned int NumRings();
-      unsigned int NumAromaticRings();
-      unsigned int NumAliphaticRings();
-      unsigned int NumSaturatedRings();
-      unsigned int NumHeterocycles();
-      unsigned int NumAromaticHeterocycles();
-      unsigned int NumAromaticCarbocycles ();
-      unsigned int NumSaturatedHeterocycles();
-      unsigned int NumSaturatedCarbocycles();
-      unsigned int NumAliphaticHeterocycles();
-      unsigned int NumAliphaticCarbocycles();
-      double LabuteASA();
-
-      double TPSA();
-      vector<double> SlogP_VSA();
-      vector<double> SMR_VSA();
-      vector<double> PEO_VSA();
-      vector<unsigned int> MQNs();
-      int GetSubstructMatches(string smilesref);
-      bool HasSubstructMatchStr(string smilesref);
-      /// get & set & has properties
-      string getProp(string key);
-      int setProp(string key, string value);
-      unsigned int getNumAtoms();
-      int getNumConformers();
-      bool hasProp(string key);
-      vector<string> getproplist();
-      
-
-      
-      // atom & bond manipulations
-      unsigned int addAtom (int atomid);
-      // this is in development stage caution not working for the moment!!!!
-      unsigned int addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,int bondtypeid);
-      void setBondDir (int Bondid, int bonddirid);
-
-
-
-
-      // static constructors
-      static Molecule* newmolecule();
-      static Molecule* MurckofromSmiles(string smi); 
-      static Molecule* fromSmiles(string smiles);
-      static Molecule* Mol2BlockToMol(string molBlock);
-      static Molecule* MolBlockToMol(string molBlock);
-      static Molecule* fromSmarts(string smarts);
-      static Molecule* molFromPickle(string pickle);
-
-    private:
-        RWMol* rdmol;
+    
+    
+    
+    // molecule manipulation & cleaning, ...
+    void addHs();
+    void removeHs();
+    void sanitizeMol();
+    void cleanUp();
+    void Kekulize();
+    
+    
+    
+    // descriptors
+    int getMW();
+    double ExactMW();
+    string Formula();
+    double Chi0v();
+    double Chi1v();
+    double Chi2v();
+    double Chi3v();
+    double Chi4v();
+    double Chi0n();
+    double Chi1n();
+    double Chi2n();
+    double Chi3n();
+    double Chi4n();
+    double HallKierAlpha();
+    double Kappa1();
+    double Kappa2();
+    double Kappa3();
+    vector<double>  logp_mr();
+    
+    
+    unsigned int LipinskiHBA();
+    unsigned int LipinskiHBD();
+    unsigned int NumRotatableBonds();
+    unsigned int NumHBD();
+    unsigned int NumHBA();
+    unsigned int NumHeteroatoms();
+    unsigned int NumAmideBonds();
+    double FractionCSP3();
+    unsigned int NumRings();
+    unsigned int NumAromaticRings();
+    unsigned int NumAliphaticRings();
+    unsigned int NumSaturatedRings();
+    unsigned int NumHeterocycles();
+    unsigned int NumAromaticHeterocycles();
+    unsigned int NumAromaticCarbocycles ();
+    unsigned int NumSaturatedHeterocycles();
+    unsigned int NumSaturatedCarbocycles();
+    unsigned int NumAliphaticHeterocycles();
+    unsigned int NumAliphaticCarbocycles();
+    double LabuteASA();
+    
+    double TPSA();
+    vector<double> SlogP_VSA();
+    vector<double> SMR_VSA();
+    vector<double> PEO_VSA();
+    vector<unsigned int> MQNs();
+    int GetSubstructMatches(string smilesref);
+    bool HasSubstructMatchStr(string smilesref);
+    /// get & set & has properties
+    string getProp(string key);
+    int setProp(string key, string value);
+    unsigned int getNumAtoms();
+    int getNumConformers();
+    RDKit::Conformer getConformer(int id);
+    bool hasProp(string key);
+    vector<string> getproplist();
+    
+    
+    
+    // atom & bond manipulations
+    unsigned int addAtom (int atomid);
+    // this is in development stage caution not working for the moment!!!!
+    unsigned int addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,int bondtypeid);
+    void setBondDir (int Bondid, int bonddirid);
+    
+    
+    
+    
+    // static constructors
+    static Molecule* newmolecule();
+    static Molecule* MurckofromSmiles(string smi);
+    static Molecule* fromSmiles(string smiles);
+    static Molecule* Mol2BlockToMol(string molBlock);
+    static Molecule* MolBlockToMol(string molBlock);
+    static Molecule* fromSmarts(string smarts);
+    static Molecule* molFromPickle(string pickle);
+    
+private:
+    RWMol* rdmol;
 };
 
 
 
+
+/* adding another class
+ class Similarity
+ {
+ public:
+ Similarity(RWMol *mol1, RWMol *mol2);
+ 
+ ~Similarity();
+ 
+ double Tanimoto();
+ 
+ private:
+ RWMol* rdmol1;
+ RWMol* rdmol2;
+ };
+ 
+ 
+ 
+ Similarity* passThrough(Similarity* ptr) { return ptr; }
+ */
 
 
 Molecule* passThrough(Molecule* ptr) { return ptr; }
 
 // Binding code
 EMSCRIPTEN_BINDINGS(rdmol) {
-        // register the vectors
+    // register the vectors
     register_vector<string>("VectorString");
     register_vector<double>("VectorDouble");
     register_vector<unsigned int>("VectorUint");
@@ -228,10 +255,10 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("removeHs", &Molecule::removeHs, allow_raw_pointers())
     .function("sanitizeMol", &Molecule::sanitizeMol, allow_raw_pointers())
     .function("findSSSR", &Molecule::findSSSR, allow_raw_pointers())
-
+    
     .function("cleanUp", &Molecule::cleanUp, allow_raw_pointers())
     .function("Kekulize", &Molecule::Kekulize, allow_raw_pointers())
-
+    
     // 2D & 3D molecules
     .function("compute2DCoords", &Molecule::compute2DCoords, allow_raw_pointers())
     .function("EmbedMolecule", select_overload<int()>(&Molecule::EmbedMolecule), allow_raw_pointers())
@@ -245,29 +272,27 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
-
+    
     // Data compression
     .function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
-
+    
     
     .function("getPath", &Molecule::getPath, allow_raw_pointers())
-
+    
     // writer basic functions
     .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
     .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
-
-
+    
+    
     // testing functions ... not working correctly
     //.function("save", &Molecule::save, allow_raw_pointers())
     //.function("load", &Molecule::load, allow_raw_pointers())
     //.function("nodereadwrite", &Molecule::nodereadwrite, allow_raw_pointers())
     //.function("nodereadwritewithdata", &Molecule::nodereadwritewithdata, allow_raw_pointers())
-
+    
     //.function("sdwritefile", &Molecule::sdwritefile, allow_raw_pointers())
     //.function("sdreadfile", &Molecule::sdreadfile, allow_raw_pointers())
-
-    .function("sdwriteConfs", &Molecule::sdwriteConfs, allow_raw_pointers())
-
+    
     .function("sdwriteConfs", &Molecule::sdwriteConfs, allow_raw_pointers())
     //.function("writefile", &Molecule::writefile, allow_raw_pointers())
     //.function("readfile", &Molecule::readfile, allow_raw_pointers())
@@ -276,7 +301,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getproplist", &Molecule::getproplist, allow_raw_pointers())
     .function("getProp", &Molecule::getProp, allow_raw_pointers())
     .function("getNumConformers", &Molecule::getNumConformers, allow_raw_pointers())
-
+    .function("getConformer", &Molecule::getConformer, allow_raw_pointers())
     .function("setProp", &Molecule::setProp, allow_raw_pointers())
     .function("hasProp", &Molecule::hasProp, allow_raw_pointers())
     
@@ -284,25 +309,28 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
     .function("HasSubstructMatchStr", &Molecule::HasSubstructMatchStr, allow_raw_pointers())
     
-
+    
     // similarity
     .function("TanimotoSimilarityfromSmile", &Molecule::TanimotoSimilarityfromSmile, allow_raw_pointers())
     .function("DiceSimilarityfromSmile", &Molecule::DiceSimilarityfromSmile, allow_raw_pointers())
     .function("TverskySimilarityfromSmile", &Molecule::TverskySimilarityfromSmile, allow_raw_pointers())
-   // .function("RusselSimilarityfromSmile", &Molecule::RusselSimilarityfromSmile, allow_raw_pointers())
-
-   /*
-    .function("AsymmetricSimilarityfromSmile", &Molecule::AsymmetricSimilarityfromSmile, allow_raw_pointers())
-    .function("OnBitSimilarityfromSmile", &Molecule::OnBitSimilarityfromSmile, allow_raw_pointers())
-    .function("NumBitsInCommonfromSmile", &Molecule::NumBitsInCommonfromSmile, allow_raw_pointers())
-    .function("McConnaugheySimilarityfromSmile", &Molecule::McConnaugheySimilarityfromSmile, allow_raw_pointers())   
-    .function("CosineSimilarityfromSmile", &Molecule::CosineSimilarityfromSmile, allow_raw_pointers())
-    .function("KulczynskiSimilarityfromSmile", &Molecule::KulczynskiSimilarityfromSmile, allow_raw_pointers())
-    .function("BraunBlanquetSimilarityfromSmile", &Molecule::BraunBlanquetSimilarityfromSmile, allow_raw_pointers())
-    .function("SokalSimilarityfromSmile", &Molecule::SokalSimilarityfromSmile, allow_raw_pointers())
-    .function("RogotGoldbergSimilarityfromSmile", &Molecule::RogotGoldbergSimilarityfromSmile, allow_raw_pointers())
-     */ 
+    // .function("RusselSimilarityfromSmile", &Molecule::RusselSimilarityfromSmile, allow_raw_pointers())
+    
+    /*
+     .function("AsymmetricSimilarityfromSmile", &Molecule::AsymmetricSimilarityfromSmile, allow_raw_pointers())
+     .function("OnBitSimilarityfromSmile", &Molecule::OnBitSimilarityfromSmile, allow_raw_pointers())
+     .function("NumBitsInCommonfromSmile", &Molecule::NumBitsInCommonfromSmile, allow_raw_pointers())
+     .function("McConnaugheySimilarityfromSmile", &Molecule::McConnaugheySimilarityfromSmile, allow_raw_pointers())
+     .function("CosineSimilarityfromSmile", &Molecule::CosineSimilarityfromSmile, allow_raw_pointers())
+     .function("KulczynskiSimilarityfromSmile", &Molecule::KulczynskiSimilarityfromSmile, allow_raw_pointers())
+     .function("BraunBlanquetSimilarityfromSmile", &Molecule::BraunBlanquetSimilarityfromSmile, allow_raw_pointers())
+     .function("SokalSimilarityfromSmile", &Molecule::SokalSimilarityfromSmile, allow_raw_pointers())
+     .function("RogotGoldbergSimilarityfromSmile", &Molecule::RogotGoldbergSimilarityfromSmile, allow_raw_pointers())
+     */
+    .function("AlignMol", &Molecule::AlignMol, allow_raw_pointers())
     .function("AlignMolConformers", &Molecule::AlignMolConformers, allow_raw_pointers())
+    //.function("AlignMolConformersRMSlist", &Molecule::AlignMolConformersRMSlist, allow_raw_pointers())
+    //.function("GetConformersRMS", &Molecule::GetConformersRMS, allow_raw_pointers())
 
     // descriptors used in calc_all_desc
     .function("getMW", &Molecule::getMW, allow_raw_pointers())
@@ -350,7 +378,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
     
     // create class from smiles or smarts
-   // .function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
+    // .function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
     .class_function("newmolecule", &Molecule::newmolecule, allow_raw_pointers())
     .class_function("MurckofromSmiles", &Molecule::MurckofromSmiles, allow_raw_pointers())
     .class_function("MolBlockToMol", &Molecule::MolBlockToMol, allow_raw_pointers())
@@ -358,8 +386,10 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
     .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers())
     .class_function("molFromPickle", &Molecule::molFromPickle, allow_raw_pointers());
-
-
-
+    
+    /* adding another class ...
+     class_<Similarity>("Similarity")
+     .function("Tanimoto",&Similarity::Tanimoto, allow_raw_pointers());
+     */
 }
 

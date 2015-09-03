@@ -101,6 +101,29 @@ using namespace std;
 using RDKit::ROMol;
 using RDKit::RWMol;
 
+/* adding another class... ???
+Similarity::Similarity(RWMol* mol1, RWMol* mol2): rdmol1(mol1),rdmol2(mol2) {}
+
+
+Similarity::~Similarity() {
+  if(mol1 != 0)
+    delete mol1;
+  if(mol2 != 0)
+    delete mol2;
+}
+
+
+double  Similarity::Tanimoto ()       
+{
+
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol1,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*rdmol2,2);
+
+   return TanimotoSimilarity (*v1,*v2);
+}
+*/
+
+
 Molecule::Molecule(RWMol* mol): rdmol(mol) {}
 
 
@@ -108,6 +131,7 @@ Molecule::~Molecule() {
   if(rdmol != 0)
     delete rdmol;
 }
+
 
 Molecule* Molecule::fromSmiles(string smiles) {
   rdErrorLog->df_enabled = false;
@@ -177,8 +201,6 @@ void Molecule::setBondDir (int Bondid, int bonddirid)
    rdmol->getBondWithIdx(Bondid)->setBondDir(castEnum);
 
 }       
-
-
 
 
 
@@ -431,18 +453,19 @@ vector<double> Molecule::MMFFoptimizeMolecule(int maxIters, string mmffVariant)
 
 
 vector<double> Molecule::MMFFOptimizeMoleculeConfs (unsigned int numThreads,int  maxIters,string mmffVariant)
-{
+{  
+   
    vector<pair< int, double>> p;
    RDKit::MMFF::MMFFOptimizeMoleculeConfs(*rdmol,p,numThreads,maxIters,mmffVariant);
    vector<double> res(2*p.size());
+   
+
    for (int i = 0; i < 2*p.size(); i++) {
         if ( i % 2== 0 )
             res[i] = static_cast<double>(p[i].first);
         else
             res[p.size()+i] = p[i].second;
-
     }
-
     return res;
 }
 
@@ -1081,13 +1104,65 @@ int Molecule::GetSubstructMatches(string smilesref)
 }
 
 
-void Molecule::AlignMolConformers(){
+
+
+/*
+double Molecule::GetConformersRMS(int confId1, int confId2){
+    RDKit::Conformer  conf1 = rdmol->getConformer(confId1);
+    RDKit::Conformer  conf2 = rdmol->getConformer(confId2);
+    //RDKit::MolAlign::alignMolConformers(*rdmol,{confId1,confId2});
+    double ssr = 0 ;
+    double d;
+    for (int i =0;i<rdmol->getNumAtoms();i++) { 
+      d = RDGeom::Point3D::Distance(conf1.getAtomPos(i),conf2.getAtomPos(i)) ;
+      ssr += d*d ;
+    }
+    ssr = ssr/rdmol->getNumAtoms() ;
+    return ssr;
+}
+*/
+
+
+double Molecule::AlignMol(string smilesref){
+    rdErrorLog->df_enabled = false;
+    RWMol* rdquery = RDKit::SmilesToMol(smilesref);
+    printf("smiles ok");
+
+    RDKit::MolOps::addHs(*rdquery);
+    printf("addH ok");
+
+    RDKit::DGeomHelpers::EmbedMolecule(*rdquery);
+    printf("add 3D ok");
+
+    pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdquery);
+    printf("optimze 3D ok");
+
+    double res = RDKit::MolAlign::alignMol(*rdmol,*rdquery);
+    printf("Align ok");
+   // string sres = (string)res;
+   // printf("%s\n", sres.c_str());
     // can return the rmds values need to look at that closely... in python not there
-    return RDKit::MolAlign::alignMolConformers(*rdmol);
+    return res;
 }
 
 
 
+void Molecule::AlignMolConformers(){
+    // can return the rmds values need to look at that closely... in python not there
+    RDKit::MolAlign::alignMolConformers(*rdmol);
+
+}
+
+
+/*
+vector<double> Molecule::AlignMolConformersRMSlist(){
+    // can return the rmds values need to look at that closely... in python not there
+    std::vector<double> *RMSlist;
+    RDKit::MolAlign::alignMolConformers(*rdmol,0,0,0,false,50,RMSlist);
+    return *RMSlist;
+
+}
+*/
 
 bool Molecule::HasSubstructMatchStr(string smilesref)
 {
@@ -1115,11 +1190,11 @@ int Molecule::getNumConformers() {
     return rdmol->getNumConformers();
 }
 
-/*
+
 RDKit::Conformer Molecule::getConformer(int id) {
     return rdmol->getConformer(id);
 }
-*/
+
 
 
 int Molecule::setProp(string key, string value) {
