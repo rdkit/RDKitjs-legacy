@@ -24,5 +24,10 @@
     "mocha": "^2.2.5",
     "mocha-better-spec-reporter": "^2.1.1",
     "should": "^7.0.4"
+  },
+  "dependencies": {
+    "async": "^1.4.2",
+    "mongodb": "^2.0.42",
+    "underscore": "^1.8.3"
   }
 }
