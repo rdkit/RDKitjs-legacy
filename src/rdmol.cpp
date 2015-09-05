@@ -134,8 +134,11 @@ Molecule::Molecule(RWMol* mol): rdmol(mol) {}
 
 
 Molecule::~Molecule() {
-  if(rdmol != 0)
+  if(rdmol != 0) {
+    //printf("Destroy called\n");
     delete rdmol;
+    rdmol =0;
+  }
 }
 
 
@@ -210,12 +213,8 @@ void Molecule::setBondDir (int Bondid, int bonddirid)
 
 
 
-
-
 double  Molecule::TanimotoSimilarityfromSmile ( string smilesref)       
 {
-
-
    ROMol *mol=RDKit::SmilesToMol(smilesref);
    RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
    RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
@@ -429,12 +428,6 @@ string Molecule::getPatternFP()
 }
 
 
-/*
-SparseIntVect<boost::int32_t> *fp1;fp1 = AtomPairs::getAtomPairFingerprint(*m1);
-fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
-SparseIntVect<boost::int64_t> *fp1; fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m3,4096);
-SparseIntVect<boost::uint32_t> *iv; iv = MorganFingerprints::getHashedFingerprint(*mol,2,2048,0,0,false,true,false,&bitInfo2);
-  */
 
 
 vector<double> Molecule::MMFFoptimizeMolecule()
@@ -493,12 +486,9 @@ vector<string> Molecule::getproplist()
 
 string Molecule::smilewrite()
 {
-    stringstream ss;
-    RDKit::SmilesWriter *writer = new RDKit::SmilesWriter(&ss, " ","Name",false);
-    writer->write(*rdmol);
-    writer->flush();
-    delete writer;
-    return ss.str();
+    string smile =  RDKit::MolToSmiles(*rdmol);  
+    return smile;
+
 }
 
 string Molecule::sdwrite()
@@ -515,13 +505,10 @@ string Molecule::sdwrite()
 string Molecule::getPath()
 
 {
-
     char cCurrentPath[FILENAME_MAX];
     int size =sizeof(cCurrentPath);
-
     getcwd(cCurrentPath, size);
     string res = string(cCurrentPath);
-
     return res;
 
 }
@@ -565,7 +552,6 @@ void Molecule::computeGasteigerCharges()
 {
     vector<double> charges(rdmol->getNumAtoms(),0);
     RDKit::computeGasteigerCharges(*rdmol, charges,12,false);
-    // return charges;
 }
 
 
@@ -1043,11 +1029,8 @@ double Molecule::Kappa3()
 }
 
 //cannot access the data of this vector in js! need to split it! 
-
-
 vector<double> Molecule::logp_mr()
-{
-    
+{    
     vector<double> res(2); 
     double logp, mr;
     RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
@@ -1186,24 +1169,32 @@ vector< unsigned int > Molecule::MQNs()
 }
 
 
-vector<double> Molecule::getCrippenAtomContribslogp() {
+
+vector<double> Molecule::getCrippenAtomContribs() {
     vector<double> logp(rdmol->getNumAtoms());
     vector<double> mr(rdmol->getNumAtoms());
     RDKit::Descriptors::getCrippenAtomContribs(*rdmol,logp,mr,true);
-    return logp;
+    vector<double> results;
+    results.reserve(logp.size() + mr.size());
+    results.insert(results.end(), logp.begin(), logp.end());
+    results.insert(results.end(), mr.begin(), mr.end());
+    return results;
 }
 
-vector<double> Molecule::getCrippenAtomContribsmr() {
-    vector<double> logp(rdmol->getNumAtoms());
-    vector<double> mr(rdmol->getNumAtoms());
-    RDKit::Descriptors::getCrippenAtomContribs(*rdmol,logp,mr,true);
-    return mr;
-}
 
-vector<double> Molecule::getTPSAAtomContribs() {
-    double nTPSA = RDKit::Descriptors::calcTPSA(*rdmol);
+vector<double>  Molecule::getTPSAAtomContribs() {
     vector<double> contribs(rdmol->getNumAtoms());
-    RDKit::Descriptors::getTPSAAtomContribs(*rdmol,contribs);
+    RDKit::Descriptors::getTPSAAtomContribs(*rdmol,contribs,false);
+    return contribs;
+}
+
+
+
+vector<double> Molecule::getASAContribs() {
+    double hContrib=0.0;
+    bool includeHs=true;
+    vector<double> contribs(rdmol->getNumAtoms());
+    RDKit::Descriptors::getLabuteAtomContribs(*rdmol,contribs,hContrib,includeHs,false);
     return contribs;
 }
 

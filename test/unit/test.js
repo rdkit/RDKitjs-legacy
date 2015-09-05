@@ -30,7 +30,7 @@ describe('Molecule Creations', function () {
     it('MolBlockToMol', function () {
         var molBlock = '\n     RDKit          \n\n  9  9  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\n  5  1  1  0\nM  END\n$$$$\n';
         var mol = RDKit.Molecule.MolBlockToMol(molBlock);
-        mol.smilewrite().should.equal('OCCOC1CCCC1 0\n');
+        mol.smilewrite().should.equal('OCCOC1CCCC1');
         mol.delete();
 
     });
@@ -80,48 +80,50 @@ describe('Compute all descriptors', function () {
         mol.delete();
     });
 
-    it('getCrippenAtomContribslogp', function () {
-        var smi="CCCCCCOCCN";
+    it('getCrippenAtomContribs', function () {
+        var smi='CO';
         var mol = RDKit.Molecule.fromSmiles(smi);
-        var cp = mol.getCrippenAtomContribslogp();
-        for (i=0;i<cp.size();i++)
+        var cp = mol.getCrippenAtomContribs();
+        var LP = [];
+        for (i =0;i<cp.size()/2;i++)
         {
-
-            process.stdout.write(cp.get(i));
-            process.stdout.write(';');
-
+            LP.push(cp.get(i));
         }
-        cp.should.eql();
+        var MR = [];
+        for (i =cp.size()/2;i<cp.size();i++)
+        {
+            MR.push(cp.get(i));
+        }
+        LP.should.eql([ -0.2035, -0.2893]);
+        MR.should.eql([ 2.753, 0.8238 ]);
+
         mol.delete();
     });
 
-
-    it('getCrippenAtomContribsmr', function () {
-        var smi="CCCCCCOCCN";
-        var mol = RDKit.Molecule.fromSmiles(smi);
-        var cp = mol.getCrippenAtomContribsmr();
-        for (i=0;i<cp.size();i++)
-        {
-            process.stdout.write(cp.get(i));
-            process.stdout.write(';');
-
-        }
-        cp.should.eql();
-        mol.delete();
-    });
 
     it('getTPSAAtomContribs', function () {
-        var smi="CCCCCCOCCN";
+        var smi='CCCCCOC';
         var mol = RDKit.Molecule.fromSmiles(smi);
-        mol.calcTPSA();
         var cp = mol.getTPSAAtomContribs();
-        for (i=0;i<cp.size();i++)
-        {
-            process.stdout.write(cp.get(i));
-            process.stdout.write(';');
-
+        var TPSA = [];
+        for (i =0;i<cp.size();i++)
+         {
+            TPSA.push(cp.get(i));
         }
-        cp.should.eql();
+        TPSA.should.eql([ 0, 0, 0, 0, 0, 9.23, 0 ]);
+        mol.delete();
+    });
+
+    it('getASAContribs', function () {
+        var smi='CCC';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        var cp = mol.getASAContribs();
+        var ASA = [];
+        for (i =0;i<cp.size();i++)
+         {
+            ASA.push(cp.get(i));
+        }
+        ASA.should.eql([ 6.923737199690624, 6.4208216229260096, 6.923737199690624 ]);
         mol.delete();
     });
 
@@ -184,7 +186,34 @@ describe('FingerPrints', function () {
 });
 
     
+/*
+describe('Conformers count & access', function () {
+    it('getConformer', function () {
+        RDKit.  getConformer(id);
+    });
     
+    it('getNumAtoms', function () {
+        getNumAtoms();
+
+    });
+
+    it('getNumConformers', function () {
+        getNumConformers();
+    });
+});
+*/
+
+/*
+describe('AlignMols', function () {
+    it('Conformers', function () {
+        AlignMolConformers();
+    });
+    
+    it('Mol versus Mol', function () {
+        AlignMol(smilesref);
+    });
+});
+*/
     
     // 3D Force Field minimization
 describe('3D Force Field minimization', function () {
@@ -216,7 +245,7 @@ describe('3D Force Field minimization', function () {
         this.timeout(50000);
 
         /*
-        for (i=0;i<10;i++){
+        for (i=0;i<100;i++){
             var mol = RDKit.Molecule.fromSmiles(smi);  
             mol.addHs(); 
             mol.EmbedMultipleConfsarg(2,200,2015);   
@@ -257,73 +286,176 @@ describe('3D Force Field minimization', function () {
         mol.delete();
     });
 
+});
+
+
+
+describe('Strings - 2D - Drawing', function () {
+
+    it('smilewrite', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        mol.smilewrite().should.equal('CCCCCOCCO');
+        mol.delete();
+    });
+    
+    it('sdwriteConfs', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        mol.addHs(); 
+        mol.EmbedMultipleConfsarg(3,1000,2015);   
+        mol.sdwriteConfs().should.equal('\n     RDKit          3D\n\n 25 24  0  0  0  0  0  0  0  0999 V2000\n    3.9840    0.1254   -0.2476 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.4817   -0.0129   -0.4820 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.8254    0.1570    0.8479 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.3452    0.0574    0.8647 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.2735   -0.7012   -0.2616 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.3948    0.0027   -0.7319 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.3754   -0.0696    0.2499 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.7151    0.4002   -0.2556 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.6855   -0.2127    0.5440 O   0  0  0  0  0  0  0  0  0  0  0  0\n    4.3140   -0.7630    0.3470 H   0  0  0  0  0  0  0  0  0  0  0  0\n    4.5389    0.2440   -1.1883 H   0  0  0  0  0  0  0  0  0  0  0  0\n    4.0917    0.9917    0.4463 H   0  0  0  0  0  0  0  0  0  0  0  0\n    2.3664   -1.0336   -0.9132 H   0  0  0  0  0  0  0  0  0  0  0  0\n    2.2266    0.7769   -1.2202 H   0  0  0  0  0  0  0  0  0  0  0  0\n    2.1107    1.1721    1.2215 H   0  0  0  0  0  0  0  0  0  0  0  0\n    2.3086   -0.5571    1.5514 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.1332    1.0649    0.9630 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0585   -0.4749    1.8083 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6698   -1.6968    0.0629 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.3651   -0.8524   -1.1388 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.1166    0.4793    1.1669 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.4950   -1.1513    0.5010 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.8321    1.5065   -0.1774 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.8780    0.1498   -1.3316 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.4477    0.3974    0.6318 H   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\n  1 10  1  0\n  1 11  1  0\n  1 12  1  0\n  2 13  1  0\n  2 14  1  0\n  3 15  1  0\n  3 16  1  0\n  4 17  1  0\n  4 18  1  0\n  5 19  1  0\n  5 20  1  0\n  7 21  1  0\n  7 22  1  0\n  8 23  1  0\n  8 24  1  0\n  9 25  1  0\nM  END\n$$$$\n\n     RDKit          3D\n\n 25 24  0  0  0  0  0  0  0  0999 V2000\n   -3.9848    0.3867   -0.4439 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.5115    0.7744   -0.3701 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.8420   -0.2667    0.4844 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7777   -0.9402   -0.3676 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.5651   -0.6601    0.2538 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.4788   -0.1226   -0.6508 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.7468   -0.4783   -0.2026 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.4842    0.7826    0.2082 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.8421    0.5349   -0.0503 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.9794   -0.7138   -0.6485 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.4952    0.9656   -1.2331 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.4249    0.5255    0.5621 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.0972    0.7996   -1.4101 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.4076    1.8040    0.0178 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.3847    0.2562    1.3599 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.5462   -1.0109    0.9036 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.9971   -2.0369   -0.3822 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8284   -0.6078   -1.4156 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.4756    0.0879    1.0816 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.9301   -1.6111    0.7109 H   0  0  0  0  0  0  0  0  0  0  0  0\n    3.2646   -0.9441   -1.0724 H   0  0  0  0  0  0  0  0  0  0  0  0\n    2.7159   -1.1803    0.6581 H   0  0  0  0  0  0  0  0  0  0  0  0\n    3.1126    1.6451   -0.3759 H   0  0  0  0  0  0  0  0  0  0  0  0\n    3.3004    0.9868    1.2741 H   0  0  0  0  0  0  0  0  0  0  0  0\n    5.3607    1.0236    0.6249 H   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\n  1 10  1  0\n  1 11  1  0\n  1 12  1  0\n  2 13  1  0\n  2 14  1  0\n  3 15  1  0\n  3 16  1  0\n  4 17  1  0\n  4 18  1  0\n  5 19  1  0\n  5 20  1  0\n  7 21  1  0\n  7 22  1  0\n  8 23  1  0\n  8 24  1  0\n  9 25  1  0\nM  END\n$$$$\n\n     RDKit          3D\n\n 25 24  0  0  0  0  0  0  0  0999 V2000\n   -3.7097    0.3392   -0.4066 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.8809    0.4861    0.8390 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.6251   -0.3382    0.7994 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5627    0.2268   -0.1067 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.4034   -0.9171   -0.3938 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.6352   -0.4745   -0.8353 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.4370   -0.0264    0.2199 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.9086   -0.1163   -0.1239 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.6121    0.4214    0.9612 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.7582    0.6227   -0.1885 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.3440    0.9860   -1.2185 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.6474   -0.7086   -0.7461 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.7227    1.5434    1.0810 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.5028    0.0682    1.6716 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.2215   -0.4300    1.8193 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.9214   -1.3562    0.4416 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.9477    0.5656   -1.0784 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0114    1.0298    0.3870 H   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0193   -1.5675   -1.1996 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.4740   -1.5333    0.5365 H   0  0  0  0  0  0  0  0  0  0  0  0\n    2.2174    1.0460    0.4175 H   0  0  0  0  0  0  0  0  0  0  0  0\n    2.2851   -0.6215    1.1461 H   0  0  0  0  0  0  0  0  0  0  0  0\n    4.1682    0.5141   -1.0047 H   0  0  0  0  0  0  0  0  0  0  0  0\n    4.2679   -1.1450   -0.2547 H   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4432    1.3854    1.0113 H   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\n  1 10  1  0\n  1 11  1  0\n  1 12  1  0\n  2 13  1  0\n  2 14  1  0\n  3 15  1  0\n  3 16  1  0\n  4 17  1  0\n  4 18  1  0\n  5 19  1  0\n  5 20  1  0\n  7 21  1  0\n  7 22  1  0\n  8 23  1  0\n  8 24  1  0\n  9 25  1  0\nM  END\n$$$$\n');
+        mol.delete();      
+    });
+
+
+    it('2D generation', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        mol.compute2DCoords();
+        mol.sdwriteConfs().should.equal('\n     RDKit          2D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.5981   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.8971    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.1962   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    6.4952    0.7500    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    7.7942   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.0933    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   10.3923   -0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
+        mol.delete();      
+    });
+
+    it('2D Drawing', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        mol.Drawing2D().should.equal('<?xml version=\'1.0\' encoding=\'iso-8859-1\'?>\n<svg:svg version=\'1.1\' baseProfile=\'full\'\n              xmlns:svg=\'http://www.w3.org/2000/svg\'\n                      xmlns:rdkit=\'http://www.rdkit.org/xml\'\n                      xmlns:xlink=\'http://www.w3.org/1999/xlink\'\n                  xml:space=\'preserve\'\nwidth=\'300px\' height=\'300px\' >\n<svg:rect style=\'opacity:1.0;fill:#ffffff;stroke:none\' width=\'300\' height=\'300\' x=\'0\' y=\'0\'> </svg:rect>\n<svg:path d=\'M 13.6364,140.943 45.0092,159.057\' style=\'fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 45.0092,159.057 76.3821,140.943\' style=\'fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 76.3821,140.943 107.755,159.057\' style=\'fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 107.755,159.057 139.128,140.943\' style=\'fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 139.128,140.943 151.995,148.372\' style=\'fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 151.995,148.372 164.862,155.801\' style=\'fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 176.14,155.801 189.007,148.372\' style=\'fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 189.007,148.372 201.873,140.943\' style=\'fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 201.873,140.943 233.246,159.057\' style=\'fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 233.246,159.057 243.704,153.019\' style=\'fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:path d=\'M 243.704,153.019 254.162,146.981\' style=\'fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\' />\n<svg:text x=\'164.862\' y=\'163.819\' style=\'font-size:12px;font-style:normal;font-weight:normal;fill-opacity:1;stroke:none;font-family:sans-serif;text-anchor:start;fill:#FF0000\' ><svg:tspan>O</svg:tspan></svg:text>\n<svg:text x=\'253.747\' y=\'145.706\' style=\'font-size:12px;font-style:normal;font-weight:normal;fill-opacity:1;stroke:none;font-family:sans-serif;text-anchor:start;fill:#FF0000\' ><svg:tspan>OH</svg:tspan></svg:text>\n</svg:svg>\n');
+        mol.delete();      
+
+    });
+  
+});
+
+
+// molecule manipulation & cleaning, ...
+describe('molecule manipulation & cleaning', function () {
+     it('addHs', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol.addHs();  
+        mol.sdwrite().should.equal('\n     RDKit          \n\n 25 24  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\n  1 10  1  0\n  1 11  1  0\n  1 12  1  0\n  2 13  1  0\n  2 14  1  0\n  3 15  1  0\n  3 16  1  0\n  4 17  1  0\n  4 18  1  0\n  5 19  1  0\n  5 20  1  0\n  7 21  1  0\n  7 22  1  0\n  8 23  1  0\n  8 24  1  0\n  9 25  1  0\nM  END\n$$$$\n');
+        mol.delete();      
+
+    });
+
+    it('removeHs', function () {
+     var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol.removeHs();
+        mol.sdwrite().should.equal('\n     RDKit          \n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
+        mol.delete();    
+    });
+
+
+
+    it('sanitizeMol', function () {
+     var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol.sanitizeMol();
+        mol.sdwrite().should.equal('\n     RDKit          \n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
+        mol.delete();    
+    });
+
+
+    it('cleanUp', function () {
+     var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol.cleanUp();
+        mol.sdwrite().should.equal('\n     RDKit          \n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
+        mol.delete();    
+    });
+
+    it('Kekulize', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol. Kekulize();
+        mol.sdwrite().should.equal('\n     RDKit          \n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
+        mol.delete();    
+    });
+});
+
+    
+describe('SubStructures search', function () {
+    it('getSubstructMatches', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        var smilesref = 'CO';
+        var d = mol.GetSubstructMatches(smilesref);
+        /*var dlen = d.size();
+        var e =  [];
+        for(var j=0;j < dlen;j++){
+                e.push(d.get(j));
+            }
+        */
+        d.should.equal(3);
+        mol.delete;
+    });
+
+    it('HasSubstructMatchStr', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        var smilesref = 'CO';
+        mol.HasSubstructMatchStr(smilesref).should.equal(true);
+        mol.delete;
+    });
 });    
 
+
+
+/*
+describe('Properties access', function () {
+    it('getProp', function () {
+        getProp(key);
+    });
+
+
+    it('setProp', function () {
+        setProp(key, value);
+    });
+
+     it('hasProp', function () {
+     hasProp(key);
+    });
+
+    it('getproplist', function () {
+      getproplist();
+    });
+});
+*/
+
+/*
+describe.skip('Similarity checks', function () {
+    it('Tanimoto', function () {
+        TanimotoSimilarityfromSmile (smilesref);
+    });
+
+    it('sDice', function () {
+        DiceSimilarityfromSmile (smilesref);
+    });
+
+    it('Tversky', function () {
+        TverskySimilarityfromSmile( smilesref,a, b);
+    });
+});
+*/
 
 
 
 
 /*
-    
-    
-
-    
-    
-  
-describe('', function () {
+describe('getPath', function () {
     it('should work', function () {
-        RDKit.  getPath();
+        var p= RDKit.getPath();
+        p.should.equal('');
+        mol.delete();    
 
     });
 });
+*/
 
-      describe('', function () {
-    it('should work', function () {
 
-    smilewrite();
-
-    });
-});
-
-  describe('', function () {
-    it('should work', function () {
-sdwriteConfs();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    compute2DCoords();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.    
-    Drawing2D();
-       });
-}); 
-    // similarity
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    TanimotoSimilarityfromSmile (smilesref);
-    });
-});
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    DiceSimilarityfromSmile (smilesref);
-    });
-});
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    TverskySimilarityfromSmile( smilesref,a, b);
-        });
-});
+/*
 describe('', function () {
     it('should work', function () {
         RDKit.
@@ -331,402 +463,19 @@ describe('', function () {
     });
 });
 
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    AlignMolConformers();
-    });
-});
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    AlignMol(smilesref);
-        });
-});
-
-    // molecule manipulation & cleaning, ...
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    addHs();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    removeHs();
-    });
-});
-
-
-  describe('', function () {
-    it('should work', function () {
-sanitizeMol();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    cleanUp();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    Kekulize();
-    });
-});
-
     
-    // descriptors
-    describe('', function () {
-    it('should work', function () {
-describe('', function () {
-    it('should work', function () {
-        RDKit.  getMW();
-
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.ExactMW();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Formula();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi0v();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi1v();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi2v();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi3v();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi4v();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi0n();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi1n();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi2n();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi3n();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Chi4n();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.HallKierAlpha();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Kappa1();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Kappa2();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.Kappa3();
-    });
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.logp_mr();
-    });
-});
-
-    
-    
-describe('', function () {
-    it('should work', function () {
-    LipinskiHBA();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    LipinskiHBD();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumRotatableBonds();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumHBD();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumHBA();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumHeteroatoms();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumAmideBonds();
-});
-});
-
-    FractionCSP3();
-describe('', function () {
-    it('should work', function () {
-    NumRings();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumAromaticRings();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumAliphaticRings();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumSaturatedRings();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumHeterocycles();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumAromaticHeterocycles();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumAromaticCarbocycles ();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumSaturatedHeterocycles();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumSaturatedCarbocycles();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumAliphaticHeterocycles();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    NumAliphaticCarbocycles();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-    LabuteASA();
-});
-});
-
-    
-    TPSA();
-  describe('', function () {
-    it('should work', function () {
-SlogP_VSA();
-});
-});
-  describe('', function () {
-    it('should work', function () {
-SMR_VSA();
-});
-});
-
-   describe('', function () {
-    it('should work', function () {
-    PEO_VSA();
-});
-});
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    MQNs();
-});
-});
-
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.  getSubstructMatches(smilesref);
-    });
-});
-
-
-describe('', function () {
-    it('should work', function () {
-
-    HasSubstructMatchStr(smilesref);
-    });
-});    
-
-  
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.  getProp(key);
-    });
-});
-
-
-
-  describe('', function () {
-    it('should work', function () {
-setProp(key, value);
-});
-});
-    describe('', function () {
-    it('should work', function () {
-describe('', function () {
-    it('should work', function () {
-        RDKit.  getNumAtoms();
-
-    });
-});
-
-    describe('', function () {
-    it('should work', function () {
-describe('', function () {
-    it('should work', function () {
-        RDKit.  getNumConformers();
-    });
-});
-
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.  getConformer(id);
-    });
-});
-
-
- describe('', function () {
-    it('should work', function () {
-     hasProp(key);
-    });
-});   
-
-
-describe('', function () {
-    it('should work', function () {
-        RDKit.  getproplist();
-    });
-});
-
-
-    
-    
-    
-    // atom & bond manipulations
-  describe('', function () {
+// atom & bond manipulations
+describe('molecule creation using atom bond', function () {
     it('should work', function () {
     addAtom (atomid);
     });
-});
     // this is in development stage caution not working for the moment!!!!
-    describe('', function () {
     it('should work', function () {
     addBond (beginAtomIdx, endAtomIdx,bondtypeid);
     });
-});
 
-
-  describe('', function () {
     it('should work', function () {
-setBondDir (Bondid, bonddirid);
+        setBondDir (Bondid, bonddirid);
+    });
 });
-});
-    
-
 */

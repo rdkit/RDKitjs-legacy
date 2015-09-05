@@ -102,23 +102,94 @@ console.log(c);
 mol.delete()
 */
 
+
+/*
+var m = RDKit.Molecule.fromSmiles('CC(C)=C(C)C(=O)c1ccccc1')
+m.sdwrite()
+m.addHs(); 
+//m.sdwrite();
+m.EmbedMultipleConfs(); //=> generate Conformers
+//m.EmbedMultipleConfsarg(5,100,1)
+
+console.log(m.sdwriteConfs())
+var d =m.MMFFOptimizeMoleculeConfs(1,500,'MMFF94'); //=> gave the Conformers optimization result in d!
+console.log('AlignMolConformers')
+
+//m.getConformerRMS(1,2);
+
+m.AlignMolConformers();
+//var t = m.AlignMolConformersRMSlist();
+//console.log(t.size());
+
+for (i=0;i<d.size();i++)
+{
+    console.log(d.get(i));
+
+}
+*/
+
+/*
+debugger;
+
+console.log('AlignMol 2')
+
+var m1 = RDKit.Molecule.fromSmiles('CC(C)=C(C)C(=O)C')
+m1.addHs();
+m1.EmbedMolecule();
+m1.MMFFoptimizeMolecule();
+var t = m1.AlignMol('CC(C)=C(C)C(=O)CC');
+*/
+
+
+//m.sdwriteConfs()
+//m.sdwrite()
+//m.AlignMolConformers();
+//m.removeHs();
+//var p = m.sdwriteConfs();
+//m.sdwriteConfs() //=> gave the 3D conformers list in a SDF format
+
+m.delete()
+
+
+/*
+
 var m = RDKit.Molecule.fromSmiles('CC(C)=C(C)C(=O)c1ccccc1')
 m.sdwrite()
 m.addHs(); 
 //m.sdwrite();
 var c = m.EmbedMultipleConfs(); //=> generate Conformers
-m.sdwriteConfs()
+//console.log(m.sdwriteConfs())
+console.log(c)
+
+var p= m.getConformer(0);
+
+console.log(p)
+
 //var p = m.sdwriteConfs();
 var d = m.MMFFOptimizeMoleculeConfs(1,100,'MMFF94'); //=> gave the Conformers optimization result in d!
-m.sdwriteConfs()
+console.log(d)
+
+//console.log(m.sdwriteConfs())
 //m.sdwrite()
-m.AlignMolConformers();
+var e = m.AlignMolConformers();
+console.log(e)
+
+
+
+
+for (i=0;i<d.length;i++)
+{
+    console.log(d.get(i));
+
+}
 //m.removeHs();
 //var p = m.sdwriteConfs();
 m.sdwriteConfs() //=> gave the 3D conformers list in a SDF format
 
 m.delete()
 
+
+*/
 
 
 

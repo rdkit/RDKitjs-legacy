@@ -1,0 +1,26 @@
+var R = RDKit;
+var smi = 'CCCCCOC(CO)';
+Error.stackTraceLimit=0;
+var iter = 0;
+
+
+function doIt() {
+ var mol = RDKit.Molecule.fromSmiles(smi); 
+ mol.addHs(); 
+ mol.EmbedMultipleConfsarg(2,200,2015); 
+ mol.MMFFOptimizeMoleculeConfs(8,200,'MMFF94');
+ mol.delete();
+ if (iter++ !== 1000) {
+ setTimeout(doIt);
+ }
+}
+doIt();
+
+for (i=0;i<100000;i++){
+ var mol = RDKit.Molecule.fromSmiles(smi); 
+ mol.addHs();
+ calc_all_desc(mol);
+ mol.EmbedMultipleConfsarg(10,200,2015); 
+ //mol.MMFFOptimizeMoleculeConfs(8,200,'MMFF94');
+ mol.delete();
+ }
