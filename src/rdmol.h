@@ -57,8 +57,8 @@ public:
     
     string getPath();
     // string output in console
-    string smilewrite();
-    string sdwrite();
+    string toSmiles();
+    string toMolfile();
     // string sdwritefile(string filename);
     // int writefile(string filename, string data);
     // int readfile(string filename);
@@ -288,8 +288,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getPath", &Molecule::getPath, allow_raw_pointers())
     
     // writer basic functions
-    .function("sdwrite", &Molecule::sdwrite, allow_raw_pointers())
-    .function("smilewrite", &Molecule::smilewrite, allow_raw_pointers())
+    .function("toMolfile", &Molecule::toMolfile, allow_raw_pointers())
+    .function("toSmiles", &Molecule::toSmiles, allow_raw_pointers())
     
     
     // testing functions ... not working correctly

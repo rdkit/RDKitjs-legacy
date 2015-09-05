@@ -484,14 +484,14 @@ vector<string> Molecule::getproplist()
     return rdmol->getPropList();
 }
 
-string Molecule::smilewrite()
+string Molecule::toSmiles()
 {
     string smile =  RDKit::MolToSmiles(*rdmol);  
     return smile;
 
 }
 
-string Molecule::sdwrite()
+string Molecule::toMolfile()
 {
     stringstream ss;
     RDKit::SDWriter *writer = new RDKit::SDWriter(&ss);
