@@ -403,79 +403,106 @@ describe('SubStructures search', function () {
 
 
 
-/*
+
 describe('Properties access', function () {
-    it('getProp', function () {
-        getProp(key);
+
+    it('set & getProp', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol.setProp('prop1', 'rdkitjstest');
+        mol.getProp('prop1').should.equal('rdkitjstest');
     });
 
 
-    it('setProp', function () {
-        setProp(key, value);
-    });
 
      it('hasProp', function () {
-     hasProp(key);
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol.setProp('prop1', 'rdkitjstest');
+        mol.hasProp('prop1').should.equal(true);
+        mol.hasProp('prop2').should.equal(false);
+
     });
 
-    it('getproplist', function () {
-      getproplist();
+    it.skip('getproplist', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol.setProp('prop1', 'rdkitjstest');
+        mol.getproplist().should.equal('');
     });
 });
-*/
 
-/*
-describe.skip('Similarity checks', function () {
+
+
+describe('Similarity checks', function () {
     it('Tanimoto', function () {
-        TanimotoSimilarityfromSmile (smilesref);
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        var smilesref ='CCCCCOC';
+        mol.TanimotoSimilarityfromSmile (smilesref).should.equal(0.4666666666666667);
+                mol.delete();    
+
     });
 
-    it('sDice', function () {
-        DiceSimilarityfromSmile (smilesref);
+    it('Dice', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        var smilesref ='CCCCCOC';
+        mol.DiceSimilarityfromSmile (smilesref).should.equal(0.6363636363636364);
+                mol.delete();    
+
     });
 
     it('Tversky', function () {
-        TverskySimilarityfromSmile( smilesref,a, b);
-    });
-});
-*/
-
-
-
-
-/*
-describe('getPath', function () {
-    it('should work', function () {
-        var p= RDKit.getPath();
-        p.should.equal('');
-        mol.delete();    
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        var smilesref ='CCCCCOC';
+        mol.TverskySimilarityfromSmile( smilesref,2, 1).should.equal(0.34146341463414637);
+                mol.delete();    
 
     });
 });
-*/
 
 
-/*
-describe('', function () {
-    it('should work', function () {
-        RDKit.
-    findSSSR(res);
-    });
-});
-
-    
 // atom & bond manipulations
 describe('molecule creation using atom bond', function () {
-    it('should work', function () {
-    addAtom (atomid);
+    it('create molecule and add atoms and bonds', function () {
+        var t = RDKit.Molecule.newmolecule();
+        t.addAtom(6)
+        t.addAtom(6)
+        t.addAtom(6)
+        t.addAtom(6)
+        t.addAtom(6)
+        t.addAtom(8)
+        t.addBond(0,1,1)
+        t.addBond(1,2,2)
+        t.addBond(2,3,1)
+        t.addBond(3,4,1)
+        t.addBond(4,5,1)
+        t.toSmiles().should.equal('CC=CCCO');
+        t.delete();    
+
     });
     // this is in development stage caution not working for the moment!!!!
-    it('should work', function () {
-    addBond (beginAtomIdx, endAtomIdx,bondtypeid);
-    });
-
-    it('should work', function () {
+    
+    it.skip('should work', function () {
         setBondDir (Bondid, bonddirid);
     });
 });
-*/
+
+describe.skip('getPath', function () {
+    it('should work', function () {
+        var p= RDKit.molecule.getPath();
+        p.should.equal('');
+        p.delete();
+    });
+});
+
+
+
+
+describe.skip('findSSSR', function () {
+    it('should work', function () {
+        findSSSR(res);
+    });
+});

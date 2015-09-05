@@ -182,10 +182,10 @@ EMSCRIPTEN_BIN:UNINITIALIZED=/Users/mbp/Github/emsdk_portable1/emscripten/tag-1.
 NODE_JS_EXECUTABLE:FILEPATH=/usr/local/bin/node
 
 //No help, variable specified on the command line.
-RDKIT_INCLUDE_DIR:UNINITIALIZED=/Users/mbp/Github/Toolchain/rdkit_15_03_1/Code
+RDKIT_INCLUDE_DIR:UNINITIALIZED=/Users/mbp/Github/rdkit/Code
 
 //No help, variable specified on the command line.
-RDKIT_LIB_DIR:UNINITIALIZED=/Users/mbp/Github/Toolchain/rdkit_15_03_1/lib
+RDKIT_LIB_DIR:UNINITIALIZED=/Users/mbp/Github/rdkit/lib
 
 //No help, variable specified on the command line.
 RDK_BUILD_CPP_TESTS:UNINITIALIZED=OFF
