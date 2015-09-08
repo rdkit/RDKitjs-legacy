@@ -64,17 +64,59 @@ if (nAtoms > fplen)
     score3 = 0.5*Math.log(nAtoms/fplen);
 
 var sascore = score1 + score2 + score3;
-console.log(sascore);
+
 min = -4.0;
 max = 2.5;
+
 sascore = 11 - (sascore - min + 1) / (max - min) * 9;
+console.log(sascore);
+
 if (sascore > 8) 
   	sascore = 8 + math.log(sascore-8);
 if (sascore > 10)
    sascore = 10.0;
 else if (sascore < 1)
-   sascore = 1.0;
+   sascore = 1;
 
-
+console.log('SAscore:');
 console.log(sascore);
+
+/*
+#
+# calculation of natural product-likeness as described in:
+#
+# Natural Product-likeness Score and Its Application for Prioritization of Compound Libraries 
+# Peter Ertl, Silvio Roggo, and Ansgar Schuffenhauer
+# Journal of Chemical Information and Modeling, 48, 68-74 (2008)
+# http://pubs.acs.org/doi/abs/10.1021/ci700286x
+#
+# for the training of this model only openly available data have been used
+# ~50,000 natural products collected from various open databases
+# ~1 million drug-like molecules from ZINC as a "non-NP background"
+#
+# peter ertl, august 2015
+# javascript adaptation september 2015
+*/
+var dict = require ('./publicnp.model.json');
+
+npscore = 0;
+for (i =0;i<fplen;i++){   
+	v = u.get(i+fplen);
+	nf = nf + v;
+	npscore = npscore + dict[u.get(i)];
+}
+
+npscore = npscore/nAtoms;
+
+//# preventing score explosion for exotic molecules
+if (npscore > 4) 
+    npscore = 4 + Math.log10(npscore - 4 + 1);
+if (npscore < -4)
+    npscore = -4 - Math.log10(-4. -npscore + 1.);
+console.log('NPscore:');
+console.log(npscore);
+
+
+
+
 
