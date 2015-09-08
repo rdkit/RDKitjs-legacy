@@ -6,9 +6,10 @@
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/FileParsers/FileParsers.h>
 #include <DataStructs/SparseBitVect.h>
+#include <DataStructs/SparseIntVect.h>
 #include <DataStructs/BitOps.h>
 #include <GraphMol/Conformer.h>
-
+#include <boost/cstdint.hpp>
 
 
 
@@ -17,19 +18,26 @@ using namespace emscripten;
 using RDKit::ROMol;
 using RDKit::RWMol;
 
-
 class Molecule
 {
 public:
     Molecule(RWMol *mol);
     
     ~Molecule();
-    
+
+
+    // SA score Peter Erl
+    vector<int> getSpiroBridgeMacrocycles();
+    vector<string> FindMolChiralCenters();
     
     // new fingerprints
     string getRDKFP();
     string getMorganFP(unsigned int sizes,unsigned int lengths);
     vector<int> getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths);
+    // const map<unsigned int,int> getMorganFP_getNonzeroElements(unsigned int sizes);
+    map<boost::uint32_t, int> getMorganFP_getNonzeroElements(unsigned int sizes);
+    vector<boost::uint32_t> getMorganFPlist(unsigned int sizes);
+    // RDKit::SparseIntVect<boost::uint32_t>::StorageType getMorganFP_getNonzeroElements(unsigned int sizes);
     string getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths);
     string getMACCSFP();
     string getPatternFP();
@@ -244,8 +252,12 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     register_vector<double>("VectorDouble");
     register_vector<unsigned int>("VectorUint");
     register_vector<int>("Vectorint");
+    register_map<boost::uint32_t,int>("MapIindexInt");
+
     
     class_<Molecule>("Molecule")
+    .function("getSpiroBridgeMacrocycles",&Molecule::getSpiroBridgeMacrocycles, allow_raw_pointers())
+    .function("FindMolChiralCenters",&Molecule::FindMolChiralCenters, allow_raw_pointers())
     .function("addAtom",&Molecule::addAtom, allow_raw_pointers())
     .function("addBond",&Molecule::addBond, allow_raw_pointers())
     .function("setBondDir",&Molecule::setBondDir, allow_raw_pointers())
@@ -254,6 +266,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getRDKFP", &Molecule::getRDKFP, allow_raw_pointers())
     .function("getMorganFP", &Molecule::getMorganFP, allow_raw_pointers())
     .function("getMorganFP_GetOnBits", &Molecule::getMorganFP_GetOnBits, allow_raw_pointers())
+    .function("getMorganFP_getNonzeroElements", &Molecule::getMorganFP_getNonzeroElements, allow_raw_pointers())
+    .function("getMorganFPlist", &Molecule::getMorganFPlist, allow_raw_pointers())
+
     .function("getLayeredFP", &Molecule::getLayeredFP, allow_raw_pointers())
     .function("getMACCSFP", &Molecule::getMACCSFP, allow_raw_pointers())
     .function("getPatternFP", &Molecule::getPatternFP, allow_raw_pointers())

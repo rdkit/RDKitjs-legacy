@@ -465,7 +465,7 @@ describe('Similarity checks', function () {
 
 
 // atom & bond manipulations
-describe('molecule creation using atom bond', function () {
+describe('new molecule using atom bond', function () {
     it('create molecule and add atoms and bonds', function () {
         var t = RDKit.Molecule.newmolecule();
         t.addAtom(6)
@@ -485,7 +485,7 @@ describe('molecule creation using atom bond', function () {
     });
     // this is in development stage caution not working for the moment!!!!
     
-    it.skip('should work', function () {
+    it.skip('setBondDir', function () {
         setBondDir (Bondid, bonddirid);
     });
 });
@@ -497,7 +497,6 @@ describe.skip('getPath', function () {
         p.delete();
     });
 });
-
 
 
 

@@ -16,6 +16,10 @@ function doIt() {
 }
 doIt();
 
+var R = RDKit;
+var smi = 'CCCCCOC(CO)';
+Error.stackTraceLimit=0;
+
 for (i=0;i<100000;i++){
  var mol = RDKit.Molecule.fromSmiles(smi); 
  mol.addHs();
@@ -23,4 +27,4 @@ for (i=0;i<100000;i++){
  mol.EmbedMultipleConfsarg(10,200,2015); 
  //mol.MMFFOptimizeMoleculeConfs(8,200,'MMFF94');
  mol.delete();
- }
+}

@@ -96,10 +96,15 @@
 
 #include <GraphMol/PartialCharges/GasteigerCharges.h>
 #include <GraphMol/PartialCharges/GasteigerParams.h>
+#include <map>
+#include <boost/cstdint.hpp>
+#include <typeinfo>
 
 
 
 typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
+//template<typename IndexType>
+//typedef std::map<IndexType,int> StorageType;
 
 
 
@@ -407,6 +412,89 @@ vector<int> Molecule::getMorganFP_GetOnBits(unsigned int sizes,unsigned int leng
 }
 
 
+
+map<boost::uint32_t, int> Molecule::getMorganFP_getNonzeroElements(unsigned int sizes)
+{
+    RDKit::SparseIntVect<boost::uint32_t> * fp =  RDKit::MorganFingerprints::getFingerprint(*rdmol,sizes);
+    RDKit::SparseIntVect<boost::uint32_t>::StorageType gnze = fp->getNonzeroElements();
+    //map<boost::uint32_t,int> gnze ;
+    
+    /*for(RDKit::SparseIntVect<boost::uint32_t>::StorageType::const_iterator iter=nze.begin();
+        iter!=nze.end();++iter){
+        boost::uint32_t v = iter->first;
+        int v2 = iter->second;
+    }*/
+    //gnze.insert(nze.begin(), nze.end());
+    //std::cout << gnze << std::endl;
+
+
+    map<boost::uint32_t, int>::iterator it;
+
+    for ( it = gnze.begin(); it != gnze.end(); it++ )
+    {
+        std::cout << it->first  // string (key)
+                  << ':'
+                  << it->second   // string's value 
+                  << std::endl ;
+    }
+
+
+
+
+
+    return gnze;
+}
+
+
+
+
+vector<boost::uint32_t> Molecule::getMorganFPlist(unsigned int sizes)
+{
+    RDKit::SparseIntVect<boost::uint32_t> * fp =  RDKit::MorganFingerprints::getFingerprint(*rdmol,sizes);
+    RDKit::SparseIntVect<boost::uint32_t>::StorageType gnze = fp->getNonzeroElements();
+
+    int elementsize=gnze.size();
+    vector<boost::uint32_t>  result(2*elementsize);
+    
+    map<boost::uint32_t, int>::iterator it;
+    
+    int idx = 0;
+    for (it = gnze.begin(); it != gnze.end(); it++ )
+    {
+        result[idx]=it->first;
+        result[elementsize+idx]=it->second;
+        idx=idx+1;
+    }
+    return result;
+}
+
+
+vector<string> Molecule::FindMolChiralCenters()
+{
+  bool includeUnassigned = false;
+  RDKit::MolOps::assignStereochemistry(*rdmol,false,true,includeUnassigned);
+  int p = 0;
+  const RDKit::Atom *atom;
+  vector<string> centers;
+    for (int i =0;i<rdmol->getNumAtoms();i++) { 
+      atom = rdmol->getAtomWithIdx(i);
+    if (atom->hasProp(RDKit::common_properties::_CIPCode)) {
+       string cip;
+       atom->getPropIfPresent<string>(RDKit::common_properties::_CIPCode, cip);
+       centers[p] = i;
+       centers[p+1] = cip;
+       p=p+2;
+    }
+    else if (includeUnassigned and atom->hasProp(RDKit::common_properties::_ChiralityPossible)){
+      centers[p] = i;
+      centers[p+1] = '?';
+      p=p+2;
+    }
+  }
+  return centers;
+}
+
+
 string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths)
 {
     ExplicitBitVect* finger =  RDKit::LayeredFingerprintMol(*rdmol,layer, sizes,lengths);
@@ -552,6 +640,49 @@ void Molecule::computeGasteigerCharges()
 {
     vector<double> charges(rdmol->getNumAtoms(),0);
     RDKit::computeGasteigerCharges(*rdmol, charges,12,false);
+}
+
+
+vector<int> Molecule::getSpiroBridgeMacrocycles()
+{
+    RDKit::VECT_INT_VECT rings = rdmol->getRingInfo()->atomRings();
+
+    int macroCycleCount = 0;
+    int bridgeAtomCount = 0;
+    int spiroAtomCount = 0;
+    int i=0;
+    for (RDKit::VECT_INT_VECT_CI ringIter = rings.begin();ringIter != rings.end();ringIter++) {
+        if (ringIter->size()>8) {
+            macroCycleCount++;
+        }
+        //std::cout << "Cycle" << std::endl;
+        //std::vector<int> i = rings[0].begin();
+        //i = ringIter->begin();
+        std::sort(rings[i].begin(),rings[i].end());
+        for (RDKit::INT_VECT_CI it=ringIter->begin();it!=ringIter->end();it++) {
+            //std::cout << *it << std::endl;
+        }
+        int x=1;
+        for (RDKit::VECT_INT_VECT_CI ringIter2 = ringIter+1; ringIter2 != rings.end(); ringIter2++) {
+            vector<int> v;
+            RDKit::Intersect(rings[i],rings[i+x],v);
+            if (v.size() == 1) {
+                spiroAtomCount++;
+            } else if (v.size() > 2) {
+                bridgeAtomCount++;
+            }
+            x++;
+        }
+        i++;
+    }
+
+
+    vector<int> result(3);
+    result[0]=spiroAtomCount;
+    result[1]=bridgeAtomCount;
+    result[2]=macroCycleCount;
+
+    return result;
 }
 
 
