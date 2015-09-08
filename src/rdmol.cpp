@@ -469,9 +469,8 @@ vector<boost::uint32_t> Molecule::getMorganFPlist(unsigned int sizes)
 }
 
 
-vector<string> Molecule::FindMolChiralCenters()
+vector<string> Molecule::FindMolChiralCenters(bool includeUnassigned)
 {
-  bool includeUnassigned = false;
   RDKit::MolOps::assignStereochemistry(*rdmol,false,true,includeUnassigned);
   int p = 0;
   const RDKit::Atom *atom;

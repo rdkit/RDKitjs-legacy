@@ -28,7 +28,7 @@ public:
 
     // SA score Peter Erl
     vector<int> getSpiroBridgeMacrocycles();
-    vector<string> FindMolChiralCenters();
+    vector<string> FindMolChiralCenters(bool includeUnassigned);
     
     // new fingerprints
     string getRDKFP();
