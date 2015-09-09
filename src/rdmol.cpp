@@ -471,22 +471,32 @@ vector<boost::uint32_t> Molecule::getMorganFPlist(unsigned int sizes)
 
 vector<string> Molecule::FindMolChiralCenters(bool includeUnassigned)
 {
-  RDKit::MolOps::assignStereochemistry(*rdmol,false,true,includeUnassigned);
+  RDKit::MolOps::assignStereochemistry(*rdmol,false,true,true);
   int p = 0;
   const RDKit::Atom *atom;
   vector<string> centers;
     for (int i =0;i<rdmol->getNumAtoms();i++) { 
       atom = rdmol->getAtomWithIdx(i);
-    if (atom->hasProp(RDKit::common_properties::_CIPCode)) {
-       string cip;
-       atom->getPropIfPresent<string>(RDKit::common_properties::_CIPCode, cip);
-       centers[p] = i;
-       centers[p+1] = cip;
-       p=p+2;
-    }
-    else if (includeUnassigned and atom->hasProp(RDKit::common_properties::_ChiralityPossible)){
-      centers[p] = i;
-      centers[p+1] = '?';
+      std::cout << i  << std::endl; 
+      vector<string>  plist=atom->getPropList();
+      for (int x=0;x<plist.size();x++)
+      {
+      std::cout << plist[x]  << std::endl; 
+      }
+      if (atom->hasProp(RDKit::common_properties::_CIPCode)) {
+         string cip;
+         atom->getProp(RDKit::common_properties::_CIPCode, cip);
+         std::cout << cip << std::endl; 
+
+         centers[p] = i;
+         centers[p+1] = cip;
+         p=p+2;
+      }
+      else if (includeUnassigned and atom->hasProp(RDKit::common_properties::_ChiralityPossible)){
+         centers[p] = i;
+         centers[p+1] = '?';
+         std::cout << "includeUnassigned true" << std::endl; 
+
       p=p+2;
     }
   }
@@ -621,6 +631,46 @@ unsigned int Molecule::compute2DCoords()
     return RDDepict::compute2DCoords(*rdmol);
 }
 
+
+
+vector<float> Molecule::getAtomsPos2D()
+{
+    double sigma = 0;
+    int atomnumber = rdmol->getNumAtoms();
+    vector<float>  res(2*atomnumber+1);
+
+    RDDepict::compute2DCoords(*rdmol);
+    WedgeMolBonds(*rdmol,&(rdmol->getConformer()));
+    RDKit::MolDraw2DSVG drawer(300,300);
+    drawer.drawMolecule(*rdmol);
+    drawer.finishDrawing();
+
+
+    for (int i =0;i<2*atomnumber;i=i+2) { 
+      RDGeom::Point2D atomcoords = drawer.getAtomCoords(i/2);
+      res[i]=atomcoords[0];
+      res[i+1]=atomcoords[1];
+    }
+    
+
+    if (rdmol->getNumBonds() >0){
+      RDKit::Bond * bond = rdmol->getBondWithIdx(0);
+      int idx1 = bond->getBeginAtomIdx();
+      int idx2 = bond->getEndAtomIdx();
+      sigma = 0.3*sqrt(pow(res[2*idx1]-res[2*idx2],2)+pow(res[2*idx1+1]-res[2*idx2+1],2));
+    }
+
+    else {
+      sigma = 0.3*sqrt(pow(res[0]-res[2],2)+pow(res[1]-res[3],2));
+    }
+     // store sigma in the last position => odd list!
+      res[2*atomnumber+1]=sigma;
+    return res;
+
+
+}
+
+
 string Molecule::Drawing2D()
 {
     RDDepict::compute2DCoords(*rdmol);
@@ -641,7 +691,7 @@ void Molecule::computeGasteigerCharges()
     RDKit::computeGasteigerCharges(*rdmol, charges,12,false);
 }
 
-
+// the results are not equivalent to the NPscore.py function need to check another method!!!
 vector<int> Molecule::getSpiroBridgeMacrocycles()
 {
     RDKit::VECT_INT_VECT rings = rdmol->getRingInfo()->atomRings();
@@ -654,13 +704,7 @@ vector<int> Molecule::getSpiroBridgeMacrocycles()
         if (ringIter->size()>8) {
             macroCycleCount++;
         }
-        //std::cout << "Cycle" << std::endl;
-        //std::vector<int> i = rings[0].begin();
-        //i = ringIter->begin();
         std::sort(rings[i].begin(),rings[i].end());
-        for (RDKit::INT_VECT_CI it=ringIter->begin();it!=ringIter->end();it++) {
-            //std::cout << *it << std::endl;
-        }
         int x=1;
         for (RDKit::VECT_INT_VECT_CI ringIter2 = ringIter+1; ringIter2 != rings.end(); ringIter2++) {
             vector<int> v;
@@ -674,7 +718,6 @@ vector<int> Molecule::getSpiroBridgeMacrocycles()
         }
         i++;
     }
-
 
     vector<int> result(3);
     result[0]=spiroAtomCount;
@@ -914,86 +957,6 @@ int Molecule::writefile(string filename, string data)
 
 
 
-*/
-
-//////////////////////////////// new drawing
-/*
- std::map<int,DrawColour> *pyDictToColourMap(python::object pyo){
-      std::map<int,DrawColour> *res=NULL;
-      if(pyo){
-        res = new std::map<int,DrawColour>;
-        python::dict tDict = python::extract<python::dict>(pyo);
-        for(unsigned int i=0;i<python::extract<unsigned int>(tDict.keys().attr("__len__")());++i){
-          python::tuple tpl=python::extract<python::tuple>(tDict.values()[i]);
-          float r=python::extract<float>(tpl[0]);
-          float g=python::extract<float>(tpl[1]);
-          float b=python::extract<float>(tpl[2]);
-          DrawColour clr(r,g,b);
-          (*res)[python::extract<int>(tDict.keys()[i])]=clr;
-        }
-      }
-      return res;
-    }
-
-
-std::map<int,double> *pyDictToDoubleMap(python::object pyo){
-      std::map<int,double> *res=NULL;
-      if(pyo){
-        res = new std::map<int,double>;
-        python::dict tDict = python::extract<python::dict>(pyo);
-        for(unsigned int i=0;i<python::extract<unsigned int>(tDict.keys().attr("__len__")());++i){
-          double r = python::extract<double>(tDict.values()[i]);
-          (*res)[python::extract<int>(tDict.keys()[i])]=r;
-        }
-      }
-      return res;
-    }
-  }
-
-
-  void drawMoleculeHelper1(MolDraw2D &self,
-                          const ROMol &mol ,
-                          python::object highlight_atoms,
-                          python::object highlight_atom_map,
-                          python::object highlight_atom_radii,
-                          int confId=-1){
-    std::vector<int> *highlightAtoms=pythonObjectToVect(highlight_atoms,static_cast<int>(mol.getNumAtoms()));
-    std::map<int,DrawColour> *ham=pyDictToColourMap(highlight_atom_map);
-    std::map<int,double> *har=pyDictToDoubleMap(highlight_atom_radii);
-
-    self.drawMolecule(mol,highlightAtoms,ham,har,confId);
-    
-    delete highlightAtoms;
-    delete ham;
-    delete har;
-  }
-
-
-  void drawMoleculeHelper2(MolDraw2D &self,
-                          const ROMol &mol ,
-                          python::object highlight_atoms,
-                          python::object highlight_bonds,
-                          python::object highlight_atom_map,
-                          python::object highlight_bond_map,
-                          python::object highlight_atom_radii,
-                          int confId=-1){
-    std::vector<int> *highlightAtoms=pythonObjectToVect(highlight_atoms,static_cast<int>(mol.getNumAtoms()));
-    std::vector<int> *highlightBonds=pythonObjectToVect(highlight_bonds,static_cast<int>(mol.getNumBonds()));
-    // FIX: support these
-    std::map<int,DrawColour> *ham=pyDictToColourMap(highlight_atom_map);
-    std::map<int,DrawColour> *hbm=pyDictToColourMap(highlight_bond_map);
-    std::map<int,double> *har=pyDictToDoubleMap(highlight_atom_radii);
-
-    self.drawMolecule(mol,highlightAtoms,highlightBonds,ham,hbm,har,confId);
-    
-    delete highlightAtoms;
-    delete highlightBonds;
-    delete ham;
-    delete hbm;
-    delete har;
-  }
-
-////////////////// new rendering 
 */
 
 int Molecule::EmbedMolecule(unsigned int maxIterations, int seed)

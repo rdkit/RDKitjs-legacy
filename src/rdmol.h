@@ -90,6 +90,7 @@ public:
     // Drawing molecule
     unsigned int compute2DCoords();
     string Drawing2D();
+    vector<float> getAtomsPos2D();
     
     // similarity
     double TanimotoSimilarityfromSmile (string smilesref);
@@ -250,6 +251,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // register the vectors
     register_vector<string>("VectorString");
     register_vector<double>("VectorDouble");
+    register_vector<float>("VectorFloat");
     register_vector<unsigned int>("VectorUint");
     register_vector<int>("Vectorint");
     register_map<boost::uint32_t,int>("MapIindexInt");
@@ -295,7 +297,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
+    .function("getAtomsPos2D", &Molecule::getAtomsPos2D, allow_raw_pointers())
     
+
     // Data compression
     .function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
     

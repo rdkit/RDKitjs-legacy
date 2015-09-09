@@ -1,5 +1,11 @@
+
+
 var dict2 = require ('./fpscores.pkldico.json');
+
+
 //console.log(Object.keys(dict2).length);
+
+
 var dict = require ('./publicnp.model.json');
 
 
@@ -48,7 +54,7 @@ function SAscore (dico, nAtoms,fplen, morganFPlist, molecule){
 
 	score1=score1/nf;
 
-	//console.log(score1);
+	console.log(score1);
 
 	var p = molecule.FindMolChiralCenters(true);
 	var nChiralCenters = p.size();
@@ -62,34 +68,33 @@ function SAscore (dico, nAtoms,fplen, morganFPlist, molecule){
 	var bridgePenalty = Math.log10(nBridgeheads+1);
 	var macrocyclePenalty = 0;
 
-  	//console.log("1:",nBridgeheads,"2:",nMacrocycles,"3:",nSpiro,"4:",nChiralCenters,"5:",macrocyclePenalty,"6:",sizePenalty)
+  	console.log("1:",nBridgeheads,"2:",nMacrocycles,"3:",nSpiro,"4:",nChiralCenters,"5:",macrocyclePenalty,"6:",sizePenalty)
 
 
 	if (nMacrocycles > 0)
 	    macrocyclePenalty = math.log10(2);
     
 	var score2 = 0-sizePenalty-stereoPenalty-spiroPenalty-bridgePenalty-macrocyclePenalty;
-	//console.log(score2);
 
 	var score3 = 0;
 	if (nAtoms > fplen)
 	    score3 = 0.5*Math.log(nAtoms/fplen);
 
 	var sascore = score1 + score2 + score3;
-	//console.log(sascore);
 
 	min = -4.0;
 	max = 2.5;
 
-	sascore = 11 - (sascore - min + 1) / (max - min) * 9;
+	sascore = 11.0 - (sascore - min + 1) / (max - min) * 9;
 
-	if (sascore > 8) 
-	  	sascore = 8 + math.log(sascore-8);
-	if (sascore > 10)
+	if (sascore > 8.0) 
+	  	sascore = 8.0 + math.log(sascore-8.0);
+	if (sascore > 10.0)
 	   sascore = 10.0;
-	else if (sascore < 1)
-	   sascore = 1;
-	//console.log(sascore);
+	else if (sascore < 1.0)
+	   sascore = 1.0;
+	console.log("1:",score1,"2:",score2,"3:",score3,"final:",sascore);
+	console.log("-----------------------------------------------------");
 
 	return sascore;
 }
@@ -133,13 +138,13 @@ function NPscore(dicts, nAtoms,fplen,morganFPlist) {
 
 
 //loop over file or list of smiles!
-/*
+
 var fs = require('fs');
 var np = 0;
 var sa = 0;
 fs.readFileSync('test-sardkit.txt').toString().split(/\r?\n/).forEach(function(line){
     var linecomponent = line.split('\t'); 
-    //try {
+    try {
 
 		var m=R.Molecule.fromSmiles(linecomponent[0]);
 		if (m !==undefined)
@@ -154,24 +159,24 @@ fs.readFileSync('test-sardkit.txt').toString().split(/\r?\n/).forEach(function(l
 
 		m.delete();
 	}
-	/*}
+	}
 	catch (err) {
-            //console.log(linecomponent);
+            console.log(linecomponent);
+            console.log(err);
 
 	}
 
 });
-*/
 
 
-
+/*
 var m=R.Molecule.fromSmiles('CC(=O)OC1C[NH+]2CCC1CC2');
 var morganFPlist =m.getMorganFPlist(2);
 var nAtoms = m.getNumAtoms();
 var fplen =  morganFPlist.size()/2;
 sa = SAscore (dict2,nAtoms,fplen, morganFPlist,m);
 console.log("sa:",sa.toPrecision(4));
-
+*/
 
 
 
