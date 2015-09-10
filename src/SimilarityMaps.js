@@ -1,6 +1,5 @@
 var num = require('numeric');
 var RDKit = require('rdkit');
-var Victor = require('victor');
 
 
 function bivariate_normal(X,Y,sigma,mux,muy)
@@ -33,10 +32,10 @@ function calcAtomGaussians(sigma,step,weigths,px,py)
 			console.log("Zsum:",num.sum(Z));
 		}
 	}
-	return Z;
+	return {X,Y,Z};
 }
 
-var m=RDKit.Molecule.fromSmiles('Cn1cc(NC=O)cc1C(=O)Nc1cc(C(=O)Nc2cc(C(=O)NCCC(N)=[NH2+])n(C)c2)n(C)c1');
+var m=RDKit.Molecule.fromSmiles('COc1cccc2cc(C(=O)NCCCCN3CCN(c4cccc5nccnc54)CC3)oc21');
 var w = m.getTPSAAtomContribs();
 var ap = m.getAtomsPos2D();
 
@@ -46,8 +45,8 @@ var weigths = [];
 for  (i=0;i<ap.size()-1;i=i+2)
 {	
 	weigths[i/2]=w.get(i/2);
-	px[i/2]=(ap.get(i)*10+150)/300;  // rescaling = center origin to left corner origin & dpi factor 
-	py[i/2]=(ap.get(i+1)*10+150)/300; 
+	px[i/2]=(ap.get(i));  // rescaling = center origin to left corner origin & dpi factor 
+	py[i/2]=(ap.get(i+1)); 
 }
 
 
@@ -66,7 +65,7 @@ console.log(py);
 // need to find why there is an issue to retreive the ap.get(t-1) value ?
 var simmap=calcAtomGaussians(0.45,0.02,weigths,px,py);
 
-console.log(simmap);
+console.log(JSON.stringify(simmap));
 
 
 

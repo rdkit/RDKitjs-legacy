@@ -1,0 +1,99 @@
+<html lang="en">
+<head>
+  <title>Plot Sample - Surface</title>
+  <script type='text/javascript' src='rdkit.js'></script>
+  <script type='text/javascript' src='numeric-1.2.6.min.js'></script>
+
+  <link rel='stylesheet' href='https://rawgit.com/domitry/elegans/master/examples/common.css'>
+  <script type="text/javascript" src="three.min.js"></script>
+  <script type="text/javascript" src="d3.min.js"></script>
+  <script type="text/javascript" src="elegans.js"></script>
+  <script type="text/javascript">
+    window.onload = function(){
+
+      var num = numeric;
+      function bivariate_normal(X,Y,sigma,mux,muy)
+      {
+        var lensize = num.dim(X)[0];
+        var rsize = [lensize,lensize];
+        var Xmu = num.sub(X,mux);
+        var Ymu = num.sub(Y,muy);
+        var le = num.div(num.pow(Xmu,2),sigma*sigma);
+        var re = num.div(num.pow(Ymu,2),sigma*sigma); 
+        var z = num.add(le,re);
+        var denom = 2*Math.PI*sigma*sigma;
+        var res = num.div(num.exp(num.neg(num.div(z,2))),denom);
+        return res;
+      }
+
+      function calcAtomGaussians(sigma,step,weigths,px,py)
+      {   
+        var x = num.linspace(0,1,51);     // default step 0.02 => 51 points
+        var v = [];
+        var slen = x.length;
+        var X = num.rep([slen,],x);
+        var Y = num.transpose(X); // meshgrid square grid X=Y'; 
+        var Z = num.rep([slen,slen],0);
+        for (j=0;j<px.length;j=j+1){   
+          if (Math.abs(weigths[j])>0){
+            v = bivariate_normal(X,Y,sigma/10,px[j],py[j]); // rescale also the sigma value... caution
+            console.log("vsum:",num.sum(v));
+            Z = num.add(Z,num.mul(v,weigths[j]));
+            console.log("Zsum:",num.sum(Z));
+          }
+        }
+        return {X,Y,Z};
+      }
+
+        R= RDKit;
+        var mol = R.Molecule.fromSmiles('COc1cccc2cc(C(=O)NCCCCN3CCN(c4cccc5nccnc54)CC3)oc21');
+        mol.Kekulize();
+        var mol2d = mol.Drawing2D();
+        var remol = mol2d.replace( /svg:/g, '' );
+        console.log(remol);
+        document.getElementById( 'moldraw' ).innerHTML = remol;
+
+        var w = mol.getTPSAAtomContribs();
+        var ap = mol.getAtomsPos2D();
+
+        var px= [];
+        var py= [];
+        var weigths = [];
+        for  (i=0;i<ap.size()-1;i=i+2)
+        { 
+          weigths[i/2]=w.get(i/2);
+          px[i/2]=(ap.get(i));  // rescaling = center origin to left corner origin & dpi factor 
+          py[i/2]=(ap.get(i+1)); 
+        }
+
+        /*
+        xmin = Math.min.apply(Math, px);
+        xmax = Math.max.apply(Math, px);
+
+        ymin = Math.min.apply(Math, py);
+        ymax = Math.max.apply(Math, py);
+        // minx = arr.reduce(function(a, b, i, px) {return Math.min(a,b)});
+        console.log("xmin:",xmin,",xmax:",xmax);
+        console.log(px);
+        console.log("ymin:",ymin,",ymax:",ymax);
+        console.log(py);
+        */
+
+        // need to find why there is an issue to retreive the ap.get(t-1) value ?
+        var simmap=calcAtomGaussians(0.45,0.02,weigths,px,py);
+
+        var data = {};
+
+        data.x = simmap.X, data.y = simmap.Y, data.z = simmap.Z;
+        
+        d3.select('#vis').datum(data).call(Elegans.SurfacePlot);
+    };
+  </script>
+</head>
+<body>
+
+<div id="vis"></div>
+
+<div id='moldraw'></div>
+
+</body>

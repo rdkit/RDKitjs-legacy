@@ -44,15 +44,11 @@ def calcAtomGaussians(mol,a=0.03,step=0.02,weights=None):
   X,Y = numpy.meshgrid(x,y)
   if weights is None:
     weights=[1.]*mol.GetNumAtoms()
-  Z = mlab.bivariate_normal(X,Y,a,a,mol._atomPs[0][0], mol._atomPs[0][1])*weights[0] # this is not bivariate case ... only univariate no mixtures
+  Z = mlab.bivariate_normal(X,Y,a,a,mol._atomPs[0][0], mol._atomPs[0][1])*weights[0] # this is not bivariate case ... only univariate no mixtures #matplotlib.mlab.bivariate_normal(X, Y, sigmax=1.0, sigmay=1.0, mux=0.0, muy=0.0, sigmaxy=0.0)
   for i in range(1,mol.GetNumAtoms()):
     Zp = mlab.bivariate_normal(X,Y,a,a,mol._atomPs[i][0], mol._atomPs[i][1])
     Z += Zp*weights[i]
   return X,Y,Z
-  
-
-#matplotlib.mlab.bivariate_normal(X, Y, sigmax=1.0, sigmay=1.0, mux=0.0, muy=0.0, sigmaxy=0.0)
-
 
 def GetSimilarityMapFromWeights(mol, weights, colorMap=cm.PiYG, scale=-1, size=(250, 250), sigma=None,  #@UndefinedVariable  #pylint: disable=E1101
                                 coordScale=1.5, step=0.01, colors='k', contourLines=10, alpha=0.5, **kwargs):

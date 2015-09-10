@@ -647,9 +647,9 @@ vector<float> Molecule::getAtomsPos2D()
 
 
     for (int i =0;i<2*atomnumber;i=i+2) { 
-      RDGeom::Point2D atomcoords = drawer.getAtomCoords(i/2);
-      res[i]=atomcoords[0];
-      res[i+1]=atomcoords[1];
+      RDGeom::Point2D atomcoords = drawer.getDrawCoords(i/2); // replace the getAtomsCoords by Draw
+      res[i]=atomcoords[0]/300;
+      res[i+1]=atomcoords[1]/300;
     }
     
 
