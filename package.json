@@ -28,6 +28,7 @@
   "dependencies": {
     "async": "^1.4.2",
     "mongodb": "^2.0.42",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "victor": "^1.1.0"
   }
 }
