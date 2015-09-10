@@ -27,7 +27,7 @@ function calcAtomGaussians(sigma,step,weigths,px,py)
 	var Z = num.rep([slen,slen],0);
 	for (j=0;j<px.length;j=j+1){   
 		if (Math.abs(weigths[j])>0){
-			v = bivariate_normal(X,Y,sigma,px[j],py[j]);
+			v = bivariate_normal(X,Y,sigma/10,px[j],py[j]); // rescale also the sigma value... caution
 			console.log("vsum:",num.sum(v));
 			Z = num.add(Z,num.mul(v,weigths[j]));
 			console.log("Zsum:",num.sum(Z));
@@ -51,11 +51,16 @@ for  (i=0;i<ap.size()-1;i=i+2)
 }
 
 
- minx = Math.min.apply(Math, px);
-// minx = arr.reduce(function(a, b, i, px) {return Math.min(a,b)});
-console.log("minx:",minx);
+xmin = Math.min.apply(Math, px);
+xmax = Math.max.apply(Math, px);
 
+ymin = Math.min.apply(Math, py);
+ymax = Math.max.apply(Math, py);
+// minx = arr.reduce(function(a, b, i, px) {return Math.min(a,b)});
+console.log("xmin:",xmin,",xmax:",xmax);
 console.log(px);
+console.log("ymin:",ymin,",ymax:",ymax);
+console.log(py);
 
 
 // need to find why there is an issue to retreive the ap.get(t-1) value ?
