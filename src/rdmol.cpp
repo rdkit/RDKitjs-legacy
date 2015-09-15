@@ -246,131 +246,6 @@ double  Molecule::TverskySimilarityfromSmile ( string smilesref, double a, doubl
    return TverskySimilarity (*v1,*v2,a,b);
 }
 
-/*
-double  Molecule::RusselSimilarityfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return RusselSimilarityfromSmile (*v1,*v2);
-}
-
-
-double  Molecule::CosineSimilarityfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return CosineSimilarity (*v1,*v2);
-}
-
-
-double  Molecule::KulczynskiSimilarityfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return KulczynskiSimilarity (*v1,*v2);
-}
-
-
-double  Molecule::McConnaugheySimilarityfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return McConnaugheySimilarity (*v1,*v2);
-}
-
-
-double  Molecule::SokalSimilarityfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return SokalSimilarity (*v1,*v2);
-}
-
-
-
-double  Molecule::AsymmetricSimilarityfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return AsymmetricSimilarity (*v1,*v2);
-}
-
-
-
-double  Molecule::BraunBlanquetSimilarityfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return BraunBlanquetSimilarity (*v1,*v2);
-}
-*/
-
-
-/*
-double  Molecule::RogotGoldbergSimilarityfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return RogotGoldbergSimilarity (*v1,*v2);
-}
-*/
-/*
-double  Molecule::OnBitSimilarityfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return OnBitSimilarity (*v1,*v2);
-}
-
-
-int  Molecule::NumBitsInCommonfromSmile ( string smilesref)       
-{
-
-
-   ROMol *mol=RDKit::SmilesToMol(smilesref);
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*mol,2);
-
-   return NumBitsInCommon (*v1,*v2);
-}
-
-*/
 
 
 
@@ -380,6 +255,59 @@ unsigned int Molecule::getNumAtoms()
 {
     return rdmol->getNumAtoms();
 }
+
+
+boost::uint32_t Molecule::getAtomCode(int atomid) {
+  return RDKit::AtomPairs::getAtomCode(rdmol->getAtomWithIdx(atomid));
+}
+
+
+
+vector<int> Molecule::getAtomPairFingerprint() {
+   RDKit::SparseIntVect<int> * finger =  RDKit::AtomPairs::getAtomPairFingerprint(*rdmol);
+   RDKit::SparseIntVect<int>::StorageType gnze = finger->getNonzeroElements();
+
+    int elementsize=gnze.size();
+    vector<int>  result(2*elementsize);
+    
+    map<int, int>::iterator it;
+    
+    int idx = 0;
+    for (it = gnze.begin(); it != gnze.end(); it++ )
+    {
+        result[idx]=it->first;
+        result[elementsize+idx]=it->second;
+        idx=idx+1;
+    }
+    return result;
+}
+
+vector<int> Molecule::getHashedAtomPairFingerprint(int size, int atomid1, int atomid2) {
+  RDKit::SparseIntVect<int> * finger =  RDKit::AtomPairs::getHashedAtomPairFingerprint(*rdmol,size,atomid1, atomid2);
+  RDKit::SparseIntVect<int>::StorageType gnze = finger->getNonzeroElements();
+  
+  int elementsize=gnze.size();
+    vector<int>  result(2*elementsize);
+    
+    map<int, int>::iterator it;
+    
+    int idx = 0;
+    for (it = gnze.begin(); it != gnze.end(); it++ )
+    {
+        result[idx]=it->first;
+        result[elementsize+idx]=it->second;
+        idx=idx+1;
+    }
+    return result;
+}
+
+
+string Molecule::getHashedAtomPairFingerprintAsBitVect(int size, int atomid1, int atomid2) {
+  ExplicitBitVect * finger = RDKit::AtomPairs::getHashedAtomPairFingerprintAsBitVect(*rdmol,size,atomid1, atomid2);
+  return BitVectToText(*finger);
+}
+
+
 
 string Molecule::MolToBinary()
 {
@@ -394,6 +322,31 @@ string Molecule::getRDKFP()
     ExplicitBitVect* finger =  RDKit::RDKFingerprintMol(*rdmol);
     return BitVectToText(*finger);
 }
+
+
+string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths)
+{
+    ExplicitBitVect* finger =  RDKit::LayeredFingerprintMol(*rdmol,layer, sizes,lengths);
+    return BitVectToText(*finger);
+}
+
+
+
+
+
+
+string Molecule::getMACCSFP()
+{
+    ExplicitBitVect* finger =  RDKit::MACCSFingerprints::getFingerprintAsBitVect(*rdmol);
+    return BitVectToText(*finger);
+}
+
+string Molecule::getPatternFP()
+{
+    ExplicitBitVect* finger =  RDKit::PatternFingerprintMol(*rdmol);
+    return BitVectToText(*finger);
+}
+
 
 
 string Molecule::getMorganFP(unsigned int sizes,unsigned int lengths)
@@ -427,7 +380,7 @@ map<boost::uint32_t, int> Molecule::getMorganFP_getNonzeroElements(unsigned int 
     //gnze.insert(nze.begin(), nze.end());
     //std::cout << gnze << std::endl;
 
-
+    /*
     map<boost::uint32_t, int>::iterator it;
 
     for ( it = gnze.begin(); it != gnze.end(); it++ )
@@ -437,11 +390,7 @@ map<boost::uint32_t, int> Molecule::getMorganFP_getNonzeroElements(unsigned int 
                   << it->second   // string's value 
                   << std::endl ;
     }
-
-
-
-
-
+    */
     return gnze;
 }
 
@@ -503,26 +452,6 @@ vector<string> Molecule::FindMolChiralCenters(bool includeUnassigned)
   return centers;
 }
 
-
-string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths)
-{
-    ExplicitBitVect* finger =  RDKit::LayeredFingerprintMol(*rdmol,layer, sizes,lengths);
-    return BitVectToText(*finger);
-}
-
-
-
-string Molecule::getMACCSFP()
-{
-    ExplicitBitVect* finger =  RDKit::MACCSFingerprints::getFingerprintAsBitVect(*rdmol);
-    return BitVectToText(*finger);
-}
-
-string Molecule::getPatternFP()
-{
-    ExplicitBitVect* finger =  RDKit::PatternFingerprintMol(*rdmol);
-    return BitVectToText(*finger);
-}
 
 
 
@@ -648,7 +577,7 @@ vector<float> Molecule::getAtomsPos2D()
 
     for (int i =0;i<2*atomnumber;i=i+2) { 
       RDGeom::Point2D atomcoords = drawer.getDrawCoords(i/2); // replace the getAtomsCoords by Draw
-      res[i]=atomcoords[0]/300;
+      res[i]=atomcoords[0]/300;  // rescale to 0-1 range!
       res[i+1]=atomcoords[1]/300;
     }
     
@@ -669,6 +598,30 @@ vector<float> Molecule::getAtomsPos2D()
 
 
 }
+
+
+
+double Molecule::get2DScale(vector<float> atcds, double width, double height) {
+    double x_min =10;
+    double y_min =10;
+    double x_max = -10;
+    double y_max = -10;
+    for( int i = 0; i < atcds.size() -1 ; i=i+2 ) {
+      if (atcds[i]<x_min ) x_min = atcds[i];
+      if (atcds[i]>x_max ) x_max = atcds[i];
+      if (atcds[i+1]<y_min ) y_min = atcds[i+1];
+      if (atcds[i+1]>y_max ) y_max = atcds[i+1];
+    }
+
+    double x_range = x_max - x_min;
+    double y_range = y_max - y_min;
+    //return scale = min( double( width ) / x_range , double( height ) / y_range );
+    double scale;
+    if (width/x_range > height/y_range) scale =  height/y_range;
+    else scale = width/x_range;
+    return scale ;
+  }
+
 
 
 string Molecule::Drawing2D()

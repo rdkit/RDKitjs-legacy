@@ -31,6 +31,13 @@ public:
     vector<string> FindMolChiralCenters(bool includeUnassigned);
     
     // new fingerprints
+    boost::uint32_t getAtomCode(int atomid);
+    vector<int> getAtomPairFingerprint();
+    vector<int> getHashedAtomPairFingerprint(int size, int atomid1, int atomid2);
+    string getHashedAtomPairFingerprintAsBitVect(int size, int atomid1, int atomid2);
+
+
+
     string getRDKFP();
     string getMorganFP(unsigned int sizes,unsigned int lengths);
     vector<int> getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths);
@@ -91,7 +98,7 @@ public:
     unsigned int compute2DCoords();
     string Drawing2D();
     vector<float> getAtomsPos2D();
-    
+    double get2DScale(vector<float> atcds, double width, double height);
     // similarity
     double TanimotoSimilarityfromSmile (string smilesref);
     double DiceSimilarityfromSmile (string smilesref);
@@ -265,6 +272,10 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("setBondDir",&Molecule::setBondDir, allow_raw_pointers())
     .function("getNumAtoms", &Molecule::getNumAtoms, allow_raw_pointers())
     // fingerprints
+    .function("getAtomCode", &Molecule::getAtomCode, allow_raw_pointers())
+    .function("getAtomPairFingerprint", &Molecule::getAtomPairFingerprint, allow_raw_pointers())
+    .function("getHashedAtomPairFingerprint", &Molecule::getHashedAtomPairFingerprint, allow_raw_pointers())
+    .function("getHashedAtomPairFingerprintAsBitVect", &Molecule::getHashedAtomPairFingerprintAsBitVect, allow_raw_pointers())
     .function("getRDKFP", &Molecule::getRDKFP, allow_raw_pointers())
     .function("getMorganFP", &Molecule::getMorganFP, allow_raw_pointers())
     .function("getMorganFP_GetOnBits", &Molecule::getMorganFP_GetOnBits, allow_raw_pointers())
@@ -298,6 +309,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
     .function("getAtomsPos2D", &Molecule::getAtomsPos2D, allow_raw_pointers())
+    .function("get2DScale", &Molecule::get2DScale, allow_raw_pointers())
+
     
 
     // Data compression
