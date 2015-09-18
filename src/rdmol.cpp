@@ -282,6 +282,13 @@ vector<int> Molecule::getAtomPairFingerprint() {
     return result;
 }
 
+
+
+
+
+
+
+
 vector<int> Molecule::getHashedAtomPairFingerprint(int size, int atomid1, int atomid2) {
   RDKit::SparseIntVect<int> * finger =  RDKit::AtomPairs::getHashedAtomPairFingerprint(*rdmol,size,atomid1, atomid2);
   RDKit::SparseIntVect<int>::StorageType gnze = finger->getNonzeroElements();
@@ -570,11 +577,14 @@ vector<float> Molecule::getAtomsPos2D()
 
     RDDepict::compute2DCoords(*rdmol);
     WedgeMolBonds(*rdmol,&(rdmol->getConformer()));
+    // adding the transparency option!
+    //RDKit::MolDrawOptions options;
+    //options.clearBackground=true;  
     RDKit::MolDraw2DSVG drawer(300,300);
     drawer.drawMolecule(*rdmol);
     drawer.finishDrawing();
 
-
+    // double count
     for (int i =0;i<2*atomnumber;i=i+2) { 
       RDGeom::Point2D atomcoords = drawer.getDrawCoords(i/2); // replace the getAtomsCoords by Draw
       res[i]=atomcoords[0]/300;  // rescale to 0-1 range!
@@ -600,30 +610,6 @@ vector<float> Molecule::getAtomsPos2D()
 }
 
 
-
-double Molecule::get2DScale(vector<float> atcds, double width, double height) {
-    double x_min =10;
-    double y_min =10;
-    double x_max = -10;
-    double y_max = -10;
-    for( int i = 0; i < atcds.size() -1 ; i=i+2 ) {
-      if (atcds[i]<x_min ) x_min = atcds[i];
-      if (atcds[i]>x_max ) x_max = atcds[i];
-      if (atcds[i+1]<y_min ) y_min = atcds[i+1];
-      if (atcds[i+1]>y_max ) y_max = atcds[i+1];
-    }
-
-    double x_range = x_max - x_min;
-    double y_range = y_max - y_min;
-    //return scale = min( double( width ) / x_range , double( height ) / y_range );
-    double scale;
-    if (width/x_range > height/y_range) scale =  height/y_range;
-    else scale = width/x_range;
-    return scale ;
-  }
-
-
-
 string Molecule::Drawing2D()
 {
     RDDepict::compute2DCoords(*rdmol);
@@ -632,10 +618,8 @@ string Molecule::Drawing2D()
     drawer.drawMolecule(*rdmol);
     drawer.finishDrawing();
     return drawer.getDrawingText();
-    //return  RDKit::Drawing::MolToDrawing(*mol);
 }
 
-//svg = RDKit::Drawing::DrawingToSVG(drawing, 4);
 
 
 void Molecule::computeGasteigerCharges()
@@ -1244,20 +1228,23 @@ vector<double> Molecule::getASAContribs() {
     return contribs;
 }
 
-int Molecule::GetSubstructMatches(string smilesref)
+vector<int> Molecule::GetSubstructMatches(string smilesref)
 {
-    RDKit::MatchVectType matchV;
     vector< RDKit::MatchVectType > matches;
-
     rdErrorLog->df_enabled = false;
     RWMol* rdquery = RDKit::SmartsToMol(smilesref);
-
     int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
-  /*  vector< int > res;
+
+    vector<int> vint;
     for(int idx=0;idx<matched;idx++){
-        res +=".";
-    }*/
-    return matched;
+        vector<pair<int, int> > invector= matches[idx];
+        for (int idx2=0;idx2<invector.size();idx2++) {
+             //std::cout <<  invector[idx2].second  << std::endl ;
+             vint.push_back(invector[idx2].second);
+        }
+    }
+
+    return vint;
 }
 
 

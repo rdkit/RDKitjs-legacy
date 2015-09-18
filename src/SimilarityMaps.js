@@ -49,19 +49,21 @@ for  (i=0;i<ap.size()-1;i=i+2)
 	py[i/2]=(ap.get(i+1)); 
 }
 
-
+/*
 xmin = Math.min.apply(Math, px);
 xmax = Math.max.apply(Math, px);
 
 ymin = Math.min.apply(Math, py);
 ymax = Math.max.apply(Math, py);
 // minx = arr.reduce(function(a, b, i, px) {return Math.min(a,b)});
+
 console.log("xmin:",xmin,",xmax:",xmax);
 console.log(px);
 console.log("ymin:",ymin,",ymax:",ymax);
 console.log(py);
+*/
 
-
+console.log("sigma",ap.get(ap.size()-1));
 // need to find why there is an issue to retreive the ap.get(t-1) value ?
 var simmap=calcAtomGaussians(0.45,0.02,weigths,px,py);
 

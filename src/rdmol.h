@@ -98,25 +98,10 @@ public:
     unsigned int compute2DCoords();
     string Drawing2D();
     vector<float> getAtomsPos2D();
-    double get2DScale(vector<float> atcds, double width, double height);
     // similarity
     double TanimotoSimilarityfromSmile (string smilesref);
     double DiceSimilarityfromSmile (string smilesref);
     double TverskySimilarityfromSmile( string smilesref,double a, double b);
-    //double RusselSimilarityfromSmile( string smilesref);
-    /* double OnBitSimilarityfromSmile ( string smilesref);
-     double RogotGoldbergSimilarityfromSmile( string smilesref);
-     
-     double BraunBlanquetSimilarityfromSmile( string smilesref);
-     double AsymmetricSimilarityfromSmile( string smilesref);
-     double SokalSimilarityfromSmile( string smilesref);
-     double McConnaugheySimilarityfromSmile( string smilesref);
-     double CosineSimilarityfromSmile( string smilesref);
-     double KulczynskiSimilarityfromSmile( string smilesref);
-     int  NumBitsInCommonfromSmile ( string smilesref) ;
-     */
-    
-    
     
     
     int findSSSR(std::vector<std::vector<int>> res );
@@ -192,7 +177,7 @@ public:
 
     void computeGasteigerCharges();
 
-    int GetSubstructMatches(string smilesref);
+    vector<int> GetSubstructMatches(string smilesref);
     bool HasSubstructMatchStr(string smilesref);
     /// get & set & has properties
     string getProp(string key);
@@ -309,7 +294,6 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
     .function("getAtomsPos2D", &Molecule::getAtomsPos2D, allow_raw_pointers())
-    .function("get2DScale", &Molecule::get2DScale, allow_raw_pointers())
 
     
 

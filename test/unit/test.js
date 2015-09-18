@@ -290,7 +290,7 @@ describe('3D Force Field minimization', function () {
 
 
 
-describe('Strings - 2D - Drawing', function () {
+describe('Strings - 2D - Drawing:', function () {
 
     it('smilewrite', function () {
         var smi = 'CCCCCOC(CO)';
@@ -382,13 +382,13 @@ describe('SubStructures search', function () {
         var mol = RDKit.Molecule.fromSmiles(smi);
         var smilesref = 'CO';
         var d = mol.GetSubstructMatches(smilesref);
-        /*var dlen = d.size();
+        var dlen = d.size();
         var e =  [];
         for(var j=0;j < dlen;j++){
                 e.push(d.get(j));
             }
-        */
-        d.should.equal(3);
+        
+        e.should.eql([ 4, 5, 6, 5, 7, 8 ]);
         mol.delete;
     });
 

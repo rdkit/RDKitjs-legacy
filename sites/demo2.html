@@ -3,14 +3,14 @@
   <title>Plot Sample - Surface</title>
   <script type='text/javascript' src='rdkit.js'></script>
   <script type='text/javascript' src='numeric-1.2.6.min.js'></script>
-
   <link rel='stylesheet' href='https://rawgit.com/domitry/elegans/master/examples/common.css'>
   <script type="text/javascript" src="three.min.js"></script>
-  <script type="text/javascript" src="d3.min.js"></script>
+  <script type="text/javascript" src="d3.v3.min.js"></script> 
+  <script type="text/javascript" src="jquery-latest.js" charset="utf-8"></script>
+  <script type="text/javascript" src="plotly.min.js"></script>
   <script type="text/javascript" src="elegans.js"></script>
   <script type="text/javascript">
-    window.onload = function(){
-
+  window.onload = function(){
       var num = numeric;
       function bivariate_normal(X,Y,sigma,mux,muy)
       {
@@ -82,18 +82,27 @@
         // need to find why there is an issue to retreive the ap.get(t-1) value ?
         var simmap=calcAtomGaussians(0.45,0.02,weigths,px,py);
 
-        var data = {};
+        //var data = {};
 
-        data.x = simmap.X, data.y = simmap.Y, data.z = simmap.Z;
+        //data.x = simmap.X, data.y = simmap.Y, data.z = simmap.Z;
         
-        d3.select('#vis').datum(data).call(Elegans.SurfacePlot);
+        //d3.select('#vis').datum(data).call(Elegans.SurfacePlot);
+
+        var data2 =  [{ z: simmap.Z, type: 'contour', colorscale: 'Jet',}];
+
+        var layout = {  title: 'Colorscale for Contour Plot'};
+
+        Plotly.newPlot('myDiv', data2, layout);
+
+
     };
   </script>
 </head>
 <body>
 
-<div id="vis"></div>
+<!--div id="vis"></div-->
 
 <div id='moldraw'></div>
 
+<div id="myDiv"></div>
 </body>
