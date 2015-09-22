@@ -578,8 +578,8 @@ vector<float> Molecule::getAtomsPos2D()
     RDDepict::compute2DCoords(*rdmol);
     WedgeMolBonds(*rdmol,&(rdmol->getConformer()));
     // adding the transparency option!
-    //RDKit::MolDrawOptions options;
-    //options.clearBackground=true;  
+    RDKit::MolDrawOptions options;
+    options.clearBackground=true;  
     RDKit::MolDraw2DSVG drawer(300,300);
     drawer.drawMolecule(*rdmol);
     drawer.finishDrawing();
