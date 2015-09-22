@@ -159,7 +159,60 @@ describe('FingerPrints', function () {
         mpf.should.eql([ 13, 80, 222, 294, 473, 591, 691, 695, 794, 807, 1057, 1069, 1249, 1325, 1369, 1444, 1911, 1992 ]);
         mol.delete();
     });
+
+    it('getMorganFPlist', function () {
+        var mol=RDKit.Molecule.fromSmiles('CCCC(CO)CCO');
+        var u =mol.getMorganFPlist(2);
+        var fplen =  u.size();
+        var v= [];
+        for (i =0;i<fplen;i++){   
+            v[i] = u.get(i); 
+        }
+        v.should.eql([203616823,383026682,864662311,1173125914,1329401632,1535166686,1583799011,2245273601,2245384272,2246728737,2512115163,2650223913,3098934668,3542456614,4022716898,4023654873,4264564392,1,1,2,1,1,2,2,1,5,1,1,1,1,1,1,1,1]);
+        mol.delete();
+    });
+
     
+    it.skip('getMorganFP_getNonzeroElements', function () {
+            var mol=RDKit.Molecule.fromSmiles('CCCC(CO)CCO');
+            var f =mol.getMorganFP_getNonzeroElements(2);
+            var p=[];
+            for (i=0;i<f.size();i++){
+                p.push(f.get(i));
+             }  
+            p.should.eql();
+            mol.delete();
+    });
+
+
+
+    it('getHashedAtomPairFingerprintAsBitVect', function () {
+        var mol = RDKit.Molecule.fromSmiles('COc1cccc2cc(C(=O)NCCCCN3CCN(c4cccc5nccnc54)CC3)oc21');
+        var e = mol.getHashedAtomPairFingerprintAsBitVect(2048,0,1);
+        e.should.eql('00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000001000000000000000000000000000000011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011100000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000010001000000000000000000000000000000011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111000000000111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000');
+        mol.delete();
+    });
+
+    it('getAtomCode', function () {
+        var mol = RDKit.Molecule.fromSmiles('COc1cccc2cc(C(=O)NCCCCN3CCN(c4cccc5nccnc54)CC3)oc21');
+        var d = mol.getAtomCode(0);
+        d.should.eql(33);
+        mol.delete();
+    });
+
+
+
+
+    it('getAtomPairFingerprint', function () {
+        var mol = RDKit.Molecule.fromSmiles('C1CCCC1CO');
+        var f = mol.getAtomPairFingerprint();
+        var p=[];
+        for (i=0;i<f.size();i++){
+            p.push(f.get(i));
+         }  
+        p.should.eql([558145,558146,558147,574529,574530,1590337,1590339,1590340,1590370,3,5,2,3,2,1,2,2,1]);
+        mol.delete();
+    });
 
     it('getLayeredFP', function () {
         var smi = 'CCCCCOC(CO)';
@@ -186,34 +239,58 @@ describe('FingerPrints', function () {
 });
 
     
-/*
+// playing with conformers
 describe('Conformers count & access', function () {
-    it('getConformer', function () {
-        RDKit.  getConformer(id);
+    it.skip('getConformer', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        mol.addHs(); 
+        mol.EmbedMultipleConfsarg(3,100,2015);   
+        mol.getConformer(1).should.equal();
+        mol.delete();
     });
     
     it('getNumAtoms', function () {
-        getNumAtoms();
-
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        mol.getNumAtoms().should.equal(9);
+        mol.delete();
     });
 
     it('getNumConformers', function () {
-        getNumConformers();
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        mol.addHs(); 
+        mol.EmbedMultipleConfsarg(3,100,2015);   
+        mol.getNumConformers().should.equal(3);
+        mol.delete();
     });
 });
-*/
 
-/*
-describe('AlignMols', function () {
-    it('Conformers', function () {
-        AlignMolConformers();
+
+
+// align molecules or conformers
+describe.skip('Molecule AlignMol method', function () {
+    it('in a list of conformers', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        mol.addHs(); 
+        mol.EmbedMultipleConfsarg(3,100,2015);   
+        mol.AlignMolConformers().should.eql();
+        mol.delete();
     });
     
-    it('Mol versus Mol', function () {
-        AlignMol(smilesref);
+    it('Mol vs Ref', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        mol.addHs(); 
+        mol.EmbedMolecule();
+        mol.AlignMol('CCCCC').should.eql();
+        mol.delete();
+
     });
 });
-*/
+
     
     // 3D Force Field minimization
 describe('3D Force Field minimization', function () {
@@ -240,7 +317,7 @@ describe('3D Force Field minimization', function () {
     });
 
 
-    it('MMFFOptimizeMoleculeConfs', function () { 
+    it.skip('MMFFOptimizeMoleculeConfs', function () { 
         var smi = 'CCCCCOC(CO)';
         this.timeout(50000);
 

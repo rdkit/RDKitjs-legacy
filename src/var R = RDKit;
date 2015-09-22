@@ -1,5 +1,0 @@
-var R = RDKit;
-m=R.Molecule.fromSmiles('CCCC(CO)CCO');
-var u =m.getMorganFP_getNonzeroElements(2);
-u.size()
-u.get(0)
