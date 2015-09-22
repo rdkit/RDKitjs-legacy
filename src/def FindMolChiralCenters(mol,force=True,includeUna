@@ -1,0 +1,34 @@
+def FindMolChiralCenters(mol,force=True,includeUnassigned=False):
+  """
+    >>> from rdkit import Chem
+    >>> mol = Chem.MolFromSmiles('[C@H](Cl)(F)Br')
+    >>> FindMolChiralCenters(mol)
+    [(0, 'R')]
+    >>> mol = Chem.MolFromSmiles('[C@@H](Cl)(F)Br')
+    >>> FindMolChiralCenters(mol)
+    [(0, 'S')]
+  
+    >>> FindMolChiralCenters(Chem.MolFromSmiles('CCC'))
+    []
+    By default unassigned stereo centers are not reported:
+    >>> mol = Chem.MolFromSmiles('C[C@H](F)C(F)(Cl)Br')
+    >>> FindMolChiralCenters(mol)
+    [(1, 'S')]
+    but this can be changed:
+    >>> FindMolChiralCenters(mol,includeUnassigned=True)
+    [(1, 'S'), (3, '?')]
+    The handling of dependent stereochemistry is not correct:
+    >>> Chem.FindMolChiralCenters(Chem.MolFromSmiles('C1CC(C)C(C)C(C)C1'),includeUnassigned=True)
+    [(2, '?'), (6, '?')]
+    >>> Chem.FindMolChiralCenters(Chem.MolFromSmiles('C1C[C@H](C)C(C)[C@H](C)C1'),includeUnassigned=True)
+    [(2, 'S'), (6, 'R')]
+    
+  """
+  AssignStereochemistry(mol,force=force, flagPossibleStereoCenters=includeUnassigned)
+  centers = []
+  for atom in mol.GetAtoms():
+    if atom.HasProp('_CIPCode'):
+      centers.append((atom.GetIdx(),atom.GetProp('_CIPCode')))
+    elif includeUnassigned and atom.HasProp('_ChiralityPossible'):
+      centers.append((atom.GetIdx(),'?'))
+  return centers

@@ -4,6 +4,6 @@ file(REMOVE_RECURSE
 )
 
 # Per-language clean rules from dependency scanning.
-foreach(lang)
+foreach(lang )
   include(CMakeFiles/rdkitjs.dir/cmake_clean_${lang}.cmake OPTIONAL)
 endforeach()

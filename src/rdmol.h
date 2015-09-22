@@ -177,7 +177,10 @@ public:
 
     void computeGasteigerCharges();
 
+
     vector<int> GetSubstructMatches(string smilesref);
+    int GetSubstructMatchesNumber(string smilesref);
+
     bool HasSubstructMatchStr(string smilesref);
     /// get & set & has properties
     string getProp(string key);
@@ -196,7 +199,8 @@ public:
     unsigned int addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,int bondtypeid);
     void setBondDir (int Bondid, int bonddirid);
     
-    
+    vector<int> getAtomicNums();
+
     
     
     // static constructors
@@ -334,6 +338,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // susbtructure
     .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
     .function("HasSubstructMatchStr", &Molecule::HasSubstructMatchStr, allow_raw_pointers())
+    .function("GetSubstructMatchesNumber", &Molecule::GetSubstructMatchesNumber, allow_raw_pointers())
     
     
     // similarity
@@ -408,6 +413,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("PEO_VSA",&Molecule::PEO_VSA ,allow_raw_pointers())
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
     .function("computeGasteigerCharges",&Molecule::computeGasteigerCharges ,allow_raw_pointers())
+    .function("getAtomicNums",&Molecule::getAtomicNums ,allow_raw_pointers())
 
 
     // create class from smiles or smarts

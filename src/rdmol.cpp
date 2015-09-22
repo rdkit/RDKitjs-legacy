@@ -1248,6 +1248,31 @@ vector<int> Molecule::GetSubstructMatches(string smilesref)
 }
 
 
+int Molecule::GetSubstructMatchesNumber(string smilesref)
+{
+    vector< RDKit::MatchVectType > matches;
+    rdErrorLog->df_enabled = false;
+    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
+    int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
+    
+    return matched;
+}
+
+
+vector<int> Molecule::getAtomicNums()
+{
+    vector<int> res;
+    int atomnumber;
+    int numAtoms =rdmol->getNumAtoms();
+    for (int i =0;i<numAtoms;i++) {
+        atomnumber = rdmol->getAtomWithIdx(i)->getAtomicNum();
+        res.push_back(atomnumber);
+    }
+    return res;
+}
+
+
+
 
 
 /*
