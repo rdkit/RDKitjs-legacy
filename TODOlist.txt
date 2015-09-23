@@ -1,62 +1,62 @@
 Improve the API:
 1. Need to find a way to have hierarchical Classes for example Molecule.Descriptors.
 
-2. Need to have a Molecule.AllDescriptors to generate all of them (... list key:value).
-
-3. Can we have two molecules like for  Tanimotosimilarity(mol1,mol2) ?
+2. Can we have two molecules like for  Tanimotosimilarity(mol1,mol2) ?
 
 Some examples to implement in the development stage:
 Look at the python getstart rdkit page for a list of missing functionnalities.
 (http://www.rdkit.org/docs/GettingStartedInPython.html)
 
 
-Status : 28/05/2015 THEGODONE
+Status : 23/09/2015 guillaume godin
 
-FIX: create a empty molecule (but this is a workaround!)
+Done Molecule.AllDescriptors like function to generate all of descriptors
 
-DONE Reading and Writing Molecules: DONE, ok, we don't need to implement files readers for the moment, need to be done in Nodejs
+Done create a empty molecule (but this is a workaround!)
+
+Done Reading and Writing Molecules: DONE, ok, we don't need to implement files readers for the moment, need to be done in Nodejs
 Reading sets of molecules: need to do that (not a priority) need to be done in Nodejs
 
-DONE Writing molecules: DONE, we don't need to implement files writers for the moment
+Done Writing molecules: DONE, we don't need to implement files writers for the moment
 Writing sets of molecules: need to do that (not a priority)
 
-In progress: Looping over Atoms and Bonds: need to do that (not a priority) addAtom, addBond
+In progress: Looping over Atoms and Bonds: Done  (addAtom, addBond)
 
-Ring Information: need to do that (not a priority)
+Ring Information: Done
 
-DONE Modifying molecules: done (MolOps)
+done Modifying molecules: MolOps functions
 
 IN Progress (thegodone) Working with 2D molecules: GenerateDepictionMatching2DStructure, GenerateDepictionMatching3DStructure
 
 IN Progress (thegodone) Working with 3D Molecules: AlignMolConformers,GetConformerRMS
 
-Done (thegodone) [issue return undefined] Preserving Molecules: MolToBinary
+Done Preserving Molecules: MolToBinary
 
-IN Progress (thegodone) Drawing Molecules: Drawing2D (done), we need to svg for chrome not the files... ? MolsToGridImage can be interesting need to check for interaction with visualizer ?
+Done Drawing Molecules: Drawing2D (done), remark MolsToGridImage can be interesting need to check for interaction with visualizer ?
 
-In Progress (thegodone) [need helps] Substructure Searching: HasSubstructMatch, in progress GetSubstructMatches "how to return the lists like in python/should we return a list like in python ?"
+Done: Substructure Searching: HasSubstructMatch, GetSubstructMatches.
 
 Stereochemistry in substructure matches: need to test
 
-Chemical Transformations: DeleteSubstructs, ReplaceSubstructs, ReplaceSidechains, ReplaceCore, GetMolFrags
+Not implemented Chemical Transformations: DeleteSubstructs, ReplaceSubstructs, ReplaceSidechains, ReplaceCore, GetMolFrags
 
-Done (thegodone):  Murcko Decomposition
+Done Murcko Decomposition
 
-Maximum Common Substructure: FindMCS, smartsString,
+Not implemented Maximum Common Substructure: FindMCS, smartsString,
 
-Almost done: Fingerprinting and Molecular Similarity: FingerprintMol done, FingerprintSimilarity done,MACCS done
+Done Fingerprinting and Molecular Similarity: FingerprintMol done, FingerprintSimilarity done,MACCS done
 
-to do : Atom Pairs and Topological Torsions: GetAtomPairFingerprint 
+Done Atom Pairs and Topological Torsions: GetAtomPairFingerprint 
 
-Done (thegodone) Morgan Fingerprints (Circular Fingerprints): GetMorganFingerprint done, GetMorganFingerprintAsBitVect done
+Done Morgan Fingerprints (Circular Fingerprints): GetMorganFingerprint done, GetMorganFingerprintAsBitVect done
 
 to do: Picking Diverse Molecules Using Fingerprints: to do not a priority
 
-to do: Generating Similarity Maps Using Fingerprints: to do not a priority
+Done (partially for AtomContribution): Generating Similarity Maps Using Fingerprints
 
-DONE Descriptor Calculation: DONE, look if we can add others descriptors from obabel, cdk (not a priority) ???
+Done Descriptors, option can we add more descriptors obabel, cdk, Padel
 
-to do: Visualization of Descriptors: interesting!
+Done Visualization of Descriptors
 
 to do: Chemical Reactions: very interesting!
 
@@ -68,9 +68,9 @@ to do: 2D Pharmacophore Fingerprints: idem
 
 to do: Molecular Fragments
 
-testing : Database functionnalities: indexedDB interaction... (http://blog.gmane.org/gmane.science.chemistry.rdkit.user/month=20140301 like for ORCALE ?)
+Done: Database functionnalities: indexedDB interaction... (http://blog.gmane.org/gmane.science.chemistry.rdkit.user/month=20140301 like for ORCALE ?)
 
 Inchi: to do not a priority
 
-
+Avalon: to do not a priority
 

@@ -138,6 +138,11 @@ double  Similarity::Tanimoto ()
 Molecule::Molecule(RWMol* mol): rdmol(mol) {}
 
 
+/**
+ * @brief [delete]
+ * @details [action on rdmol during delete process]
+ * @return [description]
+ */
 Molecule::~Molecule() {
   if(rdmol != 0) {
     //printf("Destroy called\n");
@@ -146,78 +151,148 @@ Molecule::~Molecule() {
   }
 }
 
-
+/**
+ * @brief [fromSmile]
+ * @details [generate a molecule from a smile]
+ * 
+ * @param smiles [string]
+ * @return [rdkit molecule object]
+ */
 Molecule* Molecule::fromSmiles(string smiles) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::SmilesToMol(smiles));
 }
 
+/**
+ * @brief [Mol2BlockToMol]
+ * @details [generate a molecule from a Mol2Block structure]
+ * 
+ * @param molBlock [string of Mol2Block]
+ * @return [rdkit molecule object]
+ */
 Molecule* Molecule::Mol2BlockToMol(string molBlock) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::Mol2BlockToMol(molBlock,true,false));
 }
 
+/**
+ * @brief [MolBlockToMol]
+ * @details [generate a moleculte from a MolBlock]
+ * 
+ * @param molBlock [string of MolBlock]
+ * @return [rdkit molecule object]
+ */
 Molecule* Molecule::MolBlockToMol(string molBlock) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::MolBlockToMol(molBlock, true, false));
 }
 
 
+/**
+ * @brief [fromSmarts]
+ * @details [generate a molecule from a Smart]
+ * 
+ * @param smarts [string of smart]
+ * @return [rdkit molecule object]
+ */
 Molecule* Molecule::fromSmarts(string smarts) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::SmartsToMol(smarts));
 }
-  Molecule* Molecule::molFromPickle(string pickle) {
+
+/**
+ * @brief [molFromPickle]
+ * @details [generate a molecule from a Pickle]
+ * 
+ * @param pickle [string of pickle]
+ * @return [rdkit molecule object]
+ */
+Molecule* Molecule::molFromPickle(string pickle) {
   RWMol *mol = new RWMol();
   RDKit::MolPickler::molFromPickle(pickle, *mol);
   return new Molecule(mol);
 }
 
 
+/**
+ * @brief [MurckofromSmiles]
+ * @details [generate the murcko structure from a smile]
+ * 
+ * @param smi [string of smile]
+ * @return [rdkit molecule object]
+ */
 Molecule* Molecule::MurckofromSmiles(string smi)
 {
      ROMol *mol=RDKit::SmilesToMol(smi);
      return new Molecule(dynamic_cast<RWMol *>(RDKit::MurckoDecompose(*mol)));
 }
 
+/**
+ * @brief [newmolecule]
+ * @details [generate a blank molecule container]
+ * 
+ * @return [rdkit blank molecule object]
+ */
 Molecule* Molecule::newmolecule()
 {
      RWMol *mol= new RWMol();
      return new Molecule(mol);
 }
 
+/**
+ * @brief [addAtom]
+ * @details [adding atom to a molecule using a atomid]
+ * 
+ * @param atomid [integer starting at 0]
+ * @return [define rdkit molecule atom]
+ */
 unsigned int Molecule::addAtom (int atomid)
 {
    RDKit::Atom* atom= new RDKit::Atom(atomid);  
    return rdmol->addAtom(atom);
-
 }       
 
 
-//// need to enumerate the BondType & BondDir lists ... fro emscripten ???
+/**
+ * @brief [addBond]
+ * @details [generate bond between atoms]
+ * 
+ * @param beginAtomIdx [unsigned int begin atom index of the bond]
+ * @param endAtomIdx [unsigned int end atom index of the bond]
+ * @param bondtypeid [int bondtype of the bond]
+ * @return [set a bond between two atoms in rdkit molecule object]
+ */
+
+//// need to enumerate the BondType & BondDir lists ... for emscripten ???
 unsigned int Molecule::addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx, int bondtypeid)
 {  
- 
    // RDKit::Bond::BondType realbondtype = (RDKit::Bond::BondType)enum.Parse(typeof(RDKit::Bond::BondType), bondtype);
- RDKit::Bond::BondType castEnum = (RDKit::Bond::BondType)bondtypeid;
-   
-
+   RDKit::Bond::BondType castEnum = (RDKit::Bond::BondType)bondtypeid;
    return rdmol->addBond(beginAtomIdx,endAtomIdx,castEnum);
-
 }       
 
 
+/**
+ * @brief [setBondDir]
+ * @details [set the bond direction]
+ * 
+ * @param Bondid [int bond index value]
+ * @param bonddirid [int bond dircection index]
+ */
 void Molecule::setBondDir (int Bondid, int bonddirid)
 {
-
- RDKit::Bond::BondDir castEnum = (RDKit::Bond::BondDir)bonddirid;
-
-   rdmol->getBondWithIdx(Bondid)->setBondDir(castEnum);
-
+  RDKit::Bond::BondDir castEnum = (RDKit::Bond::BondDir)bonddirid;
+  rdmol->getBondWithIdx(Bondid)->setBondDir(castEnum);
 }       
 
 
-
+/**
+ * @brief [TanimotoSimilarityfromSmile ]
+ * @details [compute tanimoto similarity of molecule vs a given smile]
+ * 
+ * @param smilesref [smile string of the molecule to compare]
+ * @return [return the tanimoto similarity]
+ */
 double  Molecule::TanimotoSimilarityfromSmile ( string smilesref)       
 {
    ROMol *mol=RDKit::SmilesToMol(smilesref);
@@ -227,6 +302,14 @@ double  Molecule::TanimotoSimilarityfromSmile ( string smilesref)
    return TanimotoSimilarity (*v1,*v2);
 }
 
+
+/**
+ * @brief [DiceSimilarityfromSmile]
+ * @details [compute Dice similarity of molecule vs a given smile]
+ * 
+ * @param smilesref [smile string of the molecule to compare]
+ * @return [return the Dice similarity]
+ */
 double  Molecule::DiceSimilarityfromSmile ( string smilesref)       
 {
 
@@ -237,6 +320,15 @@ double  Molecule::DiceSimilarityfromSmile ( string smilesref)
    return DiceSimilarity (*v1,*v2);
 }
 
+/**
+ * @brief [TverskySimilarityfromSmile]
+ * @details [compute Tversky similarity of molecule vs a given smile]
+ * 
+ * @param smilesref [smile string of the molecule to compare]
+ * @param a [a parameter of Tversky similarity]
+ * @param b [b parameter of Tversky similarity]
+ * @return [return the Tversky similarity]
+ */
 double  Molecule::TverskySimilarityfromSmile ( string smilesref, double a, double b)       
 {
    ROMol *mol=RDKit::SmilesToMol(smilesref);
@@ -249,20 +341,34 @@ double  Molecule::TverskySimilarityfromSmile ( string smilesref, double a, doubl
 
 
 
-
-
+/**
+ * @brief [getNumAtoms]
+ * @details [get the number of atoms of the molecule]
+ * @return [number of atoms]
+ */
 unsigned int Molecule::getNumAtoms()
 {
     return rdmol->getNumAtoms();
 }
 
 
+/**
+ * @brief [getAtomCode]
+ * @details [get the atom code (atompair)]
+ * 
+ * @param atomid [int index of the atom]
+ * @return [uint32 atom code]
+ */
 boost::uint32_t Molecule::getAtomCode(int atomid) {
   return RDKit::AtomPairs::getAtomCode(rdmol->getAtomWithIdx(atomid));
 }
 
 
-
+/**
+ * @brief [getAtomPairFingerprint]
+ * @details [compute the list (not the map) of Atompair code + Atompair occurence]
+ * @return [vector of int first portion of the list contains atompair code and second portion the atompair occurence]
+ */
 vector<int> Molecule::getAtomPairFingerprint() {
    RDKit::SparseIntVect<int> * finger =  RDKit::AtomPairs::getAtomPairFingerprint(*rdmol);
    RDKit::SparseIntVect<int>::StorageType gnze = finger->getNonzeroElements();
@@ -283,12 +389,15 @@ vector<int> Molecule::getAtomPairFingerprint() {
 }
 
 
-
-
-
-
-
-
+/**
+ * @brief [getHashedAtomPairFingerprint]
+ * @details [compute Hashed list (not the map) of Atompair code + Atompair occurence]
+ * 
+ * @param size [length of the distance to the core atom to be include in the AtomPait Fingerprint]
+ * @param atomid1 [from atom index 1]
+ * @param atomid2 [to atom index 2]
+ * @return [vector of int first portion of the list contains atompair code and second portion the atompair occurence]
+ */
 vector<int> Molecule::getHashedAtomPairFingerprint(int size, int atomid1, int atomid2) {
   RDKit::SparseIntVect<int> * finger =  RDKit::AtomPairs::getHashedAtomPairFingerprint(*rdmol,size,atomid1, atomid2);
   RDKit::SparseIntVect<int>::StorageType gnze = finger->getNonzeroElements();
@@ -308,14 +417,26 @@ vector<int> Molecule::getHashedAtomPairFingerprint(int size, int atomid1, int at
     return result;
 }
 
-
+/**
+ * @brief [getHashedAtomPairFingerprintAsBitVect]
+ * @details [compute Hashed Atompair BitVect of the core atom]
+ * 
+ * @param size [length of the distance to the core atom to be include in the AtomPait Fingerprint]
+ * @param atomid1 [from atom index 1]
+ * @param atomid2 [to atom index 2]
+ * @return [string of BitVector]
+ */
 string Molecule::getHashedAtomPairFingerprintAsBitVect(int size, int atomid1, int atomid2) {
   ExplicitBitVect * finger = RDKit::AtomPairs::getHashedAtomPairFingerprintAsBitVect(*rdmol,size,atomid1, atomid2);
   return BitVectToText(*finger);
 }
 
 
-
+/**
+ * @brief [MolToBinary]
+ * @details [convert molecule to binary code from storage of pickle]
+ * @return [string pickle of the molecule]
+ */
 string Molecule::MolToBinary()
 {
     string res;
@@ -324,13 +445,24 @@ string Molecule::MolToBinary()
 }
 
 
+/**
+ * @brief [getRDKFP]
+ * @details [get RDKit fingerprint string]
+ * 
+ * @return [string of fingerprint]
+ */
 string Molecule::getRDKFP()
 {
     ExplicitBitVect* finger =  RDKit::RDKFingerprintMol(*rdmol);
     return BitVectToText(*finger);
 }
 
-
+/**
+ * @brief [getLayeredFP]
+ * @details [get Layered fingerprint string]
+ * 
+ * @return [string of fingerprint]
+ */
 string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths)
 {
     ExplicitBitVect* finger =  RDKit::LayeredFingerprintMol(*rdmol,layer, sizes,lengths);
@@ -338,16 +470,25 @@ string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int
 }
 
 
-
-
-
-
+/**
+ * @brief [getMACCSFP]
+ * @details [get MACCS fingerprint string]
+ * 
+ * @return [string of fingerprint]
+ */
 string Molecule::getMACCSFP()
 {
     ExplicitBitVect* finger =  RDKit::MACCSFingerprints::getFingerprintAsBitVect(*rdmol);
     return BitVectToText(*finger);
 }
 
+
+/**
+ * @brief [getPatternFP]
+ * @details [get Pattern fingerprint string]
+ * 
+ * @return [string of fingerprint]
+ */
 string Molecule::getPatternFP()
 {
     ExplicitBitVect* finger =  RDKit::PatternFingerprintMol(*rdmol);
@@ -355,7 +496,12 @@ string Molecule::getPatternFP()
 }
 
 
-
+/**
+ * @brief [getMorganFP]
+ * @details [get Morgan fingerprint string]
+ * 
+ * @return [string of fingerprint]
+ */
 string Molecule::getMorganFP(unsigned int sizes,unsigned int lengths)
 {
     ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,sizes, lengths);
@@ -363,6 +509,14 @@ string Molecule::getMorganFP(unsigned int sizes,unsigned int lengths)
 }
 
 
+/**
+ * @brief [getMorganFP_GetOnBits]
+ * @details [get Morgan fingerprint index vector of Bits]
+ * 
+ * @param sizes [length of the vector to be generated]
+ * @param lengths [Morgan FP value]
+ * @return [Morgan fingerprint index vector of Bits]
+ */
 vector<int> Molecule::getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths)
 {
     ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,sizes, lengths);
@@ -372,7 +526,13 @@ vector<int> Molecule::getMorganFP_GetOnBits(unsigned int sizes,unsigned int leng
 }
 
 
-
+/**
+ * @brief [getMorganFP_getNonzeroElements]
+ * @details [get Morgan fingerprint map of True Bits]
+ * 
+ * @param sizes [length of the vector to be generated]
+ * @return [Morgan fingerprint map vector of True Bits]
+ */
 map<boost::uint32_t, int> Molecule::getMorganFP_getNonzeroElements(unsigned int sizes)
 {
     RDKit::SparseIntVect<boost::uint32_t> * fp =  RDKit::MorganFingerprints::getFingerprint(*rdmol,sizes);
@@ -403,7 +563,13 @@ map<boost::uint32_t, int> Molecule::getMorganFP_getNonzeroElements(unsigned int 
 
 
 
-
+/**
+ * @brief [getMorganFPlist]
+ * @details [get Morgan fingerprint vector of True Bits & values unfolded]
+ * 
+ * @param sizes [length of the vector to be generated]
+ * @return [Morgan fingerprint map vector of True Bits]
+ */
 vector<boost::uint32_t> Molecule::getMorganFPlist(unsigned int sizes)
 {
     RDKit::SparseIntVect<boost::uint32_t> * fp =  RDKit::MorganFingerprints::getFingerprint(*rdmol,sizes);
@@ -425,6 +591,13 @@ vector<boost::uint32_t> Molecule::getMorganFPlist(unsigned int sizes)
 }
 
 
+/**
+ * @brief [FindMolChiralCenters]
+ * @details [find all molecule chiral centers]
+ * 
+ * @param includeUnassigned [boolean value option]
+ * @return [return the list chiral centers]
+ */
 vector<string> Molecule::FindMolChiralCenters(bool includeUnassigned)
 {
   RDKit::MolOps::assignStereochemistry(*rdmol,false,true,true);
@@ -461,8 +634,12 @@ vector<string> Molecule::FindMolChiralCenters(bool includeUnassigned)
 
 
 
-
-
+/**
+ * @brief [MMFFoptimizeMolecule]
+ * @details [generate the 3D optimized molecule coordonate based on MMFF field force model]
+ * 
+ * @return [return the status of the optimization and the energie of the optimal structure]
+ */
 vector<double> Molecule::MMFFoptimizeMolecule()
 {
     vector<double> res(2);
@@ -473,6 +650,14 @@ vector<double> Molecule::MMFFoptimizeMolecule()
 }
 
 
+/**
+ * @brief [MMFFoptimizeMolecule]
+ * @details [generate the 3D optimized molecule coordonate based on MMFF field force model]
+ * 
+ * @param maxIters [number of max iteration option]
+ * @param mmffVariant [MMFF variant field force option]
+ * @return [return the status of the optimization and the energie of the optimal structure]
+ */
 vector<double> Molecule::MMFFoptimizeMolecule(int maxIters, string mmffVariant)
 {
     pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdmol,maxIters,mmffVariant);
@@ -483,6 +668,15 @@ vector<double> Molecule::MMFFoptimizeMolecule(int maxIters, string mmffVariant)
 }
 
 
+/**
+ * @brief [MMFFOptimizeMoleculeConfs]
+ * @details [generate the 3D optimized molecule conformers coordonate based on MMFF field force model]
+ * 
+ * @param numThreads [number of Threads option ... not working in JS for the moment!]
+ * @param maxIters [number of max iteration option]
+ * @param mmffVariant [MMFF variant field force option]
+ * @return [return the status of the optimization and the energie of the optimal structure]
+ */
 
 vector<double> Molecule::MMFFOptimizeMoleculeConfs (unsigned int numThreads,int  maxIters,string mmffVariant)
 {  
@@ -501,6 +695,13 @@ vector<double> Molecule::MMFFOptimizeMoleculeConfs (unsigned int numThreads,int 
     return res;
 }
 
+
+/**
+ * @brief [UFFoptimizeMolecule]
+ * @details [generate the 3D optimized molecule coordonate based on Universal field force model]
+ * 
+ * @return [return the status of the optimization and the energie of the optimal structure]
+ */
 vector<double> Molecule::UFFOptimizeMolecule()
 {
     vector<double> res(2);
@@ -511,12 +712,22 @@ vector<double> Molecule::UFFOptimizeMolecule()
 }
 
 
-
+/**
+ * @brief [getproplist]
+ * @details [get the list of properties computed for this molecule]
+ * @return [vector of string]
+ */
 vector<string> Molecule::getproplist()
 {
     return rdmol->getPropList();
 }
 
+/**
+ * @brief [toSmiles]
+ * @details [convert molecule to smile string]
+ * 
+ * @return [smile string]
+ */
 string Molecule::toSmiles()
 {
     string smile =  RDKit::MolToSmiles(*rdmol);  
@@ -524,6 +735,12 @@ string Molecule::toSmiles()
 
 }
 
+/**
+ * @brief [toMolfile]
+ * @details [convert molecule to Molfile string]
+ * 
+ * @return [Molfile string]
+ */
 string Molecule::toMolfile()
 {
     stringstream ss;
@@ -535,8 +752,12 @@ string Molecule::toMolfile()
 }
 
 
+/**
+ * @brief [getPath]
+ * @details [get current path in nodeJS]
+ * @return [path of nodeJS script]
+ */
 string Molecule::getPath()
-
 {
     char cCurrentPath[FILENAME_MAX];
     int size =sizeof(cCurrentPath);
@@ -546,7 +767,11 @@ string Molecule::getPath()
 
 }
     
-
+/**
+ * @brief [sdwriteConfs]
+ * @details [convert molecule conformer list into a unique Molfile string]
+ * @return [Molfile String]
+ */
 string Molecule::sdwriteConfs()
 {
     stringstream ss;
@@ -562,13 +787,23 @@ string Molecule::sdwriteConfs()
 }
 
 
+/**
+ * @brief [compute2DCoords]
+ * @details [generate 2D molecule coordinate matrix]
+ * 
+ * @return [int of boolean of the void]
+ */
 unsigned int Molecule::compute2DCoords()
 {
     return RDDepict::compute2DCoords(*rdmol);
 }
 
 
-
+/**
+ * @brief [getAtomsPos2D]
+ * @details [get the Atoms 2D coordinate + sigma value of a SVG plot for similarity map processing]
+ * @return [vector of float]
+ */
 vector<float> Molecule::getAtomsPos2D()
 {
     double sigma = 0;
@@ -610,6 +845,12 @@ vector<float> Molecule::getAtomsPos2D()
 }
 
 
+/**
+ * @brief [Drawing2D]
+ * @details [generate the svg of a 2D molecule for plotting]
+ * 
+ * @return [string type svg]
+ */
 string Molecule::Drawing2D()
 {
     RDDepict::compute2DCoords(*rdmol);
@@ -622,47 +863,979 @@ string Molecule::Drawing2D()
 
 
 
+/**
+ * @brief [EmbedMolecule]
+ * @details [Generate a random 3D molecule coordinate matrix]
+ * 
+ * @param maxIterations [maximum iteration process]
+ * @param seed [fix a seed for random predictible generation value]
+ * 
+ * @return [int value of the process]
+ */
+int Molecule::EmbedMolecule(unsigned int maxIterations, int seed)
+{   
+    return RDKit::DGeomHelpers::EmbedMolecule(*rdmol,maxIterations,seed);
+}
+
+
+/**
+ * @brief [EmbedMolecule]
+ * @details [Generate a random 3D molecule coordinate matrix]
+ * 
+ * @return [int value of the process]
+ */
+int Molecule::EmbedMolecule()
+{   
+    return RDKit::DGeomHelpers::EmbedMolecule(*rdmol);
+}
+
+
+/**
+ * @brief [EmbedMultipleConfs]
+ * @details [Generate conformers random 3D molecules coordinate matrixes]
+ * 
+ * @param numConfs [set number of conformers]
+ * @param maxIterations [set max iteration]
+ * @param seed [set the seed for random predictible generation value]
+ * @return [int vector value of the process]
+ */
+vector<int> Molecule::EmbedMultipleConfs(unsigned int numConfs, unsigned int maxIterations, int seed)
+{    
+    return RDKit::DGeomHelpers::EmbedMultipleConfs(*rdmol,numConfs,maxIterations,seed);
+}
+
+/**
+ * @brief [EmbedMultipleConfs]
+ * @details [Generate conformers random 3D molecules coordinate matrixes]
+ * @return [int vector value of the process]
+ */
+vector<int> Molecule::EmbedMultipleConfs()
+{   
+    return RDKit::DGeomHelpers::EmbedMultipleConfs(*rdmol);
+}
+
+
+/**
+ * @brief [findSSSR]
+ * @details [TDB]
+ * 
+ * @param res [TDB]
+ * @return [int value of the process]
+ */
+int Molecule::findSSSR (std::vector< std::vector< int >> res)
+{
+    return RDKit::MolOps::findSSSR(*rdmol,res);
+}
+
+
+
+
+
+/*
+double Molecule::GetConformersRMS(int confId1, int confId2){
+    RDKit::Conformer  conf1 = rdmol->getConformer(confId1);
+    RDKit::Conformer  conf2 = rdmol->getConformer(confId2);
+    //RDKit::MolAlign::alignMolConformers(*rdmol,{confId1,confId2});
+    double ssr = 0 ;
+    double d;
+    for (int i =0;i<rdmol->getNumAtoms();i++) { 
+      d = RDGeom::Point3D::Distance(conf1.getAtomPos(i),conf2.getAtomPos(i)) ;
+      ssr += d*d ;
+    }
+    ssr = ssr/rdmol->getNumAtoms() ;
+    return ssr;
+}
+*/
+
+/**
+ * @brief [AlignMol]
+ * @details [AlignMol method]
+ * 
+ * @param smilesref [string]
+ * @return [double]
+ */
+double Molecule::AlignMol(string smilesref){
+    rdErrorLog->df_enabled = false;
+    RWMol* rdquery = RDKit::SmilesToMol(smilesref);
+    printf("smiles ok");
+
+    RDKit::MolOps::addHs(*rdquery);
+    printf("addH ok");
+
+    RDKit::DGeomHelpers::EmbedMolecule(*rdquery);
+    printf("add 3D ok");
+
+    pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdquery);
+    printf("optimze 3D ok");
+
+    double res = RDKit::MolAlign::alignMol(*rdmol,*rdquery);
+    printf("Align ok");
+   // string sres = (string)res;
+   // printf("%s\n", sres.c_str());
+    // can return the rmds values need to look at that closely... in python not there
+    return res;
+}
+
+
+/**
+ * @brief [AlignMolConformers]
+ * @details [AlignMol method using first conformer as reference of align]
+ * 
+ * @return [double]
+ */
+void Molecule::AlignMolConformers(){
+    // can return the rmds values need to look at that closely... in python not there
+    RDKit::MolAlign::alignMolConformers(*rdmol);
+
+}
+
+
+/*
+vector<double> Molecule::AlignMolConformersRMSlist(){
+    // can return the rmds values need to look at that closely... in python not there
+    std::vector<double> *RMSlist;
+    RDKit::MolAlign::alignMolConformers(*rdmol,0,0,0,false,50,RMSlist);
+    return *RMSlist;
+
+}
+*/
+
+
+
+/**
+ * @brief [addHs]
+ * @details [addHs]
+ * 
+ * @param addHs [molecule with Hs]
+ */
+void Molecule::addHs()
+{
+    return RDKit::MolOps::addHs(*rdmol);
+}
+
+/**
+ * @brief [removeHs]
+ * @details [removeHs]
+ * 
+ * @param removeHs [molecule without Hs]
+ */
+void Molecule::removeHs()
+{
+    return RDKit::MolOps::removeHs(*rdmol);
+}
+
+/**
+ * @brief [sanitizeMol]
+ * @details [sanitized molecule]
+ * 
+ * @param sanitizeMol [molecule sanitized]
+ */
+void Molecule::sanitizeMol()
+{
+    return RDKit::MolOps::sanitizeMol(*rdmol);
+}
+
+/**
+ * @brief [cleanUp]
+ * @details [cleanUp]
+ * 
+ * @param cleanUp [molecule cleanUp]
+ */
+void Molecule::cleanUp()
+{
+    return RDKit::MolOps::cleanUp(*rdmol);
+}
+
+/**
+ * @brief [Kekulize]
+ * @details [Kekulize representation of the bond for plotting & descriptors...]
+ * 
+ * @param Kekulize [molecule Kekulized]
+ */
+void Molecule::Kekulize()
+{
+    return RDKit::MolOps::Kekulize(*rdmol);
+}
+
+
+
+
+/************************************** descriptors part ************************************/
+/**
+ * @brief [computeGasteigerCharges]
+ * @details [compute the GasteigerCharges for eahc atoms of the molecule and store it as a atom property]
+ */
 void Molecule::computeGasteigerCharges()
 {
     vector<double> charges(rdmol->getNumAtoms(),0);
     RDKit::computeGasteigerCharges(*rdmol, charges,12,false);
 }
 
-// the results are not equivalent to the NPscore.py function need to check another method!!!
-vector<int> Molecule::getSpiroBridgeMacrocycles()
+
+/**
+ * @brief [getNumMacrocycles]
+ * @details [count the number of macrocycles for SA score model]
+ * @return [number of macrocycles]
+ */
+int Molecule::getNumMacrocycles()
 {
     RDKit::VECT_INT_VECT rings = rdmol->getRingInfo()->atomRings();
-
     int macroCycleCount = 0;
-    int bridgeAtomCount = 0;
-    int spiroAtomCount = 0;
-    int i=0;
     for (RDKit::VECT_INT_VECT_CI ringIter = rings.begin();ringIter != rings.end();ringIter++) {
         if (ringIter->size()>8) {
             macroCycleCount++;
+        } 
+    }
+    return macroCycleCount;
+}
+
+/**
+ * @brief [calcNumSpiroAtoms]
+ * @details [count the number of Spiro Atoms for SA score model]
+ * @return [number of spiro atoms]
+ */
+int Molecule::getNumSpiroAtoms()
+{
+  return  RDKit::Descriptors::calcNumSpiroAtoms (*rdmol);
+}
+
+/**
+ * @brief [calcNumBridgeheadAtoms]
+ * @details [count the number of Bridge head Atoms for SA score model]
+ * @return [number of Bridge head atoms]
+ */
+int Molecule::getNumBridgeheadAtoms()
+{
+  return  RDKit::Descriptors::calcNumBridgeheadAtoms(*rdmol);
+}
+
+
+
+/**
+ * @brief [getMW]
+ * @details [get approximate MW int value]
+ * 
+ * @return [return approximate MW]
+ */
+int Molecule::getMW()
+{
+    return RDKit::Descriptors::calcAMW(*rdmol);
+}
+
+/**
+ * @brief [ExactMW]
+ * @details [get Exact MW]
+ * 
+ * @return [double Exact MW]
+ */
+double Molecule::ExactMW()
+{
+    return RDKit::Descriptors::calcExactMW(*rdmol);
+}
+
+
+/**
+ * @brief [Formula]
+ * @details [get molecular formula]
+ * 
+ * @return [string MF]
+ */
+string Molecule::Formula()
+{
+    return RDKit::Descriptors::calcMolFormula(*rdmol);
+}
+
+/**
+ * @brief [Chi0v]
+ * @details [ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi0v]
+ */
+double Molecule::Chi0v()
+{
+    return   RDKit::Descriptors::calcChi0v(*rdmol);
+}
+
+/**
+ * @brief [Chi1v]
+ * @details [ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi1v]
+ */
+double Molecule::Chi1v()
+{
+    return   RDKit::Descriptors::calcChi1v (*rdmol);
+}
+
+/**
+ * @brief [Chi2v]
+ * @details [ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi2v]
+ */
+double Molecule::Chi2v()
+{
+    return   RDKit::Descriptors::calcChi2v (*rdmol);
+}
+
+
+/**
+ * @brief [Chi3v]
+ * @details [ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi3v]
+ */
+double Molecule::Chi3v()
+{
+    return   RDKit::Descriptors::calcChi3v (*rdmol);
+}
+
+
+/**
+ * @brief [Chi4v]
+ * @details [ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi4v]
+ */
+double Molecule::Chi4v()
+{
+    return   RDKit::Descriptors::calcChi4v (*rdmol);
+}
+
+
+/**
+ * @brief [ChiNv]
+ * @details [ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [ChiNv]
+ */
+double Molecule::ChiNv(unsigned int N)
+{
+    return   RDKit::Descriptors::calcChiNv (*rdmol,N);
+}
+
+/**
+ * @brief [Chi0n]
+ * @details [nValence ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi0n]
+ */
+double Molecule::Chi0n()
+{
+    return   RDKit::Descriptors::calcChi0n (*rdmol);
+}
+
+/**
+ * @brief [Chi1n]
+ * @details [nValence ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi1n]
+ */
+double Molecule::Chi1n()
+{
+    return   RDKit::Descriptors::calcChi1n (*rdmol);
+}
+
+/**
+ * @brief [Chi2n]
+ * @details [nValence ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi2n]
+ */
+double Molecule::Chi2n()
+{
+    return   RDKit::Descriptors::calcChi2n (*rdmol);
+}
+
+/**
+ * @brief [Chi3n]
+ * @details [nValence ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi3n]
+ */
+double Molecule::Chi3n()
+{
+    return   RDKit::Descriptors::calcChi3n (*rdmol);
+}
+
+/**
+ * @brief [Chi4n]
+ * @details [nValence ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Chi4n]
+ */
+double Molecule::Chi4n()
+{
+    return   RDKit::Descriptors::calcChi4n (*rdmol);
+}
+
+
+
+/**
+ * @brief [ChiNn]
+ * @details [nValence ConnectivityDescriptors list from  Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [ChiNn]
+ */
+double Molecule::ChiNn(unsigned int N)
+{
+    return   RDKit::Descriptors::calcChiNn(*rdmol,N);
+}
+
+
+
+/**
+ * @brief [HallKierAlpha]
+ * @details [calculate the Hall-Kier alpha value for a molecule From equation (58) of Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [HallKierAlpha]
+ */
+double Molecule::HallKierAlpha()
+{
+    return RDKit::Descriptors::calcHallKierAlpha (*rdmol);
+}
+
+/**
+ * @brief [Kappa1]
+ * @details [calculate the Hall-Kier alpha value for a molecule From equation (58) and (59) of Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Kappa1]
+ */
+double Molecule::Kappa1()
+{
+    return    RDKit::Descriptors::calcKappa1 (*rdmol);
+}
+
+/**
+ * @brief [Kappa2]
+ * @details [calculate the Hall-Kier alpha value for a molecule From equation (58) and (59) of Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Kappa2]
+ */
+double Molecule::Kappa2()
+{
+    return    RDKit::Descriptors::calcKappa2 (*rdmol);
+}
+
+/**
+ * @brief [Kappa3]
+ * @details [calculate the Hall-Kier alpha value for a molecule From equation (58) and (59) of Rev. Comp. Chem. vol 2, 367-422, (1991)]
+ * 
+ * @return [Kappa3]
+ */
+double Molecule::Kappa3()
+{
+    return    RDKit::Descriptors::calcKappa3 (*rdmol);
+}
+
+/**
+ * @brief [logp_mr]
+ * @details [Wildman-Crippen logp,mr values]
+ * @return [array of logP and mr]
+ */
+vector<double> Molecule::logp_mr()
+{    
+    vector<double> res(2); 
+    double logp, mr;
+    RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
+    res[0] = logp;
+    res[1] = mr;
+    return res;
+}
+
+/**
+ * @brief [getCrippenAtomContribs]
+ * @details [Wildman-Crippen logp,mr Atom Contributions]
+ * @return [array of atom contribution]
+ */
+vector<double> Molecule::getCrippenAtomContribs() {
+    vector<double> logp(rdmol->getNumAtoms());
+    vector<double> mr(rdmol->getNumAtoms());
+    RDKit::Descriptors::getCrippenAtomContribs(*rdmol,logp,mr,true);
+    vector<double> results;
+    results.reserve(logp.size() + mr.size());
+    results.insert(results.end(), logp.begin(), logp.end());
+    results.insert(results.end(), mr.begin(), mr.end());
+    return results;
+}
+
+
+/**
+ * @brief [LipinskiHBA]
+ * @details [number of Lipinski H-bond acceptors for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::LipinskiHBA()
+{
+    return RDKit::Descriptors::calcLipinskiHBA (*rdmol);
+}
+
+/**
+ * @brief [LipinskiHBA]
+ * @details [number of Lipinski H-bond donors for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::LipinskiHBD()
+{
+    return RDKit::Descriptors::calcLipinskiHBD (*rdmol);
+}
+
+
+/**
+ * @brief [NumRotatableBonds]
+ * @details [number of rotatable bonds for a molecule. does not count things like amide or ester bonds]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumRotatableBonds()
+{
+    return RDKit::Descriptors::calcNumRotatableBonds (*rdmol);
+}
+
+/**
+ * @brief [NumHBA]
+ * @details [number of H-bond donors for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumHBD()
+{
+    return RDKit::Descriptors::calcNumHBD (*rdmol);
+}
+
+/**
+ * @brief [NumHBA]
+ * @details [number of H-bond acceptors for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumHBA()
+{
+    return RDKit::Descriptors::calcNumHBA (*rdmol);
+}
+
+
+/**
+ * @brief [NumHeteroatoms]
+ * @details [number of heteroatoms for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumHeteroatoms()
+{
+    return RDKit::Descriptors::calcNumHeteroatoms (*rdmol);
+}
+
+/**
+ * @brief [NumAmideBonds]
+ * @details [number of amide bonds in a molecule]
+ * 
+ * @param calcNumAmideBonds [description]
+ * @return [description]
+ */
+unsigned int Molecule::NumAmideBonds()
+{
+    return RDKit::Descriptors::calcNumAmideBonds (*rdmol);
+}
+
+/**
+ * @brief [FractionCSP3]
+ * @details [get fraction of C atoms that are SP3 hybridized]
+ * 
+ * @return [double]
+ */
+double Molecule::FractionCSP3()
+{
+    return RDKit::Descriptors::calcFractionCSP3 (*rdmol);
+}
+
+
+/**
+ * @brief [NumRings]
+ * @details [number of rings for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumRings()
+{
+    return RDKit::Descriptors::calcNumRings (*rdmol);
+}
+
+/**
+ * @brief [NumAromaticRings]
+ * @details [number of aromatic rings for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumAromaticRings()
+{
+    return   RDKit::Descriptors::calcNumAromaticRings (*rdmol);
+}
+
+/**
+ * @brief [NumAliphaticRings]
+ * @details [number of aliphatic (containing at least one non-aromatic bond) rings for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumAliphaticRings()
+{
+    return   RDKit::Descriptors::calcNumAliphaticRings (*rdmol);
+}
+
+/**
+ * @brief [NumSaturatedRings]
+ * @details [number of saturated rings for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumSaturatedRings()
+{
+    return  RDKit::Descriptors::calcNumSaturatedRings (*rdmol);
+}
+
+/**
+ * @brief [NumHeterocycles]
+ * @details [number of heterocycles for a molecule]
+ * 
+ * @return [unsigned int ]
+ */
+unsigned int Molecule::NumHeterocycles()
+{
+    return   RDKit::Descriptors::calcNumHeterocycles (*rdmol);
+}
+
+/**
+ * @brief [NumAromaticHeterocycles]
+ * @details [number of aromatic heterocycles for a molecule]
+ * 
+ * @return [unsigned int ]
+ */
+unsigned int Molecule::NumAromaticHeterocycles()
+{
+    return    RDKit::Descriptors::calcNumAromaticHeterocycles (*rdmol);
+}
+
+/**
+ * @brief [NumAromaticCarbocycles]
+ * @details [number of aromatic Carbocycles for a molecule]
+ * 
+ * @return [unsigned int ]
+ */
+unsigned int Molecule::NumAromaticCarbocycles()
+{
+    return RDKit::Descriptors::calcNumAromaticCarbocycles (*rdmol);
+}
+
+/**
+ * @brief [NumSaturatedHeterocycles]
+ * @details [number of saturated heterocycles for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumSaturatedHeterocycles()
+{
+    return   RDKit::Descriptors::calcNumSaturatedHeterocycles (*rdmol);
+}
+
+
+/**
+ * @brief [NumSaturatedCarbocycles]
+ * @details [number of saturated carbocycles for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumSaturatedCarbocycles()
+{
+    return RDKit::Descriptors::calcNumSaturatedCarbocycles (*rdmol);
+}
+
+/**
+ * @brief [NumAliphaticHeterocycles]
+ * @details [number of aliphatic (containing at least one non-aromatic bond) heterocycles for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumAliphaticHeterocycles()
+{
+    return RDKit::Descriptors::calcNumAliphaticHeterocycles (*rdmol);
+}
+
+/**
+ * @brief [NumAliphaticCarbocycles]
+ * @details [number of aliphatic (containing at least one non-aromatic bond) carbocycles for a molecule]
+ * 
+ * @return [unsigned int]
+ */
+unsigned int Molecule::NumAliphaticCarbocycles()
+{
+    return RDKit::Descriptors::calcNumAliphaticCarbocycles (*rdmol);
+}
+
+
+/**
+ * @brief [LabuteASA]
+ * @details [Labute ASA value for a molecule]
+ * 
+ * @return [double]
+ */
+double Molecule::LabuteASA()
+{
+    return RDKit::Descriptors::calcLabuteASA (*rdmol);
+}
+
+
+/**
+ * @brief [getASAContribs]
+ * @details [Labute ASA Atom Contributions]
+ * @return [array of atom contribution]
+ */
+vector<double> Molecule::getASAContribs() {
+    double hContrib=0.0;
+    bool includeHs=true;
+    vector<double> contribs(rdmol->getNumAtoms());
+    RDKit::Descriptors::getLabuteAtomContribs(*rdmol,contribs,hContrib,includeHs,false);
+    return contribs;
+}
+
+
+
+
+/**
+ * @brief [TPSA]
+ * @details [TPSA value for a molecule]
+ * 
+ * @return [double]
+ */
+double Molecule::TPSA()
+{
+    return RDKit::Descriptors::calcTPSA (*rdmol);
+}
+
+/**
+ * @brief [getTPSAAtomContribs]
+ * @details [TPSA Atom Contributions]
+ * @return [array of atom contribution]
+ */
+vector<double>  Molecule::getTPSAAtomContribs() {
+    vector<double> contribs(rdmol->getNumAtoms());
+    RDKit::Descriptors::getTPSAAtomContribs(*rdmol,contribs,false);
+    return contribs;
+}
+
+
+/**
+ * @brief [SlogP_VSA]
+ * @details [SlogP_VSA]
+ * 
+ * @return [vector of dobule]
+ */
+vector< double > Molecule::SlogP_VSA()
+{
+    return RDKit::Descriptors::calcSlogP_VSA (*rdmol);
+}
+
+/**
+ * @brief [SMR_VSA]
+ * @details [SMR_VSA]
+ * 
+ * @return [vector of dobule]
+ */
+vector< double > Molecule::SMR_VSA() {
+    return RDKit::Descriptors::calcSMR_VSA (*rdmol);
+}
+
+/**
+ * @brief [PEO_VSA]
+ * @details [PEO_VSA]
+ * 
+ * @return [vector of dobule]
+ */
+vector< double > Molecule::PEO_VSA()
+{
+    return RDKit::Descriptors::calcPEOE_VSA (*rdmol);
+}
+
+/**
+ * @brief [MQNs]
+ * @details [MQNs]
+ * 
+ * @return [vector of dobule]
+ */
+vector< unsigned int > Molecule::MQNs()
+{
+    return RDKit::Descriptors::calcMQNs (*rdmol);
+}
+
+
+
+
+
+
+
+
+/**
+ * @brief [GetSubstructMatches]
+ * @details [determine the Substruct Matches from a smile reference numbers as vector of int (3 consecutive ints define a sub match group)]
+ * 
+ * @param smilesref [string]
+ * @return [vector of int]
+ */
+vector<int> Molecule::GetSubstructMatches(string smilesref)
+{
+    vector< RDKit::MatchVectType > matches;
+    rdErrorLog->df_enabled = false;
+    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
+    int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
+
+    vector<int> vint;
+    for(int idx=0;idx<matched;idx++){
+        vector<pair<int, int> > invector= matches[idx];
+        for (int idx2=0;idx2<invector.size();idx2++) {
+             //std::cout <<  invector[idx2].second  << std::endl ;
+             vint.push_back(invector[idx2].second);
         }
-        std::sort(rings[i].begin(),rings[i].end());
-        int x=1;
-        for (RDKit::VECT_INT_VECT_CI ringIter2 = ringIter+1; ringIter2 != rings.end(); ringIter2++) {
-            vector<int> v;
-            RDKit::Intersect(rings[i],rings[i+x],v);
-            if (v.size() == 1) {
-                spiroAtomCount++;
-            } else if (v.size() > 2) {
-                bridgeAtomCount++;
-            }
-            x++;
-        }
-        i++;
     }
 
-    vector<int> result(3);
-    result[0]=spiroAtomCount;
-    result[1]=bridgeAtomCount;
-    result[2]=macroCycleCount;
-
-    return result;
+    return vint;
 }
+
+/**
+ * @brief [GetSubstructMatchesNumber]
+ * @details [determine the Substruct Matches from a smile reference total number]
+ * 
+ * @param smilesref [string]
+ * @return [int]
+ */
+int Molecule::GetSubstructMatchesNumber(string smilesref)
+{
+    vector< RDKit::MatchVectType > matches;
+    rdErrorLog->df_enabled = false;
+    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
+    int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
+    
+    return matched;
+}
+
+/**
+ * @brief [HasSubstructMatchStr]
+ * @details [determine if substructure (from smile) is in the current molecule]
+ * 
+ * @param smilesref [string]
+ * @return [bool]
+ */
+bool Molecule::HasSubstructMatchStr(string smilesref)
+{
+    rdErrorLog->df_enabled = false;
+    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
+    
+    RDKit::MatchVectType res;
+    return RDKit::SubstructMatch(*rdmol,*rdquery,res);
+}
+
+
+
+/**
+ * @brief [getAtomicNums]
+ * @details [determine the list of atomic numbers of the molecule]
+ * 
+ * @return [vector of int]
+ */
+vector<int> Molecule::getAtomicNums()
+{
+    vector<int> res;
+    int atomnumber;
+    int numAtoms =rdmol->getNumAtoms();
+    for (int i =0;i<numAtoms;i++) {
+        atomnumber = rdmol->getAtomWithIdx(i)->getAtomicNum();
+        res.push_back(atomnumber);
+    }
+    return res;
+}
+
+
+
+
+/******************************** get & set & has properties *******************************************/
+
+/**
+ * @brief [getProp]
+ * @details [get a molecule Property value based of property name key]
+ * 
+ * @param key [string]
+ * @return [string]
+ */
+string Molecule::getProp(string key) {
+    string res;
+    rdmol->getProp(key,res);
+    return res;
+}
+
+/**
+ * @brief [getAtomProp]
+ * @details [get a atom Property value based of property name key]
+ * 
+ * @param key [string]
+ * @return [string]
+ */
+string Molecule::getAtomProp(string key,int atomid) {
+    string res;
+    rdmol->getAtomWithIdx(atomid)->getProp(key,res);
+    return res;
+}
+
+
+/**
+ * @brief [getNumConformers]
+ * @details [count number of conformers]
+ * @return [int]
+ */
+int Molecule::getNumConformers() {
+    return rdmol->getNumConformers();
+}
+
+/**
+ * @brief [getConformer]
+ * @details [select a conformers]
+ * 
+ * @param id [int]
+ * @return [conformer]
+ */
+RDKit::Conformer Molecule::getConformer(int id) {
+    return rdmol->getConformer(id);
+}
+
+
+/**
+ * @brief [setProp]
+ * @details [set a molecular property value for a property key]
+ * 
+ * @param key [string]
+ * @param value [string]
+ * 
+ * @return [int]
+ */
+int Molecule::setProp(string key, string value) {
+    rdmol->setProp(key,value);
+    return 0;
+}
+
+
+/**
+ * @brief [hasProp]
+ * @details [determine if molecule has a key property]
+ * 
+ * @param key [string]
+ * @return [boolean]
+ */
+bool Molecule::hasProp(string key) {
+    return rdmol->hasProp(key);
+}
+
+
+
 
 
 
@@ -896,487 +2069,5 @@ int Molecule::writefile(string filename, string data)
 
 */
 
-int Molecule::EmbedMolecule(unsigned int maxIterations, int seed)
 
-{   
- 
-    return RDKit::DGeomHelpers::EmbedMolecule(*rdmol,maxIterations,seed);
-}
 
-
-int Molecule::EmbedMolecule()
-
-{   
- 
-    return RDKit::DGeomHelpers::EmbedMolecule(*rdmol);
-}
-
-
-vector<int> Molecule::EmbedMultipleConfs(unsigned int numConfs, unsigned int maxIterations, int seed)
-{   
- 
-    return RDKit::DGeomHelpers::EmbedMultipleConfs(*rdmol,numConfs,maxIterations,seed);
-}
-
-
-vector<int> Molecule::EmbedMultipleConfs()
-{   
- 
-    return RDKit::DGeomHelpers::EmbedMultipleConfs(*rdmol);
-}
-
-
-int Molecule::findSSSR (std::vector< std::vector< int >> res)
-{
-    return RDKit::MolOps::findSSSR(*rdmol,res);
-}
-
-
-
-void Molecule::addHs()
-{
-    return RDKit::MolOps::addHs(*rdmol);
-}
-
-
-void Molecule::removeHs()
-{
-    return RDKit::MolOps::removeHs(*rdmol);
-}
-
-
-void Molecule::sanitizeMol()
-{
-    return RDKit::MolOps::sanitizeMol(*rdmol);
-}
-
-void Molecule::cleanUp()
-{
-    return RDKit::MolOps::cleanUp(*rdmol);
-}
-
-void Molecule::Kekulize()
-{
-    return RDKit::MolOps::Kekulize(*rdmol);
-}
-
-
-int Molecule::getMW()
-{
-    return RDKit::Descriptors::calcAMW(*rdmol);
-}
-
-
-double Molecule::Molecule::ExactMW()
-{
-    return RDKit::Descriptors::calcExactMW(*rdmol);
-}
-
-
-string Molecule::Formula()
-{
-    return RDKit::Descriptors::calcMolFormula(*rdmol);
-}
-
-
-double Molecule::Chi0v()
-{
-    return   RDKit::Descriptors::calcChi0v(*rdmol);
-}
-
-
-double Molecule::Chi1v()
-{
-    return   RDKit::Descriptors::calcChi1v (*rdmol);
-}
-
-double Molecule::Chi2v()
-{
-    return   RDKit::Descriptors::calcChi2v (*rdmol);
-}
-
-
-double Molecule::Chi3v()
-{
-    return   RDKit::Descriptors::calcChi3v (*rdmol);
-}
-
-
-
-double Molecule::Chi4v()
-{
-    return   RDKit::Descriptors::calcChi4v (*rdmol);
-}
-
-
-double Molecule::Chi0n()
-{
-    return   RDKit::Descriptors::calcChi0n (*rdmol);
-}
-
-
-double Molecule::Chi1n()
-{
-    return   RDKit::Descriptors::calcChi1n (*rdmol);
-}
-
-
-double Molecule::Chi2n()
-{
-    return   RDKit::Descriptors::calcChi2n (*rdmol);
-}
-
-
-double Molecule::Chi3n()
-{
-    return   RDKit::Descriptors::calcChi3n (*rdmol);
-}
-
-double Molecule::Chi4n()
-{
-    return   RDKit::Descriptors::calcChi4n (*rdmol);
-}
-
-
-double Molecule::HallKierAlpha()
-{
-    return RDKit::Descriptors::calcHallKierAlpha (*rdmol);
-}
-
-double Molecule::Kappa1()
-{
-    return    RDKit::Descriptors::calcKappa1 (*rdmol);
-}
-
-double Molecule::Kappa2()
-{
-    return    RDKit::Descriptors::calcKappa2 (*rdmol);
-}
-
-double Molecule::Kappa3()
-{
-    return    RDKit::Descriptors::calcKappa3 (*rdmol);
-}
-
-//cannot access the data of this vector in js! need to split it! 
-vector<double> Molecule::logp_mr()
-{    
-    vector<double> res(2); 
-    double logp, mr;
-    RDKit::Descriptors::calcCrippenDescriptors (*rdmol,logp,mr);
-    res[0] = logp;
-    res[1] = mr;
-    return res;
-}
-
-
-unsigned int Molecule::LipinskiHBA()
-{
-    return RDKit::Descriptors::calcLipinskiHBA (*rdmol);
-}
-
-unsigned int Molecule::LipinskiHBD()
-{
-    return RDKit::Descriptors::calcLipinskiHBD (*rdmol);
-}
-
-unsigned int Molecule::NumRotatableBonds()
-{
-    return RDKit::Descriptors::calcNumRotatableBonds (*rdmol);
-}
-
-unsigned int Molecule::NumHBD()
-{
-    return RDKit::Descriptors::calcNumHBD (*rdmol);
-}
-
-unsigned int Molecule::NumHBA()
-{
-    return RDKit::Descriptors::calcNumHBA (*rdmol);
-}
-
-unsigned int Molecule::NumHeteroatoms()
-{
-    return RDKit::Descriptors::calcNumHeteroatoms (*rdmol);
-}
-
-unsigned int Molecule::NumAmideBonds()
-{
-    return RDKit::Descriptors::calcNumAmideBonds (*rdmol);
-}
-
-double Molecule::FractionCSP3()
-{
-    return RDKit::Descriptors::calcFractionCSP3 (*rdmol);
-}
-
-unsigned int Molecule::NumRings()
-{
-    return RDKit::Descriptors::calcNumRings (*rdmol);
-}
-
-unsigned int Molecule::NumAromaticRings()
-{
-    return   RDKit::Descriptors::calcNumAromaticRings (*rdmol);
-}
-
-unsigned int Molecule::NumAliphaticRings()
-{
-    return   RDKit::Descriptors::calcNumAliphaticRings (*rdmol);
-}
-
-unsigned int Molecule::NumSaturatedRings()
-{
-    return  RDKit::Descriptors::calcNumSaturatedRings (*rdmol);
-}
-
-unsigned int Molecule::NumHeterocycles()
-{
-    return   RDKit::Descriptors::calcNumHeterocycles (*rdmol);
-}
-
-unsigned int Molecule::NumAromaticHeterocycles()
-{
-    return    RDKit::Descriptors::calcNumAromaticHeterocycles (*rdmol);
-}
-
-unsigned int Molecule::NumAromaticCarbocycles()
-{
-    return RDKit::Descriptors::calcNumAromaticCarbocycles (*rdmol);
-}
-
-
-unsigned int Molecule::NumSaturatedHeterocycles()
-{
-    return   RDKit::Descriptors::calcNumSaturatedHeterocycles (*rdmol);
-}
-
-unsigned int Molecule::NumSaturatedCarbocycles()
-{
-    return RDKit::Descriptors::calcNumSaturatedCarbocycles (*rdmol);
-}
-
-unsigned int Molecule::NumAliphaticHeterocycles()
-{
-    return RDKit::Descriptors::calcNumAliphaticHeterocycles (*rdmol);
-}
-
-unsigned int Molecule::NumAliphaticCarbocycles()
-{
-    return RDKit::Descriptors::calcNumAliphaticCarbocycles (*rdmol);
-}
-
-double Molecule::LabuteASA()
-{
-    return RDKit::Descriptors::calcLabuteASA (*rdmol);
-}
-
-double Molecule::TPSA()
-{
-    return RDKit::Descriptors::calcTPSA (*rdmol);
-}
-
-vector< double > Molecule::SlogP_VSA()
-{
-    return RDKit::Descriptors::calcSlogP_VSA (*rdmol);
-}
-
-
-vector< double > Molecule::SMR_VSA() {
-    return RDKit::Descriptors::calcSMR_VSA (*rdmol);
-}
-
-
-vector< double > Molecule::PEO_VSA()
-{
-    return RDKit::Descriptors::calcPEOE_VSA (*rdmol);
-}
-
-
-vector< unsigned int > Molecule::MQNs()
-{
-    return RDKit::Descriptors::calcMQNs (*rdmol);
-}
-
-
-
-vector<double> Molecule::getCrippenAtomContribs() {
-    vector<double> logp(rdmol->getNumAtoms());
-    vector<double> mr(rdmol->getNumAtoms());
-    RDKit::Descriptors::getCrippenAtomContribs(*rdmol,logp,mr,true);
-    vector<double> results;
-    results.reserve(logp.size() + mr.size());
-    results.insert(results.end(), logp.begin(), logp.end());
-    results.insert(results.end(), mr.begin(), mr.end());
-    return results;
-}
-
-
-vector<double>  Molecule::getTPSAAtomContribs() {
-    vector<double> contribs(rdmol->getNumAtoms());
-    RDKit::Descriptors::getTPSAAtomContribs(*rdmol,contribs,false);
-    return contribs;
-}
-
-
-
-vector<double> Molecule::getASAContribs() {
-    double hContrib=0.0;
-    bool includeHs=true;
-    vector<double> contribs(rdmol->getNumAtoms());
-    RDKit::Descriptors::getLabuteAtomContribs(*rdmol,contribs,hContrib,includeHs,false);
-    return contribs;
-}
-
-vector<int> Molecule::GetSubstructMatches(string smilesref)
-{
-    vector< RDKit::MatchVectType > matches;
-    rdErrorLog->df_enabled = false;
-    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
-    int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
-
-    vector<int> vint;
-    for(int idx=0;idx<matched;idx++){
-        vector<pair<int, int> > invector= matches[idx];
-        for (int idx2=0;idx2<invector.size();idx2++) {
-             //std::cout <<  invector[idx2].second  << std::endl ;
-             vint.push_back(invector[idx2].second);
-        }
-    }
-
-    return vint;
-}
-
-
-int Molecule::GetSubstructMatchesNumber(string smilesref)
-{
-    vector< RDKit::MatchVectType > matches;
-    rdErrorLog->df_enabled = false;
-    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
-    int matched = RDKit::SubstructMatch(*rdmol,*rdquery,matches,true);
-    
-    return matched;
-}
-
-
-vector<int> Molecule::getAtomicNums()
-{
-    vector<int> res;
-    int atomnumber;
-    int numAtoms =rdmol->getNumAtoms();
-    for (int i =0;i<numAtoms;i++) {
-        atomnumber = rdmol->getAtomWithIdx(i)->getAtomicNum();
-        res.push_back(atomnumber);
-    }
-    return res;
-}
-
-
-
-
-
-/*
-double Molecule::GetConformersRMS(int confId1, int confId2){
-    RDKit::Conformer  conf1 = rdmol->getConformer(confId1);
-    RDKit::Conformer  conf2 = rdmol->getConformer(confId2);
-    //RDKit::MolAlign::alignMolConformers(*rdmol,{confId1,confId2});
-    double ssr = 0 ;
-    double d;
-    for (int i =0;i<rdmol->getNumAtoms();i++) { 
-      d = RDGeom::Point3D::Distance(conf1.getAtomPos(i),conf2.getAtomPos(i)) ;
-      ssr += d*d ;
-    }
-    ssr = ssr/rdmol->getNumAtoms() ;
-    return ssr;
-}
-*/
-
-
-double Molecule::AlignMol(string smilesref){
-    rdErrorLog->df_enabled = false;
-    RWMol* rdquery = RDKit::SmilesToMol(smilesref);
-    printf("smiles ok");
-
-    RDKit::MolOps::addHs(*rdquery);
-    printf("addH ok");
-
-    RDKit::DGeomHelpers::EmbedMolecule(*rdquery);
-    printf("add 3D ok");
-
-    pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdquery);
-    printf("optimze 3D ok");
-
-    double res = RDKit::MolAlign::alignMol(*rdmol,*rdquery);
-    printf("Align ok");
-   // string sres = (string)res;
-   // printf("%s\n", sres.c_str());
-    // can return the rmds values need to look at that closely... in python not there
-    return res;
-}
-
-
-
-void Molecule::AlignMolConformers(){
-    // can return the rmds values need to look at that closely... in python not there
-    RDKit::MolAlign::alignMolConformers(*rdmol);
-
-}
-
-
-/*
-vector<double> Molecule::AlignMolConformersRMSlist(){
-    // can return the rmds values need to look at that closely... in python not there
-    std::vector<double> *RMSlist;
-    RDKit::MolAlign::alignMolConformers(*rdmol,0,0,0,false,50,RMSlist);
-    return *RMSlist;
-
-}
-*/
-
-bool Molecule::HasSubstructMatchStr(string smilesref)
-{
-    rdErrorLog->df_enabled = false;
-    RWMol* rdquery = RDKit::SmartsToMol(smilesref);
-    
-    RDKit::MatchVectType res;
-    return RDKit::SubstructMatch(*rdmol,*rdquery,res);
-}
-
-
-
-/// get & set & has properties
-
-
-string Molecule::getProp(string key) {
-    string res;
-    rdmol->getProp(key,res);
-    return res;
-}
-
-
-string Molecule::getAtomProp(string key,int atomid) {
-    string res;
-    rdmol->getAtomWithIdx(atomid)->getProp(key,res);
-    return res;
-}
-
-
-int Molecule::getNumConformers() {
-    return rdmol->getNumConformers();
-}
-
-
-RDKit::Conformer Molecule::getConformer(int id) {
-    return rdmol->getConformer(id);
-}
-
-
-
-int Molecule::setProp(string key, string value) {
-    rdmol->setProp(key,value);
-    return 0;
-}
-
-bool Molecule::hasProp(string key) {
-    return rdmol->hasProp(key);
-}

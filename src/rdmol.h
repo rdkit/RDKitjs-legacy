@@ -27,7 +27,9 @@ public:
 
 
     // SA score Peter Erl
-    vector<int> getSpiroBridgeMacrocycles();
+    int getNumMacrocycles();
+    int getNumSpiroAtoms();
+    int getNumBridgeheadAtoms();
     vector<string> FindMolChiralCenters(bool includeUnassigned);
     
     // new fingerprints
@@ -131,11 +133,15 @@ public:
     double Chi2v();
     double Chi3v();
     double Chi4v();
+    double ChiNv(unsigned int N);
+
     double Chi0n();
     double Chi1n();
     double Chi2n();
     double Chi3n();
     double Chi4n();
+    double ChiNn(unsigned int N);
+
     double HallKierAlpha();
     double Kappa1();
     double Kappa2();
@@ -254,7 +260,6 @@ EMSCRIPTEN_BINDINGS(rdmol) {
 
     
     class_<Molecule>("Molecule")
-    .function("getSpiroBridgeMacrocycles",&Molecule::getSpiroBridgeMacrocycles, allow_raw_pointers())
     .function("FindMolChiralCenters",&Molecule::FindMolChiralCenters, allow_raw_pointers())
     .function("addAtom",&Molecule::addAtom, allow_raw_pointers())
     .function("addBond",&Molecule::addBond, allow_raw_pointers())
@@ -345,24 +350,16 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("TanimotoSimilarityfromSmile", &Molecule::TanimotoSimilarityfromSmile, allow_raw_pointers())
     .function("DiceSimilarityfromSmile", &Molecule::DiceSimilarityfromSmile, allow_raw_pointers())
     .function("TverskySimilarityfromSmile", &Molecule::TverskySimilarityfromSmile, allow_raw_pointers())
-    // .function("RusselSimilarityfromSmile", &Molecule::RusselSimilarityfromSmile, allow_raw_pointers())
-    
-    /*
-     .function("AsymmetricSimilarityfromSmile", &Molecule::AsymmetricSimilarityfromSmile, allow_raw_pointers())
-     .function("OnBitSimilarityfromSmile", &Molecule::OnBitSimilarityfromSmile, allow_raw_pointers())
-     .function("NumBitsInCommonfromSmile", &Molecule::NumBitsInCommonfromSmile, allow_raw_pointers())
-     .function("McConnaugheySimilarityfromSmile", &Molecule::McConnaugheySimilarityfromSmile, allow_raw_pointers())
-     .function("CosineSimilarityfromSmile", &Molecule::CosineSimilarityfromSmile, allow_raw_pointers())
-     .function("KulczynskiSimilarityfromSmile", &Molecule::KulczynskiSimilarityfromSmile, allow_raw_pointers())
-     .function("BraunBlanquetSimilarityfromSmile", &Molecule::BraunBlanquetSimilarityfromSmile, allow_raw_pointers())
-     .function("SokalSimilarityfromSmile", &Molecule::SokalSimilarityfromSmile, allow_raw_pointers())
-     .function("RogotGoldbergSimilarityfromSmile", &Molecule::RogotGoldbergSimilarityfromSmile, allow_raw_pointers())
-     */
+
     .function("AlignMol", &Molecule::AlignMol, allow_raw_pointers())
     .function("AlignMolConformers", &Molecule::AlignMolConformers, allow_raw_pointers())
     //.function("AlignMolConformersRMSlist", &Molecule::AlignMolConformersRMSlist, allow_raw_pointers())
     //.function("GetConformersRMS", &Molecule::GetConformersRMS, allow_raw_pointers())
 
+
+    .function("getNumMacrocycles",&Molecule::getNumMacrocycles, allow_raw_pointers())
+    .function("getNumSpiroAtoms",&Molecule::getNumSpiroAtoms, allow_raw_pointers())
+    .function("getNumBridgeheadAtoms",&Molecule::getNumBridgeheadAtoms, allow_raw_pointers())
     // descriptors used in calc_all_desc
     .function("getMW", &Molecule::getMW, allow_raw_pointers())
     .function("ExactMW",&Molecule::ExactMW ,allow_raw_pointers())
@@ -372,11 +369,15 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("Chi2v",&Molecule::Chi2v ,allow_raw_pointers())
     .function("Chi3v",&Molecule::Chi3v ,allow_raw_pointers())
     .function("Chi4v",&Molecule::Chi4v ,allow_raw_pointers())
+    .function("ChiNv",&Molecule::ChiNv ,allow_raw_pointers())
+
     .function("Chi0n",&Molecule::Chi0n ,allow_raw_pointers())
     .function("Chi1n",&Molecule::Chi1n ,allow_raw_pointers())
     .function("Chi2n",&Molecule::Chi2n ,allow_raw_pointers())
     .function("Chi3n",&Molecule::Chi3n ,allow_raw_pointers())
     .function("Chi4n",&Molecule::Chi4n ,allow_raw_pointers())
+    .function("ChiNn",&Molecule::ChiNn ,allow_raw_pointers())
+
     .function("HallKierAlpha",&Molecule::HallKierAlpha ,allow_raw_pointers())
     .function("Kappa1",&Molecule::Kappa1 ,allow_raw_pointers())
     .function("Kappa2",&Molecule::Kappa2 ,allow_raw_pointers())
