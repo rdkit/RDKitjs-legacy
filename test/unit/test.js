@@ -257,6 +257,35 @@ describe('Conformers count & access', function () {
         mol.delete();
     });
 
+   it('getAtomNeighbors', function () {
+        var smi = 'C(C)C(CCC)CCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        var p = mol.getAtomNeighbors(3);
+        var e=[];
+        for(var j=0;j < p.size();j++){
+                e.push(p.get(j));
+            }
+        
+        e.should.eql([1,2]);
+        mol.delete();
+    });
+
+
+   it('getBondNeighbors', function () {
+        var smi = 'C(C)C(CCC)CCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);  
+        var p = mol.getBondNeighbors(3);
+        var e=[];
+        for(var j=0;j < p.size();j++){
+                e.push(p.get(j));
+            }
+        
+        e.should.eql([0,1]);
+        mol.delete();
+    });
+
+
+
     it('getNumConformers', function () {
         var smi = 'CCCCCOC(CO)';
         var mol = RDKit.Molecule.fromSmiles(smi);  

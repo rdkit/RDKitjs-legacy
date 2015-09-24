@@ -272,6 +272,11 @@ unsigned int Molecule::addBond (unsigned int beginAtomIdx, unsigned int endAtomI
 }       
 
 
+
+
+
+
+
 /**
  * @brief [setBondDir]
  * @details [set the bond direction]
@@ -284,6 +289,77 @@ void Molecule::setBondDir (int Bondid, int bonddirid)
   RDKit::Bond::BondDir castEnum = (RDKit::Bond::BondDir)bonddirid;
   rdmol->getBondWithIdx(Bondid)->setBondDir(castEnum);
 }       
+
+
+
+
+vector<double> Molecule::getAdjacencyMatrix(bool useBO) {
+     // double *AdjMat = RDKit::MolOps::getAdjacencyMatrix(*rdmol);
+  
+      int nAts = rdmol->getNumAtoms();
+      vector<double> res(nAts*nAts);
+
+      for(RWMol::BondIterator bondIt=rdmol->beginBonds();
+          bondIt!=rdmol->endBonds();bondIt++){
+        
+        if(!useBO){
+          int beg=(*bondIt)->getBeginAtomIdx();
+          int end=(*bondIt)->getEndAtomIdx();
+          res[beg*nAts+end] = 1;
+          res[end*nAts+beg] = 1;
+        }
+        else {
+          int begIdx=(*bondIt)->getBeginAtomIdx();
+          int endIdx=(*bondIt)->getEndAtomIdx();
+          RDKit::Atom  *beg=rdmol->getAtomWithIdx(begIdx);
+          RDKit::Atom  *end=rdmol->getAtomWithIdx(endIdx);
+          res[begIdx*nAts+endIdx] = (*bondIt)->getValenceContrib(beg);
+          res[endIdx*nAts+begIdx] = (*bondIt)->getValenceContrib(end);
+        }
+      }
+
+        return res;
+
+
+
+}
+
+
+vector<int> Molecule::getAtomNeighbors(int atomid) {
+        RDKit::Atom atom = *rdmol->getAtomWithIdx(atomid);
+        vector<int> ANids;
+        RDKit::ROMol::ADJ_ITER beg,end;
+        boost::tie(beg,end) = rdmol->getAtomNeighbors(&atom);
+        while(beg!=end){
+          int nAtomIdx = (*rdmol)[*beg].get()->getIdx();
+          ANids.push_back(nAtomIdx);
+          beg++;
+
+        }
+        return ANids;
+}
+
+
+vector<double> Molecule::getBondNeighbors(int atomid) {
+        RDKit::Atom atom = *rdmol->getAtomWithIdx(atomid);
+        vector<double> BNtype;
+        double btd;
+        int nAtomIdx;
+        RDKit::ROMol::ADJ_ITER beg,end;
+        boost::tie(beg,end) = rdmol->getAtomNeighbors(&atom);
+        while(beg!=end){
+          nAtomIdx = (*rdmol)[*beg].get()->getIdx();
+          btd = rdmol->getBondBetweenAtoms(atomid, nAtomIdx)->getBondTypeAsDouble();
+          BNtype.push_back(btd);
+          beg++;
+        }
+        return BNtype;
+}
+
+
+
+
+
 
 
 /**

@@ -204,7 +204,9 @@ public:
     // this is in development stage caution not working for the moment!!!!
     unsigned int addBond (unsigned int beginAtomIdx, unsigned int endAtomIdx,int bondtypeid);
     void setBondDir (int Bondid, int bonddirid);
-    
+    vector<int> getAtomNeighbors(int atomid);
+    vector<double> getBondNeighbors(int atomid);
+    vector<double> getAdjacencyMatrix(bool useBO);
     vector<int> getAtomicNums();
 
     
@@ -265,6 +267,12 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("addBond",&Molecule::addBond, allow_raw_pointers())
     .function("setBondDir",&Molecule::setBondDir, allow_raw_pointers())
     .function("getNumAtoms", &Molecule::getNumAtoms, allow_raw_pointers())
+    .function("getAtomNeighbors", &Molecule::getAtomNeighbors, allow_raw_pointers())
+    .function("getBondNeighbors", &Molecule::getBondNeighbors, allow_raw_pointers())
+    .function("getAdjacencyMatrix", &Molecule::getAdjacencyMatrix, allow_raw_pointers())
+
+    //.function("getAtomSubstituantNumber", &Molecule::getAtomSubstituantNumber, allow_raw_pointers())
+
     // fingerprints
     .function("getAtomCode", &Molecule::getAtomCode, allow_raw_pointers())
     .function("getAtomPairFingerprint", &Molecule::getAtomPairFingerprint, allow_raw_pointers())
