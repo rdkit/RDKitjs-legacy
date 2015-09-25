@@ -106,7 +106,9 @@ public:
     double TverskySimilarityfromSmile( string smilesref,double a, double b);
     
     
-    int findSSSR(std::vector<std::vector<int>> res );
+    int findSSSRnumber();
+    map<int, string>  findSSSR();
+
     //vector<double> AlignMolConformersRMSlist();
     void AlignMolConformers();
     //double GetConformersRMS(int id1, int id2);
@@ -259,6 +261,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     register_vector<unsigned int>("VectorUint");
     register_vector<int>("Vectorint");
     register_map<boost::uint32_t,int>("MapIindexInt");
+    register_map<int,string>("MapIntString");
 
     
     class_<Molecule>("Molecule")
@@ -293,6 +296,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("removeHs", &Molecule::removeHs, allow_raw_pointers())
     .function("sanitizeMol", &Molecule::sanitizeMol, allow_raw_pointers())
     .function("findSSSR", &Molecule::findSSSR, allow_raw_pointers())
+    .function("findSSSRnumber", &Molecule::findSSSRnumber, allow_raw_pointers())
     
     .function("cleanUp", &Molecule::cleanUp, allow_raw_pointers())
     .function("Kekulize", &Molecule::Kekulize, allow_raw_pointers())

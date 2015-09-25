@@ -293,12 +293,9 @@ void Molecule::setBondDir (int Bondid, int bonddirid)
 
 
 
-vector<double> Molecule::getAdjacencyMatrix(bool useBO) {
-     // double *AdjMat = RDKit::MolOps::getAdjacencyMatrix(*rdmol);
-  
+vector<double> Molecule::getAdjacencyMatrix(bool useBO) {  
       int nAts = rdmol->getNumAtoms();
       vector<double> res(nAts*nAts);
-
       for(RWMol::BondIterator bondIt=rdmol->beginBonds();
           bondIt!=rdmol->endBonds();bondIt++){
         
@@ -317,11 +314,7 @@ vector<double> Molecule::getAdjacencyMatrix(bool useBO) {
           res[endIdx*nAts+begIdx] = (*bondIt)->getValenceContrib(end);
         }
       }
-
-        return res;
-
-
-
+      return res;
 }
 
 
@@ -992,18 +985,38 @@ vector<int> Molecule::EmbedMultipleConfs()
 
 
 /**
- * @brief [findSSSR]
- * @details [TDB]
+ * @brief [findSSSRnumber]
+ * @details [count the number of rings in the molecule]
  * 
- * @param res [TDB]
  * @return [int value of the process]
  */
-int Molecule::findSSSR (std::vector< std::vector< int >> res)
-{
+int Molecule::findSSSRnumber()
+{   vector<vector<int>> res ;
     return RDKit::MolOps::findSSSR(*rdmol,res);
 }
 
 
+/**
+ * @brief [findSSSR]
+ * @details [export rings lists into a map of "ringid, string" string containing atomid of the ring and comma separator]
+ * 
+ * @return [map of int, string]
+ */
+map<int, string> Molecule::findSSSR ()
+{   vector<vector<int>> res ;
+    int count = RDKit::MolOps::findSSSR(*rdmol,res);
+    map<int, string> resmap;
+    for (int it = 0; it < count; it++ )
+    {   string s = "";
+        for (int j=0; j<res[it].size(); j++) 
+        {
+          s=s+to_string(res[it][j]);
+          if (j<res[it].size()-1) s=s+",";
+        }
+        resmap[it] = s;
+    }
+    return resmap;
+}
 
 
 
