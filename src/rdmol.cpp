@@ -318,33 +318,32 @@ vector<double> Molecule::getAdjacencyMatrix(bool useBO) {
 }
 
 
+// not working... enumeration is wrong
 vector<int> Molecule::getAtomNeighbors(int atomid) {
-        RDKit::Atom atom = *rdmol->getAtomWithIdx(atomid);
-        vector<int> ANids;
-        RDKit::ROMol::ADJ_ITER beg,end;
-        boost::tie(beg,end) = rdmol->getAtomNeighbors(&atom);
-        while(beg!=end){
-          int nAtomIdx = (*rdmol)[*beg].get()->getIdx();
-          ANids.push_back(nAtomIdx);
-          beg++;
+    vector<int> ANids;
 
-        }
-        return ANids;
+    RDKit::ROMol::ADJ_ITER ai1,ai2;
+    boost::tie(ai1,ai2) = rdmol->getAtomNeighbors(rdmol->getAtomWithIdx(atomid));
+    while(ai1!=ai2){
+      //cout << to_string((*rdmol->getAtomWithIdx(*ai1)).getIdx()) << endl;
+      ANids.push_back((*rdmol->getAtomWithIdx(*ai1)).getIdx());
+      ai1++;
+    }
+    return ANids;
 }
 
-
+// not working... enumeration is wrong
 vector<double> Molecule::getBondNeighbors(int atomid) {
-        RDKit::Atom atom = *rdmol->getAtomWithIdx(atomid);
         vector<double> BNtype;
         double btd;
         int nAtomIdx;
-        RDKit::ROMol::ADJ_ITER beg,end;
-        boost::tie(beg,end) = rdmol->getAtomNeighbors(&atom);
-        while(beg!=end){
-          nAtomIdx = (*rdmol)[*beg].get()->getIdx();
-          btd = rdmol->getBondBetweenAtoms(atomid, nAtomIdx)->getBondTypeAsDouble();
+        RDKit::ROMol::ADJ_ITER ai1,ai2;
+        boost::tie(ai1,ai2) = rdmol->getAtomNeighbors(rdmol->getAtomWithIdx(atomid));
+        while(ai1!=ai2){
+          nAtomIdx =(*rdmol->getAtomWithIdx(*ai1)).getIdx();
+          btd = (*rdmol->getBondBetweenAtoms(atomid, nAtomIdx)).getBondTypeAsDouble();
           BNtype.push_back(btd);
-          beg++;
+          ai1++;
         }
         return BNtype;
 }
@@ -1840,6 +1839,18 @@ vector<int> Molecule::getAtomicNums()
     for (int i =0;i<numAtoms;i++) {
         atomnumber = rdmol->getAtomWithIdx(i)->getAtomicNum();
         res.push_back(atomnumber);
+    }
+    return res;
+}
+
+vector<string> Molecule::getSymbols()
+{
+    vector<string> res;
+    string atomsymbol;
+    int numAtoms =rdmol->getNumAtoms();
+    for (int i =0;i<numAtoms;i++) {
+        atomsymbol = rdmol->getAtomWithIdx(i)->getSymbol();
+        res.push_back(atomsymbol);
     }
     return res;
 }

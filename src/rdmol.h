@@ -210,6 +210,7 @@ public:
     vector<double> getBondNeighbors(int atomid);
     vector<double> getAdjacencyMatrix(bool useBO);
     vector<int> getAtomicNums();
+    vector<string> getSymbols();
 
     
     
@@ -427,6 +428,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("MQNs",&Molecule::MQNs ,allow_raw_pointers())
     .function("computeGasteigerCharges",&Molecule::computeGasteigerCharges ,allow_raw_pointers())
     .function("getAtomicNums",&Molecule::getAtomicNums ,allow_raw_pointers())
+    .function("getSymbols",&Molecule::getSymbols ,allow_raw_pointers())
 
 
     // create class from smiles or smarts
