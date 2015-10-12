@@ -26,6 +26,9 @@ public:
     ~Molecule();
 
 
+    // canonical
+    vector<unsigned int> CanonicalRankAtoms(bool breakTies, bool includeChirality, bool includeIsotopes);
+
     // SA score Peter Erl
     int getNumMacrocycles();
     int getNumSpiroAtoms();
@@ -274,8 +277,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getAtomNeighbors", &Molecule::getAtomNeighbors, allow_raw_pointers())
     .function("getBondNeighbors", &Molecule::getBondNeighbors, allow_raw_pointers())
     .function("getAdjacencyMatrix", &Molecule::getAdjacencyMatrix, allow_raw_pointers())
-
-    //.function("getAtomSubstituantNumber", &Molecule::getAtomSubstituantNumber, allow_raw_pointers())
+    .function("CanonicalRankAtoms", &Molecule::CanonicalRankAtoms, allow_raw_pointers())
 
     // fingerprints
     .function("getAtomCode", &Molecule::getAtomCode, allow_raw_pointers())

@@ -55,8 +55,8 @@
 #include <GraphMol/MolDraw2D/MolDraw2DSVG.h>
 
 
-
-
+//canonical
+#include <GraphMol/new_canon.h>
 
 
 // 2D
@@ -289,6 +289,15 @@ void Molecule::setBondDir (int Bondid, int bonddirid)
   RDKit::Bond::BondDir castEnum = (RDKit::Bond::BondDir)bonddirid;
   rdmol->getBondWithIdx(Bondid)->setBondDir(castEnum);
 }       
+
+
+
+
+vector<unsigned int> Molecule::CanonicalRankAtoms(bool breakTies=true, bool includeChirality=true, bool includeIsotopes=true){
+    std::vector<unsigned int> ranks(rdmol->getNumAtoms());
+    RDKit::Canon::rankMolAtoms(*rdmol, ranks, breakTies, includeChirality, includeIsotopes);
+    return ranks;
+  }
 
 
 

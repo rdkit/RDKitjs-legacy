@@ -35,6 +35,16 @@ var doBFS = function(graph, source) {
 
     // Traverse the graph
     
+    while (!queue.isEmpty()) {
+        var current = queue.dequeue();
+        for (var i = 0; i < graph.length; i += 1) {
+             if (i !== current && graph[current][i]>0 && !visited[i]) {  // add >0 to include the bond weight instead of boolean matrix!
+            parents[i] = current;
+            visited[i] = true;
+            queue.push(i);
+          }
+        }
+    }
     // As long as the queue is not empty:
     //  Repeatedly dequeue a vertex u from the queue.
     //  
@@ -49,6 +59,13 @@ var doBFS = function(graph, source) {
     
     return bfsInfo;
 };
+
+
+/*In this step, you'll finish implementing the doBFS function, which performs a breadth-first search on a graph and returns an array of objects describing each vertex.
+For each vertex v, the object's distance property should be vertex v's distance from the source, and the predecessor property should be vertex v's predecessor on a shortest path from the source. If there is no path from the source to vertex v, then v's distance and predecessor should both be null. The source's predecessor should also be null. 
+In the starter code, the function initializes the distance and predecessor values to null, and then enqueues the source vertex. It is up to you to implement the rest of the algorithm, as described in the pseudocode.
+Once implemented, uncomment the Program.assertEqual() at the bottom to verify that the test assertions pass.
+*/
 
 
 var adjList = [

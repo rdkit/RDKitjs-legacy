@@ -6,13 +6,44 @@ console.log(smi);
 
 var mol = RDKit.Molecule.fromSmiles(smi);
 
+var t = mol.CanonicalRankAtoms(true,true,true);
+
+console.log(readvector(t));
+
+
+function Node(value) {
+    this.value = value;
+    this.children = [];
+    this.parent = null;
+
+    this.setParentNode = function(node) {
+        this.parent = node;
+    }
+
+    this.getParentNode = function() {
+        return this.parent;
+    }
+
+    this.addChild = function(node) {
+        node.setParentNode(this);
+        this.children[this.children.length] = node;
+    }
+
+    this.getChildren = function() {
+        return this.children;
+    }
+
+    this.removeChildren = function() {
+        this.children = [];
+    }
+}
+
 function readvector(vect) {
 	var vectolength =  vect.size();
 	var vectorval= [];
 	for (i =0;i<vectolength;i++){   
 	    vectorval[i] = vect.get(i); 
 	}
-
 	return vectorval;
 }
 
@@ -37,8 +68,37 @@ function diff(a,b) {
 	return nar;
 };
 
-//var bondSymbols = { "=" : 200, "%" : 300, "*" :  100};
-//var atomicSymbols  = {"C" :90, "O" :89, "N" : 88, "S" : 87, "P" : 86, "Si" : 85, "B" : 84, "F" : 83, "Cl" : 82, "Br" : 81, ";" : 80, "I" : 79, "#" : 21, "&" : 11, ",": 10};
+
+
+//var atomicSymbols  = {"C" :90, "O" :89, "N" : 88, "S" : 87, "P" : 86, "Si" : 85, "B" : 84, "F" : 83, "Cl" : 82, "Br" : 81, ";" : 80, "I" : 79, "&" : 11, ",": 10};
+
+function HC(Symbol,bondtype,isdejavu){
+	  	var  tmp_str = "";
+	  	var  hs = 0;
+
+	  	if (isdejavu)  {Symbol = "&";}
+
+		if (bondtype=== 3) { tmp_str=tmp_str+"%"; hs += 300; }
+	  	if (bondtype=== 1.5) { tmp_str=tmp_str+"*"; hs += 100; }
+	  	if (bondtype=== 2) { tmp_str=tmp_str+"="; hs += 200; }
+	  	if (Symbol === "C") { tmp_str=tmp_str+"C"; hs += 90; }
+	  	if (Symbol === "O") { tmp_str=tmp_str+"O"; hs += 89; }
+	  	if (Symbol === "N") { tmp_str=tmp_str+"N"; hs += 88; }
+	  	if (Symbol === "S") { tmp_str=tmp_str+"S"; hs += 87; }
+	  	if (Symbol === "P") { tmp_str=tmp_str+"P"; hs += 86; }
+	  	if (Symbol === "Si") { tmp_str=tmp_str+"Q"; hs+= 85; }
+	  	if (Symbol === "B") { tmp_str=tmp_str+"B"; hs += 84; }
+	  	if (Symbol === "F") { tmp_str=tmp_str+"F"; hs += 83; }
+	  	if (Symbol === "Cl") { tmp_str=tmp_str+"X"; hs += 82;}
+	  	if (Symbol === "Br") { tmp_str=tmp_str+"Y"; hs += 81;}
+	  	if (Symbol === "I") { tmp_str=tmp_str+"I"; hs += 79; }
+	  	if (Symbol === "&") { tmp_str=tmp_str+"&"; hs += 11; }
+
+	  	if (!Symbol | Symbol ===null) {tmp_str = ","; hs = 10;}
+
+	return {hs,tmp_str};
+
+}
 
 
 function HosecodeSphere(sphere, atomlistvect, bondtype, ringinfo, Neiarray, parents) { 
@@ -46,50 +106,122 @@ function HosecodeSphere(sphere, atomlistvect, bondtype, ringinfo, Neiarray, pare
  var child =childs(sphere, Neiarray, parents);
  var previousGroup=[];
  var spherecode = [];
+ var dejavu = [];
+ var S=[];
+
+  dejavu[5]=true;
 
  for (var j=0;j<sphere.length;j++) {
     var currentsphere = sphere[j];
     console.log(currentsphere);
     var tmphose =[];
-    var hosescore =[];
+    var thehosescore =[];
     var Childgroup = [];
-    console.log("prev:",previousGroup);
+    var bondtypes = [];
+    var symbol = [];
+    var ranking = [];
+    //console.log("prev:",previousGroup);
 
 	  // Determine atoms surrounding each atom and build HOSE code list
     for (var i=0; i<currentsphere.length;i++) {
-	  	var  tmp_str = "";
-	  	var  hs = 0;
+	  	var  hs,tmp_str;
 	  	var atomid = currentsphere[i]; 
 
+	  	if (!dejavu[atomid]) {
+	  		isdejavu=false;
+	  	}
+	  	else {
+	  		isdejavu = true;
 
-	  	if (bondtype[atomid] === 3) { tmp_str=tmp_str+"%"; hs += 300; }
-	  	if (bondtype[atomid] === 1.5) { tmp_str=tmp_str+"*"; hs += 100; }
-	  	if (bondtype[atomid] === 2) { tmp_str=tmp_str+"="; hs += 200; }
-	  	if (atomlistvect[atomid] === "C") { tmp_str=tmp_str+"C"; hs += 90; }
-	  	if (atomlistvect[atomid] === "O") { tmp_str=tmp_str+"O"; hs += 89; }
-	  	if (atomlistvect[atomid] === "N") { tmp_str=tmp_str+"N"; hs += 88; }
-	  	if (atomlistvect[atomid] === "S") { tmp_str=tmp_str+"S"; hs += 87; }
-	  	if (atomlistvect[atomid] === "P") { tmp_str=tmp_str+"P"; hs += 86; }
-	  	if (atomlistvect[atomid] === "Si") { tmp_str=tmp_str+"Q"; hs+= 85; }
-	  	if (atomlistvect[atomid] === "B") { tmp_str=tmp_str+"B"; hs += 84; }
-	  	if (atomlistvect[atomid] === "F") { tmp_str=tmp_str+"F"; hs += 83; }
-	  	if (atomlistvect[atomid] === "Cl") { tmp_str=tmp_str+"X"; hs += 82; }
-	  	if (atomlistvect[atomid] === "Br") { tmp_str=tmp_str+"Y"; hs += 81; }
-	  	if (atomlistvect[atomid] === "I") { tmp_str=tmp_str+"I"; hs += 79; }
+	  	}
 
-	  	tmphose[i] = tmp_str;
-	  	hosescore[i] = hs;
+	  	dejavu[atomid]=true;
+	    
+	    symbol[i]= atomlistvect[atomid];
+	  	bondtypes[i] = bondtype[atomid];
+
+	  	var hose_code =HC(atomlistvect[atomid],bondtype[atomid],isdejavu);
+
+	  	tmphose[i] = hose_code.tmp_str;
+	  	thehosescore[i] = hose_code.hs;
+
+
+	  	symbol[i]= atomlistvect[atomid];
+	  	ranking[i]= i+1;
     	Childgroup.push(child[atomid]);
 
 	  }
 
-	  spherecode.push(currentsphere,tmphose,hosescore,previousGroup);
+	  //spherecode.push(currentsphere,tmphose,thehosescore,previousGroup);
+	  S.push(new Node({"bondtype":bondtypes,"atomid" :currentsphere,"symbols":symbol,"ranking":ranking,"childs": Childgroup, "hosescore": thehosescore, "hosecode":tmphose }));
+	  
 	  previousGroup =Childgroup;
+	}
+	return S;
+}
+
+
+function loopotherSpheres(Spheres,graph){
+	var dejavu=[];
+	var currentnodes = Spheres[0].value.atomid;
+	for (var ni=0; ni< currentnodes.length; ni++) {
+		dejavu[currentnodes[ni]]= true;
 
 	}
+	var initalscore  = Spheres[0].value.hosescore;
+	var initalhose =  Spheres[0].value.hosecode;
+		console.log("Sphere: 1 ------------");
+		console.log(currentnodes,",score:",initalscore,"hosecode:",initalhose);
 
-	return spherecode;
+
+
+
+
+	for (var i=1; i<Spheres.length;i++) {
+		console.log("Sphere:",i+1,"------------")
+	 	var nextSphere = Spheres[i-1].value.childs;
+	 	var currentchilds = Spheres[i].value.childs;
+	 	var currentnodes = Spheres[i].value.atomid;
+	 	var parentnodes = Spheres[i-1].value.atomid;
+
+
+	 	var currentsymbol = Spheres[i].value.symbols;
+	 	var currentbondtype = Spheres[i].value.bondtype;
+	 	var parenthosescore = Spheres[i-1].value.hosescore;
+
+	 	for (var j=0; j<nextSphere.length;j++)
+	 		 {
+	 		 	var childnode = nextSphere[j];
+
+	 		 	for (var sj=0; sj<childnode.length;sj++){
+	 		 		var myatomid =childnode[sj];
+		 		    var previous = parentnodes[j];
+	 		 		console.log("current atomid:",myatomid,"<=",previous);
+		 		 	if (dejavu[myatomid]) {
+		 		 		var isdejavu = true;
+		 		 		var mybondtype = graph[previous][myatomid]; // look like this is not always the good value for dejavu cases!
+		 		 		var mysymbol = '&';
+		 		 		var hcode =HC(mysymbol,mybondtype,isdejavu);
+		 		 		console.log("currentatomidindex:",myatomid,",bond:",mybondtype,";dejavu:",hcode);
+		 		 	}
+		 		 	else {
+		 		 		dejavu[myatomid]=true;
+		 		 		var isdejavu = false;
+		 		 		var currentatomidindex = currentnodes.indexOf(myatomid);
+		 		 		var mybondtype = currentbondtype[currentatomidindex];
+		 		 		var mysymbol = currentsymbol[currentatomidindex];
+		 		 		var hsval = HC(mysymbol,mybondtype,isdejavu);
+		 		 		console.log("currentatomidindex:",currentatomidindex,",bond:",mybondtype,",symbol:",mysymbol,",HOSE:",hsval);
+		 		 	}
+	 		 	}
+	 		 }
+	  }
+	  return 1;
 }
+
+
+
+
 
 
 function childs(sphere, Neiarray, parents) {
@@ -107,9 +239,50 @@ function childs(sphere, Neiarray, parents) {
 }
 
 function ScoreandSort(spherecode) {
-	console.log("Score&Sort:",spherecode);
+	console.log(spherecode);
+	var linker = [];
+	var cscore = [];
+	var atoms = [];
+	var dupindex = [];
+	for(var i=0; i<spherecode.length/4; i++) {
+			
+		    for (var u=0; u<linker.length;u++){
+
+		    	console.log("linker loop",linker[u]);
+		    }
+		    console.log("sphereid:",i+1);
+		    // iteration on the next sphere to find duplicate and inject them to modify the score at the next level
+		    cscore=spherecode[i*4+2];
+		    atoms=spherecode[i*4];
+
+			var dup = cscore.getDuplicates();
+			var keys =Object.keys(dup);
+			for (var j=0; j<keys.length;j++) {
+				dupindex = dup[keys[j]];
+
+				for (var k=0;k<dupindex.length;k++) {
+					 linker[k] = atoms[dupindex[k]];
+				}
+			}
+	}
+	console.log("cummulative score:",cscore);
+	return cscore;
+
 }
 
+
+Array.prototype.getDuplicates = function () {
+    var duplicates = {};
+    for (var i = 0; i < this.length; i++) {
+        if(duplicates.hasOwnProperty(this[i])) {
+            duplicates[this[i]].push(i);
+        } else if (this.lastIndexOf(this[i]) !== i) {
+            duplicates[this[i]] = [i];
+        }
+    }
+
+    return duplicates;
+};
 
 
 function AdjList (graph) {
@@ -124,7 +297,6 @@ function AdjList (graph) {
         }
         AL.push(al);
       }
-    
     return AL;
 }
 
@@ -132,7 +304,6 @@ function AdjList (graph) {
 
 
 function readmat(vect) {
-    
 	var matsize =  Math.sqrt(vect.size());
 	var matrix= [];
 	for (i =0;i<matsize;i++){   
@@ -143,7 +314,6 @@ function readmat(vect) {
 		}
 		matrix[i]=matrixrow;
 	}	
-
 	return matrix;
 }
 
@@ -163,6 +333,7 @@ function bfs (graph, startNode, len) {
       bondtype[startNode] = null;
       sphereid[startNode]=0;
       visited[startNode] = true;
+
       while (queue.length) {
         current = queue.shift();
         for (var i = 0; i < graph.length; i += 1) {
@@ -173,6 +344,7 @@ function bfs (graph, startNode, len) {
             visited[i] = true;
             queue.push(i);
           }
+        
         }
       }
     // extract the resulting spheres atomindexes based on the distance to the core! 
@@ -193,7 +365,6 @@ function bfs (graph, startNode, len) {
 var numSpheres=5;
 
 var C = mol.getNumAtoms();
-console.log("number of Atoms:",C);
 
 
 var Neiarray = [];
@@ -237,104 +408,24 @@ console.log("Spheres list:",shortestpath);
 
 
 var HSC = HosecodeSphere(shortestpath.spheres, atomlistvect, shortestpath.bondtype, ringsval, Neiarray,shortestpath.parents);
-var t = ScoreandSort(HSC);
-
-/*
-for (j=0;j<C;j++)
-{
-console.log(j);
-/// only scans the carbons!
-
-/*
-var atomneib = mol.getAtomNeighbors(j);	
-var arrayatomid =readvector(atomneib);
-var bondnum = mol.getBondNeighbors(j);	
-var arraybondnum =readvector(bondnum);
 
 
-console.log("atomids:",JSON.stringify(arrayatomid));
-console.log("bondnum:",JSON.stringify(arraybondnum));
-
-
-
-
-var  shortestpath = bfs(graph, j, 8);
-
-console.log("Spheres list:",shortestpath);
-console.log("..........................");
-
+//// return the HSC structure of childs ,...
+for (i=0; i<HSC.length;i++) {
+console.log("S",i);
+console.log("atomids:",HSC[i].value.atomid);
+console.log("childids:",HSC[i].value.childs);
+console.log("bondtypes:",HSC[i].value.bondtype);
+console.log("symbol:",HSC[i].value.symbols);
+console.log("rank:",HSC[i].value.ranking);
+console.log("hose score:",HSC[i].value.hosescore);
+console.log("hose code:",HSC[i].value.hosecode);
 }
-*/
-/*
 
 
+loopotherSpheres(HSC,graph);
 
 
-
-
-
-  // Determine atoms surrounding each atom and build HOSE code list
-  for (tmp_pt = up.first(); tmp_pt != NULL; tmp_pt = up.next()) {
-    if (tmp_pt->element == "C") {  // only look at carbons
-	    for (tmp_bond = bonds.first(); tmp_bond != 0; tmp_bond = bonds.next()) {
-				if (tmp_bond->Find(tmp_pt) == true) {
-				  tmp_str = "";
-				  hs = 0;
-				  tmp_pt2 = tmp_bond->otherPoint(tmp_pt);
-				  if (tmp_bond->Order() == 3) { tmp_str.append("%"); hs += 300; }
-				  if ((tmp_pt->aromatic == true) && (tmp_pt2->aromatic == true)) {
-				    tmp_str.append("*"); hs += 100;
-				  } else {
-				    if (tmp_bond->Order() == 2) {
-				      	if (tmp_bond->Dash() == 0) { tmp_str.append("="); hs += 200; }
-				      	if (tmp_bond->Dash() == 1) { tmp_str.append("*"); hs += 100; }
-				    }
-				  }
-				  if (tmp_pt2->element == "C") { tmp_str.append("C"); hs += 24; }
-				  if (tmp_pt2->element == "O") { tmp_str.append("O"); hs += 22; }
-				  if (tmp_pt2->element == "N") { tmp_str.append("N"); hs += 20; }
-				  if (tmp_pt2->element == "P") { tmp_str.append("P"); hs += 18; }
-				  if (tmp_pt2->element == "S") { tmp_str.append("S"); hs += 16; }
-				  if (tmp_pt2->element == "Si") { tmp_str.append("Q"); hs+= 14; }
-				  if (tmp_pt2->element == "B") { tmp_str.append("B"); hs += 12; }
-				  if (tmp_pt2->element == "F") { tmp_str.append("F"); hs += 10; }
-				  if (tmp_pt2->element == "Cl") { tmp_str.append("X"); hs += 8; }
-				  if (tmp_pt2->element == "Br") { tmp_str.append("Y"); hs += 6; }
-				  if (tmp_pt2->element == "I") { tmp_str.append("I"); hs += 4; }
-				  if (tmp_pt2->ketos == 2) { tmp_str.append("$$"); }
-				  if (tmp_pt2->ketos == 1) { tmp_str.append("$"); }
-				  tmp_pt2->tmphose = tmp_str;
-				  tmp_pt2->hosescore = hs;
-				  sphere1.append(tmp_pt2);
-				}
-      		}
-      tmp_str = "";
-      do {
-		hsmax = -1;
-		for (tmp_pt3 = sphere1.first(); tmp_pt3 != 0; tmp_pt3 = sphere1.next()) {
-	  		if (tmp_pt3->hosescore > hsmax) { 
-	    			hsmax = tmp_pt3->hosescore; 
-	    			ts = tmp_pt3->tmphose;
-	    			tmp_pt2 = tmp_pt3;
-	  		}
-		}
-		sphere1.remove(tmp_pt2);
-		tmp_str.append(ts);
-      	 } while (sphere1.count() > 0);
-      tmp_str.append("(//)");
-      hosecodes.append(tmp_str);
-      tmp_pt->hosecode = tmp_str;
-      cout << tmp_str << endl;
-    }
-  }
-
-
-
-
-
-}
-*/
 
 mol.delete();
-
 
