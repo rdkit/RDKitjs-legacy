@@ -1,14 +1,13 @@
 Improve the API:
 1. Need to find a way to have hierarchical Classes for example Molecule.Descriptors.
 
-2. Can we have two molecules like for  Tanimotosimilarity(mol1,mol2) ?
+2. Hosecode for NMR in progress. 
 
 Some examples to implement in the development stage:
 Look at the python getstart rdkit page for a list of missing functionnalities.
 (http://www.rdkit.org/docs/GettingStartedInPython.html)
 
-
-Status : 23/09/2015 guillaume godin
+Status : 15/10/2015 guillaume godin
 
 Done Molecule.AllDescriptors like function to generate all of descriptors
 
@@ -24,7 +23,7 @@ In progress: Looping over Atoms and Bonds: Done  (addAtom, addBond)
 
 Ring Information: Done
 
-done Modifying molecules: MolOps functions
+Done Modifying molecules: MolOps functions
 
 IN Progress (thegodone) Working with 2D molecules: GenerateDepictionMatching2DStructure, GenerateDepictionMatching3DStructure
 
@@ -38,7 +37,7 @@ Done: Substructure Searching: HasSubstructMatch, GetSubstructMatches.
 
 Stereochemistry in substructure matches: need to test
 
-Not implemented Chemical Transformations: DeleteSubstructs, ReplaceSubstructs, ReplaceSidechains, ReplaceCore, GetMolFrags
+Not implemented Chemical Transformations: DeleteSubstructs, ReplaceSubstructs, ReplaceSidechains, ReplaceCore, GetMolFrags, can be interesting for HoseCode.
 
 Done Murcko Decomposition
 
@@ -68,7 +67,7 @@ to do: 2D Pharmacophore Fingerprints: idem
 
 to do: Molecular Fragments
 
-Done: Database functionnalities: indexedDB interaction... (http://blog.gmane.org/gmane.science.chemistry.rdkit.user/month=20140301 like for ORCALE ?)
+Done: Database functionnalities: indexedDB interaction... (http://blog.gmane.org/gmane.science.chemistry.rdkit.user/month=20140301 like for ORCALE)
 
 Inchi: to do not a priority
 
