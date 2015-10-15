@@ -8,6 +8,16 @@ console.log(smi);
 
 var mol = RDKit.Molecule.fromSmiles(smi);
 
+var obj2 = mol.getMorganUFPkeys(2);
+
+var u =mol.getMorganFPlist(2);
+
+
+console.log(readvector(obj2));
+
+
+console.log(readvector(u));
+
 var mol1 = RDKit.Molecule.fromSmiles(smi1);
 
 console.log(mol.Similarity(mol1,'dice',0,0));

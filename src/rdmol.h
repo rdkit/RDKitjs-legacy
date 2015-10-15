@@ -51,6 +51,8 @@ public:
     string getMorganFP(unsigned int sizes,unsigned int lengths);
     vector<int> getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths);
     // const map<unsigned int,int> getMorganFP_getNonzeroElements(unsigned int sizes);
+    vector<boost::uint32_t> getMorganUFPkeys(unsigned int sizes);
+
     map<boost::uint32_t, int> getMorganFP_getNonzeroElements(unsigned int sizes);
     vector<boost::uint32_t> getMorganFPlist(unsigned int sizes);
     // RDKit::SparseIntVect<boost::uint32_t>::StorageType getMorganFP_getNonzeroElements(unsigned int sizes);
@@ -295,6 +297,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getHashedAtomPairFingerprintAsBitVect", &Molecule::getHashedAtomPairFingerprintAsBitVect, allow_raw_pointers())
     .function("getRDKFP", &Molecule::getRDKFP, allow_raw_pointers())
     .function("getMorganFP", &Molecule::getMorganFP, allow_raw_pointers())
+    .function("getMorganUFPkeys", &Molecule::getMorganUFPkeys, allow_raw_pointers())
     .function("getMorganFP_GetOnBits", &Molecule::getMorganFP_GetOnBits, allow_raw_pointers())
     .function("getMorganFP_getNonzeroElements", &Molecule::getMorganFP_getNonzeroElements, allow_raw_pointers())
     .function("getMorganFPlist", &Molecule::getMorganFPlist, allow_raw_pointers())

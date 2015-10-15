@@ -584,6 +584,41 @@ string Molecule::getMorganFP(unsigned int sizes,unsigned int lengths)
 
 
 /**
+ * @brief [getMorganUFP]
+ * @details [get Morgan fingerprint string]
+ * @param sizes [length of the vector to be generated]
+
+ * @return [key getOnBit keys like getNonzeroElements().key()]
+ */
+vector<boost::uint32_t> Molecule::getMorganUFPkeys(unsigned int sizes)
+{   int nbatoms=rdmol->getNumAtoms();
+    std::vector<boost::uint32_t> *invars=0;
+    bool useChirality=false;
+    bool useBondTypes=true;
+    bool useFeatures=false;
+    bool useCounts=true;
+    std::vector<boost::uint32_t> *froms=0;
+
+    RDKit::SparseIntVect<boost::uint32_t> * fp = RDKit::MorganFingerprints::getFingerprint(*rdmol,sizes,invars,froms,useChirality,useBondTypes,useCounts,false);
+    RDKit::SparseIntVect<boost::uint32_t>::StorageType gnze = fp->getNonzeroElements();
+
+    int elementsize=gnze.size();
+    vector<boost::uint32_t>  result(elementsize);
+    
+    map<boost::uint32_t, int>::iterator it;
+    
+    int idx = 0;
+    for (it = gnze.begin(); it != gnze.end(); it++ )
+    {
+        result[idx]=it->first;
+        idx=idx+1;
+    }
+    return result;
+
+}
+
+
+/**
  * @brief [getMorganFP_GetOnBits]
  * @details [get Morgan fingerprint index vector of Bits]
  * 
@@ -661,6 +696,8 @@ vector<boost::uint32_t> Molecule::getMorganFPlist(unsigned int sizes)
         result[elementsize+idx]=it->second;
         idx=idx+1;
     }
+
+
     return result;
 }
 

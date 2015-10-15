@@ -161,6 +161,10 @@ function processFile(){
                 var binarymol = mol.MolToBinary();
                 console.log(".");
 
+
+                // this is the folded example (AllChem.GetHashedMorganFingerprint(mol, radius=self.radius, nBits = self.length))
+                // the unfolded (faster method is based on : AllChem.GetMorganFingerprint(mol, radius=self.radius) 
+                // the bits are sorted using sorted(GetNonZeroElement().keys())
                 var mpf2 = mol.getMorganFP_GetOnBits(2,2048);
                 console.log(".");
 
