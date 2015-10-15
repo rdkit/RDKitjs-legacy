@@ -26,6 +26,10 @@ public:
     ~Molecule();
 
 
+
+
+    double Similarity(const Molecule moltocompare, string similarityfunction,double a, double b);
+
     // canonical
     vector<unsigned int> CanonicalRankAtoms(bool breakTies, bool includeChirality, bool includeIsotopes);
 
@@ -228,6 +232,8 @@ public:
     
 private:
     RWMol* rdmol;
+    RWMol getMol() const {return *rdmol;}; // access to the RDkit mol object in private function not to share with javascript!
+
 };
 
 
@@ -269,6 +275,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
 
     
     class_<Molecule>("Molecule")
+    .function("Similarity",&Molecule::Similarity, allow_raw_pointers())
+//    .function("getMol",&Molecule::getMol, allow_raw_pointers())
+
     .function("FindMolChiralCenters",&Molecule::FindMolChiralCenters, allow_raw_pointers())
     .function("addAtom",&Molecule::addAtom, allow_raw_pointers())
     .function("addBond",&Molecule::addBond, allow_raw_pointers())

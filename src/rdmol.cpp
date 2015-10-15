@@ -112,27 +112,6 @@ using namespace std;
 using RDKit::ROMol;
 using RDKit::RWMol;
 
-/* adding another class... ???
-Similarity::Similarity(RWMol* mol1, RWMol* mol2): rdmol1(mol1),rdmol2(mol2) {}
-
-
-Similarity::~Similarity() {
-  if(mol1 != 0)
-    delete mol1;
-  if(mol2 != 0)
-    delete mol2;
-}
-
-
-double  Similarity::Tanimoto ()       
-{
-
-   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol1,2);
-   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(*rdmol2,2);
-
-   return TanimotoSimilarity (*v1,*v2);
-}
-*/
 
 
 Molecule::Molecule(RWMol* mol): rdmol(mol) {}
@@ -150,6 +129,24 @@ Molecule::~Molecule() {
     rdmol =0;
   }
 }
+
+
+double Molecule::Similarity(const Molecule moltocompare, string similarityfunction,double a, double b) {
+
+   RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
+   RDKit::SparseIntVect< boost::uint32_t > * v2 =  RDKit::MorganFingerprints::getFingerprint(moltocompare.getMol(),2);
+
+   if (similarityfunction=="tanimoto")
+   {  return TanimotoSimilarity (*v1,*v2);}
+
+
+   if (similarityfunction=="dice")
+      {  return DiceSimilarity (*v1,*v2);}
+
+   if (similarityfunction=="tversky")
+     {  return TverskySimilarity (*v1,*v2,a,b);}
+
+};
 
 /**
  * @brief [fromSmile]

@@ -2,13 +2,20 @@
 var RDKit = require('rdkit');
 
 var smi = 'ClC1(=C(C=CC(=C1)C(=O)C2(C(N)CCCC2))C)';
+var smi1 = 'C1(=C(C=CC(=C1)C(=O)C2(C(N)CCCC2))C)';
+
 console.log(smi);
 
 var mol = RDKit.Molecule.fromSmiles(smi);
 
-var t = mol.CanonicalRankAtoms(true,true,true);
+var mol1 = RDKit.Molecule.fromSmiles(smi1);
 
-console.log(readvector(t));
+console.log(mol.Similarity(mol1,'dice',0,0));
+
+// gave the canonical order of atoms (new algo!)
+var UniquerankAtoms = mol.CanonicalRankAtoms(true,true,true);
+
+console.log(readvector(UniquerankAtoms));
 
 
 function Node(value) {
@@ -37,6 +44,38 @@ function Node(value) {
         this.children = [];
     }
 }
+
+
+function HOSEsphere(value) {
+    this.value = value;
+    this.children = [];
+    this.parent = null;
+
+    this.setParentNode = function(node) {
+        this.parent = node;
+    }
+
+    this.getParentNode = function() {
+        return this.parent;
+    }
+
+    this.addChild = function(node) {
+        node.setParentNode(this);
+        this.children[this.children.length] = node;
+    }
+
+    this.getChildren = function() {
+        return this.children;
+    }
+
+    this.removeChildren = function() {
+        this.children = [];
+    }
+}
+
+
+
+
 
 function readvector(vect) {
 	var vectolength =  vect.size();
@@ -173,10 +212,6 @@ function loopotherSpheres(Spheres,graph){
 		console.log("Sphere: 1 ------------");
 		console.log(currentnodes,",score:",initalscore,"hosecode:",initalhose);
 
-
-
-
-
 	for (var i=1; i<Spheres.length;i++) {
 		console.log("Sphere:",i+1,"------------")
 	 	var nextSphere = Spheres[i-1].value.childs;
@@ -269,6 +304,8 @@ function ScoreandSort(spherecode) {
 	return cscore;
 
 }
+
+
 
 
 Array.prototype.getDuplicates = function () {
@@ -365,31 +402,21 @@ function bfs (graph, startNode, len) {
 var numSpheres=5;
 
 var C = mol.getNumAtoms();
-
-
 var Neiarray = [];
 var Bonarray = [];
-
-for (j=0;j<C;j++)
-{
- Neiarray.push(readvector(mol.getAtomNeighbors(j)));
- Bonarray.push(readvector(mol.getBondNeighbors(j)));
+// return the Atom & bond Neighbors
+for (j=0;j<C;j++){
+ 	Neiarray.push(readvector(mol.getAtomNeighbors(j)));
+ 	Bonarray.push(readvector(mol.getBondNeighbors(j)));
 }
 
-console.log(Neiarray);
-console.log(Bonarray);
 
 var g = mol.getAdjacencyMatrix(true);
 var graph =readmat(g);
 //var adjlist = AdjList(graph);
-//console.log(graph);
-//console.log(adjlist);
-
-var atomlist = mol.getSymbols(); // getAtomicNum()
+// 
+var atomlist = mol.getSymbols();
 var atomlistvect = readvector(atomlist);
-//console.log("atomelist:",JSON.stringify(atomlistvect));
-
-
 
 var rings = mol.findSSSR();
 var ringsval= [];
@@ -397,21 +424,17 @@ var ringsval= [];
 for (i =0;i<rings.size();i++){  
 	ringsval[i] = rings.get(i); 
 }
-//console.log("ring list:",ringsval);
 
 
 console.log("--------------------------");
 
 
 var  shortestpath = bfs(graph, 5, numSpheres);
-console.log("Spheres list:",shortestpath);
-
 
 var HSC = HosecodeSphere(shortestpath.spheres, atomlistvect, shortestpath.bondtype, ringsval, Neiarray,shortestpath.parents);
 
-
 //// return the HSC structure of childs ,...
-for (i=0; i<HSC.length;i++) {
+/*for (i=0; i<HSC.length;i++) {
 console.log("S",i);
 console.log("atomids:",HSC[i].value.atomid);
 console.log("childids:",HSC[i].value.childs);
@@ -420,7 +443,7 @@ console.log("symbol:",HSC[i].value.symbols);
 console.log("rank:",HSC[i].value.ranking);
 console.log("hose score:",HSC[i].value.hosescore);
 console.log("hose code:",HSC[i].value.hosecode);
-}
+}*/
 
 
 loopotherSpheres(HSC,graph);
