@@ -1,10 +1,12 @@
 var mongourl = 'mongodb://localhost:27017/rdkit';
 //var collectionName = "molecules1";
-var collectionName = "molecules-"+new Date().getTime();
+var collectionName = "molecules2";
 var start = 1;//start = 1
-var end = 2000000;//include it
+var end = 1000000;//include it
 var stepToShow = 1000;
-var fileToRead = '/Users/mbp/Downloads/chembl20/chembl_20.sdf';//File to process
+var fileToRead = '/Users/mbp/Desktop/mol.sdf';//File to process
+//var fileToRead = '/Users/mbp/Downloads/chembl20/chembl_20.sdf';//File to process
+
 var errorFile = 'errors.txt';
 var encoding = 'ascii';
 var dolineInputStream = true;
@@ -17,6 +19,7 @@ var rdk = require('rdkit');
 var util = require('util');
 var os = require('os');
 var memwatch = require('memwatch-next');
+var parse = require('sdf-parser');
  
 var hd;
 memwatch.on('leak', function(info) {
@@ -151,10 +154,22 @@ function processFile(){
         }
  
         if(i >= start){//define point for start
-            try {
+           try {
+
+                var Lines = line.split('\n');
+                goodlines = Lines[0]+"\n";
+                cscart = false;
+                for (ij=1;ij<Lines.length;ij++)
+                {   
+                    if (Lines[ij].indexOf("CsCart") !==-1) cscart = true;
+                    if (ij!=1 & cscart) goodlines+=Lines[ij]+"\n";
+                }
+
+                var result = parse(goodlines);
+                line = result.molecules[0].molfile.value;
+
                 var mol= rdk.Molecule.MolBlockToMol(line);
                 var smile = mol.toSmiles();
-
                 var binarymol = mol.MolToBinary();
 
                 // this is the folded example (AllChem.GetHashedMorganFingerprint(mol, radius=self.radius, nBits = self.length))
@@ -177,7 +192,7 @@ function processFile(){
                 );
                 mol.delete();
                 nbsuccess++;         
-           }catch (err) {
+          }catch (err) {
                 fs.appendFileSync(errorFile, "i="+i+"\r\n"+JSON.stringify(err)+"\r\n");
                 nberror++;
                 return;

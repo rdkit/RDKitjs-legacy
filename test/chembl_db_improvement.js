@@ -13,20 +13,24 @@ var databaseMongo;
 //###################################################################
 
 var mongourl = 'mongodb://localhost:27017/rdkit';
-var collectionName = "molecules";
+var collectionName = "molecules2";
 var timestamp = (new Date()).getTime();
 var limitRefresh = 200000000;
-var limitCompared = 10;
+var limitCompared = 20;
 var thresholdArray = [0.8,0.9];
 
 // add index into db from mongo cmd
-// db.molecules.createIndex({'mfp.bits':1})
-// db.molecules.createIndex({'mfp.count':1})
+// db.molecules2.createIndex({'mfp.bits':1})
+// db.molecules2.createIndex({'mfp.count':1})
 MongoClient.connect(mongourl, 
   function(err, db) {
     if(err){console.log(err);}
     databaseMongo=db;
     moleculesCollection = databaseMongo.collection(collectionName);
+
+   db.molecules2.createIndex({'mfp.bits':1})
+   db.molecules2.createIndex({'mfp.count':1})
+
     mfp_countsCollection = databaseMongo.collection("mfp_counts");
    
     benchmarkFPfrequency(limitCompared, function(err,res){
