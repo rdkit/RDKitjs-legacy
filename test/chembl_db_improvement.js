@@ -27,10 +27,6 @@ MongoClient.connect(mongourl,
     if(err){console.log(err);}
     databaseMongo=db;
     moleculesCollection = databaseMongo.collection(collectionName);
-
-   db.molecules2.createIndex({'mfp.bits':1})
-   db.molecules2.createIndex({'mfp.count':1})
-
     mfp_countsCollection = databaseMongo.collection("mfp_counts");
    
     benchmarkFPfrequency(limitCompared, function(err,res){
