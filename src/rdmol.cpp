@@ -269,11 +269,6 @@ unsigned int Molecule::addBond (unsigned int beginAtomIdx, unsigned int endAtomI
 }       
 
 
-
-
-
-
-
 /**
  * @brief [setBondDir]
  * @details [set the bond direction]
@@ -288,8 +283,14 @@ void Molecule::setBondDir (int Bondid, int bonddirid)
 }       
 
 
-
-
+/**
+ * @brief [CanonicalRankAtoms]
+ * @details [canonical ordering label of atoms]
+ * 
+ * @param breakTies [bool default true]
+ * @param includeChirality [boll default true]
+ * @param includeIsotopes [bool default true]
+ */
 vector<unsigned int> Molecule::CanonicalRankAtoms(bool breakTies=true, bool includeChirality=true, bool includeIsotopes=true){
     std::vector<unsigned int> ranks(rdmol->getNumAtoms());
     RDKit::Canon::rankMolAtoms(*rdmol, ranks, breakTies, includeChirality, includeIsotopes);
@@ -322,6 +323,86 @@ vector<double> Molecule::getAdjacencyMatrix(bool useBO) {
       }
       return res;
 }
+
+
+
+
+unsigned int Molecule::enumNbrConjGrp( std::vector<unsigned int> &atomConjGrpIdx,  std::vector<unsigned int> &bondConjGrpIdx, std::map<unsigned int, std::vector<unsigned int> > &m)
+{
+  unsigned int nConjGrp = 0;
+  unsigned int nb = rdmol->getNumBonds();
+  bondConjGrpIdx.resize(nb, nb);
+  unsigned int na = rdmol->getNumAtoms();
+  atomConjGrpIdx.resize(na, na);
+  for (unsigned int i = 0; i < nb; ++i) {
+    const RDKit::Bond *bi = rdmol->getBondWithIdx(i);
+    unsigned int biBeginIdx = bi->getBeginAtomIdx();
+    unsigned int biEndIdx = bi->getEndAtomIdx();
+    if (bi->getIsConjugated() && (bondConjGrpIdx[i] == nb)) {
+      // assign this conjugate bond to the matching group, if any
+      for (unsigned int j = 0;
+        (bondConjGrpIdx[i] == nb) && (j < nb); ++j) {
+        if ((i == j) || (bondConjGrpIdx[j] == nb))
+          continue;
+        const RDKit::Bond *bj = rdmol->getBondWithIdx(j);
+        if ((bj->getBeginAtomIdx() == biBeginIdx) || (bj->getBeginAtomIdx() == biEndIdx) || (bj->getEndAtomIdx() == biBeginIdx)   || (bj->getEndAtomIdx() == biEndIdx))
+          bondConjGrpIdx[i] = bondConjGrpIdx[j];
+      }
+      // no existing group matches: create a new group
+      if (bondConjGrpIdx[i] == nb)
+        bondConjGrpIdx[i] = nConjGrp++;
+    }
+  }
+  for (unsigned int i = 0; i < nb; ++i) {
+    if (bondConjGrpIdx[i] != nb) {
+      const RDKit::Bond *bi = rdmol->getBondWithIdx(i);
+      unsigned int biBeginIdx = bi->getBeginAtomIdx();
+      unsigned int biEndIdx = bi->getEndAtomIdx();
+      atomConjGrpIdx[biBeginIdx] = bondConjGrpIdx[i];
+      atomConjGrpIdx[biEndIdx] = bondConjGrpIdx[i];
+    }
+  }
+  for (unsigned int ai = 0; ai < na; ++ai) {
+    if (atomConjGrpIdx[ai] == na)
+      continue;
+    ROMol::ADJ_ITER nbrIdx, endNbrs;
+    boost::tie(nbrIdx, endNbrs) =
+      rdmol->getAtomNeighbors(rdmol->getAtomWithIdx(ai));
+    std::vector <unsigned int> v;
+    for (; nbrIdx != endNbrs; ++nbrIdx) {
+      const RDKit::Atom *atom = rdmol->getAtomWithIdx(*nbrIdx);
+      if (atom->getAtomicNum() == 1)
+        continue;
+      unsigned int aiNbr = atom->getIdx();
+      if (atomConjGrpIdx[aiNbr] == na) {
+        if (m.find(aiNbr) == m.end())
+          m[aiNbr] = v;
+        if (std::find(m[aiNbr].begin(), m[aiNbr].end(),
+          atomConjGrpIdx[ai]) == m[aiNbr].end())
+          m[aiNbr].push_back(atomConjGrpIdx[ai]);
+      }
+    }
+  }
+  return nConjGrp;
+}
+
+
+unsigned int Molecule::picontacts() {
+  std::vector<unsigned int> atomConjGrpIdx;
+  std::vector<unsigned int> bondConjGrpIdx;
+  std::map<unsigned int, std::vector<unsigned int> > m;
+  enumNbrConjGrp(atomConjGrpIdx, bondConjGrpIdx, m);
+  for (std::map<unsigned int, std::vector<unsigned int> >::const_iterator
+    mit = m.begin(); mit != m.end(); ++mit) {
+    std::cout << mit->first << "\t";
+    for (std::vector<unsigned int>::const_iterator
+      vit = mit->second.begin(); vit != mit->second.end(); ++vit)
+      std::cout << *vit << (vit == (mit->second.end() - 1) ? "\n" : ",");
+  }
+return 0;
+}
+
+
 
 
 // not working... enumeration is wrong

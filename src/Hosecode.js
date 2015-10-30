@@ -8,6 +8,12 @@ console.log(smi);
 
 var mol = RDKit.Molecule.fromSmiles(smi);
 
+console.log("pi contact list");
+
+var p = mol.picontacts();
+console.log("done");
+
+
 var obj2 = mol.getMorganUFPkeys(2);
 
 var u =mol.getMorganFPlist(2);
