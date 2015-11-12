@@ -327,6 +327,95 @@ vector<double> Molecule::getAdjacencyMatrix(bool useBO) {
 
 
 
+// compute the bfs to store the spheres & distance
+/*
+
+ function bfs (graph, startNode, len) {
+      var parents = [];
+      var sphereid = [];
+      var spheres = [];
+      var bondtype = [];
+      var queue = [];
+      var visited = [];
+      var current;
+      queue.push(startNode);
+      parents[startNode] = null;
+      bondtype[startNode] = null;
+      sphereid[startNode]=0;
+      visited[startNode] = true;
+
+      while (queue.length) {
+        current = queue.shift();
+        for (var i = 0; i < graph.length; i += 1) {
+          if (i !== current && graph[current][i]>0 && !visited[i]) {  // add >0 to include the bond weight instead of boolean matrix!
+            parents[i] = current;
+            sphereid[i] = sphereid[current]+1;
+            bondtype[i] = graph[current][i];
+            visited[i] = true;
+            queue.push(i);
+          }
+        
+        }
+      }
+    // extract the resulting spheres atomindexes based on the distance to the core! 
+    for (var j=1;j<len;j++) {
+        var spherescore = [];
+
+        for (var i =0;i<graph.length;i+=1){
+          if(sphereid[i]===j) {
+            spherescore.push(i); 
+          }
+      }
+    spheres.push(spherescore);
+
+    }
+    return {spheres,parents,bondtype};
+}
+
+
+Molecule::BFS(int StartIndex)
+{
+    RDKit::BitVect _notVisited;
+    std::queue<RDKit::Atom *> _queue;
+    std::vector<int> _depth;
+    RDKit::Atom _ptr = rdmol->GetAtom(StartIndex);
+
+   
+    _notVisited.Resize(rdmol->NumAtoms());
+    _notVisited.SetRangeOn(0, rdmol->NumAtoms() - 1);
+
+    if (!_ptr) return;
+    _notVisited.SetBitOff(_ptr->GetIdx() - 1);
+
+    // Set up storage for the depths
+    _depth.resize(rdmol->NumAtoms() + 1, 0);
+    _depth[_ptr->GetIdx()] = 1;
+
+    vector<RDKit::Bond*>::iterator i;
+    RDKit::Atom *a;
+
+    // look at the javascript version!
+
+    for (a = _ptr->BeginNbrAtom(i); a; a = _ptr->NextNbrAtom(i))
+      {
+        _queue.push(a);
+        _depth[a->GetIdx()] = 2;
+        _notVisited.SetBitOff(a->GetIdx() - 1);
+      }
+
+
+    // queue and depth
+    return _queue;
+  }
+
+*/
+
+
+
+
+
+
+
 unsigned int Molecule::enumNbrConjGrp( std::vector<unsigned int> &atomConjGrpIdx,  std::vector<unsigned int> &bondConjGrpIdx, std::map<unsigned int, std::vector<unsigned int> > &m)
 {
   unsigned int nConjGrp = 0;
@@ -400,6 +489,62 @@ unsigned int Molecule::picontacts() {
       std::cout << *vit << (vit == (mit->second.end() - 1) ? "\n" : ",");
   }
 return 0;
+}
+
+
+
+
+unsigned int Molecule::getAtomCountRingBonds(int atomid)
+{
+  RDKit::Atom *atom = rdmol->getAtomWithIdx(atomid);
+  unsigned int c = 0;
+  const ROMol mol = *rdmol;
+  RDKit::RingInfo *ringInfo = mol.getRingInfo();
+  ROMol::OEDGE_ITER nbrIdx, endNbrs;
+  boost::tie(nbrIdx, endNbrs) = mol.getAtomBonds(atom);
+  for (; nbrIdx != endNbrs; ++nbrIdx) {
+    unsigned int nbi = mol[*nbrIdx].get()->getIdx();
+    if (ringInfo->numBondRings(nbi))
+      ++c;
+  }
+  return c;
+}
+
+unsigned int Molecule::getAtomHeavyValence(int atomid)
+{
+  RDKit::Atom *atom = rdmol->getAtomWithIdx(atomid);
+  unsigned int hv = 0;
+  const ROMol mol = *rdmol;
+  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  boost::tie(nbrIdx, endNbrs) = mol.getAtomNeighbors(atom);
+  for (; nbrIdx != endNbrs; ++nbrIdx) {
+    const RDKit::Atom *atomNbr = mol[*nbrIdx].get();
+    if (atomNbr->getAtomicNum() != 1)
+      ++hv;
+  }
+  return hv;
+}
+
+unsigned int Molecule::getAtomHeteroValence(int atomid)
+{
+  RDKit::Atom *atom = rdmol->getAtomWithIdx(atomid);
+  unsigned int hv = 0;
+  const ROMol mol = *rdmol;
+  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  boost::tie(nbrIdx, endNbrs) = mol.getAtomNeighbors(atom);
+  for (; nbrIdx != endNbrs; ++nbrIdx) {
+    const RDKit::Atom *atomNbr = mol[*nbrIdx].get();
+    if ((atomNbr->getAtomicNum() != 1)
+      && (atomNbr->getAtomicNum() != 6))
+      ++hv;
+  }
+  return hv;
+}
+
+unsigned int Molecule::getAtomValence(int atomid)
+{
+  RDKit::Atom *atom = rdmol->getAtomWithIdx(atomid);
+  return atom->getExplicitValence();
 }
 
 
@@ -878,11 +1023,9 @@ vector<double> Molecule::MMFFOptimizeMoleculeConfs (unsigned int numThreads,int 
    vector<double> res(2*p.size());
    
 
-   for (int i = 0; i < 2*p.size(); i++) {
-        if ( i % 2== 0 )
-            res[i] = static_cast<double>(p[i].first);
-        else
-            res[p.size()+i] = p[i].second;
+   for (int i = 0; i < p.size(); i++) {
+            res[i*2] = static_cast<double>(p[i].first);
+            res[i*2+1] = p[i].second;
     }
     return res;
 }

@@ -28,6 +28,11 @@ public:
     // paolo code testing of pi contact generator
     unsigned int enumNbrConjGrp( std::vector<unsigned int> &atomConjGrpIdx,  std::vector<unsigned int> &bondConjGrpIdx, std::map<unsigned int, std::vector<unsigned int> > &m);
     unsigned int picontacts();
+    unsigned int getAtomCountRingBonds(int atomid);
+    unsigned int getAtomHeavyValence(int atomid);
+    unsigned int getAtomHeteroValence(int atomid);
+    unsigned int getAtomValence(int atomid);
+
 
 
 
@@ -293,6 +298,10 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getAdjacencyMatrix", &Molecule::getAdjacencyMatrix, allow_raw_pointers())
     .function("CanonicalRankAtoms", &Molecule::CanonicalRankAtoms, allow_raw_pointers())
     .function("picontacts", &Molecule::picontacts, allow_raw_pointers())
+    .function("getAtomCountRingBonds", &Molecule::getAtomCountRingBonds, allow_raw_pointers())
+    .function("getAtomValence", &Molecule::getAtomValence, allow_raw_pointers())
+    .function("getAtomHeteroValence", &Molecule::getAtomHeteroValence, allow_raw_pointers())
+    .function("getAtomHeavyValence", &Molecule::getAtomHeavyValence, allow_raw_pointers())
 
     // fingerprints
     .function("getAtomCode", &Molecule::getAtomCode, allow_raw_pointers())
