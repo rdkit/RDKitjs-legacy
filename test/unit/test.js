@@ -76,7 +76,7 @@ describe('Compute all descriptors', function () {
 		var mol = RDKit.Molecule.fromSmiles(smi);	
 		var c = RDKit.calc_all_desc(mol);
         c=JSON.stringify(c);
-        c.should.eql('{"mw":132,"exactMW":132.115029752,"formula":"C7H16O2","frsp3":1,"mqn":[7,0,0,0,0,0,0,0,0,2,0,0,8,0,0,0,0,0,6,4,2,1,1,0,0,2,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"peovsa":[9.843390348640755,0,0,0,0,19.765380445542643,6.4208216229260096,6.606881964512918,13.213763929025836,0,0,0,0,0],"smrvsa":[9.843390348640755,0,0,0,26.186202068468653,19.820645893538753,0,0,0,0],"tpsa":29.46,"slogpvsa":[0,24.927173288379457,4.736862953800049,0,26.186202068468653,0,0,0,0,0,0,0],"logp":1.1855,"mr":37.42979999999999,"labuteASA":56.83668269591208,"lipinskiHBD":1,"lipinskiHBA":2,"numHeterocycles":0,"numRings":0,"numHeteroatoms":2,"numHBA":2,"numHBD":1,"numAliphaticCarbocycles":0,"numAliphaticHeterocycles":0,"numSaturatedCarbocycles":0,"numSaturatedHeterocycles":0,"numAliphaticRings":0,"numAromaticRings":0,"numSaturatedRings":0,"numAmideBonds":0,"numRotatableBonds":6,"numAromaticHeterocycles":0,"chi0n":6.098102573083107,"chi1n":3.6006848163930116,"chi2n":2.043086014632321,"chi3n":1.1278531854030205,"chi4n":0.6207359402846874,"chi0v":6.098102573083107,"chi1v":3.6006848163930116,"chi2v":2.043086014632321,"chi3v":1.1278531854030205,"chi4v":0.6207359402846874,"kappa1":8.92,"kappa2":7.919999999999998,"kappa3":7.920000000000001,"hallKierAlpha":-0.08}');
+        c.should.eql('{"mw":132,"exactMW":132.115029752,"formula":"C7H16O2","frsp3":1,"mqn":[7,0,0,0,0,0,0,0,0,2,0,9,8,0,0,0,0,0,6,4,2,1,1,0,0,2,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"peovsa":[9.843390348640755,0,0,0,0,19.765380445542643,6.4208216229260096,6.606881964512918,13.213763929025836,0,0,0,0,0],"smrvsa":[9.843390348640755,0,0,0,26.186202068468653,19.820645893538753,0,0,0,0],"tpsa":29.46,"slogpvsa":[0,24.927173288379457,4.736862953800049,0,26.186202068468653,0,0,0,0,0,0,0],"logp":1.1855,"mr":37.42979999999999,"labuteASA":56.83668269591208,"lipinskiHBD":1,"lipinskiHBA":2,"numHeterocycles":0,"numRings":0,"numHeteroatoms":2,"numHBA":2,"numHBD":1,"numAliphaticCarbocycles":0,"numAliphaticHeterocycles":0,"numSaturatedCarbocycles":0,"numSaturatedHeterocycles":0,"numAliphaticRings":0,"numAromaticRings":0,"numSaturatedRings":0,"numAmideBonds":0,"numRotatableBonds":6,"numAromaticHeterocycles":0,"chi0n":6.098102573083107,"chi1n":3.6006848163930116,"chi2n":2.043086014632321,"chi3n":1.1278531854030205,"chi4n":0.6207359402846874,"chi0v":6.098102573083107,"chi1v":3.6006848163930116,"chi2v":2.043086014632321,"chi3v":1.1278531854030205,"chi4v":0.6207359402846874,"kappa1":8.92,"kappa2":7.919999999999998,"kappa3":7.920000000000001,"hallKierAlpha":-0.08}');
         mol.delete();
     });
 
@@ -265,8 +265,7 @@ describe('Conformers count & access', function () {
         for(var j=0;j < p.size();j++){
                 e.push(p.get(j));
             }
-        
-        e.should.eql([1,2]);
+        e.should.eql([2,4]);
         mol.delete();
     });
 
@@ -280,7 +279,7 @@ describe('Conformers count & access', function () {
                 e.push(p.get(j));
             }
         
-        e.should.eql([0,1]);
+        e.should.eql([1,1]);
         mol.delete();
     });
 
@@ -299,7 +298,7 @@ describe('Conformers count & access', function () {
 
 
 // align molecules or conformers
-describe.skip('Molecule AlignMol method', function () {
+describe('Molecule AlignMol method', function () {
     it('in a list of conformers', function () {
         var smi = 'CCCCCOC(CO)';
         var mol = RDKit.Molecule.fromSmiles(smi);  
@@ -330,7 +329,8 @@ describe('3D Force Field minimization', function () {
         mol.EmbedMolecule();
         mol.MMFFoptimizeMolecule();
         mol.removeHs()
-        mol.toMolfile().should.equal('\n     RDKit          3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    3.1421    1.8386   -0.4923 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.6872    0.3939   -0.6248 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2560    0.2090   -0.1205 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.8032   -1.2480   -0.2553 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6112   -1.4612    0.2765 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.5285   -0.7132   -0.5206 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.8815   -0.8099   -0.0574 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.1425    0.2334    1.0272 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.8418    1.5355    0.5278 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
+        mol.toMolfile().should.equal(
+            '\n     RDKit          3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n   -3.1318   -1.8240    0.0542 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.0336   -0.3800   -0.4132 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.7232   -0.0595   -1.1352 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.4940   -0.1565   -0.2313 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7737    0.2734   -0.9678 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.9353    0.0671   -0.1633 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.1547    1.1165    0.7884 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.4473    0.8050    1.5361 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.5342    0.7467    0.6134 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
         mol.delete();
     });
 
@@ -341,17 +341,18 @@ describe('3D Force Field minimization', function () {
         mol.EmbedMolecule();    
         mol.MMFFoptimizeMoleculearg(1000, 'MMFF94');
         mol.removeHs()
-        mol.toMolfile().should.equal('\n     RDKit          3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n   -3.8778    0.3120   -0.5134 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.0248   -0.5928    0.3621 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.6103   -0.0585    0.5998 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7594   -0.0088   -0.6737 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.6675    0.4592   -0.3946 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.3211   -0.4950    0.4391 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.6477   -0.1175    0.8000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.6604   -0.4181   -0.3038 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.9785   -0.0672    0.1025 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
+        mol.toMolfile().should.equal(
+            '\n     RDKit          3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n   -4.2225   -0.1660   -0.0329 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.8088   -0.0324   -0.5763 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.7651   -0.3593    0.4915 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.3459   -0.2244   -0.0585 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.6998   -0.5507    1.0053 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.0181   -0.5368    0.4565 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.5706    0.7818    0.3525 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.9897    0.6511   -0.1915 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.7752   -0.1392    0.6999 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
         mol.delete();
     });
 
 
-    it.skip('MMFFOptimizeMoleculeConfs', function () { 
+    it('MMFFOptimizeMoleculeConfs', function () { 
         var smi = 'CCCCCOC(CO)';
         this.timeout(50000);
 
         /*
-        for (i=0;i<100;i++){
+        for (var i=0;i<100;i++){
             var mol = RDKit.Molecule.fromSmiles(smi);  
             mol.addHs(); 
             mol.EmbedMultipleConfsarg(2,200,2015);   
@@ -360,6 +361,7 @@ describe('3D Force Field minimization', function () {
             mol.delete();
         }
         */
+       
         var mol = RDKit.Molecule.fromSmiles(smi);  
         mol.addHs(); 
         mol.EmbedMultipleConfsarg(3,1000,2015);   
@@ -377,7 +379,7 @@ describe('3D Force Field minimization', function () {
         mol.EmbedMolecule(); 
         mol.UFFOptimizeMolecule();
         mol.removeHs()
-        mol.toMolfile().should.equal('\n     RDKit          3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n   -3.2713    0.4667   -1.0876 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.9791   -0.8786   -0.4235 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.8749   -0.7887    0.6411 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.4844   -0.5591    0.0307 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.6043   -0.5961    1.1078 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.8803   -0.4433    0.5144 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.3128    0.8990    0.6042 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.6179    1.0667   -0.1689 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.6397    0.3074    0.4191 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
+        mol.toMolfile().should.equal('\n     RDKit          3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n   -3.4083    0.8048   -0.3623 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.1076   -0.6782   -0.1469 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.8510   -0.9123    0.7056 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5574   -0.5506   -0.0391 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.6776   -0.9097    0.7933 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.8559   -0.6239    0.0628 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.3833    0.6312    0.4415 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.5602    0.9786   -0.4611 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.5719    0.0215   -0.3126 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  4  5  1  0\n  5  6  1  0\n  6  7  1  0\n  7  8  1  0\n  8  9  1  0\nM  END\n$$$$\n');
         mol.delete();
     });
 
