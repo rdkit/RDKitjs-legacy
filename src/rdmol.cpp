@@ -146,7 +146,7 @@ double Molecule::Similarity(const Molecule moltocompare, string similarityfuncti
    if (similarityfunction=="tversky")
      {  return TverskySimilarity (*v1,*v2,a,b);}
 
-};
+}
 
 /**
  * @brief [fromSmile]
@@ -1311,22 +1311,20 @@ double Molecule::GetConformersRMS(int confId1, int confId2){
  */
 double Molecule::AlignMol(string smilesref){
     rdErrorLog->df_enabled = false;
-    RWMol* rdquery = RDKit::SmilesToMol(smilesref);
-    printf("smiles ok");
+    RWMol *prbMol = RDKit::SmilesToMol(smilesref);
+    RDKit::MatchVectType matches;
+    RDKit::SubstructMatch(*rdmol,*prbMol,matches,true);
 
-    RDKit::MolOps::addHs(*rdquery);
-    printf("addH ok");
+    RDKit::MolOps::addHs(*prbMol);
+    RDKit::MolOps::addHs(*rdmol);
 
-    RDKit::DGeomHelpers::EmbedMolecule(*rdquery);
-    printf("add 3D ok");
+    RDKit::DGeomHelpers::EmbedMolecule(*prbMol);
+    RDKit::DGeomHelpers::EmbedMolecule(*rdmol);
 
-    pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdquery);
-    printf("optimze 3D ok");
+    //pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*rdquery);
 
-    double res = RDKit::MolAlign::alignMol(*rdmol,*rdquery);
-    printf("Align ok");
-   // string sres = (string)res;
-   // printf("%s\n", sres.c_str());
+    double res = RDKit::MolAlign::alignMol(*rdmol,*prbMol,-1,-1,&matches);
+    
     // can return the rmds values need to look at that closely... in python not there
     return res;
 }

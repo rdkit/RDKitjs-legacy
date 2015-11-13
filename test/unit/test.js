@@ -303,7 +303,8 @@ describe('Molecule AlignMol method', function () {
         var smi = 'CCCCCOC(CO)';
         var mol = RDKit.Molecule.fromSmiles(smi);  
         mol.addHs(); 
-        mol.EmbedMultipleConfsarg(3,100,2015);   
+        mol.EmbedMultipleConfsarg(3,100,2015); 
+        mol.removeHs();  
         mol.AlignMolConformers().should.eql();
         mol.delete();
     });
@@ -311,9 +312,7 @@ describe('Molecule AlignMol method', function () {
     it('Mol vs Ref', function () {
         var smi = 'CCCCCOC(CO)';
         var mol = RDKit.Molecule.fromSmiles(smi);  
-        mol.addHs(); 
-        mol.EmbedMolecule();
-        mol.AlignMol('CCCCC').should.eql();
+        mol.AlignMol('CCCCC').should.eql(0.3789185721593953);
         mol.delete();
 
     });
