@@ -146,6 +146,7 @@ double Molecule::Similarity(const Molecule moltocompare, string similarityfuncti
    if (similarityfunction=="tversky")
      {  return TverskySimilarity (*v1,*v2,a,b);}
 
+   else return 0;
 }
 
 /**
@@ -1343,15 +1344,19 @@ void Molecule::AlignMolConformers(){
 }
 
 
-/*
-vector<double> Molecule::AlignMolConformersRMSlist(){
+
+vector<double> Molecule::getConformersRMS(unsigned int confId1,unsigned int confId2, unsigned int maxIters){
     // can return the rmds values need to look at that closely... in python not there
-    std::vector<double> *RMSlist;
-    RDKit::MolAlign::alignMolConformers(*rdmol,0,0,0,false,50,RMSlist);
-    return *RMSlist;
+    std::vector<double> RMSlist;
+    std::vector<unsigned int> confId;
+    confId.push_back(confId1);
+    confId.push_back(confId2);
+    // cannot pass * objects to align ... create an issue !
+    RDKit::MolAlign::alignMolConformers(*rdmol,0,&confId,0,true,maxIters,&RMSlist);
+    return RMSlist;
 
 }
-*/
+
 
 
 

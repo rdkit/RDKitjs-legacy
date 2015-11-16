@@ -126,9 +126,12 @@ public:
     int findSSSRnumber();
     map<int, string>  findSSSR();
 
-    //vector<double> AlignMolConformersRMSlist();
+    // return matrix ... vector<double> AlignMolConformersRMSlist();
+
     void AlignMolConformers();
-    //double GetConformersRMS(int id1, int id2);
+
+    vector<double> getConformersRMS(unsigned int confId1,unsigned int confId2,unsigned int maxIters);
+
     double AlignMol(string smilesref);
 
     
@@ -394,7 +397,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("AlignMol", &Molecule::AlignMol, allow_raw_pointers())
     .function("AlignMolConformers", &Molecule::AlignMolConformers, allow_raw_pointers())
     //.function("AlignMolConformersRMSlist", &Molecule::AlignMolConformersRMSlist, allow_raw_pointers())
-    //.function("GetConformersRMS", &Molecule::GetConformersRMS, allow_raw_pointers())
+    .function("getConformersRMS", &Molecule::getConformersRMS, allow_raw_pointers())
 
 
     .function("getNumMacrocycles",&Molecule::getNumMacrocycles, allow_raw_pointers())

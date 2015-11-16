@@ -304,18 +304,45 @@ describe('Molecule AlignMol method', function () {
         var mol = RDKit.Molecule.fromSmiles(smi);  
         mol.addHs(); 
         mol.EmbedMultipleConfsarg(3,100,2015); 
-        mol.removeHs();  
-        mol.AlignMolConformers().should.eql();
+        
+        //console.log(mol.sdwriteConfs());
+        mol.AlignMolConformers();
+        //console.log(mol.sdwriteConfs());
+
         mol.delete();
+        // to do return the aligned score !!!!
+        console.log('done');
     });
     
     it('Mol vs Ref', function () {
         var smi = 'CCCCCOC(CO)';
         var mol = RDKit.Molecule.fromSmiles(smi);  
         mol.AlignMol('CCCCC').should.eql(0.3789185721593953);
+        // to do return the 2 molecules aligned!
         mol.delete();
 
     });
+
+
+   it.only('RMS value of conformers', function () {
+        var smi = 'CCCCCOC(CO)';
+        var mol = RDKit.Molecule.fromSmiles(smi);
+        mol.addHs(); 
+        mol.EmbedMultipleConfsarg(10,100,2015); 
+        mol.AlignMolConformers();
+        var p = mol.getConformersRMS(1,2,50);
+
+        var plen = p.size();
+        var e =  [];
+        for(var j=0;j < plen;j++){
+                e.push(p.get(j));
+            }
+        console.log(e);
+        // to do return the 2 molecules aligned!
+        mol.delete();
+
+    });
+
 });
 
     
