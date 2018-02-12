@@ -20,11 +20,13 @@ install RDKit 2017.3.3, 2017.9.3 (New version of Libraries).
 
 you need to add eigen3 include files for 3Ddescriptors (since RDkit 2017.3)
 
+```bash
 wget https://github.com/rdkit/rdkit/archive/Release_2017_09_3.tar.gz
 wget https://github.com/rdkit/rdkit/archive/Release_2017_03_3.tar.gz
 wget https://github.com/rdkit/rdkit/archive/Release_2016_09_4.tar.gz
 wget https://github.com/rdkit/rdkit/archive/Release_2016_03_5.tar.gz
 wget http://downloads.sourceforge.net/project/rdkit/rdkit/Q1_2015/RDKit_2015_03_1.tgz
+```
 
 Choose your version based on required RDkit functionnalities and compile RDKit first for emscripten:
 ```bash
