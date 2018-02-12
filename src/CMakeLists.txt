@@ -3,6 +3,7 @@ set(RDKITJS_H ${CMAKE_CURRENT_SOURCE_DIR}/rdmol.h)
 
 
 # boost found
+
 if(Boost_FOUND)
 	# RDkit Original lib format
 	if(NOT RDKitNEWLIB)
@@ -15,6 +16,7 @@ if(Boost_FOUND)
 	# RDkit new lib format since 2017.03.1
 	if(RDKitNEWLIB)
     	# ASM compiler
+		# RDkit new lib format since 2017.03.1
 		if(ASM)
 		    add_custom_command(
 		        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/rdkit.js
@@ -22,6 +24,7 @@ if(Boost_FOUND)
 		endif()
 
     	# WASM compiler
+
 		if(WASM)
 		    add_custom_command(
 		        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/rdkit.js

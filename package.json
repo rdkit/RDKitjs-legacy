@@ -6,8 +6,8 @@
   "main": "dist/rdkit.js",
   "scripts": {
     "test": "npm run build-test && mocha test/unit --require should --reporter mocha-better-spec-reporter --recursive",
-    "build-test": "cat javascript/pre.js build/src/rdkit.js javascript/post.js > test/rdkit.js",
-    "build": "cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js"
+    "build-test": "cat javascript/pre.js build/src/rdkit.js javascript/post.js > test/rdkit.js && cp build/src/rdkit.wasm test/rdkit.wasm",
+    "build": "cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js && cp build/src/rdkit.wasm dist/rdkit.wasm"
   },
   "repository": "thegodone/RDKitjs",
   "author": "Guillaume Godin",

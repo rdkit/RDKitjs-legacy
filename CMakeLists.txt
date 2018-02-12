@@ -7,8 +7,8 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 # add compatibility with RDKIT version >=2017.03.1
 set(RDKitNEWLIB ON)
 # testing compilation with ASM or Web Assembly
-set(ASM ON)
-set(WASM OFF)
+set(ASM OFF)
+set(WASM ON)
 
 find_package(Boost 1.50.0 COMPONENTS)
 
