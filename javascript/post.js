@@ -1,4 +1,4 @@
-var RDKit = rdk();
+var RDKit = rdk(Module);
 
 // custom JS methods
 

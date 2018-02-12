@@ -1,6 +1,7 @@
 .idea
 .DS_Store
 *.log
-test/rdkit.js
+test/rdkit.*
 node_modules
 
+/rdkit-*
