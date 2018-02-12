@@ -118,9 +118,11 @@ http://gmrand.blogspot.ch/2015/03/howto-install-rdkit-and-emscripten-on.html
 => OSX:
 http://gmrand.blogspot.ch/2015/05/howto-install-rdkit-and-emscripten-on.html
 
+
+
 P.S.: CAUTION due to a bug report we suggest to apply this patch to rdkit
 
-Patching of RDKit files for emscripten binding only required for 2015.03.1
+ONLY for RDKIT version 2015.03.1 : Patching of RDKit files for emscripten binding 
 ===============================================
 
 * adding class MMFFMolProperties in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h
@@ -137,7 +139,6 @@ Patching of RDKit files for emscripten binding only required for 2015.03.1
 + #include "AtomTyper.h"
   #include "Builder.h"
 ```
-
 
 Want to try it without compilation ? It's already possible
 =================
