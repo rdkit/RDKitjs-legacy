@@ -1150,7 +1150,7 @@ vector<float> Molecule::getAtomsPos2D()
     WedgeMolBonds(*rdmol,&(rdmol->getConformer()));
     // adding the transparency option!
     RDKit::MolDrawOptions options;
-    options.clearBackground=true;  
+    //options.clearBackground=true; not in 2015.3
     RDKit::MolDraw2DSVG drawer(300,300);
     drawer.drawMolecule(*rdmol);
     drawer.finishDrawing();
@@ -1180,6 +1180,29 @@ vector<float> Molecule::getAtomsPos2D()
 
 }
 
+
+/**
+ * @brief [get2DScale]
+ * @details [return the scale on 2D image for plotting]
+ * 
+ * @return [double]
+ */
+double Molecule::get2DScale(vector<float> atcds, double width, double height) {
+   double x_min =10;
+   double y_min =10;
+   double x_max =-10;
+   double y_max =-10;
+   for( int i = 0; i < atcds.size() -1 ; i=i+2 ) {
+         if (atcds[i]<x_min ) x_min = atcds[i];
+         if (atcds[i]>x_max ) x_max = atcds[i];
+         if (atcds[i+1]<y_min ) y_min = atcds[i+1];
+         if (atcds[i+1]>y_max ) y_max = atcds[i+1];
+   }
+   double x_range = x_max - x_min;
+   double y_range = y_max - y_min;
+   double scale;
+   return scale = min( double( width ) / x_range , double( height ) / y_range );
+}
 
 /**
  * @brief [Drawing2D]
@@ -1451,17 +1474,20 @@ int Molecule::getNumMacrocycles()
  * @brief [calcNumSpiroAtoms]
  * @details [count the number of Spiro Atoms for SA score model]
  * @return [number of spiro atoms]
+ * caution must use RDKIT version >= 2016.03.01
  */
 int Molecule::getNumSpiroAtoms()
 {
   return  RDKit::Descriptors::calcNumSpiroAtoms (*rdmol);
 }
 
+
 /**
  * @brief [calcNumBridgeheadAtoms]
  * @details [count the number of Bridge head Atoms for SA score model]
  * @return [number of Bridge head atoms]
- */
+ * caution must use RDKIT version >= 2016.03.01
+*/
 int Molecule::getNumBridgeheadAtoms()
 {
   return  RDKit::Descriptors::calcNumBridgeheadAtoms(*rdmol);
@@ -1959,8 +1985,6 @@ vector<double> Molecule::getASAContribs() {
 }
 
 
-
-
 /**
  * @brief [TPSA]
  * @details [TPSA value for a molecule]
@@ -2026,12 +2050,6 @@ vector< unsigned int > Molecule::MQNs()
 {
     return RDKit::Descriptors::calcMQNs (*rdmol);
 }
-
-
-
-
-
-
 
 
 /**
@@ -2203,7 +2221,6 @@ int Molecule::setProp(string key, string value) {
 bool Molecule::hasProp(string key) {
     return rdmol->hasProp(key);
 }
-
 
 
 

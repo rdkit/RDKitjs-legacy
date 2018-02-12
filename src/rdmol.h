@@ -117,6 +117,8 @@ public:
     unsigned int compute2DCoords();
     string Drawing2D();
     vector<float> getAtomsPos2D();
+    double get2DScale(vector<float> atcds, double width, double height);
+
     // similarity
     double TanimotoSimilarityfromSmile (string smilesref);
     double DiceSimilarityfromSmile (string smilesref);
@@ -251,7 +253,6 @@ private:
 
 
 
-
 /* adding another class
  class Similarity
  {
@@ -346,6 +347,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // drawing molecules
     .function("Drawing2D", &Molecule::Drawing2D, allow_raw_pointers())
     .function("getAtomsPos2D", &Molecule::getAtomsPos2D, allow_raw_pointers())
+    .function("get2DScale", &Molecule::get2DScale, allow_raw_pointers())
 
     
 
