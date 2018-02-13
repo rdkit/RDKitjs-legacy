@@ -1,6 +1,6 @@
 {
   "name": "rdkit",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "port RDKit to js using emscripten",
   "keywords": [],
   "main": "dist/rdkit.js",
