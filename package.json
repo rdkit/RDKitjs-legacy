@@ -7,29 +7,28 @@
   "scripts": {
     "test": "npm run build-test && npm run test-only",
     "test-only": "jest",
-    "build-test":
-      "cat javascript/pre.js build/src/rdkit.js javascript/post.js > test/rdkit.js && cp build/src/rdkit.wasm test/rdkit.wasm",
-    "build":
-      "cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js && cp build/src/rdkit.wasm dist/rdkit.wasm"
+    "build-test": "cat javascript/pre.js build/src/rdkit.js javascript/post.js > test/rdkit.js && cp build/src/rdkit.wasm test/rdkit.wasm",
+    "build": "cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js && cp build/src/rdkit.wasm dist/rdkit.wasm"
   },
   "jest": {
     "testEnvironment": "node"
   },
   "repository": "thegodone/RDKitjs",
   "author": "Guillaume Godin",
-  "contributors": ["Michaël Zasso", "Giuseppe Marco Randazzo"],
+  "contributors": [
+    "Michaël Zasso",
+    "Giuseppe Marco Randazzo"
+  ],
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/thegodone/RDKitjs/issues"
   },
   "homepage": "https://github.com/thegodone/RDKitjs",
   "devDependencies": {
-    "jest": "^22.2.2",
-    "should": "^7.0.4"
-  },
-  "dependencies": {
     "async": "^1.4.2",
+    "jest": "^22.2.2",
     "mongodb": "^2.0.42",
+    "should": "^13.2.1",
     "underscore": "^1.8.3",
     "victor": "^1.1.0"
   }
