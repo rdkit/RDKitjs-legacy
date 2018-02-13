@@ -1,4 +1,4 @@
-var rdkit = require('.');
+var rdkit = require('..');
 
 rdkit.load().then(() => {
 
