@@ -3,5 +3,5 @@
 *.log
 test/rdkit.*
 node_modules
-
+/dist/
 /rdkit-*
