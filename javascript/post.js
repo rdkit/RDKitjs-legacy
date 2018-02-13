@@ -4,102 +4,127 @@ var RDKit = rdk(Module);
 
 RDKit.hello = 'world';
 
+function calc_all_desc(mol) {
+  var mw = mol.getMW();
+  var fr_sp3 = mol.FractionCSP3();
+  var ExactMW = mol.ExactMW();
+  var Formula = mol.Formula();
+  var Chi0v = mol.Chi0v();
+  var Chi1v = mol.Chi1v();
+  var Chi2v = mol.Chi2v();
+  var Chi3v = mol.Chi3v();
+  var Chi4v = mol.Chi4v();
+  var Chi0n = mol.Chi0n();
+  var Chi1n = mol.Chi1n();
+  var Chi2n = mol.Chi2n();
+  var Chi3n = mol.Chi3n();
+  var Chi4n = mol.Chi4n();
+  var HallKierAlpha = mol.HallKierAlpha();
+  var Kappa1 = mol.Kappa1();
+  var Kappa2 = mol.Kappa2();
+  var Kappa3 = mol.Kappa3();
 
-function calc_all_desc(mol){
-    var mw = mol.getMW();
-    var fr_sp3 = mol.FractionCSP3();
-    var ExactMW = mol.ExactMW();
-    var Formula = mol.Formula();
-    var Chi0v = mol.Chi0v();
-    var Chi1v = mol.Chi1v();
-    var Chi2v = mol.Chi2v();
-    var Chi3v = mol.Chi3v();
-    var Chi4v = mol.Chi4v();
-    var Chi0n = mol.Chi0n();
-    var Chi1n = mol.Chi1n();
-    var Chi2n = mol.Chi2n();
-    var Chi3n = mol.Chi3n();
-    var Chi4n = mol.Chi4n();
-    var HallKierAlpha = mol.HallKierAlpha();
-    var Kappa1 = mol.Kappa1();
-    var Kappa2 = mol.Kappa2();
-    var Kappa3 = mol.Kappa3();
-    
-    var t = new RDKit.VectorDouble();
-    t = mol.logp_mr(); 
-    var logp = t.get(0);
-    var mr = t.get(1);
+  var t = new RDKit.VectorDouble();
+  t = mol.logp_mr();
+  var logp = t.get(0);
+  var mr = t.get(1);
 
-    var LipinskiHBA = mol.LipinskiHBA();
-    var LipinskiHBD = mol.LipinskiHBD();
-    var NumRotatableBonds = mol.NumRotatableBonds();
-    var NumHBD = mol.NumHBD();
-    var NumHBA = mol.NumHBA();
-    var NumHeteroatoms = mol.NumHeteroatoms();
-    var NumAmideBonds = mol.NumAmideBonds();
-    var NumRings = mol.NumRings();
-    var NumAromaticRings = mol.NumAromaticRings();
-    var NumAliphaticRings = mol.NumAliphaticRings();
-    var NumSaturatedRings = mol.NumSaturatedRings();
-    var NumHeterocycles = mol.NumHeterocycles();
-    var NumAromaticHeterocycles = mol.NumAromaticHeterocycles();
-    var NumAromaticCarbocycles = mol.NumAromaticCarbocycles();
-    var NumSaturatedHeterocycles = mol.NumSaturatedHeterocycles();
-    var NumSaturatedCarbocycles = mol.NumSaturatedCarbocycles();
-    var NumAliphaticHeterocycles = mol.NumAliphaticHeterocycles();
-    var NumAliphaticCarbocycles = mol.NumAliphaticCarbocycles();
-    var LabuteASA = mol.LabuteASA();
-    var TPSA = mol.TPSA();
+  var LipinskiHBA = mol.LipinskiHBA();
+  var LipinskiHBD = mol.LipinskiHBD();
+  var NumRotatableBonds = mol.NumRotatableBonds();
+  var NumHBD = mol.NumHBD();
+  var NumHBA = mol.NumHBA();
+  var NumHeteroatoms = mol.NumHeteroatoms();
+  var NumAmideBonds = mol.NumAmideBonds();
+  var NumRings = mol.NumRings();
+  var NumAromaticRings = mol.NumAromaticRings();
+  var NumAliphaticRings = mol.NumAliphaticRings();
+  var NumSaturatedRings = mol.NumSaturatedRings();
+  var NumHeterocycles = mol.NumHeterocycles();
+  var NumAromaticHeterocycles = mol.NumAromaticHeterocycles();
+  var NumAromaticCarbocycles = mol.NumAromaticCarbocycles();
+  var NumSaturatedHeterocycles = mol.NumSaturatedHeterocycles();
+  var NumSaturatedCarbocycles = mol.NumSaturatedCarbocycles();
+  var NumAliphaticHeterocycles = mol.NumAliphaticHeterocycles();
+  var NumAliphaticCarbocycles = mol.NumAliphaticCarbocycles();
+  var LabuteASA = mol.LabuteASA();
+  var TPSA = mol.TPSA();
 
-    // get array values
-   var slogp = new RDKit.VectorDouble();
-    slogp = mol.SlogP_VSA();    
-    SlogP_VSA = [];
-    for (i =0;i<slogp.size();i++)
-    {
-        SlogP_VSA.push(slogp.get(i));
-    }
+  // get array values
+  var slogp = new RDKit.VectorDouble();
+  slogp = mol.SlogP_VSA();
+  SlogP_VSA = [];
+  for (i = 0; i < slogp.size(); i++) {
+    SlogP_VSA.push(slogp.get(i));
+  }
 
+  var smr = new RDKit.VectorDouble();
+  smr = mol.SMR_VSA();
+  SMR_VSA = [];
+  for (i = 0; i < smr.size(); i++) {
+    SMR_VSA.push(smr.get(i));
+  }
 
-    var smr = new RDKit.VectorDouble();
-    smr = mol.SMR_VSA();    
-    SMR_VSA = [];
-    for (i =0;i<smr.size();i++)
-    {
-        SMR_VSA.push(smr.get(i));
-    }
+  var peo = new RDKit.VectorDouble();
+  peo = mol.PEO_VSA();
+  PEO_VSA = [];
+  for (i = 0; i < peo.size(); i++) {
+    PEO_VSA.push(peo.get(i));
+  }
 
+  var mqn = new RDKit.VectorUint();
+  mqn = mol.MQNs();
+  MQNs = [];
+  for (i = 0; i < mqn.size(); i++) {
+    MQNs.push(mqn.get(i));
+  }
 
-    var peo = new RDKit.VectorDouble();
-    peo = mol.PEO_VSA();    
-    PEO_VSA = [];
-    for (i =0;i<peo.size();i++)
-    {
-        PEO_VSA.push(peo.get(i));
-    }
-
-
-    var mqn = new RDKit.VectorUint();
-    mqn = mol.MQNs();   
-    MQNs = [];
-    for (i =0;i<mqn.size();i++)
-    {
-        MQNs.push(mqn.get(i));
-    }
-   
-    return {mw:mw,exactMW:ExactMW,formula:Formula,frsp3:fr_sp3,mqn:MQNs,peovsa:PEO_VSA,smrvsa:SMR_VSA, 
-        tpsa:TPSA,slogpvsa:SlogP_VSA,logp:logp,mr:mr,labuteASA:LabuteASA,lipinskiHBD:LipinskiHBD,lipinskiHBA:LipinskiHBA,
-        numHeterocycles:NumHeterocycles,numRings:NumRings,numHeteroatoms:NumHeteroatoms,numHBA:NumHBA,
-        numHBD:NumHBD,numAliphaticCarbocycles:NumAliphaticCarbocycles,numAliphaticHeterocycles:NumAliphaticHeterocycles,
-        numSaturatedCarbocycles:NumSaturatedCarbocycles,numSaturatedHeterocycles:NumSaturatedHeterocycles,
-        numAliphaticRings:NumAliphaticRings,numAromaticRings:NumAromaticRings,numSaturatedRings:NumSaturatedRings,
-        numAmideBonds:NumAmideBonds, 
-        numRotatableBonds:NumRotatableBonds,numAromaticHeterocycles:NumAromaticHeterocycles,
-        chi0n:Chi0n,chi1n:Chi1n,chi2n:Chi2n,chi3n:Chi3n,chi4n:Chi4n,
-        chi0v:Chi0v,chi1v:Chi1v,chi2v:Chi2v,chi3v:Chi3v,chi4v:Chi4v,kappa1:Kappa1,kappa2:Kappa2,kappa3:Kappa3,
-        hallKierAlpha:HallKierAlpha
-   }; 
-};
+  return {
+    mw: mw,
+    exactMW: ExactMW,
+    formula: Formula,
+    frsp3: fr_sp3,
+    mqn: MQNs,
+    peovsa: PEO_VSA,
+    smrvsa: SMR_VSA,
+    tpsa: TPSA,
+    slogpvsa: SlogP_VSA,
+    logp: logp,
+    mr: mr,
+    labuteASA: LabuteASA,
+    lipinskiHBD: LipinskiHBD,
+    lipinskiHBA: LipinskiHBA,
+    numHeterocycles: NumHeterocycles,
+    numRings: NumRings,
+    numHeteroatoms: NumHeteroatoms,
+    numHBA: NumHBA,
+    numHBD: NumHBD,
+    numAliphaticCarbocycles: NumAliphaticCarbocycles,
+    numAliphaticHeterocycles: NumAliphaticHeterocycles,
+    numSaturatedCarbocycles: NumSaturatedCarbocycles,
+    numSaturatedHeterocycles: NumSaturatedHeterocycles,
+    numAliphaticRings: NumAliphaticRings,
+    numAromaticRings: NumAromaticRings,
+    numSaturatedRings: NumSaturatedRings,
+    numAmideBonds: NumAmideBonds,
+    numRotatableBonds: NumRotatableBonds,
+    numAromaticHeterocycles: NumAromaticHeterocycles,
+    chi0n: Chi0n,
+    chi1n: Chi1n,
+    chi2n: Chi2n,
+    chi3n: Chi3n,
+    chi4n: Chi4n,
+    chi0v: Chi0v,
+    chi1v: Chi1v,
+    chi2v: Chi2v,
+    chi3v: Chi3v,
+    chi4v: Chi4v,
+    kappa1: Kappa1,
+    kappa2: Kappa2,
+    kappa3: Kappa3,
+    hallKierAlpha: HallKierAlpha
+  };
+}
 
 /*
 // Abraham Descriptors Model from publication : 
@@ -113,7 +138,7 @@ var Scoef = [-0.075,    0,  0.036,  0.071,  -0.085, 0.05,   0.101,  0.121,  0.03
 var BHcoef = [0.007,0,0.011,0.037,0.019,0.011,0,0.019,0.028,0.481,0.275,0.541,0.415,0.316,0.653,0.321,0.392,0.2,0.596,0.321,0.242,0.103,-0.476,-0.525,-0.204,0.307,0.211,0.331,0.047,0.334,0.168,0.043,0.071,0.448,-0.188,0,1.183,-0.036,0,0,-0.011,0,-0.206,-0.214,-0.394,-0.267,-0.308,-0.095,-0.287,-0.231,-0.446,-0.076,-0.252,-0.148,-0.051,-0.014,0.013,0.267,0,-0.068,-0.079,-0.387,-0.126,0,-0.059,-0.045,-0.13,0,-0.132,-0.157,-0.098,-0.17,-0.089,0.031,-0.035,-0.023,-0.668,-0.042,0.131,-0.408,-0.216];
 var BOcoef= [0,0,0.02,0.047,0.024,0.012,0,0.018,0.032,0.486,0.326,0.543,0.426,0.267,0.655,0.338,0.338,0.202,0.589,0.3,0.245,0.093,-0.595,-0.533,-0.202,0.311,0.226,0.33,0.06,0.339,0.175,0.083,0.069,0.319,-0.19,0,1.189,-0.033,0,0,0,0,-0.223,-0.169,-0.408,-0.298,-0.312,-0.038,-0.292,-0.242,-0.443,-0.054,-0.251,-0.149,-0.05,-0.016,0.01,0.218,0,-0.09,-0.122,-0.403,-0.12,0,-0.027,-0.069,-0.13,-0.018,-0.094,-0.141,-0.113,-0.184,-0.073,0.025,-0.033,-0.025,-0.668,-0.057,0.129,-0.405,-0.218];
 var Lcoef = [0.321,0.499,0.449,0.443,0.244,0.469,0.624,0.744,0.332,0.781,0.949,0.568,0.912,1.25,0.4,0.869,0.794,-0.235,-0.24,0.574,0.757,0.732,0.278,0.347,0,0.672,0.36,0.359,0.057,0.495,1.258,0.848,0.954,2.196,0,0.554,2.051,-0.143,-0.147,0.669,1.097,1.59,-0.39,0.406,-0.483,0,-0.369,0,0.603,0.583,0,0,0,0,0,-0.111,0.054,0.488,-0.072,-0.337,0,-0.303,-0.364,0.062,0,0.169,-0.4,0.1,-0.179,0,0.042,0.209,-0.058,-0.081,-0.026,0,0,0.149,-0.145,0,0];
-    
+  
 
 // Abraham ODT model clusters from publication : 
 var smartsODT = ['[SX2H1]','[CX3](=O)[OX2H1]', '[$([CX3H][#6]),$([CX3H2])]=[OX1]','[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][#6;!$(C=[O,N,S])]',  '[CX3;$([H2]),$([H1][#6]),$(C([#6])[#6])]=[CX3;$([H2]),$([H1][#6]),$(C([#6])[#6])]']
@@ -128,100 +153,100 @@ var Polcoef =  [10.152, 8.765, 5.702, 3.833, 16.557, 24.123, 38.506, 10.488, 6.3
 
 // binary fragments
 function fragpresent (smarts, functions, mol) {
-  var desc = [];
-  for (i=0; i<smarts.length;i++) {
-     var v = mol.GetSubstructMatchesNumber(smarts[i]);
-     if (v>0) desc[i]=1;
-     else desc[i]=0;
-    }
-  return desc
+var desc = [];
+for (i=0; i<smarts.length;i++) {
+    var v = mol.GetSubstructMatchesNumber(smarts[i]);
+    if (v>0) desc[i]=1;
+    else desc[i]=0;
+  }
+return desc
 };
 
 
 // count fragments
 function fragnum(smarts, functions, mol) {
-  var desc = [];
-  for (i=0; i<smarts.length;i++) {
-     var v = mol.GetSubstructMatchesNumber(smarts[i]);
-     //console.log(smarts[i],functions[i],v);
+var desc = [];
+for (i=0; i<smarts.length;i++) {
+    var v = mol.GetSubstructMatchesNumber(smarts[i]);
+    //console.log(smarts[i],functions[i],v);
 
-     desc[i]=v;
- }
-  return desc;
+    desc[i]=v;
+}
+return desc;
 };
 
 
 function calcV_Pol_MR(atomnumbers,mol) {
-  var nC=0, nB=0, nO=0,nN=0,nS=0,nI=0,nCl=0,nBr=0,nP=0,nF=0,nTe=0,nSn=0,nSb=0,nSe=0,nAs=0,nGe=0,nSi=0;
-  for (j=0; j<atomnumbers.length;j++)
-  {
-    if (atomnumbers[j]=== 6)       nC++
-    else if (atomnumbers[j]=== 5)  nB++
-    else if (atomnumbers[j]=== 8)  nO++
-    else if (atomnumbers[j]=== 7)  nN++
-    else if (atomnumbers[j]=== 16) nS++
-    else if (atomnumbers[j]=== 53) nI++
-    else if (atomnumbers[j]=== 17) nCl++
-    else if (atomnumbers[j]=== 35) nBr++
-    else if (atomnumbers[j]=== 15) nP++
-    else if (atomnumbers[j]=== 9)  nF++
-    else if (atomnumbers[j]=== 52) nTe++
-    else if (atomnumbers[j]=== 50) nSn++
-    else if (atomnumbers[j]=== 51) nSb++
-    else if (atomnumbers[j]=== 34) nSe++
-    else if (atomnumbers[j]=== 33) nAs++
-    else if (atomnumbers[j]=== 32) nGe++
-    else if (atomnumbers[j]=== 14) nSi++
+var nC=0, nB=0, nO=0,nN=0,nS=0,nI=0,nCl=0,nBr=0,nP=0,nF=0,nTe=0,nSn=0,nSb=0,nSe=0,nAs=0,nGe=0,nSi=0;
+for (j=0; j<atomnumbers.length;j++)
+{
+  if (atomnumbers[j]=== 6)       nC++
+  else if (atomnumbers[j]=== 5)  nB++
+  else if (atomnumbers[j]=== 8)  nO++
+  else if (atomnumbers[j]=== 7)  nN++
+  else if (atomnumbers[j]=== 16) nS++
+  else if (atomnumbers[j]=== 53) nI++
+  else if (atomnumbers[j]=== 17) nCl++
+  else if (atomnumbers[j]=== 35) nBr++
+  else if (atomnumbers[j]=== 15) nP++
+  else if (atomnumbers[j]=== 9)  nF++
+  else if (atomnumbers[j]=== 52) nTe++
+  else if (atomnumbers[j]=== 50) nSn++
+  else if (atomnumbers[j]=== 51) nSb++
+  else if (atomnumbers[j]=== 34) nSe++
+  else if (atomnumbers[j]=== 33) nAs++
+  else if (atomnumbers[j]=== 32) nGe++
+  else if (atomnumbers[j]=== 14) nSi++
+}
+
+// count number of Hydrogens
+mol.removeHs();
+var nH1 = mol.getNumAtoms();
+mol.addHs();
+var nH2 =  mol.getNumAtoms();
+var nH = nH2-nH1;   
+//console.log("number of H:",nH);
+var nRing = mol.NumRings();
+//console.log("number of Rings:",nRing);
+
+
+
+
+
+// Abraham MH, McGowan JC., Chromatographia. 1987;23:243-6.
+var Sumx = 0.0871*nH +0.1635*nC + 0.1439*nN + nO*0.1243 + nP*0.2487 + nS*0.2291 + nF*0.1048 + nCl*0.2095 + nBr*0.2621 + nI*0.3453;
+Sumx = Sumx+ 0.2683*nSi + 0.1832*nB + 0.3102*nGe +0.2942*nAs + 0.2781*nSe + 0.3935*nSn + 0.3774*nSb + 0.3614*nTe ;
+// count number of bond
+var nBond = nH +nC + nN + nO+ nP+ nS + nF + nCl+ nBr+ nI+nSi + nB + nGe +nAs + nSe + nSn + nSb + nTe - 1 + nRing;
+// McGowan Volume 
+var V= Sumx-0.0656*nBond;
+
+//console.log("McGowan Volume:",V);
+
+// Polarizability 
+var Pol = -1.529;
+var Polfinger =fragnum(smartsPol, functionPol, mol);
+Polfinger[12]=Polfinger[12]-Polfinger[11];  // remove the sulfones in nS count!
+Polfinger[9]=Polfinger[9]-Polfinger[8]; // remove the Nitro in nN count!
+
+
+for (j=0;j<Polfinger.length;j++) 
+{ 
+  if (Polfinger[j]>0) { Pol += Polcoef[j]*Polfinger[j];
+    //console.log(j,Pol,Polcoef[j],Polfinger[j]);
   }
+}
 
-  // count number of Hydrogens
-  mol.removeHs();
-  var nH1 = mol.getNumAtoms();
-  mol.addHs();
-  var nH2 =  mol.getNumAtoms();
-  var nH = nH2-nH1;   
-  //console.log("number of H:",nH);
-  var nRing = mol.NumRings();
-  //console.log("number of Rings:",nRing);
+// Polarizability
+//console.log("Pol:",Pol);
 
+// Molecular refraction
+var MR=4/3*Math.PI*Pol;
+//console.log("MR:",MR);
 
-
-
-
-  // Abraham MH, McGowan JC., Chromatographia. 1987;23:243-6.
-  var Sumx = 0.0871*nH +0.1635*nC + 0.1439*nN + nO*0.1243 + nP*0.2487 + nS*0.2291 + nF*0.1048 + nCl*0.2095 + nBr*0.2621 + nI*0.3453;
-  Sumx = Sumx+ 0.2683*nSi + 0.1832*nB + 0.3102*nGe +0.2942*nAs + 0.2781*nSe + 0.3935*nSn + 0.3774*nSb + 0.3614*nTe ;
-  // count number of bond
-  var nBond = nH +nC + nN + nO+ nP+ nS + nF + nCl+ nBr+ nI+nSi + nB + nGe +nAs + nSe + nSn + nSb + nTe - 1 + nRing;
-  // McGowan Volume 
-  var V= Sumx-0.0656*nBond;
-
-  //console.log("McGowan Volume:",V);
-
-  // Polarizability 
-  var Pol = -1.529;
-  var Polfinger =fragnum(smartsPol, functionPol, mol);
-  Polfinger[12]=Polfinger[12]-Polfinger[11];  // remove the sulfones in nS count!
-  Polfinger[9]=Polfinger[9]-Polfinger[8]; // remove the Nitro in nN count!
-
-
-  for (j=0;j<Polfinger.length;j++) 
-  { 
-    if (Polfinger[j]>0) { Pol += Polcoef[j]*Polfinger[j];
-      //console.log(j,Pol,Polcoef[j],Polfinger[j]);
-    }
-  }
-
-  // Polarizability
-  //console.log("Pol:",Pol);
-
-  // Molecular refraction
-  var MR=4/3*Math.PI*Pol;
-  //console.log("MR:",MR);
-
-  return {nC,nB,nO,nN,nS,nI,nCl,nBr,nP,nF,nTe,nSn,nSb,nSe,nAs,nGe,nSi,nH,nRing,V,Pol,MR};
+return {nC,nB,nO,nN,nS,nI,nCl,nBr,nP,nF,nTe,nSn,nSb,nSe,nAs,nGe,nSi,nH,nRing,V,Pol,MR};
 };
-  
+
 
 function Abrahams(smartsA, functionA, smartsB, functionB, smartsODT,functionODT,mol){
 
@@ -237,9 +262,9 @@ var E = 0.24;
 
 for (j=0;j<Afinger.length;j++) 
 { 
-  if (Afinger[j]>0) { A += Acoef[j]*Afinger[j];
-    //console.log(j,Aval,Acoef[j],Afinger[j]);
-  }
+if (Afinger[j]>0) { A += Acoef[j]*Afinger[j];
+  //console.log(j,Aval,Acoef[j],Afinger[j]);
+}
 }
 
 // need to reduce FRAGMENT 36 proportion based on others sulphur contributions in : (31 OR 32 OR 33 OR 34 OR 35)
@@ -248,13 +273,13 @@ Bfinger[35]= Bfinger[35]-(Bfinger[30]+Bfinger[31]+Bfinger[32]+Bfinger[33]+Bfinge
 
 for (k=0;k<Bfinger.length;k++) 
 {
-  if (Bfinger[k]>0) {
-    Bh += BHcoef[k]*Bfinger[k];
-    Bo += BOcoef[k]*Bfinger[k];
-    L += Lcoef[k]*Bfinger[k];
-    S += Scoef[k]*Bfinger[k];
-    E += Ecoef[k]*Bfinger[k];
-  }
+if (Bfinger[k]>0) {
+  Bh += BHcoef[k]*Bfinger[k];
+  Bo += BOcoef[k]*Bfinger[k];
+  L += Lcoef[k]*Bfinger[k];
+  S += Scoef[k]*Bfinger[k];
+  E += Ecoef[k]*Bfinger[k];
+}
 }
 
 //  logODT model linear from Abraham publication
@@ -273,10 +298,7 @@ RDKIt.calcV_Pol_MR = calcV_Pol_MR;
 
 */
 
-
 RDKit.calc_all_desc = calc_all_desc;
-
-
 
 // END custom JS methods
 

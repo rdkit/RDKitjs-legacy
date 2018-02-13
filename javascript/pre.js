@@ -1,11 +1,13 @@
-(function(factory){
+(function(factory) {
   function getCurrentPathBrowser() {
-    sc = document.getElementsByTagName("script");
+    sc = document.getElementsByTagName('script');
 
     for (idx = 0; idx < sc.length; idx++) {
       s = sc.item(idx);
 
-      if (s.src && s.src.match(/rdkit\.js$/)) { return s.src; }
+      if (s.src && s.src.match(/rdkit\.js$/)) {
+        return s.src;
+      }
     }
   }
   function getModuleForBrowser() {
@@ -21,8 +23,10 @@
       onRuntimeInitialized() {
         resolve();
       },
-      then: promise.then.bind(promise)
-    }
+      load() {
+        return promise;
+      }
+    };
     return Module;
   }
   function getModuleForNode() {
@@ -37,21 +41,22 @@
       onRuntimeInitialized() {
         resolve();
       },
-      then: promise.then.bind(promise)
-    }
-    return Module
+      load() {
+        return promise;
+      }
+    };
+    return Module;
   }
   if (typeof define === 'function' && define.amd) {
-    define(function(){
-    const Module = getModuleForBrowser();      
+    define(function() {
+      const Module = getModuleForBrowser();
       return factory(Module);
     });
-  } else if (typeof module === "object" && module.exports) {
+  } else if (typeof module === 'object' && module.exports) {
     const Module = getModuleForNode();
     module.exports = factory(Module);
   } else {
     const Module = getModuleForBrowser();
     window.RDKit = factory();
   }
-})(function(Module){
-
+})(function(Module) {
