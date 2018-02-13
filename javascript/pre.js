@@ -49,14 +49,11 @@
   }
   if (typeof define === 'function' && define.amd) {
     define(function() {
-      const Module = getModuleForBrowser();
-      return factory(Module);
+      return factory(getModuleForBrowser());
     });
   } else if (typeof module === 'object' && module.exports) {
-    const Module = getModuleForNode();
-    module.exports = factory(Module);
+    module.exports = factory(getModuleForNode());
   } else {
-    const Module = getModuleForBrowser();
-    window.RDKit = factory();
+    window.RDKit = factory(getModuleForBrowser());
   }
-})(function(Module) {
+})(function(Module, module, exports, define) {
