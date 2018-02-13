@@ -15,7 +15,7 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "repository": "thegodone/RDKitjs",
+  "repository": "cheminfo/RDKitjs",
   "author": "Guillaume Godin",
   "contributors": [
     "Michaël Zasso",
@@ -23,9 +23,9 @@
   ],
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/thegodone/RDKitjs/issues"
+    "url": "https://github.com/cheminfo/RDKitjs/issues"
   },
-  "homepage": "https://github.com/thegodone/RDKitjs",
+  "homepage": "https://github.com/cheminfo/RDKitjs",
   "devDependencies": {
     "async": "^1.4.2",
     "jest": "^22.2.2",
