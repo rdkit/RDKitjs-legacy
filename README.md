@@ -1,22 +1,17 @@
-RDKitjs
-=======
+# RDKitjs
 
-Port RDKit to js using emscripten with ASM & WASM 
+Port RDKit to js using emscripten with ASM & WASM
 
-
-Emscripten installation & activation
-===============================================
+# Emscripten installation & activation
 
 Install emscripten (1.37.33 or higher).
 https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html
 
+# RDKit emscripten binding
 
-RDKit emscripten binding
-===============================================
-
-install RDKit 2015.3.1, 2016.3.5, 2016.9.4 (old version of Libraries). 
-or 
-install RDKit 2017.3.3, 2017.9.3 (New version of Libraries). 
+install RDKit 2015.3.1, 2016.3.5, 2016.9.4 (old version of Libraries).
+or
+install RDKit 2017.3.3, 2017.9.3 (New version of Libraries).
 
 you need to add eigen3 include files for 3Ddescriptors (since RDkit 2017.3)
 
@@ -29,6 +24,7 @@ wget http://downloads.sourceforge.net/project/rdkit/rdkit/Q1_2015/RDKit_2015_03_
 ```
 
 Choose your version based on required RDkit functionnalities and compile RDKit first for emscripten:
+
 ```bash
 tar -xf RDKit_20YY_0M_V.tgz
 cd rdkit-Release_20YY_0M_V
@@ -47,16 +43,16 @@ cmake  .. \
 ```
 
 based on your number of CPU:
+
 ```bash
 make -jX
 ```
 
-Install RDKitjs
-==================
+# Install RDKitjs
 
 clone this repository
-```bash
 
+```bash
 git clone https://github.com/thegodone/RDKitjs.git
 
 
@@ -67,8 +63,8 @@ cd build
 ```
 
 ### for OSX
-```bash
 
+```bash
 cmake .. \
 -DCMAKE_TOOLCHAIN_FILE=/path/to/emscripten/1.37.33/cmake/Modules/Platform/Emscripten.cmake \
 -DRDKIT_INCLUDE_DIR=/path/to/rdkitversion/rdkit-Release_2017_09_3/Code/ \
@@ -79,6 +75,7 @@ cmake .. \
 ```
 
 ### for Linux
+
 ```bash
 cmake .. \
 -DCMAKE_TOOLCHAIN_FILE=/path/to/emscripten/1.37.33/cmake/Modules/Platform/Emscripten.cmake \
@@ -87,8 +84,6 @@ cmake .. \
 -DRDKIT_LIB_DIR=/path/to/rdkitversion/rdkit-Release_2015_03_1/lib \
 -DEMSCRIPTEN_BIN=/path/to/emscripten/1.37.33/
 ```
-
-
 
 ```bash
 rm src/rdkit.js
@@ -102,31 +97,25 @@ npm run build-test
 
 # copy web loading file into the localhost folder
 cp ../test/rdkit.js /path/to/localhostcode/rdkitjs/rdkit.js
-
 ```
-
-
-
 
 Please take a look at those references:
 
 => Ubuntu 14.04:  
-http://baoilleach.blogspot.ch/2015/02/cheminformaticsjs-rdkit.html  
+http://baoilleach.blogspot.ch/2015/02/cheminformaticsjs-rdkit.html
 
-http://gmrand.blogspot.ch/2015/03/howto-install-rdkit-and-emscripten-on.html  
+http://gmrand.blogspot.ch/2015/03/howto-install-rdkit-and-emscripten-on.html
 
 => OSX:
 http://gmrand.blogspot.ch/2015/05/howto-install-rdkit-and-emscripten-on.html
 
-
-
 P.S.: CAUTION due to a bug report we suggest to apply this patch to rdkit
 
-ONLY for RDKIT version 2015.03.1 : Patching of RDKit files for emscripten binding 
-===============================================
+# ONLY for RDKIT version 2015.03.1 : Patching of RDKit files for emscripten binding
 
 * adding class MMFFMolProperties in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h
-```bash  
+
+```bash
   namespace RDKit {
     class ROMol;
     namespace MMFF {
@@ -134,43 +123,43 @@ ONLY for RDKIT version 2015.03.1 : Patching of RDKit files for emscripten bindin
 ```
 
 * adding AtomTyper.h in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h
-```bash  
+
+```bash
   #include <ForceField/ForceField.h>
 + #include "AtomTyper.h"
   #include "Builder.h"
 ```
 
-Want to try it without compilation ? It's already possible
-=================
-Thers is a first example in the visualizer project there:  
+# Want to try it without compilation ? It's already possible
 
-http://www.lactame.com/visualizer/head/index.html?viewURL=http://visualizer.epfl.ch/x/urhBCrzbZ0r75WWbEmRp/view.json&dataURL=http://visualizer.epfl.ch/x/urhBCrzbZ0r75WWbEmRp/data.json  
+Thers is a first example in the visualizer project there:
 
-You can draw a molecule in the botton module which will generate the 3D model using MMFF force field. 
+https://www.cheminfo.org/Chemistry/Cheminformatics/RDKit_demo/index.html
 
+You can draw a molecule in the botton module which will generate the 3D model using MMFF force field.
 
 another example of javascript can be found there:  
 https://iwatobipen.wordpress.com/2015/05/21/rdkit-in-javascript/  
 thanks to iwatobipen!  
-source code: https://github.com/iwatobipen/rdkit_javascript  
+source code: https://github.com/iwatobipen/rdkit_javascript
 
 You can also use nodejs:  
 the current module is available for npm / nodejs:  
-https://www.npmjs.com/package/rdkit  
+https://www.npmjs.com/package/rdkit
 
-Current stability status  
-===============
-This project is not stable but lot of basic RDKit functions are already ported look at the test/exemple.txt file for a example of function availables  
+# Current stability status
 
-to have a complete list of available function look at the EMSCRIPTEN_BINDINGS section in rdmol.h  
+This project is not stable but lot of basic RDKit functions are already ported look at the test/exemple.txt file for a example of function availables
 
-there are two type of methods:   
-* create a molecule (class_function)  
-* apply functions on a created molecule (function)  
+to have a complete list of available function look at the EMSCRIPTEN_BINDINGS section in rdmol.h
 
-Future requests / help / missing RDKit functions
-================
-If you want to contribute or need RDKit functions not already mapped please add a comment in the issues of this project.  
+there are two type of methods:
 
-Guillaume Godin  
+* create a molecule (class_function)
+* apply functions on a created molecule (function)
 
+# Future requests / help / missing RDKit functions
+
+If you want to contribute or need RDKit functions not already mapped please add a comment in the issues of this project.
+
+Guillaume Godin
