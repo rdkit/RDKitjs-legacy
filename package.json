@@ -1,6 +1,6 @@
 {
   "name": "rdkit",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "port RDKit to js using emscripten",
   "keywords": [],
   "main": "dist/rdkit.js",
@@ -28,7 +28,7 @@
   "homepage": "https://github.com/cheminfo/RDKitjs",
   "devDependencies": {
     "async": "^1.4.2",
-    "jest": "^22.2.2",
+    "jest": "^22.3.0",
     "mongodb": "^2.0.42",
     "underscore": "^1.8.3",
     "victor": "^1.1.0"
