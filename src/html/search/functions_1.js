@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['canonicalrankatoms',['CanonicalRankAtoms',['../class_molecule.html#abc491241d48487fac42166ff81c0289c',1,'Molecule']]],
   ['chi0n',['Chi0n',['../class_molecule.html#aaf96784d73e8e2052d3e78bd4a198810',1,'Molecule']]],
   ['chi0v',['Chi0v',['../class_molecule.html#a7299912c0000b8f3520984400f72a86b',1,'Molecule']]],
   ['chi1n',['Chi1n',['../class_molecule.html#a68d5354a45b3e01b372b1a8052b37a93',1,'Molecule']]],

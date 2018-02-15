@@ -8,10 +8,8 @@ var dict2 = require ('./fpscores.pkldico.json');
 
 var dict = require ('./publicnp.model.json');
 
-
 var RDKit = require ('rdkit');
 var R = RDKit;
-
 
 
 /*
@@ -56,7 +54,7 @@ function SAscore (dico, nAtoms,fplen, morganFPlist, molecule){
 
 	console.log(score1);
 
-	var p = molecule.FindMolChiralCenters(true);
+	var p = molecule.findMolChiralCenters(true);
 	var nChiralCenters = p.size();
 	var SBM = molecule.getSpiroBridgeMacrocycles(); // there is a issue there S
 	var nSpiro = SBM.get(0);
@@ -146,10 +144,10 @@ fs.readFileSync('test-sardkit.txt').toString().split(/\r?\n/).forEach(function(l
     var linecomponent = line.split('\t'); 
     try {
 
-		var m=R.Molecule.fromSmiles(linecomponent[0]);
+		var m=R.Molecule.smilesToMol(linecomponent[0]);
 		if (m !==undefined)
 		{
-		var morganFPlist =m.getMorganFPlist(2);
+		var morganFPlist =m.getMorganFingerprintslist(2);
 		var nAtoms = m.getNumAtoms();
 		var fplen =  morganFPlist.size()/2;
 		sa = SAscore (dict2,nAtoms,fplen, morganFPlist,m);
@@ -170,8 +168,8 @@ fs.readFileSync('test-sardkit.txt').toString().split(/\r?\n/).forEach(function(l
 
 
 /*
-var m=R.Molecule.fromSmiles('CC(=O)OC1C[NH+]2CCC1CC2');
-var morganFPlist =m.getMorganFPlist(2);
+var m=R.Molecule.smilesToMol('CC(=O)OC1C[NH+]2CCC1CC2');
+var morganFPlist =m.getMorganFingerprintslist(2);
 var nAtoms = m.getNumAtoms();
 var fplen =  morganFPlist.size()/2;
 sa = SAscore (dict2,nAtoms,fplen, morganFPlist,m);

@@ -6,7 +6,7 @@ beforeEach(() => RDKit.load());
 
 test.skip('getConformer', function() {
   var smi = 'CCCCCOC(CO)';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   mol.addHs();
   mol.EmbedMultipleConfsarg(3, 100, 2015);
   expect(mol.getConformer(1)).toBe();
@@ -15,14 +15,14 @@ test.skip('getConformer', function() {
 
 test('getNumAtoms', function() {
   var smi = 'CCCCCOC(CO)';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   expect(mol.getNumAtoms()).toBe(9);
   mol.delete();
 });
 
 test('getAtomNeighbors', function() {
   var smi = 'C(C)C(CCC)CCOC(CO)';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   var p = mol.getAtomNeighbors(3);
   var e = [];
   for (var j = 0; j < p.size(); j++) {
@@ -34,7 +34,7 @@ test('getAtomNeighbors', function() {
 
 test('getBondNeighbors', function() {
   var smi = 'C(C)C(CCC)CCOC(CO)';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   var p = mol.getBondNeighbors(3);
   var e = [];
   for (var j = 0; j < p.size(); j++) {
@@ -47,7 +47,7 @@ test('getBondNeighbors', function() {
 
 test('getNumConformers', function() {
   var smi = 'CCCCCOC(CO)';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   mol.addHs();
   mol.EmbedMultipleConfsarg(3, 100, 2015);
   expect(mol.getNumConformers()).toBe(3);

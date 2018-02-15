@@ -35,7 +35,7 @@ function calcAtomGaussians(sigma,step,weigths,px,py)
 	return {X,Y,Z};
 }
 
-var m=RDKit.Molecule.fromSmiles('COc1cccc2cc(C(=O)NCCCCN3CCN(c4cccc5nccnc54)CC3)oc21');
+var m=RDKit.Molecule.smilesToMol('COc1cccc2cc(C(=O)NCCCCN3CCN(c4cccc5nccnc54)CC3)oc21');
 var w = m.getTPSAAtomContribs();
 var ap = m.getAtomsPos2D();
 

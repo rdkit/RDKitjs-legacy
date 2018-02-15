@@ -6,9 +6,9 @@ beforeEach(() => RDKit.load());
 
 test('getSubstructMatches', function() {
   var smi = 'CCCCCOC(CO)';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   var smilesref = 'CO';
-  var d = mol.GetSubstructMatches(smilesref);
+  var d = mol.getSubstructMatches(smilesref);
   var dlen = d.size();
   var e = [];
   for (var j = 0; j < dlen; j++) {
@@ -21,7 +21,7 @@ test('getSubstructMatches', function() {
 
 test('HasSubstructMatchStr', function() {
   var smi = 'CCCCCOC(CO)';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   var smilesref = 'CO';
   expect(mol.HasSubstructMatchStr(smilesref)).toBe(true);
   mol.delete;

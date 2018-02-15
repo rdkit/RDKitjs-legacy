@@ -125,8 +125,8 @@ function FPfrequency(smile, threshold, callback){
   try{
     smile = gf.replaceAll(smile, ' 0\n', '');
     var rdkit = require('rdkit');
-    var qmol = rdkit.Molecule.fromSmiles(smile); 
-    var qfp2 = qmol.getMorganFP_GetOnBits(2,2048);
+    var qmol = rdkit.Molecule.smilesToMol(smile); 
+    var qfp2 = qmol.getMorganFingerprints_getOnBbits(2,2048);
     qmol.delete();
     var qfp = [];
     var mpflen = qfp2.size();

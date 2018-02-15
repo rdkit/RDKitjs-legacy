@@ -45,7 +45,7 @@ public:
     int getNumMacrocycles();
     int getNumSpiroAtoms();
     int getNumBridgeheadAtoms();
-    vector<string> FindMolChiralCenters(bool includeUnassigned);
+    vector<string> findMolChiralCenters(bool includeUnassigned);
     
     // new fingerprints
     boost::uint32_t getAtomCode(int atomid);
@@ -55,18 +55,18 @@ public:
 
 
 
-    string getRDKFP();
-    string getMorganFP(unsigned int sizes,unsigned int lengths);
-    vector<int> getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths);
-    // const map<unsigned int,int> getMorganFP_getNonzeroElements(unsigned int sizes);
-    vector<boost::uint32_t> getMorganUFPkeys(unsigned int sizes);
+    string getRDKFingerprintMol();
+    string getMorganFingerprints(unsigned int sizes,unsigned int lengths);
+    vector<int> getMorganFingerprints_getOnBbits(unsigned int sizes,unsigned int lengths);
+    // const map<unsigned int,int> getMorganFingerprints_getNonzeroElements(unsigned int sizes);
+    vector<boost::uint32_t> getMorganFingerprintsKeys(unsigned int sizes);
 
-    map<boost::uint32_t, int> getMorganFP_getNonzeroElements(unsigned int sizes);
-    vector<boost::uint32_t> getMorganFPlist(unsigned int sizes);
-    // RDKit::SparseIntVect<boost::uint32_t>::StorageType getMorganFP_getNonzeroElements(unsigned int sizes);
-    string getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths);
-    string getMACCSFP();
-    string getPatternFP();
+    map<boost::uint32_t, int> getMorganFingerprints_getNonzeroElements(unsigned int sizes);
+    vector<boost::uint32_t> getMorganFingerprintslist(unsigned int sizes);
+    // RDKit::SparseIntVect<boost::uint32_t>::StorageType getMorganFingerprints_getNonzeroElements(unsigned int sizes);
+    string getLayeredFingerprintMol(unsigned int layer,unsigned int sizes,unsigned int lengths);
+    string getMACCSFingerprints();
+    string getPatternFingerprintMol();
     
     
     
@@ -85,14 +85,14 @@ public:
     
     
     // Pickle molecule representation
-    string MolToBinary();
+    string pickleMol();
     
     
     
     string getPath();
     // string output in console
-    string toSmiles();
-    string toMolfile();
+    string molToSmiles();
+    string molToMolfile();
     // string sdwritefile(string filename);
     // int writefile(string filename, string data);
     // int readfile(string filename);
@@ -136,17 +136,12 @@ public:
 
     double AlignMol(string smilesref);
 
-    
-    
-    
     // molecule manipulation & cleaning, ...
     void addHs();
     void removeHs();
     void sanitizeMol();
     void cleanUp();
     void Kekulize();
-    
-    
     
     // descriptors
     int getMW();
@@ -174,7 +169,6 @@ public:
     
     vector<double> getCrippenAtomContribs();
 
-    
     unsigned int LipinskiHBA();
     unsigned int LipinskiHBD();
     unsigned int NumRotatableBonds();
@@ -199,6 +193,8 @@ public:
 
     double TPSA();
     vector<double>  getTPSAAtomContribs();
+    vector<double>  getAutoCorr2D();
+    //vector<double>  getAutoCorr3D();
 
     vector<double> SlogP_VSA();
     vector<double> SMR_VSA();
@@ -207,9 +203,8 @@ public:
 
     void computeGasteigerCharges();
 
-
-    vector<int> GetSubstructMatches(string smilesref);
-    int GetSubstructMatchesNumber(string smilesref);
+    vector<int> getSubstructMatches(string smilesref);
+    int getSubstructMatchesNumber(string smilesref);
 
     bool HasSubstructMatchStr(string smilesref);
     /// get & set & has properties
@@ -238,11 +233,11 @@ public:
     
     // static constructors
     static Molecule* newmolecule();
-    static Molecule* MurckofromSmiles(string smi);
-    static Molecule* fromSmiles(string smiles);
+    static Molecule* MurckosmilesToMol(string smi);
+    static Molecule* smilesToMol(string smiles);
     static Molecule* Mol2BlockToMol(string molBlock);
     static Molecule* MolBlockToMol(string molBlock);
-    static Molecule* fromSmarts(string smarts);
+    static Molecule* smartsToMol(string smarts);
     static Molecule* molFromPickle(string pickle);
     
 private:
@@ -292,7 +287,7 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("Similarity",&Molecule::Similarity, allow_raw_pointers())
 //    .function("getMol",&Molecule::getMol, allow_raw_pointers())
 
-    .function("FindMolChiralCenters",&Molecule::FindMolChiralCenters, allow_raw_pointers())
+    .function("findMolChiralCenters",&Molecule::findMolChiralCenters, allow_raw_pointers())
     .function("addAtom",&Molecule::addAtom, allow_raw_pointers())
     .function("addBond",&Molecule::addBond, allow_raw_pointers())
     .function("setBondDir",&Molecule::setBondDir, allow_raw_pointers())
@@ -312,16 +307,16 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("getAtomPairFingerprint", &Molecule::getAtomPairFingerprint, allow_raw_pointers())
     .function("getHashedAtomPairFingerprint", &Molecule::getHashedAtomPairFingerprint, allow_raw_pointers())
     .function("getHashedAtomPairFingerprintAsBitVect", &Molecule::getHashedAtomPairFingerprintAsBitVect, allow_raw_pointers())
-    .function("getRDKFP", &Molecule::getRDKFP, allow_raw_pointers())
-    .function("getMorganFP", &Molecule::getMorganFP, allow_raw_pointers())
-    .function("getMorganUFPkeys", &Molecule::getMorganUFPkeys, allow_raw_pointers())
-    .function("getMorganFP_GetOnBits", &Molecule::getMorganFP_GetOnBits, allow_raw_pointers())
-    .function("getMorganFP_getNonzeroElements", &Molecule::getMorganFP_getNonzeroElements, allow_raw_pointers())
-    .function("getMorganFPlist", &Molecule::getMorganFPlist, allow_raw_pointers())
+    .function("getRDKFingerprintMol", &Molecule::getRDKFingerprintMol, allow_raw_pointers())
+    .function("getMorganFingerprints", &Molecule::getMorganFingerprints, allow_raw_pointers())
+    .function("getMorganFingerprintsKeys", &Molecule::getMorganFingerprintsKeys, allow_raw_pointers())
+    .function("getMorganFingerprints_getOnBbits", &Molecule::getMorganFingerprints_getOnBbits, allow_raw_pointers())
+    .function("getMorganFingerprints_getNonzeroElements", &Molecule::getMorganFingerprints_getNonzeroElements, allow_raw_pointers())
+    .function("getMorganFingerprintslist", &Molecule::getMorganFingerprintslist, allow_raw_pointers())
 
-    .function("getLayeredFP", &Molecule::getLayeredFP, allow_raw_pointers())
-    .function("getMACCSFP", &Molecule::getMACCSFP, allow_raw_pointers())
-    .function("getPatternFP", &Molecule::getPatternFP, allow_raw_pointers())
+    .function("getLayeredFingerprintMol", &Molecule::getLayeredFingerprintMol, allow_raw_pointers())
+    .function("getMACCSFingerprints", &Molecule::getMACCSFingerprints, allow_raw_pointers())
+    .function("getPatternFingerprintMol", &Molecule::getPatternFingerprintMol, allow_raw_pointers())
     
     // molops basic functions
     .function("addHs", &Molecule::addHs, allow_raw_pointers())
@@ -352,14 +347,14 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     
 
     // Data compression
-    .function("MolToBinary", &Molecule::MolToBinary, allow_raw_pointers())
+    .function("pickleMol", &Molecule::pickleMol, allow_raw_pointers())
     
     
     .function("getPath", &Molecule::getPath, allow_raw_pointers())
     
     // writer basic functions
-    .function("toMolfile", &Molecule::toMolfile, allow_raw_pointers())
-    .function("toSmiles", &Molecule::toSmiles, allow_raw_pointers())
+    .function("molToMolfile", &Molecule::molToMolfile, allow_raw_pointers())
+    .function("molToSmiles", &Molecule::molToSmiles, allow_raw_pointers())
     
     
     // testing functions ... not working correctly
@@ -386,9 +381,9 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     .function("hasProp", &Molecule::hasProp, allow_raw_pointers())
     
     // susbtructure
-    .function("GetSubstructMatches", &Molecule::GetSubstructMatches, allow_raw_pointers())
+    .function("getSubstructMatches", &Molecule::getSubstructMatches, allow_raw_pointers())
     .function("HasSubstructMatchStr", &Molecule::HasSubstructMatchStr, allow_raw_pointers())
-    .function("GetSubstructMatchesNumber", &Molecule::GetSubstructMatchesNumber, allow_raw_pointers())
+    .function("getSubstructMatchesNumber", &Molecule::getSubstructMatchesNumber, allow_raw_pointers())
     
     
     // similarity
@@ -453,6 +448,8 @@ EMSCRIPTEN_BINDINGS(rdmol) {
 
     .function("TPSA",&Molecule::TPSA ,allow_raw_pointers())
     .function("getTPSAAtomContribs",&Molecule::getTPSAAtomContribs ,allow_raw_pointers())
+    .function("getAutoCorr2D",&Molecule::getAutoCorr2D ,allow_raw_pointers())
+   //.function("getAutoCorr3D",&Molecule::getAutoCorr3D ,allow_raw_pointers())
 
     .function("SlogP_VSA",&Molecule::SlogP_VSA ,allow_raw_pointers())
     .function("SMR_VSA",&Molecule::SMR_VSA ,allow_raw_pointers())
@@ -466,11 +463,11 @@ EMSCRIPTEN_BINDINGS(rdmol) {
     // create class from smiles or smarts
     // .function("Mol2FileToMol", &Molecule::Mol2FileToMol, allow_raw_pointers())
     .class_function("newmolecule", &Molecule::newmolecule, allow_raw_pointers())
-    .class_function("MurckofromSmiles", &Molecule::MurckofromSmiles, allow_raw_pointers())
+    .class_function("MurckosmilesToMol", &Molecule::MurckosmilesToMol, allow_raw_pointers())
     .class_function("MolBlockToMol", &Molecule::MolBlockToMol, allow_raw_pointers())
     .class_function("Mol2BlockToMol", &Molecule::Mol2BlockToMol, allow_raw_pointers())
-    .class_function("fromSmiles", &Molecule::fromSmiles, allow_raw_pointers())
-    .class_function("fromSmarts", &Molecule::fromSmarts, allow_raw_pointers())
+    .class_function("smilesToMol", &Molecule::smilesToMol, allow_raw_pointers())
+    .class_function("smartsToMol", &Molecule::smartsToMol, allow_raw_pointers())
     .class_function("molFromPickle", &Molecule::molFromPickle, allow_raw_pointers());
     
     /* adding another class ...

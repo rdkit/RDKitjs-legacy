@@ -29,11 +29,11 @@ IN Progress (thegodone) Working with 2D molecules: GenerateDepictionMatching2DSt
 
 IN Progress (thegodone) Working with 3D Molecules: AlignMolConformers,GetConformerRMS
 
-Done Preserving Molecules: MolToBinary
+Done Preserving Molecules: pickleMol
 
 Done Drawing Molecules: Drawing2D (done), remark MolsToGridImage can be interesting need to check for interaction with visualizer ?
 
-Done: Substructure Searching: HasSubstructMatch, GetSubstructMatches.
+Done: Substructure Searching: HasSubstructMatch, getSubstructMatches.
 
 Stereochemistry in substructure matches: need to test
 

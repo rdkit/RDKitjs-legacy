@@ -140,8 +140,8 @@ function processFile(){
 
   function savetomongo(mol){
     //@todo a reprendre
-    var binarymol = mol.MolToBinary();
-    var mpf = mol.getMorganFP(2,2048);
+    var binarymol = mol.pickleMol();
+    var mpf = mol.getMorganFingerprints(2,2048);
     mfp = AllChem.GetMorganFingerprint(rdmol, 2);
     
     //rdmol = Chem.Mol(molecule['rdmol']);

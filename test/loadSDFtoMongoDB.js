@@ -170,13 +170,13 @@ function processFile(){
                 console.log(line);
 
                 var mol= rdk.Molecule.MolBlockToMol(line);
-                var smile = mol.toSmiles();
-                var binarymol = mol.MolToBinary();
+                var smile = mol.molToSmiles();
+                var binarymol = mol.pickleMol();
 
                 // this is the folded example (AllChem.GetHashedMorganFingerprint(mol, radius=self.radius, nBits = self.length))
                 // the unfolded (faster method is based on : AllChem.GetMorganFingerprint(mol, radius=self.radius) 
                 // the bits are sorted using sorted(GetNonZeroElement().keys())
-                var mpf2 = mol.getMorganUFPkeys(2);   // unfolded keys storage using getMorganUFPkeys   // folded =  mol.getMorganFP_GetOnBits(2,2048); 
+                var mpf2 = mol.getMorganFingerprintsKeys(2);   // unfolded keys storage using getMorganFingerprintsKeys   // folded =  mol.getMorganFingerprints_getOnBbits(2,2048); 
                 var mpf = [];
                 var mpflen = mpf2.size();
                 for(var j=0;j < mpflen;j++){

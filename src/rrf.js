@@ -4,7 +4,7 @@ var RDKit = require('rdkit');
 function fragnum(smarts, functions, mol) {
   var desc = [];
   for (i=0; i<smarts.length;i++) {
-     var v = mol.GetSubstructMatchesNumber(smarts[i]);
+     var v = mol.getSubstructMatchesNumber(smarts[i]);
   	 //console.log(smarts[i],functions[i],v);
 
      desc[i]=v;
@@ -14,9 +14,9 @@ function fragnum(smarts, functions, mol) {
 
 // from Jean-Yves article: http://onlinelibrary.wiley.com/store/10.1002/jssc.201500106/asset/jssc4443.pdf?v=1&t=if6srj7k&s=3454006c4a3e61decd6e4d9c46dd5b651f0962a2
 function rrf(smi) {
-    var mol = RDKit.Molecule.fromSmiles(smi);  
+    var mol = RDKit.Molecule.smilesToMol(smi);  
     mol.addHs(); // need to add the hydrogens for the count of H!
-    var Benz_count= mol.GetSubstructMatchesNumber('c1ccccc1'); // number of benzene
+    var Benz_count= mol.getSubstructMatchesNumber('c1ccccc1'); // number of benzene
     var functionHoC = ['C_count','H_count','O_count', 'N_count','S_count','F_count','Cl_count','Br_count','I_count','Si_count']; // function of HoC
     var smartHoC = ['[C,c]','[H]','[O,o]','[N,n]','[S,s]','F','Cl','Br','I','[Si]']; // smarts codes
     var HoCcoef =  [103.57, 21.85, -48.18, 7.46, 74.67, -23.57, -27.43, -10.9, -2.04, 46.5]; // HoC coefs

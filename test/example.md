@@ -11,7 +11,7 @@ test/example.html  build/rdkit.js in
 # GENERATE A RDKitjs MOLECULE OBJECT FROM SMILE #
 ```js
 R=rdk();
-var m=R.Molecule.fromSmiles('CCCC(C=O)NCCCCC')
+var m=R.Molecule.smilesToMol('CCCC(C=O)NCCCCC')
 ```
 
 # GET DESCRIPTORS FROM MOLECULE OBJECT #
@@ -31,37 +31,37 @@ m.NumHeteroatoms()
 
 # substructure search in CURRENT MOLECULE OBJECT CCCC(C=O)NCCCCC #
 ```js
-m.GetSubstructMatches('C=O')
+m.getSubstructMatches('C=O')
 => "."
-m.GetSubstructMatches('CO')
+m.getSubstructMatches('CO')
 => ""
 ```
 
 # GENERATE FINGERPRINTS ( like MorganFP, RDKFP, LayeredFP, MACCSFP, PatternFP) #
 ```js
-m.getMorganFP(3,2048)
+m.getMorganFingerprints(3,2048)
 
 ```
 
-// getRDKFP
+// getRDKFingerprintMol
 ```js
-t.getRDKFP()
+t.getRDKFingerprintMol()
 ```
 
-/// getLayeredFP
+/// getLayeredFingerprintMol
 ```js
-t.getLayeredFP(3,3,2048)
+t.getLayeredFingerprintMol(3,3,2048)
 ```
 
-/// getMACCSFP
+/// getMACCSFingerprints
 ```js
-t.getMACCSFP()
+t.getMACCSFingerprints()
 "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000011101000000000110000000000000000010100000100001000000"
 ```
 
-/// getPatternFP
+/// getPatternFingerprintMol
 ```js
-t.getPatternFP()
+t.getPatternFingerprintMol()
 
 ```
 
@@ -238,7 +238,7 @@ return 2
 # adding get set & has properties functions #
 ```js
 T= R.Molecule.MolBlockToMol('CCCO\nJME 2015-05-03 Sat May 16 17:16:55 GMT+200 2015\n \n  4  3  0  0  0  0  0  0  0  0999 V2000\n    3.6373    0.7000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.4249    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2124    0.7000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  2  1  1  0  0  0  0\n  3  2  1  0  0  0  0\n  4  3  1  0  0  0  0\nM  END\n')
-Object {$$: Object, getNumAtoms: function, getFP: function, getMorganFP2: function, getMorganFP3: function…}
+Object {$$: Object, getNumAtoms: function, getFP: function, getMorganFingerprints2: function, getMorganFingerprints3: function…}
 T.setProp('MP','45')
 0
 T.hasProp('MP')
@@ -269,10 +269,10 @@ T.getProp('MP')
 # Murcko decomposition #
 ```js
 R=rdk();
-t = R.Molecule.MurckofromSmiles('OC2C(C)C21C(N)C1C');
+t = R.Molecule.MurckosmilesToMol('OC2C(C)C21C(N)C1C');
 t.smilewrite()
 "C1CC12CC2 0"
-t = R.Molecule.MurckofromSmiles('O=S(CNCNC)(=O)CNC1CC1S(=O)(=O)C1CC1C=CNNCO');
+t = R.Molecule.MurckosmilesToMol('O=S(CNCNC)(=O)CNC1CC1S(=O)(=O)C1CC1C=CNNCO');
 t.smilewrite()
 "O=S(=O)(C1CC1)C1CC1 0"
 ```
@@ -309,11 +309,11 @@ t.smilewrite()
 "
 ```
 
-# MolToBinary & molfromPickle methods from data compression #
+# pickleMol & molfromPickle methods from data compression #
 ```js
 R=rdk()
-mol =R.Molecule.fromSmiles('C1CCC1')
-mol.MolToBinary()
+mol =R.Molecule.smilesToMol('C1CCC1')
+mol.pickleMol()
 "ï¾­Þ
 c=R.Molecule.molFromPickle(s)
 c.Chi0v()

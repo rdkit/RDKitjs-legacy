@@ -11,6 +11,7 @@ set(ASM OFF)
 set(WASM ON)
 
 find_package(Boost 1.50.0 COMPONENTS)
+find_package(Eigen3)
 
 set(CMAKE_C_FLAGS "-O2")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")

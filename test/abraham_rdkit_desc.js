@@ -15,7 +15,7 @@ for (var j = 0; j < lines.length; ++j) {
         var smi = lines[j];
         // need to add try ... catch check of kekulize process!!!
         try {
-		var mol = RDKit.Molecule.fromSmiles(smi);	
+		var mol = RDKit.Molecule.smilesToMol(smi);	
         var c = RDKit.calc_all_desc(mol);
         var g = JSON.stringify(c);
         //console.log(g);
@@ -30,7 +30,7 @@ for (var j = 0; j < lines.length; ++j) {
         var cmd = 'obabel -:"'+ smi + '" -ocan';
       	exec(cmd, function(error, stdout, stderr) {
       			console.log("res:",stdout);
-      			var mol = RDKit.Molecule.fromSmiles(stdout);	
+      			var mol = RDKit.Molecule.smilesToMol(stdout);	
         		var c = RDKit.calc_all_desc(mol);
         		var g = JSON.stringify(c);
 

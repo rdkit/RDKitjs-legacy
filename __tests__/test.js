@@ -19,7 +19,7 @@ describe('new molecule using atom bond', function() {
     t.addBond(2, 3, 1);
     t.addBond(3, 4, 1);
     t.addBond(4, 5, 1);
-    expect(t.toSmiles()).toBe('CC=CCCO');
+    expect(t.molToSmiles()).toBe('CC=CCCO');
     t.delete();
   });
   // this is in development stage caution not working for the moment!!!!

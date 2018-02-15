@@ -1,26 +1,26 @@
-def FindMolChiralCenters(mol,force=True,includeUnassigned=False):
+def findMolChiralCenters(mol,force=True,includeUnassigned=False):
   """
     >>> from rdkit import Chem
-    >>> mol = Chem.MolFromSmiles('[C@H](Cl)(F)Br')
-    >>> FindMolChiralCenters(mol)
+    >>> mol = Chem.MolsmilesToMol('[C@H](Cl)(F)Br')
+    >>> findMolChiralCenters(mol)
     [(0, 'R')]
-    >>> mol = Chem.MolFromSmiles('[C@@H](Cl)(F)Br')
-    >>> FindMolChiralCenters(mol)
+    >>> mol = Chem.MolsmilesToMol('[C@@H](Cl)(F)Br')
+    >>> findMolChiralCenters(mol)
     [(0, 'S')]
   
-    >>> FindMolChiralCenters(Chem.MolFromSmiles('CCC'))
+    >>> findMolChiralCenters(Chem.MolsmilesToMol('CCC'))
     []
     By default unassigned stereo centers are not reported:
-    >>> mol = Chem.MolFromSmiles('C[C@H](F)C(F)(Cl)Br')
-    >>> FindMolChiralCenters(mol)
+    >>> mol = Chem.MolsmilesToMol('C[C@H](F)C(F)(Cl)Br')
+    >>> findMolChiralCenters(mol)
     [(1, 'S')]
     but this can be changed:
-    >>> FindMolChiralCenters(mol,includeUnassigned=True)
+    >>> findMolChiralCenters(mol,includeUnassigned=True)
     [(1, 'S'), (3, '?')]
     The handling of dependent stereochemistry is not correct:
-    >>> Chem.FindMolChiralCenters(Chem.MolFromSmiles('C1CC(C)C(C)C(C)C1'),includeUnassigned=True)
+    >>> Chem.findMolChiralCenters(Chem.MolsmilesToMol('C1CC(C)C(C)C(C)C1'),includeUnassigned=True)
     [(2, '?'), (6, '?')]
-    >>> Chem.FindMolChiralCenters(Chem.MolFromSmiles('C1C[C@H](C)C(C)[C@H](C)C1'),includeUnassigned=True)
+    >>> Chem.findMolChiralCenters(Chem.MolsmilesToMol('C1C[C@H](C)C(C)[C@H](C)C1'),includeUnassigned=True)
     [(2, 'S'), (6, 'R')]
     
   """

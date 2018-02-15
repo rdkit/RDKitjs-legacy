@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['get2dscale',['get2DScale',['../class_molecule.html#ac36056d9d2c1f09d25f70abdd88e7233',1,'Molecule']]],
   ['getasacontribs',['getASAContribs',['../class_molecule.html#a6788d32036ced74e382310e93629b785',1,'Molecule']]],
   ['getatomcode',['getAtomCode',['../class_molecule.html#a4123cb22770fc42287562a16affa5ba5',1,'Molecule']]],
   ['getatomicnums',['getAtomicNums',['../class_molecule.html#ac4010a4be90b8f109903d41a05d3ff81',1,'Molecule']]],
@@ -16,6 +17,7 @@ var searchData=
   ['getmorganfp_5fgetnonzeroelements',['getMorganFP_getNonzeroElements',['../class_molecule.html#aa769820db6167c0861d1a784ba64ebbc',1,'Molecule']]],
   ['getmorganfp_5fgetonbits',['getMorganFP_GetOnBits',['../class_molecule.html#a1f719071d2a80ebe43599cd357767a19',1,'Molecule']]],
   ['getmorganfplist',['getMorganFPlist',['../class_molecule.html#a8546f6429ed2147b33c9d61fc192513c',1,'Molecule']]],
+  ['getmorganufpkeys',['getMorganUFPkeys',['../class_molecule.html#a51353115cdc974d1cf6b5d99bd9f5300',1,'Molecule']]],
   ['getmw',['getMW',['../class_molecule.html#afa532b75ee416a58bf7f628252522e65',1,'Molecule']]],
   ['getnumatoms',['getNumAtoms',['../class_molecule.html#a23bfc1c88f4aff43e87af062fe295922',1,'Molecule']]],
   ['getnumbridgeheadatoms',['getNumBridgeheadAtoms',['../class_molecule.html#a9d22135d69888e8d269ac5384a424f83',1,'Molecule']]],

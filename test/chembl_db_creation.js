@@ -71,8 +71,8 @@ function processLine(line) {
         
     
     var smile = mol.smilewrite();
-    var binarymol = mol.MolToBinary();
-    var mpf2 = mol.getMorganFP_GetOnBits(2,2048);
+    var binarymol = mol.pickleMol();
+    var mpf2 = mol.getMorganFingerprints_getOnBbits(2,2048);
     
         var mpf = [];
         var mpflen = mpf2.size();

@@ -6,7 +6,7 @@ var smi1 = 'C1(=C(C=CC(=C1)C(=O)C2(C(N)CCCC2))C)';
 
 console.log(smi);
 
-var mol = RDKit.Molecule.fromSmiles(smi);
+var mol = RDKit.Molecule.smilesToMol(smi);
 
 console.log("pi contact list");
 
@@ -14,9 +14,9 @@ var p = mol.picontacts();
 console.log("done");
 
 
-var obj2 = mol.getMorganUFPkeys(2);
+var obj2 = mol.getMorganFingerprintsKeys(2);
 
-var u =mol.getMorganFPlist(2);
+var u =mol.getMorganFingerprintslist(2);
 
 
 console.log(readvector(obj2));
@@ -24,7 +24,7 @@ console.log(readvector(obj2));
 
 console.log(readvector(u));
 
-var mol1 = RDKit.Molecule.fromSmiles(smi1);
+var mol1 = RDKit.Molecule.smilesToMol(smi1);
 
 console.log(mol.Similarity(mol1,'dice',0,0));
 
@@ -271,10 +271,6 @@ function loopotherSpheres(Spheres,graph){
 }
 
 
-
-
-
-
 function childs(sphere, Neiarray, parents) {
 	child = [];
 	var atomid = null;
@@ -322,8 +318,6 @@ function ScoreandSort(spherecode) {
 }
 
 
-
-
 Array.prototype.getDuplicates = function () {
     var duplicates = {};
     for (var i = 0; i < this.length; i++) {
@@ -354,8 +348,6 @@ function AdjList (graph) {
 }
 
 
-
-
 function readmat(vect) {
 	var matsize =  Math.sqrt(vect.size());
 	var matrix= [];
@@ -370,9 +362,7 @@ function readmat(vect) {
 	return matrix;
 }
 
-
-
-// compute thze bfs to store the spheres & distance
+// compute the bfs to store the spheres & distance
 function bfs (graph, startNode, len) {
       var parents = [];
       var sphereid = [];
@@ -461,10 +451,7 @@ console.log("hose score:",HSC[i].value.hosescore);
 console.log("hose code:",HSC[i].value.hosecode);
 }*/
 
-
 loopotherSpheres(HSC,graph);
-
-
 
 mol.delete();
 

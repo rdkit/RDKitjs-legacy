@@ -1,0 +1,2916 @@
+\hypertarget{class_molecule}{}\section{Molecule Class Reference}
+\label{class_molecule}\index{Molecule@{Molecule}}
+
+
+{\ttfamily \#include $<$rdmol.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_molecule_a552677256bff6acac003617eddaa4233}{Molecule}} (R\+W\+Mol $\ast$mol)
+\item 
+\mbox{\hyperlink{class_molecule_a1ff980b574a62526abff3d631c83bf94}{$\sim$\+Molecule}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}delete\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a76f90edc870400248478fafdacd6efd3}{enum\+Nbr\+Conj\+Grp}} (std\+::vector$<$ unsigned int $>$ \&atom\+Conj\+Grp\+Idx, std\+::vector$<$ unsigned int $>$ \&bond\+Conj\+Grp\+Idx, std\+::map$<$ unsigned int, std\+::vector$<$ unsigned int $>$ $>$ \&m)
+\item 
+unsigned int \mbox{\hyperlink{class_molecule_a491c0807f620c690bb8b5eab3bf7efcf}{picontacts}} ()
+\item 
+unsigned int \mbox{\hyperlink{class_molecule_a180abc69d36d7909f3ed578475cc075c}{get\+Atom\+Count\+Ring\+Bonds}} (int atomid)
+\item 
+unsigned int \mbox{\hyperlink{class_molecule_ab20d6bcc1513a5dbe3648eec782003df}{get\+Atom\+Heavy\+Valence}} (int atomid)
+\item 
+unsigned int \mbox{\hyperlink{class_molecule_a1ff2823d05fb0c104bef3a2af09b4a21}{get\+Atom\+Hetero\+Valence}} (int atomid)
+\item 
+unsigned int \mbox{\hyperlink{class_molecule_a9fb0b5f467ac50bb3eac31d194b5fba7}{get\+Atom\+Valence}} (int atomid)
+\item 
+double \mbox{\hyperlink{class_molecule_a43f990a0c0e9f3952c4a1e2f0ba75117}{Similarity}} (const \mbox{\hyperlink{class_molecule}{Molecule}} moltocompare, string similarityfunction, double a, double b)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Similarity\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ unsigned int $>$ \mbox{\hyperlink{class_molecule_abc491241d48487fac42166ff81c0289c}{Canonical\+Rank\+Atoms}} (bool break\+Ties, bool include\+Chirality, bool include\+Isotopes)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Canonical\+Rank\+Atoms\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_a7ae4c6e9458d7874bf43bdfbe079d875}{get\+Num\+Macrocycles}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Num\+Macrocycles\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_ab418ce9c2222f00552c847a14499e282}{get\+Num\+Spiro\+Atoms}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}calc\+Num\+Spiro\+Atoms\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_a9d22135d69888e8d269ac5384a424f83}{get\+Num\+Bridgehead\+Atoms}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}calc\+Num\+Bridgehead\+Atoms\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{class_molecule_af6c321c6236876f4e4a16cc8ff5ddee9}{find\+Mol\+Chiral\+Centers}} (bool include\+Unassigned)
+\begin{DoxyCompactList}\small\item\em \mbox{[}find\+Mol\+Chiral\+Centers\mbox{]} \end{DoxyCompactList}\item 
+boost\+::uint32\+\_\+t \mbox{\hyperlink{class_molecule_a4123cb22770fc42287562a16affa5ba5}{get\+Atom\+Code}} (int atomid)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Atom\+Code\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ int $>$ \mbox{\hyperlink{class_molecule_abfb8fda0aff9f7d749257badadd5d6d5}{get\+Atom\+Pair\+Fingerprint}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Atom\+Pair\+Fingerprint\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ int $>$ \mbox{\hyperlink{class_molecule_a12aeb95c7b163dd74d62cc6973d1197a}{get\+Hashed\+Atom\+Pair\+Fingerprint}} (int size, int atomid1, int atomid2)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Hashed\+Atom\+Pair\+Fingerprint\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_abc89b98816f2dc9666679cfb2e1eb696}{get\+Hashed\+Atom\+Pair\+Fingerprint\+As\+Bit\+Vect}} (int size, int atomid1, int atomid2)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Hashed\+Atom\+Pair\+Fingerprint\+As\+Bit\+Vect\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_aaace92222bb544e3682c894d4f1e9302}{get\+R\+D\+K\+Fingerprint\+Mol}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+R\+D\+K\+Fingerprint\+Mol\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_a78cd64d263c131ee0313917c023b940f}{get\+Morgan\+Fingerprints}} (unsigned int sizes, unsigned int lengths)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Morgan\+Fingerprints\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ int $>$ \mbox{\hyperlink{class_molecule_ace01e8dc28ea916279af4905fa4a5d4c}{get\+Morgan\+Fingerprints\+\_\+get\+On\+Bbits}} (unsigned int sizes, unsigned int lengths)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Morgan\+Fingerprints\+\_\+get\+On\+Bbits\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ boost\+::uint32\+\_\+t $>$ \mbox{\hyperlink{class_molecule_a773a68572aff26b0fa536588e562e87b}{get\+Morgan\+Fingerprints\+Keys}} (unsigned int sizes)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Morgan\+U\+FP\mbox{]} \end{DoxyCompactList}\item 
+map$<$ boost\+::uint32\+\_\+t, int $>$ \mbox{\hyperlink{class_molecule_aecd6b243dc5b420306cad9ba3a996101}{get\+Morgan\+Fingerprints\+\_\+get\+Nonzero\+Elements}} (unsigned int sizes)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Morgan\+Fingerprints\+\_\+get\+Nonzero\+Elements\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ boost\+::uint32\+\_\+t $>$ \mbox{\hyperlink{class_molecule_aa3eccf55a9d1e512a16d2db64add43d2}{get\+Morgan\+Fingerprintslist}} (unsigned int sizes)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Morgan\+Fingerprintslist\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_a337c5373820a171f3cb3edc8ded2bf02}{get\+Layered\+Fingerprint\+Mol}} (unsigned int layer, unsigned int sizes, unsigned int lengths)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Layered\+Fingerprint\+Mol\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_ae3c52fdc38e787ce7abb9ec4fb35795c}{get\+M\+A\+C\+C\+S\+Fingerprints}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+M\+A\+C\+C\+S\+Fingerprints\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_a8d537ddf4c7fe5103a3a8f3025f1cea0}{get\+Pattern\+Fingerprint\+Mol}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Pattern\+Fingerprint\+Mol\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a5e441ebbeef50a379ed79911805a5124}{M\+M\+F\+Foptimize\+Molecule}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}M\+M\+F\+Foptimize\+Molecule\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a871ec0fe06c07a873ef29d1af4190640}{M\+M\+F\+Foptimize\+Molecule}} (int max\+Iters, string mmff\+Variant)
+\begin{DoxyCompactList}\small\item\em \mbox{[}M\+M\+F\+Foptimize\+Molecule\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a839e0ee89e2355a5451cd0f8fdff0a90}{M\+M\+F\+F\+Optimize\+Molecule\+Confs}} (unsigned int num\+Threads, int max\+Iters, string mmff\+Variant)
+\begin{DoxyCompactList}\small\item\em \mbox{[}M\+M\+F\+F\+Optimize\+Molecule\+Confs\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a5a7fe2f265ee8e8d4aeebfd41bf0ebdc}{U\+F\+F\+Optimize\+Molecule}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}U\+F\+Foptimize\+Molecule\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_ab5b0afe25fe921c55a3a9ccd3de78b08}{Embed\+Molecule}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Embed\+Molecule\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_a49385d99cee0aba8c758a1420ba7c88d}{Embed\+Molecule}} (unsigned int max\+Iterations, int seed)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Embed\+Molecule\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ int $>$ \mbox{\hyperlink{class_molecule_a05d32198715c54d6db4c139e4c9a3985}{Embed\+Multiple\+Confs}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Embed\+Multiple\+Confs\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ int $>$ \mbox{\hyperlink{class_molecule_a3364337cff6c6a4d382f8653da23a54f}{Embed\+Multiple\+Confs}} (unsigned int num\+Confs, unsigned int max\+Iterations, int seed)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Embed\+Multiple\+Confs\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_a24d8a0ae44766a09fa4f245f61a22dc2}{pickle\+Mol}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}pickle\+Mol\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_a5d97408c9357663ceb2b2bff4471c602}{get\+Path}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Path\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_a9575c457c6fb3c38ac260b87434b5a37}{mol\+To\+Smiles}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}mol\+To\+Smiles\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_af03e0cbd53700d8fda8ed381184a75cc}{mol\+To\+Molfile}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}mol\+To\+Molfile\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_a4c3f4a82ffe6453c231d78aef0af5efd}{sdwrite\+Confs}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}sdwrite\+Confs\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a0add82d890a92f6b9cab8099becf966f}{compute2\+D\+Coords}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}compute2\+D\+Coords\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_a7048877e6bd7ac8c34f760ce9e92dc31}{Drawing2D}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Drawing2D\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ float $>$ \mbox{\hyperlink{class_molecule_aa995ba2f208be94be9d1bbb756cb1e91}{get\+Atoms\+Pos2D}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Atoms\+Pos2D\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_ac36056d9d2c1f09d25f70abdd88e7233}{get2\+D\+Scale}} (vector$<$ float $>$ atcds, double width, double height)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get2\+D\+Scale\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a2f83a282a6276fb330b46831a29907d6}{Tanimoto\+Similarityfrom\+Smile}} (string smilesref)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Tanimoto\+Similarityfrom\+Smile \mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a5dcf9622623a09d43d9a2bc9d381a67e}{Dice\+Similarityfrom\+Smile}} (string smilesref)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Dice\+Similarityfrom\+Smile\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_ae2126d53ee2e1488eb7d105c6b02a604}{Tversky\+Similarityfrom\+Smile}} (string smilesref, double a, double b)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Tversky\+Similarityfrom\+Smile\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_aaca41709fb5306fbfd11f4a75664e2ed}{find\+S\+S\+S\+Rnumber}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}find\+S\+S\+S\+Rnumber\mbox{]} \end{DoxyCompactList}\item 
+map$<$ int, string $>$ \mbox{\hyperlink{class_molecule_a553c6c6f1543156da2ff00c859f6b508}{find\+S\+S\+SR}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}find\+S\+S\+SR\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_molecule_adc6886a60ec1e7f55ba07d7f2be72e68}{Align\+Mol\+Conformers}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Align\+Mol\+Conformers\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a98b0a89a7c6275eee5252155fa530e77}{get\+Conformers\+R\+MS}} (unsigned int conf\+Id1, unsigned int conf\+Id2, unsigned int max\+Iters)
+\item 
+double \mbox{\hyperlink{class_molecule_a8c47d44f8436cb7d3741af6aeb734a37}{Align\+Mol}} (string smilesref)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Align\+Mol\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_molecule_a4113a3e70e7bc6d994bf7c8f14d94c9b}{add\+Hs}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}add\+Hs\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_molecule_aff4e7702feb85eb5d43b5ae89a504ca3}{remove\+Hs}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}remove\+Hs\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_molecule_a1d3b07d426af616e861606727848d35e}{sanitize\+Mol}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}sanitize\+Mol\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_molecule_ae9aeca03c03bbd36ab63c4a69e2ddc82}{clean\+Up}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}clean\+Up\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_molecule_ac70bc19bc462d250f2c4de320bd3330c}{Kekulize}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Kekulize\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_afa532b75ee416a58bf7f628252522e65}{get\+MW}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+MW\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_abd7a0835ce83bffd2422df8cdfb5b163}{Exact\+MW}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Exact\+MW\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_a2a8be2c496fe515635ad70949ca3c634}{Formula}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Formula\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a7299912c0000b8f3520984400f72a86b}{Chi0v}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi0v\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a867c7ad16812f1aafac38087eec756f4}{Chi1v}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi1v\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a31a72034aa6769237eb794d923788584}{Chi2v}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi2v\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_ac708655c8a81d9e25fe414f43b1d0b1c}{Chi3v}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi3v\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a26ca2dbe4464eee3cf0405c1a09fb310}{Chi4v}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi4v\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_ada6fd7f4b47622e5a07d80052cf0d0b5}{Chi\+Nv}} (unsigned int N)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi\+Nv\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_aaf96784d73e8e2052d3e78bd4a198810}{Chi0n}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi0n\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a68d5354a45b3e01b372b1a8052b37a93}{Chi1n}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi1n\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a74a0866a08a22793a822d7411e2f3758}{Chi2n}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi2n\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_ad4e37c52bc0660deeee68e487992e476}{Chi3n}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi3n\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a5724983b9e05e85161df48e5c8486d77}{Chi4n}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi4n\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a383c34ed1e85d4f07e1f70ee20eeb5ae}{Chi\+Nn}} (unsigned int N)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Chi\+Nn\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_ab4440ddc7c396037799a37dcc6fdb497}{Hall\+Kier\+Alpha}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Hall\+Kier\+Alpha\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_ae4e3b1f59d36dde20ffded165b417288}{Kappa1}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Kappa1\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a27ded481f6abb14e5531e645713effe3}{Kappa2}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Kappa2\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a46bf5206450f9a17bd2c256a7f37ab8b}{Kappa3}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Kappa3\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_ae3e5569d45cb96dbf1636d55e69273d4}{logp\+\_\+mr}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}logp\+\_\+mr\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a89046a3437790e24581fd2958d49c544}{get\+Crippen\+Atom\+Contribs}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Crippen\+Atom\+Contribs\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_aae854241373a2539a0b9421b8d295dd6}{Lipinski\+H\+BA}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Lipinski\+H\+BA\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a5b22fcdafd01813f7a554f42dad03aea}{Lipinski\+H\+BD}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Lipinski\+H\+BA\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a1185b821c895d5bfd39d194570749524}{Num\+Rotatable\+Bonds}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Rotatable\+Bonds\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a67cebe5aa58856c930fa1b162e592956}{Num\+H\+BD}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+H\+BA\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a932d2464d1d351fca8e72cd160bde74f}{Num\+H\+BA}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+H\+BA\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a582058277ae6808a93cf6ef186037eaa}{Num\+Heteroatoms}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Heteroatoms\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a48326bca7f346cee15f4c6f251ba8788}{Num\+Amide\+Bonds}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Amide\+Bonds\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a9fe4d5adae1305a7eeb0a7f4a7b5bcad}{Fraction\+C\+S\+P3}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Fraction\+C\+S\+P3\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a0a3b03a9c5fcc9d24f2f285fdb68361a}{Num\+Rings}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Rings\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a76554ff4fee44adcd1a1ca15eb8e8a7b}{Num\+Aromatic\+Rings}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Aromatic\+Rings\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a6170e58d6f19e2023378975bcf93c8d7}{Num\+Aliphatic\+Rings}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Aliphatic\+Rings\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a0c4eb1ffb0cc048b22a8298e3a9bc951}{Num\+Saturated\+Rings}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Saturated\+Rings\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a9ea5ea968d6b3712d059b33fcd860c94}{Num\+Heterocycles}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Heterocycles\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_acacbd3d2e5fc65157be32f14ef98f15d}{Num\+Aromatic\+Heterocycles}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Aromatic\+Heterocycles\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_af0be542ca2e2d7d137d80dc0fdc7d6ec}{Num\+Aromatic\+Carbocycles}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Aromatic\+Carbocycles\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a9121b878bee7059c7f3eabb541e3c029}{Num\+Saturated\+Heterocycles}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Saturated\+Heterocycles\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a63f6f6403e648006f25feb9103add3ce}{Num\+Saturated\+Carbocycles}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Saturated\+Carbocycles\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a9c5af0a753b98601782bb2d98021793a}{Num\+Aliphatic\+Heterocycles}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Aliphatic\+Heterocycles\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a4953b86e7456967bb605bdb61c15b1aa}{Num\+Aliphatic\+Carbocycles}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Num\+Aliphatic\+Carbocycles\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_a3ed0d0c3a496259b3e030dcfc2e37e39}{Labute\+A\+SA}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Labute\+A\+SA\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a6788d32036ced74e382310e93629b785}{get\+A\+S\+A\+Contribs}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+A\+S\+A\+Contribs\mbox{]} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_molecule_ac5e52f33289342df7147a7151890df95}{T\+P\+SA}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}T\+P\+SA\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_ab277cc8d75ec0bfafe2e40aa3d960e4b}{get\+T\+P\+S\+A\+Atom\+Contribs}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+T\+P\+S\+A\+Atom\+Contribs\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_ae8f8eb2feb22bfb7567d5c4886ef7957}{get\+Auto\+Corr2D}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Auto\+Corr2D\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a76432450fc78f8e42f7202d58a9b0d09}{get\+Auto\+Corr3D}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Auto\+Corr3D\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_aaf27b23a3849ca9ec2cf2df6ee591244}{Slog\+P\+\_\+\+V\+SA}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}Slog\+P\+\_\+\+V\+SA\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a839c9f1848b3b0c953ca7f4902e86086}{S\+M\+R\+\_\+\+V\+SA}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}S\+M\+R\+\_\+\+V\+SA\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a7af6b3bc2840250b9e9aac63067a4b3d}{P\+E\+O\+\_\+\+V\+SA}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}P\+E\+O\+\_\+\+V\+SA\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ unsigned int $>$ \mbox{\hyperlink{class_molecule_a982b663705ea294980bdb56458dc9bd1}{M\+Q\+Ns}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}M\+Q\+Ns\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_molecule_ad5c41d17dd1d3b564f85f97620cc508b}{compute\+Gasteiger\+Charges}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}compute\+Gasteiger\+Charges\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ int $>$ \mbox{\hyperlink{class_molecule_a5d33d9bf92166de9e58d6deadddc9fed}{get\+Substruct\+Matches}} (string smilesref)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Substruct\+Matches\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_a07e55f82e97dfe4c49855b5bb81c49d2}{get\+Substruct\+Matches\+Number}} (string smilesref)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Substruct\+Matches\+Number\mbox{]} \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_molecule_a5494377b1f6db28c894941c0139496b3}{Has\+Substruct\+Match\+Str}} (string smilesref)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Has\+Substruct\+Match\+Str\mbox{]} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_ad465fbdb8c43e8280e4dcf3eefac1e13}{get\+Prop}} (string key)
+\begin{DoxyCompactList}\small\item\em get \& set \& has properties \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_molecule_acb057213561817b5e78a1e5e5845ae8f}{get\+Atom\+Prop}} (string key, int atomid)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Atom\+Prop\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_a25264008a24371142100f10ab7907d6f}{set\+Prop}} (string key, string value)
+\begin{DoxyCompactList}\small\item\em \mbox{[}set\+Prop\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a23bfc1c88f4aff43e87af062fe295922}{get\+Num\+Atoms}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Num\+Atoms\mbox{]} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_molecule_a00c23cd635ca82207165e59cdd714d99}{get\+Num\+Conformers}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Num\+Conformers\mbox{]} \end{DoxyCompactList}\item 
+R\+D\+Kit\+::\+Conformer \mbox{\hyperlink{class_molecule_ad58d85938153a73ee5f17426474e6a90}{get\+Conformer}} (int id)
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Conformer\mbox{]} \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_molecule_a7168f3faf1d150373c0b8728767d1d4b}{has\+Prop}} (string key)
+\begin{DoxyCompactList}\small\item\em \mbox{[}has\+Prop\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{class_molecule_a5296c86bec78924d64bc2a9472eb91d5}{getproplist}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}getproplist\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_a2ef7b76adda28cd4932d07c35d330f71}{add\+Atom}} (int atomid)
+\begin{DoxyCompactList}\small\item\em \mbox{[}add\+Atom\mbox{]} \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_molecule_ad1c8dfe8ea7c2026bcdbdd2c90fa17b8}{add\+Bond}} (unsigned int begin\+Atom\+Idx, unsigned int end\+Atom\+Idx, int bondtypeid)
+\begin{DoxyCompactList}\small\item\em \mbox{[}add\+Bond\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_molecule_a21ccf25eb7aa1fb6c5827a7c6c01d926}{set\+Bond\+Dir}} (int Bondid, int bonddirid)
+\begin{DoxyCompactList}\small\item\em \mbox{[}set\+Bond\+Dir\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ int $>$ \mbox{\hyperlink{class_molecule_a8a7e0db0469ed164e76f4fc48f4e387b}{get\+Atom\+Neighbors}} (int atomid)
+\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a8b75895f9b9d0c50fa856b0d5289bf5f}{get\+Bond\+Neighbors}} (int atomid)
+\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_molecule_a7ee37a53f63c296a206a20b69808cff8}{get\+Adjacency\+Matrix}} (bool use\+BO)
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{class_molecule_ac4010a4be90b8f109903d41a05d3ff81}{get\+Atomic\+Nums}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}get\+Atomic\+Nums\mbox{]} \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{class_molecule_afe8104a0a538fe6b64c089d409871f0d}{get\+Symbols}} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ \mbox{\hyperlink{class_molecule_ab7813a959f80b5291f43f6b84b775ff5}{newmolecule}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}newmolecule\mbox{]} \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ \mbox{\hyperlink{class_molecule_af46950eda08b8532e75f9bf83a07ead7}{Murckosmiles\+To\+Mol}} (string smi)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Murckosmiles\+To\+Mol\mbox{]} \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ \mbox{\hyperlink{class_molecule_a8aa7308d675a16f2513de6c343eb11d3}{smiles\+To\+Mol}} (string smiles)
+\begin{DoxyCompactList}\small\item\em \mbox{[}from\+Smile\mbox{]} \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ \mbox{\hyperlink{class_molecule_a689a07968c44db22ef925eee7f70295b}{Mol2\+Block\+To\+Mol}} (string mol\+Block)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Mol2\+Block\+To\+Mol\mbox{]} \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ \mbox{\hyperlink{class_molecule_a75b3d11ee3b2ccacad2f5ae1c6909b19}{Mol\+Block\+To\+Mol}} (string mol\+Block)
+\begin{DoxyCompactList}\small\item\em \mbox{[}Mol\+Block\+To\+Mol\mbox{]} \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ \mbox{\hyperlink{class_molecule_a628d6859f22b76a102d11674ef461923}{smarts\+To\+Mol}} (string smarts)
+\begin{DoxyCompactList}\small\item\em \mbox{[}smarts\+To\+Mol\mbox{]} \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ \mbox{\hyperlink{class_molecule_a2425937fefa34d28560ef4ad152b9602}{mol\+From\+Pickle}} (string pickle)
+\begin{DoxyCompactList}\small\item\em \mbox{[}mol\+From\+Pickle\mbox{]} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 21 of file rdmol.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_molecule_a552677256bff6acac003617eddaa4233}\label{class_molecule_a552677256bff6acac003617eddaa4233}} 
+\index{Molecule@{Molecule}!Molecule@{Molecule}}
+\index{Molecule@{Molecule}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Molecule()}{Molecule()}}
+{\footnotesize\ttfamily Molecule\+::\+Molecule (\begin{DoxyParamCaption}\item[{R\+W\+Mol $\ast$}]{mol }\end{DoxyParamCaption})}
+
+
+
+Definition at line 124 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a1ff980b574a62526abff3d631c83bf94}\label{class_molecule_a1ff980b574a62526abff3d631c83bf94}} 
+\index{Molecule@{Molecule}!````~Molecule@{$\sim$\+Molecule}}
+\index{````~Molecule@{$\sim$\+Molecule}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{$\sim$\+Molecule()}{~Molecule()}}
+{\footnotesize\ttfamily Molecule\+::$\sim$\+Molecule (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}delete\mbox{]} 
+
+\mbox{[}action on rdmol during delete process\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}description\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 132 of file rdmol.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_molecule_a2ef7b76adda28cd4932d07c35d330f71}\label{class_molecule_a2ef7b76adda28cd4932d07c35d330f71}} 
+\index{Molecule@{Molecule}!add\+Atom@{add\+Atom}}
+\index{add\+Atom@{add\+Atom}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{add\+Atom()}{addAtom()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::add\+Atom (\begin{DoxyParamCaption}\item[{int}]{atomid }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}add\+Atom\mbox{]} 
+
+\mbox{[}adding atom to a molecule using a atomid\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em atomid} & \mbox{[}integer starting at 0\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}define rdkit molecule atom\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 261 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ad1c8dfe8ea7c2026bcdbdd2c90fa17b8}\label{class_molecule_ad1c8dfe8ea7c2026bcdbdd2c90fa17b8}} 
+\index{Molecule@{Molecule}!add\+Bond@{add\+Bond}}
+\index{add\+Bond@{add\+Bond}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{add\+Bond()}{addBond()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::add\+Bond (\begin{DoxyParamCaption}\item[{unsigned int}]{begin\+Atom\+Idx,  }\item[{unsigned int}]{end\+Atom\+Idx,  }\item[{int}]{bondtypeid }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}add\+Bond\mbox{]} 
+
+\mbox{[}generate bond between atoms\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em begin\+Atom\+Idx} & \mbox{[}unsigned int begin atom index of the bond\mbox{]} \\
+\hline
+{\em end\+Atom\+Idx} & \mbox{[}unsigned int end atom index of the bond\mbox{]} \\
+\hline
+{\em bondtypeid} & \mbox{[}int bondtype of the bond\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}set a bond between two atoms in rdkit molecule object\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 279 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a4113a3e70e7bc6d994bf7c8f14d94c9b}\label{class_molecule_a4113a3e70e7bc6d994bf7c8f14d94c9b}} 
+\index{Molecule@{Molecule}!add\+Hs@{add\+Hs}}
+\index{add\+Hs@{add\+Hs}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{add\+Hs()}{addHs()}}
+{\footnotesize\ttfamily void Molecule\+::add\+Hs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}add\+Hs\mbox{]} 
+
+\mbox{[}add\+Hs\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em add\+Hs} & \mbox{[}molecule with Hs\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 1402 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a8c47d44f8436cb7d3741af6aeb734a37}\label{class_molecule_a8c47d44f8436cb7d3741af6aeb734a37}} 
+\index{Molecule@{Molecule}!Align\+Mol@{Align\+Mol}}
+\index{Align\+Mol@{Align\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Align\+Mol()}{AlignMol()}}
+{\footnotesize\ttfamily double Molecule\+::\+Align\+Mol (\begin{DoxyParamCaption}\item[{string}]{smilesref }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Align\+Mol\mbox{]} 
+
+\mbox{[}Align\+Mol method\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smilesref} & \mbox{[}string\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}double\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1346 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_adc6886a60ec1e7f55ba07d7f2be72e68}\label{class_molecule_adc6886a60ec1e7f55ba07d7f2be72e68}} 
+\index{Molecule@{Molecule}!Align\+Mol\+Conformers@{Align\+Mol\+Conformers}}
+\index{Align\+Mol\+Conformers@{Align\+Mol\+Conformers}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Align\+Mol\+Conformers()}{AlignMolConformers()}}
+{\footnotesize\ttfamily void Molecule\+::\+Align\+Mol\+Conformers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Align\+Mol\+Conformers\mbox{]} 
+
+\mbox{[}Align\+Mol method using first conformer as reference of align\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}double\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1373 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_abc491241d48487fac42166ff81c0289c}\label{class_molecule_abc491241d48487fac42166ff81c0289c}} 
+\index{Molecule@{Molecule}!Canonical\+Rank\+Atoms@{Canonical\+Rank\+Atoms}}
+\index{Canonical\+Rank\+Atoms@{Canonical\+Rank\+Atoms}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Canonical\+Rank\+Atoms()}{CanonicalRankAtoms()}}
+{\footnotesize\ttfamily vector$<$ unsigned int $>$ Molecule\+::\+Canonical\+Rank\+Atoms (\begin{DoxyParamCaption}\item[{bool}]{break\+Ties = {\ttfamily true},  }\item[{bool}]{include\+Chirality = {\ttfamily true},  }\item[{bool}]{include\+Isotopes = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Canonical\+Rank\+Atoms\mbox{]} 
+
+\mbox{[}canonical ordering label of atoms\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em break\+Ties} & \mbox{[}bool default true\mbox{]} \\
+\hline
+{\em include\+Chirality} & \mbox{[}boll default true\mbox{]} \\
+\hline
+{\em include\+Isotopes} & \mbox{[}bool default true\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 309 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_aaf96784d73e8e2052d3e78bd4a198810}\label{class_molecule_aaf96784d73e8e2052d3e78bd4a198810}} 
+\index{Molecule@{Molecule}!Chi0n@{Chi0n}}
+\index{Chi0n@{Chi0n}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi0n()}{Chi0n()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi0n (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi0n\mbox{]} 
+
+\mbox{[}n\+Valence Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi0n\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1617 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a7299912c0000b8f3520984400f72a86b}\label{class_molecule_a7299912c0000b8f3520984400f72a86b}} 
+\index{Molecule@{Molecule}!Chi0v@{Chi0v}}
+\index{Chi0v@{Chi0v}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi0v()}{Chi0v()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi0v (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi0v\mbox{]} 
+
+\mbox{[}Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi0v\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1548 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a68d5354a45b3e01b372b1a8052b37a93}\label{class_molecule_a68d5354a45b3e01b372b1a8052b37a93}} 
+\index{Molecule@{Molecule}!Chi1n@{Chi1n}}
+\index{Chi1n@{Chi1n}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi1n()}{Chi1n()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi1n (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi1n\mbox{]} 
+
+\mbox{[}n\+Valence Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi1n\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1628 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a867c7ad16812f1aafac38087eec756f4}\label{class_molecule_a867c7ad16812f1aafac38087eec756f4}} 
+\index{Molecule@{Molecule}!Chi1v@{Chi1v}}
+\index{Chi1v@{Chi1v}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi1v()}{Chi1v()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi1v (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi1v\mbox{]} 
+
+\mbox{[}Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi1v\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1559 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a74a0866a08a22793a822d7411e2f3758}\label{class_molecule_a74a0866a08a22793a822d7411e2f3758}} 
+\index{Molecule@{Molecule}!Chi2n@{Chi2n}}
+\index{Chi2n@{Chi2n}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi2n()}{Chi2n()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi2n (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi2n\mbox{]} 
+
+\mbox{[}n\+Valence Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi2n\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1639 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a31a72034aa6769237eb794d923788584}\label{class_molecule_a31a72034aa6769237eb794d923788584}} 
+\index{Molecule@{Molecule}!Chi2v@{Chi2v}}
+\index{Chi2v@{Chi2v}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi2v()}{Chi2v()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi2v (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi2v\mbox{]} 
+
+\mbox{[}Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi2v\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1570 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ad4e37c52bc0660deeee68e487992e476}\label{class_molecule_ad4e37c52bc0660deeee68e487992e476}} 
+\index{Molecule@{Molecule}!Chi3n@{Chi3n}}
+\index{Chi3n@{Chi3n}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi3n()}{Chi3n()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi3n (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi3n\mbox{]} 
+
+\mbox{[}n\+Valence Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi3n\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1650 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ac708655c8a81d9e25fe414f43b1d0b1c}\label{class_molecule_ac708655c8a81d9e25fe414f43b1d0b1c}} 
+\index{Molecule@{Molecule}!Chi3v@{Chi3v}}
+\index{Chi3v@{Chi3v}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi3v()}{Chi3v()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi3v (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi3v\mbox{]} 
+
+\mbox{[}Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi3v\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1582 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a5724983b9e05e85161df48e5c8486d77}\label{class_molecule_a5724983b9e05e85161df48e5c8486d77}} 
+\index{Molecule@{Molecule}!Chi4n@{Chi4n}}
+\index{Chi4n@{Chi4n}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi4n()}{Chi4n()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi4n (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi4n\mbox{]} 
+
+\mbox{[}n\+Valence Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi4n\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1661 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a26ca2dbe4464eee3cf0405c1a09fb310}\label{class_molecule_a26ca2dbe4464eee3cf0405c1a09fb310}} 
+\index{Molecule@{Molecule}!Chi4v@{Chi4v}}
+\index{Chi4v@{Chi4v}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi4v()}{Chi4v()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi4v (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi4v\mbox{]} 
+
+\mbox{[}Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi4v\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1594 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a383c34ed1e85d4f07e1f70ee20eeb5ae}\label{class_molecule_a383c34ed1e85d4f07e1f70ee20eeb5ae}} 
+\index{Molecule@{Molecule}!Chi\+Nn@{Chi\+Nn}}
+\index{Chi\+Nn@{Chi\+Nn}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi\+Nn()}{ChiNn()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi\+Nn (\begin{DoxyParamCaption}\item[{unsigned int}]{N }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi\+Nn\mbox{]} 
+
+\mbox{[}n\+Valence Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi\+Nn\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1674 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ada6fd7f4b47622e5a07d80052cf0d0b5}\label{class_molecule_ada6fd7f4b47622e5a07d80052cf0d0b5}} 
+\index{Molecule@{Molecule}!Chi\+Nv@{Chi\+Nv}}
+\index{Chi\+Nv@{Chi\+Nv}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Chi\+Nv()}{ChiNv()}}
+{\footnotesize\ttfamily double Molecule\+::\+Chi\+Nv (\begin{DoxyParamCaption}\item[{unsigned int}]{N }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Chi\+Nv\mbox{]} 
+
+\mbox{[}Connectivity\+Descriptors list from Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Chi\+Nv\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1606 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ae9aeca03c03bbd36ab63c4a69e2ddc82}\label{class_molecule_ae9aeca03c03bbd36ab63c4a69e2ddc82}} 
+\index{Molecule@{Molecule}!clean\+Up@{clean\+Up}}
+\index{clean\+Up@{clean\+Up}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{clean\+Up()}{cleanUp()}}
+{\footnotesize\ttfamily void Molecule\+::clean\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}clean\+Up\mbox{]} 
+
+\mbox{[}clean\+Up\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em clean\+Up} & \mbox{[}molecule clean\+Up\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 1435 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a0add82d890a92f6b9cab8099becf966f}\label{class_molecule_a0add82d890a92f6b9cab8099becf966f}} 
+\index{Molecule@{Molecule}!compute2\+D\+Coords@{compute2\+D\+Coords}}
+\index{compute2\+D\+Coords@{compute2\+D\+Coords}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{compute2\+D\+Coords()}{compute2DCoords()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::compute2\+D\+Coords (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}compute2\+D\+Coords\mbox{]} 
+
+\mbox{[}generate 2D molecule coordinate matrix\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}int of boolean of the void\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1142 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ad5c41d17dd1d3b564f85f97620cc508b}\label{class_molecule_ad5c41d17dd1d3b564f85f97620cc508b}} 
+\index{Molecule@{Molecule}!compute\+Gasteiger\+Charges@{compute\+Gasteiger\+Charges}}
+\index{compute\+Gasteiger\+Charges@{compute\+Gasteiger\+Charges}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{compute\+Gasteiger\+Charges()}{computeGasteigerCharges()}}
+{\footnotesize\ttfamily void Molecule\+::compute\+Gasteiger\+Charges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}compute\+Gasteiger\+Charges\mbox{]} 
+
+\mbox{[}compute the Gasteiger\+Charges for eahc atoms of the molecule and store it as a atom property\mbox{]} 
+
+Definition at line 1459 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a5dcf9622623a09d43d9a2bc9d381a67e}\label{class_molecule_a5dcf9622623a09d43d9a2bc9d381a67e}} 
+\index{Molecule@{Molecule}!Dice\+Similarityfrom\+Smile@{Dice\+Similarityfrom\+Smile}}
+\index{Dice\+Similarityfrom\+Smile@{Dice\+Similarityfrom\+Smile}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Dice\+Similarityfrom\+Smile()}{DiceSimilarityfromSmile()}}
+{\footnotesize\ttfamily double Molecule\+::\+Dice\+Similarityfrom\+Smile (\begin{DoxyParamCaption}\item[{string}]{smilesref }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Dice\+Similarityfrom\+Smile\mbox{]} 
+
+\mbox{[}compute Dice similarity of molecule vs a given smile\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smilesref} & \mbox{[}smile string of the molecule to compare\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}return the Dice similarity\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 624 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a7048877e6bd7ac8c34f760ce9e92dc31}\label{class_molecule_a7048877e6bd7ac8c34f760ce9e92dc31}} 
+\index{Molecule@{Molecule}!Drawing2D@{Drawing2D}}
+\index{Drawing2D@{Drawing2D}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Drawing2\+D()}{Drawing2D()}}
+{\footnotesize\ttfamily string Molecule\+::\+Drawing2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Drawing2D\mbox{]} 
+
+\mbox{[}generate the svg of a 2D molecule for plotting\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}string type svg\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1223 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ab5b0afe25fe921c55a3a9ccd3de78b08}\label{class_molecule_ab5b0afe25fe921c55a3a9ccd3de78b08}} 
+\index{Molecule@{Molecule}!Embed\+Molecule@{Embed\+Molecule}}
+\index{Embed\+Molecule@{Embed\+Molecule}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Embed\+Molecule()}{EmbedMolecule()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Molecule\+::\+Embed\+Molecule (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Embed\+Molecule\mbox{]} 
+
+\mbox{[}Generate a random 3D molecule coordinate matrix\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}int value of the process\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1256 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a49385d99cee0aba8c758a1420ba7c88d}\label{class_molecule_a49385d99cee0aba8c758a1420ba7c88d}} 
+\index{Molecule@{Molecule}!Embed\+Molecule@{Embed\+Molecule}}
+\index{Embed\+Molecule@{Embed\+Molecule}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Embed\+Molecule()}{EmbedMolecule()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Molecule\+::\+Embed\+Molecule (\begin{DoxyParamCaption}\item[{unsigned int}]{max\+Iterations,  }\item[{int}]{seed }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Embed\+Molecule\mbox{]} 
+
+\mbox{[}Generate a random 3D molecule coordinate matrix\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\+Iterations} & \mbox{[}maximum iteration process\mbox{]} \\
+\hline
+{\em seed} & \mbox{[}fix a seed for random predictible generation value\mbox{]}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}int value of the process\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1244 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a05d32198715c54d6db4c139e4c9a3985}\label{class_molecule_a05d32198715c54d6db4c139e4c9a3985}} 
+\index{Molecule@{Molecule}!Embed\+Multiple\+Confs@{Embed\+Multiple\+Confs}}
+\index{Embed\+Multiple\+Confs@{Embed\+Multiple\+Confs}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Embed\+Multiple\+Confs()}{EmbedMultipleConfs()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily vector$<$ int $>$ Molecule\+::\+Embed\+Multiple\+Confs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Embed\+Multiple\+Confs\mbox{]} 
+
+\mbox{[}Generate conformers random 3D molecules coordinate matrixes\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}int vector value of the process\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1281 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a3364337cff6c6a4d382f8653da23a54f}\label{class_molecule_a3364337cff6c6a4d382f8653da23a54f}} 
+\index{Molecule@{Molecule}!Embed\+Multiple\+Confs@{Embed\+Multiple\+Confs}}
+\index{Embed\+Multiple\+Confs@{Embed\+Multiple\+Confs}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Embed\+Multiple\+Confs()}{EmbedMultipleConfs()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily vector$<$ int $>$ Molecule\+::\+Embed\+Multiple\+Confs (\begin{DoxyParamCaption}\item[{unsigned int}]{num\+Confs,  }\item[{unsigned int}]{max\+Iterations,  }\item[{int}]{seed }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Embed\+Multiple\+Confs\mbox{]} 
+
+\mbox{[}Generate conformers random 3D molecules coordinate matrixes\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+Confs} & \mbox{[}set number of conformers\mbox{]} \\
+\hline
+{\em max\+Iterations} & \mbox{[}set max iteration\mbox{]} \\
+\hline
+{\em seed} & \mbox{[}set the seed for random predictible generation value\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}int vector value of the process\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1271 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a76f90edc870400248478fafdacd6efd3}\label{class_molecule_a76f90edc870400248478fafdacd6efd3}} 
+\index{Molecule@{Molecule}!enum\+Nbr\+Conj\+Grp@{enum\+Nbr\+Conj\+Grp}}
+\index{enum\+Nbr\+Conj\+Grp@{enum\+Nbr\+Conj\+Grp}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{enum\+Nbr\+Conj\+Grp()}{enumNbrConjGrp()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::enum\+Nbr\+Conj\+Grp (\begin{DoxyParamCaption}\item[{std\+::vector$<$ unsigned int $>$ \&}]{atom\+Conj\+Grp\+Idx,  }\item[{std\+::vector$<$ unsigned int $>$ \&}]{bond\+Conj\+Grp\+Idx,  }\item[{std\+::map$<$ unsigned int, std\+::vector$<$ unsigned int $>$ $>$ \&}]{m }\end{DoxyParamCaption})}
+
+
+
+Definition at line 430 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_abd7a0835ce83bffd2422df8cdfb5b163}\label{class_molecule_abd7a0835ce83bffd2422df8cdfb5b163}} 
+\index{Molecule@{Molecule}!Exact\+MW@{Exact\+MW}}
+\index{Exact\+MW@{Exact\+MW}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Exact\+M\+W()}{ExactMW()}}
+{\footnotesize\ttfamily double Molecule\+::\+Exact\+MW (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Exact\+MW\mbox{]} 
+
+\mbox{[}get Exact MW\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}double Exact MW\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1525 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_af6c321c6236876f4e4a16cc8ff5ddee9}\label{class_molecule_af6c321c6236876f4e4a16cc8ff5ddee9}} 
+\index{Molecule@{Molecule}!find\+Mol\+Chiral\+Centers@{find\+Mol\+Chiral\+Centers}}
+\index{find\+Mol\+Chiral\+Centers@{find\+Mol\+Chiral\+Centers}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{find\+Mol\+Chiral\+Centers()}{findMolChiralCenters()}}
+{\footnotesize\ttfamily vector$<$ string $>$ Molecule\+::find\+Mol\+Chiral\+Centers (\begin{DoxyParamCaption}\item[{bool}]{include\+Unassigned }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}find\+Mol\+Chiral\+Centers\mbox{]} 
+
+\mbox{[}find all molecule chiral centers\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em include\+Unassigned} & \mbox{[}boolean value option\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}return the list chiral centers\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 949 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a553c6c6f1543156da2ff00c859f6b508}\label{class_molecule_a553c6c6f1543156da2ff00c859f6b508}} 
+\index{Molecule@{Molecule}!find\+S\+S\+SR@{find\+S\+S\+SR}}
+\index{find\+S\+S\+SR@{find\+S\+S\+SR}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{find\+S\+S\+S\+R()}{findSSSR()}}
+{\footnotesize\ttfamily map$<$ int, string $>$ Molecule\+::find\+S\+S\+SR (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}find\+S\+S\+SR\mbox{]} 
+
+\mbox{[}export rings lists into a map of \char`\"{}ringid, string\char`\"{} string containing atomid of the ring and comma separator\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}map of int, string\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1305 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_aaca41709fb5306fbfd11f4a75664e2ed}\label{class_molecule_aaca41709fb5306fbfd11f4a75664e2ed}} 
+\index{Molecule@{Molecule}!find\+S\+S\+S\+Rnumber@{find\+S\+S\+S\+Rnumber}}
+\index{find\+S\+S\+S\+Rnumber@{find\+S\+S\+S\+Rnumber}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{find\+S\+S\+S\+Rnumber()}{findSSSRnumber()}}
+{\footnotesize\ttfamily int Molecule\+::find\+S\+S\+S\+Rnumber (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}find\+S\+S\+S\+Rnumber\mbox{]} 
+
+\mbox{[}count the number of rings in the molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}int value of the process\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1293 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a2a8be2c496fe515635ad70949ca3c634}\label{class_molecule_a2a8be2c496fe515635ad70949ca3c634}} 
+\index{Molecule@{Molecule}!Formula@{Formula}}
+\index{Formula@{Formula}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Formula()}{Formula()}}
+{\footnotesize\ttfamily string Molecule\+::\+Formula (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Formula\mbox{]} 
+
+\mbox{[}get molecular formula\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}string MF\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1537 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a9fe4d5adae1305a7eeb0a7f4a7b5bcad}\label{class_molecule_a9fe4d5adae1305a7eeb0a7f4a7b5bcad}} 
+\index{Molecule@{Molecule}!Fraction\+C\+S\+P3@{Fraction\+C\+S\+P3}}
+\index{Fraction\+C\+S\+P3@{Fraction\+C\+S\+P3}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Fraction\+C\+S\+P3()}{FractionCSP3()}}
+{\footnotesize\ttfamily double Molecule\+::\+Fraction\+C\+S\+P3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Fraction\+C\+S\+P3\mbox{]} 
+
+\mbox{[}get fraction of C atoms that are S\+P3 hybridized\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}double\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1843 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ac36056d9d2c1f09d25f70abdd88e7233}\label{class_molecule_ac36056d9d2c1f09d25f70abdd88e7233}} 
+\index{Molecule@{Molecule}!get2\+D\+Scale@{get2\+D\+Scale}}
+\index{get2\+D\+Scale@{get2\+D\+Scale}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get2\+D\+Scale()}{get2DScale()}}
+{\footnotesize\ttfamily double Molecule\+::get2\+D\+Scale (\begin{DoxyParamCaption}\item[{vector$<$ float $>$}]{atcds,  }\item[{double}]{width,  }\item[{double}]{height }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get2\+D\+Scale\mbox{]} 
+
+\mbox{[}return the scale on 2D image for plotting\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}double\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1200 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a7ee37a53f63c296a206a20b69808cff8}\label{class_molecule_a7ee37a53f63c296a206a20b69808cff8}} 
+\index{Molecule@{Molecule}!get\+Adjacency\+Matrix@{get\+Adjacency\+Matrix}}
+\index{get\+Adjacency\+Matrix@{get\+Adjacency\+Matrix}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Adjacency\+Matrix()}{getAdjacencyMatrix()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::get\+Adjacency\+Matrix (\begin{DoxyParamCaption}\item[{bool}]{use\+BO }\end{DoxyParamCaption})}
+
+
+
+Definition at line 318 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a6788d32036ced74e382310e93629b785}\label{class_molecule_a6788d32036ced74e382310e93629b785}} 
+\index{Molecule@{Molecule}!get\+A\+S\+A\+Contribs@{get\+A\+S\+A\+Contribs}}
+\index{get\+A\+S\+A\+Contribs@{get\+A\+S\+A\+Contribs}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+A\+S\+A\+Contribs()}{getASAContribs()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::get\+A\+S\+A\+Contribs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+A\+S\+A\+Contribs\mbox{]} 
+
+\mbox{[}Labute A\+SA Atom Contributions\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}array of atom contribution\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1989 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a4123cb22770fc42287562a16affa5ba5}\label{class_molecule_a4123cb22770fc42287562a16affa5ba5}} 
+\index{Molecule@{Molecule}!get\+Atom\+Code@{get\+Atom\+Code}}
+\index{get\+Atom\+Code@{get\+Atom\+Code}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atom\+Code()}{getAtomCode()}}
+{\footnotesize\ttfamily boost\+::uint32\+\_\+t Molecule\+::get\+Atom\+Code (\begin{DoxyParamCaption}\item[{int}]{atomid }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Atom\+Code\mbox{]} 
+
+\mbox{[}get the atom code (atompair)\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em atomid} & \mbox{[}int index of the atom\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}uint32 atom code\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 673 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a180abc69d36d7909f3ed578475cc075c}\label{class_molecule_a180abc69d36d7909f3ed578475cc075c}} 
+\index{Molecule@{Molecule}!get\+Atom\+Count\+Ring\+Bonds@{get\+Atom\+Count\+Ring\+Bonds}}
+\index{get\+Atom\+Count\+Ring\+Bonds@{get\+Atom\+Count\+Ring\+Bonds}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atom\+Count\+Ring\+Bonds()}{getAtomCountRingBonds()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::get\+Atom\+Count\+Ring\+Bonds (\begin{DoxyParamCaption}\item[{int}]{atomid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 508 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ab20d6bcc1513a5dbe3648eec782003df}\label{class_molecule_ab20d6bcc1513a5dbe3648eec782003df}} 
+\index{Molecule@{Molecule}!get\+Atom\+Heavy\+Valence@{get\+Atom\+Heavy\+Valence}}
+\index{get\+Atom\+Heavy\+Valence@{get\+Atom\+Heavy\+Valence}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atom\+Heavy\+Valence()}{getAtomHeavyValence()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::get\+Atom\+Heavy\+Valence (\begin{DoxyParamCaption}\item[{int}]{atomid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 524 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a1ff2823d05fb0c104bef3a2af09b4a21}\label{class_molecule_a1ff2823d05fb0c104bef3a2af09b4a21}} 
+\index{Molecule@{Molecule}!get\+Atom\+Hetero\+Valence@{get\+Atom\+Hetero\+Valence}}
+\index{get\+Atom\+Hetero\+Valence@{get\+Atom\+Hetero\+Valence}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atom\+Hetero\+Valence()}{getAtomHeteroValence()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::get\+Atom\+Hetero\+Valence (\begin{DoxyParamCaption}\item[{int}]{atomid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 539 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ac4010a4be90b8f109903d41a05d3ff81}\label{class_molecule_ac4010a4be90b8f109903d41a05d3ff81}} 
+\index{Molecule@{Molecule}!get\+Atomic\+Nums@{get\+Atomic\+Nums}}
+\index{get\+Atomic\+Nums@{get\+Atomic\+Nums}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atomic\+Nums()}{getAtomicNums()}}
+{\footnotesize\ttfamily vector$<$ int $>$ Molecule\+::get\+Atomic\+Nums (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Atomic\+Nums\mbox{]} 
+
+\mbox{[}determine the list of atomic numbers of the molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}vector of int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2158 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a8a7e0db0469ed164e76f4fc48f4e387b}\label{class_molecule_a8a7e0db0469ed164e76f4fc48f4e387b}} 
+\index{Molecule@{Molecule}!get\+Atom\+Neighbors@{get\+Atom\+Neighbors}}
+\index{get\+Atom\+Neighbors@{get\+Atom\+Neighbors}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atom\+Neighbors()}{getAtomNeighbors()}}
+{\footnotesize\ttfamily vector$<$ int $>$ Molecule\+::get\+Atom\+Neighbors (\begin{DoxyParamCaption}\item[{int}]{atomid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 565 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_abfb8fda0aff9f7d749257badadd5d6d5}\label{class_molecule_abfb8fda0aff9f7d749257badadd5d6d5}} 
+\index{Molecule@{Molecule}!get\+Atom\+Pair\+Fingerprint@{get\+Atom\+Pair\+Fingerprint}}
+\index{get\+Atom\+Pair\+Fingerprint@{get\+Atom\+Pair\+Fingerprint}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atom\+Pair\+Fingerprint()}{getAtomPairFingerprint()}}
+{\footnotesize\ttfamily vector$<$ int $>$ Molecule\+::get\+Atom\+Pair\+Fingerprint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Atom\+Pair\+Fingerprint\mbox{]} 
+
+\mbox{[}compute the list (not the map) of Atompair code + Atompair occurence\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}vector of int first portion of the list contains atompair code and second portion the atompair occurence\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 683 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_acb057213561817b5e78a1e5e5845ae8f}\label{class_molecule_acb057213561817b5e78a1e5e5845ae8f}} 
+\index{Molecule@{Molecule}!get\+Atom\+Prop@{get\+Atom\+Prop}}
+\index{get\+Atom\+Prop@{get\+Atom\+Prop}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atom\+Prop()}{getAtomProp()}}
+{\footnotesize\ttfamily string Molecule\+::get\+Atom\+Prop (\begin{DoxyParamCaption}\item[{string}]{key,  }\item[{int}]{atomid }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Atom\+Prop\mbox{]} 
+
+\mbox{[}get a atom Property value based of property name key\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \mbox{[}string\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}string\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2207 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_aa995ba2f208be94be9d1bbb756cb1e91}\label{class_molecule_aa995ba2f208be94be9d1bbb756cb1e91}} 
+\index{Molecule@{Molecule}!get\+Atoms\+Pos2D@{get\+Atoms\+Pos2D}}
+\index{get\+Atoms\+Pos2D@{get\+Atoms\+Pos2D}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atoms\+Pos2\+D()}{getAtomsPos2D()}}
+{\footnotesize\ttfamily vector$<$ float $>$ Molecule\+::get\+Atoms\+Pos2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Atoms\+Pos2D\mbox{]} 
+
+\mbox{[}get the Atoms 2D coordinate + sigma value of a S\+VG plot for similarity map processing\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}vector of float\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1153 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a9fb0b5f467ac50bb3eac31d194b5fba7}\label{class_molecule_a9fb0b5f467ac50bb3eac31d194b5fba7}} 
+\index{Molecule@{Molecule}!get\+Atom\+Valence@{get\+Atom\+Valence}}
+\index{get\+Atom\+Valence@{get\+Atom\+Valence}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Atom\+Valence()}{getAtomValence()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::get\+Atom\+Valence (\begin{DoxyParamCaption}\item[{int}]{atomid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 555 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ae8f8eb2feb22bfb7567d5c4886ef7957}\label{class_molecule_ae8f8eb2feb22bfb7567d5c4886ef7957}} 
+\index{Molecule@{Molecule}!get\+Auto\+Corr2D@{get\+Auto\+Corr2D}}
+\index{get\+Auto\+Corr2D@{get\+Auto\+Corr2D}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Auto\+Corr2\+D()}{getAutoCorr2D()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::get\+Auto\+Corr2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Auto\+Corr2D\mbox{]} 
+
+\mbox{[}Generate A\+U\+T\+O\+C\+O\+R\+R2D vector\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}array of autoccorelation 2D\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2026 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a76432450fc78f8e42f7202d58a9b0d09}\label{class_molecule_a76432450fc78f8e42f7202d58a9b0d09}} 
+\index{Molecule@{Molecule}!get\+Auto\+Corr3D@{get\+Auto\+Corr3D}}
+\index{get\+Auto\+Corr3D@{get\+Auto\+Corr3D}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Auto\+Corr3\+D()}{getAutoCorr3D()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::get\+Auto\+Corr3D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Auto\+Corr3D\mbox{]} 
+
+\mbox{[}Generate A\+U\+T\+O\+C\+O\+R\+R3D vector\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}array of autoccorelation 3D\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2038 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a8b75895f9b9d0c50fa856b0d5289bf5f}\label{class_molecule_a8b75895f9b9d0c50fa856b0d5289bf5f}} 
+\index{Molecule@{Molecule}!get\+Bond\+Neighbors@{get\+Bond\+Neighbors}}
+\index{get\+Bond\+Neighbors@{get\+Bond\+Neighbors}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Bond\+Neighbors()}{getBondNeighbors()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::get\+Bond\+Neighbors (\begin{DoxyParamCaption}\item[{int}]{atomid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 579 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ad58d85938153a73ee5f17426474e6a90}\label{class_molecule_ad58d85938153a73ee5f17426474e6a90}} 
+\index{Molecule@{Molecule}!get\+Conformer@{get\+Conformer}}
+\index{get\+Conformer@{get\+Conformer}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Conformer()}{getConformer()}}
+{\footnotesize\ttfamily R\+D\+Kit\+::\+Conformer Molecule\+::get\+Conformer (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Conformer\mbox{]} 
+
+\mbox{[}select a conformers\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{[}int\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}conformer\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2230 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a98b0a89a7c6275eee5252155fa530e77}\label{class_molecule_a98b0a89a7c6275eee5252155fa530e77}} 
+\index{Molecule@{Molecule}!get\+Conformers\+R\+MS@{get\+Conformers\+R\+MS}}
+\index{get\+Conformers\+R\+MS@{get\+Conformers\+R\+MS}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Conformers\+R\+M\+S()}{getConformersRMS()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::get\+Conformers\+R\+MS (\begin{DoxyParamCaption}\item[{unsigned int}]{conf\+Id1,  }\item[{unsigned int}]{conf\+Id2,  }\item[{unsigned int}]{max\+Iters }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1381 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a89046a3437790e24581fd2958d49c544}\label{class_molecule_a89046a3437790e24581fd2958d49c544}} 
+\index{Molecule@{Molecule}!get\+Crippen\+Atom\+Contribs@{get\+Crippen\+Atom\+Contribs}}
+\index{get\+Crippen\+Atom\+Contribs@{get\+Crippen\+Atom\+Contribs}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Crippen\+Atom\+Contribs()}{getCrippenAtomContribs()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::get\+Crippen\+Atom\+Contribs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Crippen\+Atom\+Contribs\mbox{]} 
+
+\mbox{[}Wildman-\/\+Crippen logp,mr Atom Contributions\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}array of atom contribution\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1745 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a12aeb95c7b163dd74d62cc6973d1197a}\label{class_molecule_a12aeb95c7b163dd74d62cc6973d1197a}} 
+\index{Molecule@{Molecule}!get\+Hashed\+Atom\+Pair\+Fingerprint@{get\+Hashed\+Atom\+Pair\+Fingerprint}}
+\index{get\+Hashed\+Atom\+Pair\+Fingerprint@{get\+Hashed\+Atom\+Pair\+Fingerprint}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Hashed\+Atom\+Pair\+Fingerprint()}{getHashedAtomPairFingerprint()}}
+{\footnotesize\ttfamily vector$<$ int $>$ Molecule\+::get\+Hashed\+Atom\+Pair\+Fingerprint (\begin{DoxyParamCaption}\item[{int}]{size,  }\item[{int}]{atomid1,  }\item[{int}]{atomid2 }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Hashed\+Atom\+Pair\+Fingerprint\mbox{]} 
+
+\mbox{[}compute Hashed list (not the map) of Atompair code + Atompair occurence\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & \mbox{[}length of the distance to the core atom to be include in the Atom\+Pait Fingerprint\mbox{]} \\
+\hline
+{\em atomid1} & \mbox{[}from atom index 1\mbox{]} \\
+\hline
+{\em atomid2} & \mbox{[}to atom index 2\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}vector of int first portion of the list contains atompair code and second portion the atompair occurence\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 712 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_abc89b98816f2dc9666679cfb2e1eb696}\label{class_molecule_abc89b98816f2dc9666679cfb2e1eb696}} 
+\index{Molecule@{Molecule}!get\+Hashed\+Atom\+Pair\+Fingerprint\+As\+Bit\+Vect@{get\+Hashed\+Atom\+Pair\+Fingerprint\+As\+Bit\+Vect}}
+\index{get\+Hashed\+Atom\+Pair\+Fingerprint\+As\+Bit\+Vect@{get\+Hashed\+Atom\+Pair\+Fingerprint\+As\+Bit\+Vect}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Hashed\+Atom\+Pair\+Fingerprint\+As\+Bit\+Vect()}{getHashedAtomPairFingerprintAsBitVect()}}
+{\footnotesize\ttfamily string Molecule\+::get\+Hashed\+Atom\+Pair\+Fingerprint\+As\+Bit\+Vect (\begin{DoxyParamCaption}\item[{int}]{size,  }\item[{int}]{atomid1,  }\item[{int}]{atomid2 }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Hashed\+Atom\+Pair\+Fingerprint\+As\+Bit\+Vect\mbox{]} 
+
+\mbox{[}compute Hashed Atompair Bit\+Vect of the core atom\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & \mbox{[}length of the distance to the core atom to be include in the Atom\+Pait Fingerprint\mbox{]} \\
+\hline
+{\em atomid1} & \mbox{[}from atom index 1\mbox{]} \\
+\hline
+{\em atomid2} & \mbox{[}to atom index 2\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}string of Bit\+Vector\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 740 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a337c5373820a171f3cb3edc8ded2bf02}\label{class_molecule_a337c5373820a171f3cb3edc8ded2bf02}} 
+\index{Molecule@{Molecule}!get\+Layered\+Fingerprint\+Mol@{get\+Layered\+Fingerprint\+Mol}}
+\index{get\+Layered\+Fingerprint\+Mol@{get\+Layered\+Fingerprint\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Layered\+Fingerprint\+Mol()}{getLayeredFingerprintMol()}}
+{\footnotesize\ttfamily string Molecule\+::get\+Layered\+Fingerprint\+Mol (\begin{DoxyParamCaption}\item[{unsigned int}]{layer,  }\item[{unsigned int}]{sizes,  }\item[{unsigned int}]{lengths }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Layered\+Fingerprint\+Mol\mbox{]} 
+
+\mbox{[}get Layered fingerprint string\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}string of fingerprint\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 777 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ae3c52fdc38e787ce7abb9ec4fb35795c}\label{class_molecule_ae3c52fdc38e787ce7abb9ec4fb35795c}} 
+\index{Molecule@{Molecule}!get\+M\+A\+C\+C\+S\+Fingerprints@{get\+M\+A\+C\+C\+S\+Fingerprints}}
+\index{get\+M\+A\+C\+C\+S\+Fingerprints@{get\+M\+A\+C\+C\+S\+Fingerprints}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+M\+A\+C\+C\+S\+Fingerprints()}{getMACCSFingerprints()}}
+{\footnotesize\ttfamily string Molecule\+::get\+M\+A\+C\+C\+S\+Fingerprints (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+M\+A\+C\+C\+S\+Fingerprints\mbox{]} 
+
+\mbox{[}get M\+A\+C\+CS fingerprint string\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}string of fingerprint\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 790 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a78cd64d263c131ee0313917c023b940f}\label{class_molecule_a78cd64d263c131ee0313917c023b940f}} 
+\index{Molecule@{Molecule}!get\+Morgan\+Fingerprints@{get\+Morgan\+Fingerprints}}
+\index{get\+Morgan\+Fingerprints@{get\+Morgan\+Fingerprints}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Morgan\+Fingerprints()}{getMorganFingerprints()}}
+{\footnotesize\ttfamily string Molecule\+::get\+Morgan\+Fingerprints (\begin{DoxyParamCaption}\item[{unsigned int}]{sizes,  }\item[{unsigned int}]{lengths }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Morgan\+Fingerprints\mbox{]} 
+
+\mbox{[}get Morgan fingerprint string\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}string of fingerprint\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 816 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_aecd6b243dc5b420306cad9ba3a996101}\label{class_molecule_aecd6b243dc5b420306cad9ba3a996101}} 
+\index{Molecule@{Molecule}!get\+Morgan\+Fingerprints\+\_\+get\+Nonzero\+Elements@{get\+Morgan\+Fingerprints\+\_\+get\+Nonzero\+Elements}}
+\index{get\+Morgan\+Fingerprints\+\_\+get\+Nonzero\+Elements@{get\+Morgan\+Fingerprints\+\_\+get\+Nonzero\+Elements}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Morgan\+Fingerprints\+\_\+get\+Nonzero\+Elements()}{getMorganFingerprints\_getNonzeroElements()}}
+{\footnotesize\ttfamily map$<$ boost\+::uint32\+\_\+t, int $>$ Molecule\+::get\+Morgan\+Fingerprints\+\_\+get\+Nonzero\+Elements (\begin{DoxyParamCaption}\item[{unsigned int}]{sizes }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Morgan\+Fingerprints\+\_\+get\+Nonzero\+Elements\mbox{]} 
+
+\mbox{[}get Morgan fingerprint map of True Bits\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em sizes} & \mbox{[}length of the vector to be generated\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}Morgan fingerprint map vector of True Bits\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 882 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ace01e8dc28ea916279af4905fa4a5d4c}\label{class_molecule_ace01e8dc28ea916279af4905fa4a5d4c}} 
+\index{Molecule@{Molecule}!get\+Morgan\+Fingerprints\+\_\+get\+On\+Bbits@{get\+Morgan\+Fingerprints\+\_\+get\+On\+Bbits}}
+\index{get\+Morgan\+Fingerprints\+\_\+get\+On\+Bbits@{get\+Morgan\+Fingerprints\+\_\+get\+On\+Bbits}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Morgan\+Fingerprints\+\_\+get\+On\+Bbits()}{getMorganFingerprints\_getOnBbits()}}
+{\footnotesize\ttfamily vector$<$ int $>$ Molecule\+::get\+Morgan\+Fingerprints\+\_\+get\+On\+Bbits (\begin{DoxyParamCaption}\item[{unsigned int}]{sizes,  }\item[{unsigned int}]{lengths }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Morgan\+Fingerprints\+\_\+get\+On\+Bbits\mbox{]} 
+
+\mbox{[}get Morgan fingerprint index vector of Bits\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em sizes} & \mbox{[}length of the vector to be generated\mbox{]} \\
+\hline
+{\em lengths} & \mbox{[}Morgan FP value\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}Morgan fingerprint index vector of Bits\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 866 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a773a68572aff26b0fa536588e562e87b}\label{class_molecule_a773a68572aff26b0fa536588e562e87b}} 
+\index{Molecule@{Molecule}!get\+Morgan\+Fingerprints\+Keys@{get\+Morgan\+Fingerprints\+Keys}}
+\index{get\+Morgan\+Fingerprints\+Keys@{get\+Morgan\+Fingerprints\+Keys}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Morgan\+Fingerprints\+Keys()}{getMorganFingerprintsKeys()}}
+{\footnotesize\ttfamily vector$<$ boost\+::uint32\+\_\+t $>$ Molecule\+::get\+Morgan\+Fingerprints\+Keys (\begin{DoxyParamCaption}\item[{unsigned int}]{sizes }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Morgan\+U\+FP\mbox{]} 
+
+\mbox{[}get Morgan fingerprint string\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em sizes} & \mbox{[}length of the vector to be generated\mbox{]}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}key get\+On\+Bit keys like get\+Nonzero\+Elements().key()\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 830 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_aa3eccf55a9d1e512a16d2db64add43d2}\label{class_molecule_aa3eccf55a9d1e512a16d2db64add43d2}} 
+\index{Molecule@{Molecule}!get\+Morgan\+Fingerprintslist@{get\+Morgan\+Fingerprintslist}}
+\index{get\+Morgan\+Fingerprintslist@{get\+Morgan\+Fingerprintslist}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Morgan\+Fingerprintslist()}{getMorganFingerprintslist()}}
+{\footnotesize\ttfamily vector$<$ boost\+::uint32\+\_\+t $>$ Molecule\+::get\+Morgan\+Fingerprintslist (\begin{DoxyParamCaption}\item[{unsigned int}]{sizes }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Morgan\+Fingerprintslist\mbox{]} 
+
+\mbox{[}get Morgan fingerprint vector of True Bits \& values unfolded\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em sizes} & \mbox{[}length of the vector to be generated\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}Morgan fingerprint map vector of True Bits\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 919 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_afa532b75ee416a58bf7f628252522e65}\label{class_molecule_afa532b75ee416a58bf7f628252522e65}} 
+\index{Molecule@{Molecule}!get\+MW@{get\+MW}}
+\index{get\+MW@{get\+MW}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+M\+W()}{getMW()}}
+{\footnotesize\ttfamily int Molecule\+::get\+MW (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+MW\mbox{]} 
+
+\mbox{[}get approximate MW int value\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}return approximate MW\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1514 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a23bfc1c88f4aff43e87af062fe295922}\label{class_molecule_a23bfc1c88f4aff43e87af062fe295922}} 
+\index{Molecule@{Molecule}!get\+Num\+Atoms@{get\+Num\+Atoms}}
+\index{get\+Num\+Atoms@{get\+Num\+Atoms}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Num\+Atoms()}{getNumAtoms()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::get\+Num\+Atoms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Num\+Atoms\mbox{]} 
+
+\mbox{[}get the number of atoms of the molecule\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}number of atoms\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 660 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a9d22135d69888e8d269ac5384a424f83}\label{class_molecule_a9d22135d69888e8d269ac5384a424f83}} 
+\index{Molecule@{Molecule}!get\+Num\+Bridgehead\+Atoms@{get\+Num\+Bridgehead\+Atoms}}
+\index{get\+Num\+Bridgehead\+Atoms@{get\+Num\+Bridgehead\+Atoms}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Num\+Bridgehead\+Atoms()}{getNumBridgeheadAtoms()}}
+{\footnotesize\ttfamily int Molecule\+::get\+Num\+Bridgehead\+Atoms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}calc\+Num\+Bridgehead\+Atoms\mbox{]} 
+
+\mbox{[}count the number of Bridge head Atoms for SA score model\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}number of Bridge head atoms\mbox{]} caution must use R\+D\+K\+IT version $>$= 2016.\+03.\+01 
+\end{DoxyReturn}
+
+
+Definition at line 1501 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a00c23cd635ca82207165e59cdd714d99}\label{class_molecule_a00c23cd635ca82207165e59cdd714d99}} 
+\index{Molecule@{Molecule}!get\+Num\+Conformers@{get\+Num\+Conformers}}
+\index{get\+Num\+Conformers@{get\+Num\+Conformers}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Num\+Conformers()}{getNumConformers()}}
+{\footnotesize\ttfamily int Molecule\+::get\+Num\+Conformers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Num\+Conformers\mbox{]} 
+
+\mbox{[}count number of conformers\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2219 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a7ae4c6e9458d7874bf43bdfbe079d875}\label{class_molecule_a7ae4c6e9458d7874bf43bdfbe079d875}} 
+\index{Molecule@{Molecule}!get\+Num\+Macrocycles@{get\+Num\+Macrocycles}}
+\index{get\+Num\+Macrocycles@{get\+Num\+Macrocycles}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Num\+Macrocycles()}{getNumMacrocycles()}}
+{\footnotesize\ttfamily int Molecule\+::get\+Num\+Macrocycles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Num\+Macrocycles\mbox{]} 
+
+\mbox{[}count the number of macrocycles for SA score model\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}number of macrocycles\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1471 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ab418ce9c2222f00552c847a14499e282}\label{class_molecule_ab418ce9c2222f00552c847a14499e282}} 
+\index{Molecule@{Molecule}!get\+Num\+Spiro\+Atoms@{get\+Num\+Spiro\+Atoms}}
+\index{get\+Num\+Spiro\+Atoms@{get\+Num\+Spiro\+Atoms}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Num\+Spiro\+Atoms()}{getNumSpiroAtoms()}}
+{\footnotesize\ttfamily int Molecule\+::get\+Num\+Spiro\+Atoms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}calc\+Num\+Spiro\+Atoms\mbox{]} 
+
+\mbox{[}count the number of Spiro Atoms for SA score model\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}number of spiro atoms\mbox{]} caution must use R\+D\+K\+IT version $>$= 2016.\+03.\+01 
+\end{DoxyReturn}
+
+
+Definition at line 1489 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a5d97408c9357663ceb2b2bff4471c602}\label{class_molecule_a5d97408c9357663ceb2b2bff4471c602}} 
+\index{Molecule@{Molecule}!get\+Path@{get\+Path}}
+\index{get\+Path@{get\+Path}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Path()}{getPath()}}
+{\footnotesize\ttfamily string Molecule\+::get\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Path\mbox{]} 
+
+\mbox{[}get current path in node\+JS\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}path of node\+JS script\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1106 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a8d537ddf4c7fe5103a3a8f3025f1cea0}\label{class_molecule_a8d537ddf4c7fe5103a3a8f3025f1cea0}} 
+\index{Molecule@{Molecule}!get\+Pattern\+Fingerprint\+Mol@{get\+Pattern\+Fingerprint\+Mol}}
+\index{get\+Pattern\+Fingerprint\+Mol@{get\+Pattern\+Fingerprint\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Pattern\+Fingerprint\+Mol()}{getPatternFingerprintMol()}}
+{\footnotesize\ttfamily string Molecule\+::get\+Pattern\+Fingerprint\+Mol (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Pattern\+Fingerprint\+Mol\mbox{]} 
+
+\mbox{[}get Pattern fingerprint string\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}string of fingerprint\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 803 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ad465fbdb8c43e8280e4dcf3eefac1e13}\label{class_molecule_ad465fbdb8c43e8280e4dcf3eefac1e13}} 
+\index{Molecule@{Molecule}!get\+Prop@{get\+Prop}}
+\index{get\+Prop@{get\+Prop}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Prop()}{getProp()}}
+{\footnotesize\ttfamily string Molecule\+::get\+Prop (\begin{DoxyParamCaption}\item[{string}]{key }\end{DoxyParamCaption})}
+
+
+
+get \& set \& has properties 
+
+\mbox{[}get\+Prop\mbox{]}
+
+\mbox{[}get a molecule Property value based of property name key\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \mbox{[}string\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}string\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2194 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a5296c86bec78924d64bc2a9472eb91d5}\label{class_molecule_a5296c86bec78924d64bc2a9472eb91d5}} 
+\index{Molecule@{Molecule}!getproplist@{getproplist}}
+\index{getproplist@{getproplist}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{getproplist()}{getproplist()}}
+{\footnotesize\ttfamily vector$<$ string $>$ Molecule\+::getproplist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}getproplist\mbox{]} 
+
+\mbox{[}get the list of properties computed for this molecule\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}vector of string\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1066 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_aaace92222bb544e3682c894d4f1e9302}\label{class_molecule_aaace92222bb544e3682c894d4f1e9302}} 
+\index{Molecule@{Molecule}!get\+R\+D\+K\+Fingerprint\+Mol@{get\+R\+D\+K\+Fingerprint\+Mol}}
+\index{get\+R\+D\+K\+Fingerprint\+Mol@{get\+R\+D\+K\+Fingerprint\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+R\+D\+K\+Fingerprint\+Mol()}{getRDKFingerprintMol()}}
+{\footnotesize\ttfamily string Molecule\+::get\+R\+D\+K\+Fingerprint\+Mol (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+R\+D\+K\+Fingerprint\+Mol\mbox{]} 
+
+\mbox{[}get R\+D\+Kit fingerprint string\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}string of fingerprint\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 765 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a5d33d9bf92166de9e58d6deadddc9fed}\label{class_molecule_a5d33d9bf92166de9e58d6deadddc9fed}} 
+\index{Molecule@{Molecule}!get\+Substruct\+Matches@{get\+Substruct\+Matches}}
+\index{get\+Substruct\+Matches@{get\+Substruct\+Matches}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Substruct\+Matches()}{getSubstructMatches()}}
+{\footnotesize\ttfamily vector$<$ int $>$ Molecule\+::get\+Substruct\+Matches (\begin{DoxyParamCaption}\item[{string}]{smilesref }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Substruct\+Matches\mbox{]} 
+
+\mbox{[}determine the Substruct Matches from a smile reference numbers as vector of int (3 consecutive ints define a sub match group)\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smilesref} & \mbox{[}string\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}vector of int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2098 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a07e55f82e97dfe4c49855b5bb81c49d2}\label{class_molecule_a07e55f82e97dfe4c49855b5bb81c49d2}} 
+\index{Molecule@{Molecule}!get\+Substruct\+Matches\+Number@{get\+Substruct\+Matches\+Number}}
+\index{get\+Substruct\+Matches\+Number@{get\+Substruct\+Matches\+Number}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Substruct\+Matches\+Number()}{getSubstructMatchesNumber()}}
+{\footnotesize\ttfamily int Molecule\+::get\+Substruct\+Matches\+Number (\begin{DoxyParamCaption}\item[{string}]{smilesref }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+Substruct\+Matches\+Number\mbox{]} 
+
+\mbox{[}determine the Substruct Matches from a smile reference total number\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smilesref} & \mbox{[}string\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2124 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_afe8104a0a538fe6b64c089d409871f0d}\label{class_molecule_afe8104a0a538fe6b64c089d409871f0d}} 
+\index{Molecule@{Molecule}!get\+Symbols@{get\+Symbols}}
+\index{get\+Symbols@{get\+Symbols}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+Symbols()}{getSymbols()}}
+{\footnotesize\ttfamily vector$<$ string $>$ Molecule\+::get\+Symbols (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 2170 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ab277cc8d75ec0bfafe2e40aa3d960e4b}\label{class_molecule_ab277cc8d75ec0bfafe2e40aa3d960e4b}} 
+\index{Molecule@{Molecule}!get\+T\+P\+S\+A\+Atom\+Contribs@{get\+T\+P\+S\+A\+Atom\+Contribs}}
+\index{get\+T\+P\+S\+A\+Atom\+Contribs@{get\+T\+P\+S\+A\+Atom\+Contribs}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{get\+T\+P\+S\+A\+Atom\+Contribs()}{getTPSAAtomContribs()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::get\+T\+P\+S\+A\+Atom\+Contribs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}get\+T\+P\+S\+A\+Atom\+Contribs\mbox{]} 
+
+\mbox{[}T\+P\+SA Atom Contributions\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}array of atom contribution\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2014 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ab4440ddc7c396037799a37dcc6fdb497}\label{class_molecule_ab4440ddc7c396037799a37dcc6fdb497}} 
+\index{Molecule@{Molecule}!Hall\+Kier\+Alpha@{Hall\+Kier\+Alpha}}
+\index{Hall\+Kier\+Alpha@{Hall\+Kier\+Alpha}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Hall\+Kier\+Alpha()}{HallKierAlpha()}}
+{\footnotesize\ttfamily double Molecule\+::\+Hall\+Kier\+Alpha (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Hall\+Kier\+Alpha\mbox{]} 
+
+\mbox{[}calculate the Hall-\/\+Kier alpha value for a molecule From equation (58) of Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Hall\+Kier\+Alpha\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1687 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a7168f3faf1d150373c0b8728767d1d4b}\label{class_molecule_a7168f3faf1d150373c0b8728767d1d4b}} 
+\index{Molecule@{Molecule}!has\+Prop@{has\+Prop}}
+\index{has\+Prop@{has\+Prop}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{has\+Prop()}{hasProp()}}
+{\footnotesize\ttfamily bool Molecule\+::has\+Prop (\begin{DoxyParamCaption}\item[{string}]{key }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}has\+Prop\mbox{]} 
+
+\mbox{[}determine if molecule has a key property\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \mbox{[}string\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}boolean\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2257 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a5494377b1f6db28c894941c0139496b3}\label{class_molecule_a5494377b1f6db28c894941c0139496b3}} 
+\index{Molecule@{Molecule}!Has\+Substruct\+Match\+Str@{Has\+Substruct\+Match\+Str}}
+\index{Has\+Substruct\+Match\+Str@{Has\+Substruct\+Match\+Str}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Has\+Substruct\+Match\+Str()}{HasSubstructMatchStr()}}
+{\footnotesize\ttfamily bool Molecule\+::\+Has\+Substruct\+Match\+Str (\begin{DoxyParamCaption}\item[{string}]{smilesref }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Has\+Substruct\+Match\+Str\mbox{]} 
+
+\mbox{[}determine if substructure (from smile) is in the current molecule\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smilesref} & \mbox{[}string\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}bool\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2141 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ae4e3b1f59d36dde20ffded165b417288}\label{class_molecule_ae4e3b1f59d36dde20ffded165b417288}} 
+\index{Molecule@{Molecule}!Kappa1@{Kappa1}}
+\index{Kappa1@{Kappa1}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Kappa1()}{Kappa1()}}
+{\footnotesize\ttfamily double Molecule\+::\+Kappa1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Kappa1\mbox{]} 
+
+\mbox{[}calculate the Hall-\/\+Kier alpha value for a molecule From equation (58) and (59) of Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Kappa1\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1698 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a27ded481f6abb14e5531e645713effe3}\label{class_molecule_a27ded481f6abb14e5531e645713effe3}} 
+\index{Molecule@{Molecule}!Kappa2@{Kappa2}}
+\index{Kappa2@{Kappa2}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Kappa2()}{Kappa2()}}
+{\footnotesize\ttfamily double Molecule\+::\+Kappa2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Kappa2\mbox{]} 
+
+\mbox{[}calculate the Hall-\/\+Kier alpha value for a molecule From equation (58) and (59) of Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Kappa2\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1709 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a46bf5206450f9a17bd2c256a7f37ab8b}\label{class_molecule_a46bf5206450f9a17bd2c256a7f37ab8b}} 
+\index{Molecule@{Molecule}!Kappa3@{Kappa3}}
+\index{Kappa3@{Kappa3}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Kappa3()}{Kappa3()}}
+{\footnotesize\ttfamily double Molecule\+::\+Kappa3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Kappa3\mbox{]} 
+
+\mbox{[}calculate the Hall-\/\+Kier alpha value for a molecule From equation (58) and (59) of Rev. Comp. Chem. vol 2, 367-\/422, (1991)\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Kappa3\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1720 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ac70bc19bc462d250f2c4de320bd3330c}\label{class_molecule_ac70bc19bc462d250f2c4de320bd3330c}} 
+\index{Molecule@{Molecule}!Kekulize@{Kekulize}}
+\index{Kekulize@{Kekulize}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Kekulize()}{Kekulize()}}
+{\footnotesize\ttfamily void Molecule\+::\+Kekulize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Kekulize\mbox{]} 
+
+\mbox{[}Kekulize representation of the bond for plotting \& descriptors...\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em Kekulize} & \mbox{[}molecule Kekulized\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 1446 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a3ed0d0c3a496259b3e030dcfc2e37e39}\label{class_molecule_a3ed0d0c3a496259b3e030dcfc2e37e39}} 
+\index{Molecule@{Molecule}!Labute\+A\+SA@{Labute\+A\+SA}}
+\index{Labute\+A\+SA@{Labute\+A\+SA}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Labute\+A\+S\+A()}{LabuteASA()}}
+{\footnotesize\ttfamily double Molecule\+::\+Labute\+A\+SA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Labute\+A\+SA\mbox{]} 
+
+\mbox{[}Labute A\+SA value for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}double\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1978 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_aae854241373a2539a0b9421b8d295dd6}\label{class_molecule_aae854241373a2539a0b9421b8d295dd6}} 
+\index{Molecule@{Molecule}!Lipinski\+H\+BA@{Lipinski\+H\+BA}}
+\index{Lipinski\+H\+BA@{Lipinski\+H\+BA}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Lipinski\+H\+B\+A()}{LipinskiHBA()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Lipinski\+H\+BA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Lipinski\+H\+BA\mbox{]} 
+
+\mbox{[}number of Lipinski H-\/bond acceptors for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1763 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a5b22fcdafd01813f7a554f42dad03aea}\label{class_molecule_a5b22fcdafd01813f7a554f42dad03aea}} 
+\index{Molecule@{Molecule}!Lipinski\+H\+BD@{Lipinski\+H\+BD}}
+\index{Lipinski\+H\+BD@{Lipinski\+H\+BD}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Lipinski\+H\+B\+D()}{LipinskiHBD()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Lipinski\+H\+BD (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Lipinski\+H\+BA\mbox{]} 
+
+\mbox{[}number of Lipinski H-\/bond donors for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1774 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ae3e5569d45cb96dbf1636d55e69273d4}\label{class_molecule_ae3e5569d45cb96dbf1636d55e69273d4}} 
+\index{Molecule@{Molecule}!logp\+\_\+mr@{logp\+\_\+mr}}
+\index{logp\+\_\+mr@{logp\+\_\+mr}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{logp\+\_\+mr()}{logp\_mr()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::logp\+\_\+mr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}logp\+\_\+mr\mbox{]} 
+
+\mbox{[}Wildman-\/\+Crippen logp,mr values\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}array of logP and mr\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1730 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a5e441ebbeef50a379ed79911805a5124}\label{class_molecule_a5e441ebbeef50a379ed79911805a5124}} 
+\index{Molecule@{Molecule}!M\+M\+F\+Foptimize\+Molecule@{M\+M\+F\+Foptimize\+Molecule}}
+\index{M\+M\+F\+Foptimize\+Molecule@{M\+M\+F\+Foptimize\+Molecule}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{M\+M\+F\+Foptimize\+Molecule()}{MMFFoptimizeMolecule()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::\+M\+M\+F\+Foptimize\+Molecule (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}M\+M\+F\+Foptimize\+Molecule\mbox{]} 
+
+\mbox{[}generate the 3D optimized molecule coordonate based on M\+M\+FF field force model\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}return the status of the optimization and the energie of the optimal structure\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 991 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a871ec0fe06c07a873ef29d1af4190640}\label{class_molecule_a871ec0fe06c07a873ef29d1af4190640}} 
+\index{Molecule@{Molecule}!M\+M\+F\+Foptimize\+Molecule@{M\+M\+F\+Foptimize\+Molecule}}
+\index{M\+M\+F\+Foptimize\+Molecule@{M\+M\+F\+Foptimize\+Molecule}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{M\+M\+F\+Foptimize\+Molecule()}{MMFFoptimizeMolecule()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::\+M\+M\+F\+Foptimize\+Molecule (\begin{DoxyParamCaption}\item[{int}]{max\+Iters,  }\item[{string}]{mmff\+Variant }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}M\+M\+F\+Foptimize\+Molecule\mbox{]} 
+
+\mbox{[}generate the 3D optimized molecule coordonate based on M\+M\+FF field force model\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\+Iters} & \mbox{[}number of max iteration option\mbox{]} \\
+\hline
+{\em mmff\+Variant} & \mbox{[}M\+M\+FF variant field force option\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}return the status of the optimization and the energie of the optimal structure\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1009 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a839e0ee89e2355a5451cd0f8fdff0a90}\label{class_molecule_a839e0ee89e2355a5451cd0f8fdff0a90}} 
+\index{Molecule@{Molecule}!M\+M\+F\+F\+Optimize\+Molecule\+Confs@{M\+M\+F\+F\+Optimize\+Molecule\+Confs}}
+\index{M\+M\+F\+F\+Optimize\+Molecule\+Confs@{M\+M\+F\+F\+Optimize\+Molecule\+Confs}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{M\+M\+F\+F\+Optimize\+Molecule\+Confs()}{MMFFOptimizeMoleculeConfs()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::\+M\+M\+F\+F\+Optimize\+Molecule\+Confs (\begin{DoxyParamCaption}\item[{unsigned int}]{num\+Threads,  }\item[{int}]{max\+Iters,  }\item[{string}]{mmff\+Variant }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}M\+M\+F\+F\+Optimize\+Molecule\+Confs\mbox{]} 
+
+\mbox{[}generate the 3D optimized molecule conformers coordonate based on M\+M\+FF field force model\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+Threads} & \mbox{[}number of Threads option ... not working in JS for the moment!\mbox{]} \\
+\hline
+{\em max\+Iters} & \mbox{[}number of max iteration option\mbox{]} \\
+\hline
+{\em mmff\+Variant} & \mbox{[}M\+M\+FF variant field force option\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}return the status of the optimization and the energie of the optimal structure\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1029 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a689a07968c44db22ef925eee7f70295b}\label{class_molecule_a689a07968c44db22ef925eee7f70295b}} 
+\index{Molecule@{Molecule}!Mol2\+Block\+To\+Mol@{Mol2\+Block\+To\+Mol}}
+\index{Mol2\+Block\+To\+Mol@{Mol2\+Block\+To\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Mol2\+Block\+To\+Mol()}{Mol2BlockToMol()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ Molecule\+::\+Mol2\+Block\+To\+Mol (\begin{DoxyParamCaption}\item[{string}]{mol\+Block }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{[}Mol2\+Block\+To\+Mol\mbox{]} 
+
+\mbox{[}generate a molecule from a Mol2\+Block structure\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em mol\+Block} & \mbox{[}string of Mol2\+Block\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}rdkit molecule object\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 185 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a75b3d11ee3b2ccacad2f5ae1c6909b19}\label{class_molecule_a75b3d11ee3b2ccacad2f5ae1c6909b19}} 
+\index{Molecule@{Molecule}!Mol\+Block\+To\+Mol@{Mol\+Block\+To\+Mol}}
+\index{Mol\+Block\+To\+Mol@{Mol\+Block\+To\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Mol\+Block\+To\+Mol()}{MolBlockToMol()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ Molecule\+::\+Mol\+Block\+To\+Mol (\begin{DoxyParamCaption}\item[{string}]{mol\+Block }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{[}Mol\+Block\+To\+Mol\mbox{]} 
+
+\mbox{[}generate a moleculte from a Mol\+Block\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em mol\+Block} & \mbox{[}string of Mol\+Block\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}rdkit molecule object\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 197 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a2425937fefa34d28560ef4ad152b9602}\label{class_molecule_a2425937fefa34d28560ef4ad152b9602}} 
+\index{Molecule@{Molecule}!mol\+From\+Pickle@{mol\+From\+Pickle}}
+\index{mol\+From\+Pickle@{mol\+From\+Pickle}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{mol\+From\+Pickle()}{molFromPickle()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ Molecule\+::mol\+From\+Pickle (\begin{DoxyParamCaption}\item[{string}]{pickle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{[}mol\+From\+Pickle\mbox{]} 
+
+\mbox{[}generate a molecule from a Pickle\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em pickle} & \mbox{[}string of pickle\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}rdkit molecule object\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 222 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_af03e0cbd53700d8fda8ed381184a75cc}\label{class_molecule_af03e0cbd53700d8fda8ed381184a75cc}} 
+\index{Molecule@{Molecule}!mol\+To\+Molfile@{mol\+To\+Molfile}}
+\index{mol\+To\+Molfile@{mol\+To\+Molfile}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{mol\+To\+Molfile()}{molToMolfile()}}
+{\footnotesize\ttfamily string Molecule\+::mol\+To\+Molfile (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}mol\+To\+Molfile\mbox{]} 
+
+\mbox{[}convert molecule to Molfile string\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}Molfile string\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1090 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a9575c457c6fb3c38ac260b87434b5a37}\label{class_molecule_a9575c457c6fb3c38ac260b87434b5a37}} 
+\index{Molecule@{Molecule}!mol\+To\+Smiles@{mol\+To\+Smiles}}
+\index{mol\+To\+Smiles@{mol\+To\+Smiles}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{mol\+To\+Smiles()}{molToSmiles()}}
+{\footnotesize\ttfamily string Molecule\+::mol\+To\+Smiles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}mol\+To\+Smiles\mbox{]} 
+
+\mbox{[}convert molecule to smile string\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}smile string\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1077 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a982b663705ea294980bdb56458dc9bd1}\label{class_molecule_a982b663705ea294980bdb56458dc9bd1}} 
+\index{Molecule@{Molecule}!M\+Q\+Ns@{M\+Q\+Ns}}
+\index{M\+Q\+Ns@{M\+Q\+Ns}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{M\+Q\+Ns()}{MQNs()}}
+{\footnotesize\ttfamily vector$<$ unsigned int $>$ Molecule\+::\+M\+Q\+Ns (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}M\+Q\+Ns\mbox{]} 
+
+\mbox{[}M\+Q\+Ns\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}vector of dobule\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2084 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_af46950eda08b8532e75f9bf83a07ead7}\label{class_molecule_af46950eda08b8532e75f9bf83a07ead7}} 
+\index{Molecule@{Molecule}!Murckosmiles\+To\+Mol@{Murckosmiles\+To\+Mol}}
+\index{Murckosmiles\+To\+Mol@{Murckosmiles\+To\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Murckosmiles\+To\+Mol()}{MurckosmilesToMol()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ Molecule\+::\+Murckosmiles\+To\+Mol (\begin{DoxyParamCaption}\item[{string}]{smi }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{[}Murckosmiles\+To\+Mol\mbox{]} 
+
+\mbox{[}generate the murcko structure from a smile\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smi} & \mbox{[}string of smile\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}rdkit molecule object\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 236 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ab7813a959f80b5291f43f6b84b775ff5}\label{class_molecule_ab7813a959f80b5291f43f6b84b775ff5}} 
+\index{Molecule@{Molecule}!newmolecule@{newmolecule}}
+\index{newmolecule@{newmolecule}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{newmolecule()}{newmolecule()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ Molecule\+::newmolecule (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{[}newmolecule\mbox{]} 
+
+\mbox{[}generate a blank molecule container\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}rdkit blank molecule object\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 248 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a4953b86e7456967bb605bdb61c15b1aa}\label{class_molecule_a4953b86e7456967bb605bdb61c15b1aa}} 
+\index{Molecule@{Molecule}!Num\+Aliphatic\+Carbocycles@{Num\+Aliphatic\+Carbocycles}}
+\index{Num\+Aliphatic\+Carbocycles@{Num\+Aliphatic\+Carbocycles}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Aliphatic\+Carbocycles()}{NumAliphaticCarbocycles()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Aliphatic\+Carbocycles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Aliphatic\+Carbocycles\mbox{]} 
+
+\mbox{[}number of aliphatic (containing at least one non-\/aromatic bond) carbocycles for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1966 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a9c5af0a753b98601782bb2d98021793a}\label{class_molecule_a9c5af0a753b98601782bb2d98021793a}} 
+\index{Molecule@{Molecule}!Num\+Aliphatic\+Heterocycles@{Num\+Aliphatic\+Heterocycles}}
+\index{Num\+Aliphatic\+Heterocycles@{Num\+Aliphatic\+Heterocycles}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Aliphatic\+Heterocycles()}{NumAliphaticHeterocycles()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Aliphatic\+Heterocycles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Aliphatic\+Heterocycles\mbox{]} 
+
+\mbox{[}number of aliphatic (containing at least one non-\/aromatic bond) heterocycles for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1955 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a6170e58d6f19e2023378975bcf93c8d7}\label{class_molecule_a6170e58d6f19e2023378975bcf93c8d7}} 
+\index{Molecule@{Molecule}!Num\+Aliphatic\+Rings@{Num\+Aliphatic\+Rings}}
+\index{Num\+Aliphatic\+Rings@{Num\+Aliphatic\+Rings}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Aliphatic\+Rings()}{NumAliphaticRings()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Aliphatic\+Rings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Aliphatic\+Rings\mbox{]} 
+
+\mbox{[}number of aliphatic (containing at least one non-\/aromatic bond) rings for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1877 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a48326bca7f346cee15f4c6f251ba8788}\label{class_molecule_a48326bca7f346cee15f4c6f251ba8788}} 
+\index{Molecule@{Molecule}!Num\+Amide\+Bonds@{Num\+Amide\+Bonds}}
+\index{Num\+Amide\+Bonds@{Num\+Amide\+Bonds}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Amide\+Bonds()}{NumAmideBonds()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Amide\+Bonds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Amide\+Bonds\mbox{]} 
+
+\mbox{[}number of amide bonds in a molecule\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em calc\+Num\+Amide\+Bonds} & \mbox{[}description\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}description\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1832 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_af0be542ca2e2d7d137d80dc0fdc7d6ec}\label{class_molecule_af0be542ca2e2d7d137d80dc0fdc7d6ec}} 
+\index{Molecule@{Molecule}!Num\+Aromatic\+Carbocycles@{Num\+Aromatic\+Carbocycles}}
+\index{Num\+Aromatic\+Carbocycles@{Num\+Aromatic\+Carbocycles}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Aromatic\+Carbocycles()}{NumAromaticCarbocycles()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Aromatic\+Carbocycles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Aromatic\+Carbocycles\mbox{]} 
+
+\mbox{[}number of aromatic Carbocycles for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int \mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1921 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_acacbd3d2e5fc65157be32f14ef98f15d}\label{class_molecule_acacbd3d2e5fc65157be32f14ef98f15d}} 
+\index{Molecule@{Molecule}!Num\+Aromatic\+Heterocycles@{Num\+Aromatic\+Heterocycles}}
+\index{Num\+Aromatic\+Heterocycles@{Num\+Aromatic\+Heterocycles}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Aromatic\+Heterocycles()}{NumAromaticHeterocycles()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Aromatic\+Heterocycles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Aromatic\+Heterocycles\mbox{]} 
+
+\mbox{[}number of aromatic heterocycles for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int \mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1910 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a76554ff4fee44adcd1a1ca15eb8e8a7b}\label{class_molecule_a76554ff4fee44adcd1a1ca15eb8e8a7b}} 
+\index{Molecule@{Molecule}!Num\+Aromatic\+Rings@{Num\+Aromatic\+Rings}}
+\index{Num\+Aromatic\+Rings@{Num\+Aromatic\+Rings}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Aromatic\+Rings()}{NumAromaticRings()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Aromatic\+Rings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Aromatic\+Rings\mbox{]} 
+
+\mbox{[}number of aromatic rings for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1866 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a932d2464d1d351fca8e72cd160bde74f}\label{class_molecule_a932d2464d1d351fca8e72cd160bde74f}} 
+\index{Molecule@{Molecule}!Num\+H\+BA@{Num\+H\+BA}}
+\index{Num\+H\+BA@{Num\+H\+BA}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+H\+B\+A()}{NumHBA()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+H\+BA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+H\+BA\mbox{]} 
+
+\mbox{[}number of H-\/bond acceptors for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1808 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a67cebe5aa58856c930fa1b162e592956}\label{class_molecule_a67cebe5aa58856c930fa1b162e592956}} 
+\index{Molecule@{Molecule}!Num\+H\+BD@{Num\+H\+BD}}
+\index{Num\+H\+BD@{Num\+H\+BD}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+H\+B\+D()}{NumHBD()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+H\+BD (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+H\+BA\mbox{]} 
+
+\mbox{[}number of H-\/bond donors for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1797 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a582058277ae6808a93cf6ef186037eaa}\label{class_molecule_a582058277ae6808a93cf6ef186037eaa}} 
+\index{Molecule@{Molecule}!Num\+Heteroatoms@{Num\+Heteroatoms}}
+\index{Num\+Heteroatoms@{Num\+Heteroatoms}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Heteroatoms()}{NumHeteroatoms()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Heteroatoms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Heteroatoms\mbox{]} 
+
+\mbox{[}number of heteroatoms for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1820 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a9ea5ea968d6b3712d059b33fcd860c94}\label{class_molecule_a9ea5ea968d6b3712d059b33fcd860c94}} 
+\index{Molecule@{Molecule}!Num\+Heterocycles@{Num\+Heterocycles}}
+\index{Num\+Heterocycles@{Num\+Heterocycles}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Heterocycles()}{NumHeterocycles()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Heterocycles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Heterocycles\mbox{]} 
+
+\mbox{[}number of heterocycles for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int \mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1899 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a0a3b03a9c5fcc9d24f2f285fdb68361a}\label{class_molecule_a0a3b03a9c5fcc9d24f2f285fdb68361a}} 
+\index{Molecule@{Molecule}!Num\+Rings@{Num\+Rings}}
+\index{Num\+Rings@{Num\+Rings}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Rings()}{NumRings()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Rings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Rings\mbox{]} 
+
+\mbox{[}number of rings for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1855 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a1185b821c895d5bfd39d194570749524}\label{class_molecule_a1185b821c895d5bfd39d194570749524}} 
+\index{Molecule@{Molecule}!Num\+Rotatable\+Bonds@{Num\+Rotatable\+Bonds}}
+\index{Num\+Rotatable\+Bonds@{Num\+Rotatable\+Bonds}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Rotatable\+Bonds()}{NumRotatableBonds()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Rotatable\+Bonds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Rotatable\+Bonds\mbox{]} 
+
+\mbox{[}number of rotatable bonds for a molecule. does not count things like amide or ester bonds\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1786 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a63f6f6403e648006f25feb9103add3ce}\label{class_molecule_a63f6f6403e648006f25feb9103add3ce}} 
+\index{Molecule@{Molecule}!Num\+Saturated\+Carbocycles@{Num\+Saturated\+Carbocycles}}
+\index{Num\+Saturated\+Carbocycles@{Num\+Saturated\+Carbocycles}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Saturated\+Carbocycles()}{NumSaturatedCarbocycles()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Saturated\+Carbocycles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Saturated\+Carbocycles\mbox{]} 
+
+\mbox{[}number of saturated carbocycles for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1944 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a9121b878bee7059c7f3eabb541e3c029}\label{class_molecule_a9121b878bee7059c7f3eabb541e3c029}} 
+\index{Molecule@{Molecule}!Num\+Saturated\+Heterocycles@{Num\+Saturated\+Heterocycles}}
+\index{Num\+Saturated\+Heterocycles@{Num\+Saturated\+Heterocycles}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Saturated\+Heterocycles()}{NumSaturatedHeterocycles()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Saturated\+Heterocycles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Saturated\+Heterocycles\mbox{]} 
+
+\mbox{[}number of saturated heterocycles for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1932 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a0c4eb1ffb0cc048b22a8298e3a9bc951}\label{class_molecule_a0c4eb1ffb0cc048b22a8298e3a9bc951}} 
+\index{Molecule@{Molecule}!Num\+Saturated\+Rings@{Num\+Saturated\+Rings}}
+\index{Num\+Saturated\+Rings@{Num\+Saturated\+Rings}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Num\+Saturated\+Rings()}{NumSaturatedRings()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::\+Num\+Saturated\+Rings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Num\+Saturated\+Rings\mbox{]} 
+
+\mbox{[}number of saturated rings for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}unsigned int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1888 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a7af6b3bc2840250b9e9aac63067a4b3d}\label{class_molecule_a7af6b3bc2840250b9e9aac63067a4b3d}} 
+\index{Molecule@{Molecule}!P\+E\+O\+\_\+\+V\+SA@{P\+E\+O\+\_\+\+V\+SA}}
+\index{P\+E\+O\+\_\+\+V\+SA@{P\+E\+O\+\_\+\+V\+SA}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{P\+E\+O\+\_\+\+V\+S\+A()}{PEO\_VSA()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::\+P\+E\+O\+\_\+\+V\+SA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}P\+E\+O\+\_\+\+V\+SA\mbox{]} 
+
+\mbox{[}P\+E\+O\+\_\+\+V\+SA\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}vector of dobule\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2073 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a24d8a0ae44766a09fa4f245f61a22dc2}\label{class_molecule_a24d8a0ae44766a09fa4f245f61a22dc2}} 
+\index{Molecule@{Molecule}!pickle\+Mol@{pickle\+Mol}}
+\index{pickle\+Mol@{pickle\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{pickle\+Mol()}{pickleMol()}}
+{\footnotesize\ttfamily string Molecule\+::pickle\+Mol (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}pickle\+Mol\mbox{]} 
+
+\mbox{[}convert molecule to binary code from storage of pickle\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}string pickle of the molecule\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 751 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a491c0807f620c690bb8b5eab3bf7efcf}\label{class_molecule_a491c0807f620c690bb8b5eab3bf7efcf}} 
+\index{Molecule@{Molecule}!picontacts@{picontacts}}
+\index{picontacts@{picontacts}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{picontacts()}{picontacts()}}
+{\footnotesize\ttfamily unsigned int Molecule\+::picontacts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 490 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_aff4e7702feb85eb5d43b5ae89a504ca3}\label{class_molecule_aff4e7702feb85eb5d43b5ae89a504ca3}} 
+\index{Molecule@{Molecule}!remove\+Hs@{remove\+Hs}}
+\index{remove\+Hs@{remove\+Hs}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{remove\+Hs()}{removeHs()}}
+{\footnotesize\ttfamily void Molecule\+::remove\+Hs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}remove\+Hs\mbox{]} 
+
+\mbox{[}remove\+Hs\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em remove\+Hs} & \mbox{[}molecule without Hs\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 1413 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a1d3b07d426af616e861606727848d35e}\label{class_molecule_a1d3b07d426af616e861606727848d35e}} 
+\index{Molecule@{Molecule}!sanitize\+Mol@{sanitize\+Mol}}
+\index{sanitize\+Mol@{sanitize\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{sanitize\+Mol()}{sanitizeMol()}}
+{\footnotesize\ttfamily void Molecule\+::sanitize\+Mol (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}sanitize\+Mol\mbox{]} 
+
+\mbox{[}sanitized molecule\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em sanitize\+Mol} & \mbox{[}molecule sanitized\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 1424 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a4c3f4a82ffe6453c231d78aef0af5efd}\label{class_molecule_a4c3f4a82ffe6453c231d78aef0af5efd}} 
+\index{Molecule@{Molecule}!sdwrite\+Confs@{sdwrite\+Confs}}
+\index{sdwrite\+Confs@{sdwrite\+Confs}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{sdwrite\+Confs()}{sdwriteConfs()}}
+{\footnotesize\ttfamily string Molecule\+::sdwrite\+Confs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}sdwrite\+Confs\mbox{]} 
+
+\mbox{[}convert molecule conformer list into a unique Molfile string\mbox{]} \begin{DoxyReturn}{Returns}
+\mbox{[}Molfile String\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1121 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a21ccf25eb7aa1fb6c5827a7c6c01d926}\label{class_molecule_a21ccf25eb7aa1fb6c5827a7c6c01d926}} 
+\index{Molecule@{Molecule}!set\+Bond\+Dir@{set\+Bond\+Dir}}
+\index{set\+Bond\+Dir@{set\+Bond\+Dir}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{set\+Bond\+Dir()}{setBondDir()}}
+{\footnotesize\ttfamily void Molecule\+::set\+Bond\+Dir (\begin{DoxyParamCaption}\item[{int}]{Bondid,  }\item[{int}]{bonddirid }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}set\+Bond\+Dir\mbox{]} 
+
+\mbox{[}set the bond direction\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em Bondid} & \mbox{[}int bond index value\mbox{]} \\
+\hline
+{\em bonddirid} & \mbox{[}int bond dircection index\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 294 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a25264008a24371142100f10ab7907d6f}\label{class_molecule_a25264008a24371142100f10ab7907d6f}} 
+\index{Molecule@{Molecule}!set\+Prop@{set\+Prop}}
+\index{set\+Prop@{set\+Prop}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{set\+Prop()}{setProp()}}
+{\footnotesize\ttfamily int Molecule\+::set\+Prop (\begin{DoxyParamCaption}\item[{string}]{key,  }\item[{string}]{value }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}set\+Prop\mbox{]} 
+
+\mbox{[}set a molecular property value for a property key\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \mbox{[}string\mbox{]} \\
+\hline
+{\em value} & \mbox{[}string\mbox{]}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}int\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2244 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a43f990a0c0e9f3952c4a1e2f0ba75117}\label{class_molecule_a43f990a0c0e9f3952c4a1e2f0ba75117}} 
+\index{Molecule@{Molecule}!Similarity@{Similarity}}
+\index{Similarity@{Similarity}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Similarity()}{Similarity()}}
+{\footnotesize\ttfamily double Molecule\+::\+Similarity (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_molecule}{Molecule}}}]{moltocompare,  }\item[{string}]{similarityfunction,  }\item[{double}]{a,  }\item[{double}]{b }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Similarity\mbox{]} 
+
+\mbox{[}generate a molecule from a smile\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}compar} & one molecule to another molecule object\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}double\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 148 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_aaf27b23a3849ca9ec2cf2df6ee591244}\label{class_molecule_aaf27b23a3849ca9ec2cf2df6ee591244}} 
+\index{Molecule@{Molecule}!Slog\+P\+\_\+\+V\+SA@{Slog\+P\+\_\+\+V\+SA}}
+\index{Slog\+P\+\_\+\+V\+SA@{Slog\+P\+\_\+\+V\+SA}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Slog\+P\+\_\+\+V\+S\+A()}{SlogP\_VSA()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::\+Slog\+P\+\_\+\+V\+SA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Slog\+P\+\_\+\+V\+SA\mbox{]} 
+
+\mbox{[}Slog\+P\+\_\+\+V\+SA\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}vector of dobule\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2052 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a628d6859f22b76a102d11674ef461923}\label{class_molecule_a628d6859f22b76a102d11674ef461923}} 
+\index{Molecule@{Molecule}!smarts\+To\+Mol@{smarts\+To\+Mol}}
+\index{smarts\+To\+Mol@{smarts\+To\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{smarts\+To\+Mol()}{smartsToMol()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ Molecule\+::smarts\+To\+Mol (\begin{DoxyParamCaption}\item[{string}]{smarts }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{[}smarts\+To\+Mol\mbox{]} 
+
+\mbox{[}generate a molecule from a Smart\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smarts} & \mbox{[}string of smart\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}rdkit molecule object\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 210 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a8aa7308d675a16f2513de6c343eb11d3}\label{class_molecule_a8aa7308d675a16f2513de6c343eb11d3}} 
+\index{Molecule@{Molecule}!smiles\+To\+Mol@{smiles\+To\+Mol}}
+\index{smiles\+To\+Mol@{smiles\+To\+Mol}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{smiles\+To\+Mol()}{smilesToMol()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_molecule}{Molecule}} $\ast$ Molecule\+::smiles\+To\+Mol (\begin{DoxyParamCaption}\item[{string}]{smiles }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{[}from\+Smile\mbox{]} 
+
+\mbox{[}generate a molecule from a smile\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smiles} & \mbox{[}string\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}rdkit molecule object\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 173 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a839c9f1848b3b0c953ca7f4902e86086}\label{class_molecule_a839c9f1848b3b0c953ca7f4902e86086}} 
+\index{Molecule@{Molecule}!S\+M\+R\+\_\+\+V\+SA@{S\+M\+R\+\_\+\+V\+SA}}
+\index{S\+M\+R\+\_\+\+V\+SA@{S\+M\+R\+\_\+\+V\+SA}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{S\+M\+R\+\_\+\+V\+S\+A()}{SMR\_VSA()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::\+S\+M\+R\+\_\+\+V\+SA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}S\+M\+R\+\_\+\+V\+SA\mbox{]} 
+
+\mbox{[}S\+M\+R\+\_\+\+V\+SA\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}vector of dobule\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2063 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a2f83a282a6276fb330b46831a29907d6}\label{class_molecule_a2f83a282a6276fb330b46831a29907d6}} 
+\index{Molecule@{Molecule}!Tanimoto\+Similarityfrom\+Smile@{Tanimoto\+Similarityfrom\+Smile}}
+\index{Tanimoto\+Similarityfrom\+Smile@{Tanimoto\+Similarityfrom\+Smile}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Tanimoto\+Similarityfrom\+Smile()}{TanimotoSimilarityfromSmile()}}
+{\footnotesize\ttfamily double Molecule\+::\+Tanimoto\+Similarityfrom\+Smile (\begin{DoxyParamCaption}\item[{string}]{smilesref }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Tanimoto\+Similarityfrom\+Smile \mbox{]} 
+
+\mbox{[}compute tanimoto similarity of molecule vs a given smile\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smilesref} & \mbox{[}smile string of the molecule to compare\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}return the tanimoto similarity\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 607 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ac5e52f33289342df7147a7151890df95}\label{class_molecule_ac5e52f33289342df7147a7151890df95}} 
+\index{Molecule@{Molecule}!T\+P\+SA@{T\+P\+SA}}
+\index{T\+P\+SA@{T\+P\+SA}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{T\+P\+S\+A()}{TPSA()}}
+{\footnotesize\ttfamily double Molecule\+::\+T\+P\+SA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}T\+P\+SA\mbox{]} 
+
+\mbox{[}T\+P\+SA value for a molecule\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}double\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 2004 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_ae2126d53ee2e1488eb7d105c6b02a604}\label{class_molecule_ae2126d53ee2e1488eb7d105c6b02a604}} 
+\index{Molecule@{Molecule}!Tversky\+Similarityfrom\+Smile@{Tversky\+Similarityfrom\+Smile}}
+\index{Tversky\+Similarityfrom\+Smile@{Tversky\+Similarityfrom\+Smile}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{Tversky\+Similarityfrom\+Smile()}{TverskySimilarityfromSmile()}}
+{\footnotesize\ttfamily double Molecule\+::\+Tversky\+Similarityfrom\+Smile (\begin{DoxyParamCaption}\item[{string}]{smilesref,  }\item[{double}]{a,  }\item[{double}]{b }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}Tversky\+Similarityfrom\+Smile\mbox{]} 
+
+\mbox{[}compute Tversky similarity of molecule vs a given smile\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em smilesref} & \mbox{[}smile string of the molecule to compare\mbox{]} \\
+\hline
+{\em a} & \mbox{[}a parameter of Tversky similarity\mbox{]} \\
+\hline
+{\em b} & \mbox{[}b parameter of Tversky similarity\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}return the Tversky similarity\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 643 of file rdmol.\+cpp.
+
+\mbox{\Hypertarget{class_molecule_a5a7fe2f265ee8e8d4aeebfd41bf0ebdc}\label{class_molecule_a5a7fe2f265ee8e8d4aeebfd41bf0ebdc}} 
+\index{Molecule@{Molecule}!U\+F\+F\+Optimize\+Molecule@{U\+F\+F\+Optimize\+Molecule}}
+\index{U\+F\+F\+Optimize\+Molecule@{U\+F\+F\+Optimize\+Molecule}!Molecule@{Molecule}}
+\subsubsection{\texorpdfstring{U\+F\+F\+Optimize\+Molecule()}{UFFOptimizeMolecule()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Molecule\+::\+U\+F\+F\+Optimize\+Molecule (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{[}U\+F\+Foptimize\+Molecule\mbox{]} 
+
+\mbox{[}generate the 3D optimized molecule coordonate based on Universal field force model\mbox{]}
+
+\begin{DoxyReturn}{Returns}
+\mbox{[}return the status of the optimization and the energie of the optimal structure\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line 1051 of file rdmol.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{rdmol_8h}{rdmol.\+h}}\item 
+src/\mbox{\hyperlink{rdmol_8cpp}{rdmol.\+cpp}}\end{DoxyCompactItemize}

@@ -6,7 +6,7 @@ beforeEach(() => RDKit.load());
 
 test('calc_all_desc', function() {
   var smi = 'CCCCCOC(CO)';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   var c = RDKit.calc_all_desc(mol);
   c = JSON.stringify(c);
   expect(c).toMatchSnapshot();
@@ -15,7 +15,7 @@ test('calc_all_desc', function() {
 
 test('getCrippenAtomContribs', function() {
   var smi = 'CO';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   var cp = mol.getCrippenAtomContribs();
   var LP = [];
   for (i = 0; i < cp.size() / 2; i++) {
@@ -33,7 +33,7 @@ test('getCrippenAtomContribs', function() {
 
 test('getTPSAAtomContribs', function() {
   var smi = 'CCCCCOC';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   var cp = mol.getTPSAAtomContribs();
   var TPSA = [];
   for (i = 0; i < cp.size(); i++) {
@@ -43,9 +43,35 @@ test('getTPSAAtomContribs', function() {
   mol.delete();
 });
 
+
+test('getAutoCorr2D', function() {
+  var smi = 'CCCCCOC';
+  var mol = RDKit.Molecule.smilesToMol(smi);
+  var cp = mol.getAutoCorr2D();
+  var Autocorr2D = [];
+  for (i = 0; i < cp.size(); i++) {
+    Autocorr2D.push(cp.get(i));
+  }
+  expect(Autocorr2D).toMatchSnapshot();
+  mol.delete();
+});
+
+/*test('getAutoCorr3D', function() {
+  var smi = 'CCCCCOC';
+  var mol = RDKit.Molecule.smilesToMol(smi);
+  var cp = mol.getAutoCorr3D();
+  var Autocorr3D = [];
+  for (i = 0; i < cp.size(); i++) {
+    Autocorr3D.push(cp.get(i));
+  }
+  expect(Autocorr3D).toMatchSnapshot();
+  mol.delete();
+});
+*/
+
 test('getASAContribs', function() {
   var smi = 'CCC';
-  var mol = RDKit.Molecule.fromSmiles(smi);
+  var mol = RDKit.Molecule.smilesToMol(smi);
   var cp = mol.getASAContribs();
   var ASA = [];
   for (i = 0; i < cp.size(); i++) {

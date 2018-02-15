@@ -1,12 +1,12 @@
 
 var RDKit = require('rdkit');
 
-var mol = RDKit.Molecule.fromSmiles('CCCCCC');
+var mol = RDKit.Molecule.smilesToMol('CCCCCC');
 
-//var obj = mol.getMorganFP_getNonzeroElements(2048);	
+//var obj = mol.getMorganFingerprints_getNonzeroElements(2048);	
 
 
-var u =mol.getMorganFPlist(2);
+var u =mol.getMorganFingerprintslist(2);
         var fplen =  u.size();
         var v= [];
         for (i =0;i<fplen;i++){   

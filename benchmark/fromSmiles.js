@@ -4,7 +4,7 @@ rdkit.load().then(() => {
 
 function test() {
   for (var i = 0; i < 100; i++) {
-    rdkit.Molecule.fromSmiles('CCOOCCOCOCOCOCCOOCCCCOC');
+    rdkit.Molecule.smilesToMol('CCOOCCOCOCOCOCCOOCCCCOC');
   }
 }
 

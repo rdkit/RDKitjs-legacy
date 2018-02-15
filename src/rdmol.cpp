@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 
+#include <emscripten/emscripten.h>
 
 #include "rdmol.h"
 
@@ -11,11 +12,14 @@
 #include <string>
 #include <vector>
 #include <utility>  // pair, get
+#include <map>
+#include <typeinfo>
 
 // Boost include for rdkit dependence
 #include <boost/cstdint.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
 
 
 /* RDkit libraries */
@@ -26,21 +30,21 @@
 #include <GraphMol/FileParsers/MolWriters.h>
 #include <GraphMol/FileParsers/FileParsers.h>
 
-// fkingreprints
+// RDkit fingreprints
 #include <DataStructs/ExplicitBitVect.h>
 #include <GraphMol/Fingerprints/AtomPairs.h>
 #include <GraphMol/Fingerprints/Fingerprints.h>
 #include <GraphMol/Fingerprints/MorganFingerprints.h>
 #include <GraphMol/Fingerprints/MACCS.h>
-
 #include <DataStructs/BitOps.h>
 #include <DataStructs/SparseIntVect.h>
 
+// RDkit MolOps & Conformers
 #include <GraphMol/MolOps.h>
 #include <GraphMol/Conformer.h>
 
 
-// stream Mol2File
+// RDkit stream Mol2File
 #include <RDGeneral/StreamOps.h>
 #include <GraphMol/FileParsers/FileParsers.h>
 #include <RDGeneral/FileParseException.h>
@@ -48,57 +52,58 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/FileParsers/MolFileStereochem.h>
 
-//Drawing
+// RDkit Drawing
 //#include <GraphMol/MolDrawing/MolDrawing.h>
 //#include <GraphMol/MolDrawing/DrawingToSVG.h>
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
 #include <GraphMol/MolDraw2D/MolDraw2DSVG.h>
 
-
-//canonical
+// RDkit canonical
 #include <GraphMol/new_canon.h>
 
-
-// 2D
+// RDkit 2D
 #include <GraphMol/Depictor/RDDepictor.h>
 
-// cpickle
+// RDkit cpickle
 #include <GraphMol/MolPickler.h>
 
-// bond
+// RDkit bond
 #include <GraphMol/Bond.h>
 
-// murko
+// RDkit murko
 #include <GraphMol/ChemTransforms/ChemTransforms.h>
 
-
+// RDkit 3D
 #include <GraphMol/DistGeomHelpers/Embedder.h>
+
+// RDkit ForceField
 // comments thegodone & Paolo => MMFF.h and Builder.h need to be patch to avoid class issues! 13_05_2015
 #include <GraphMol/ForceFieldHelpers/MMFF/MMFF.h>
 #include <GraphMol/ForceFieldHelpers/MMFF/Builder.h>
 #include <GraphMol/ForceFieldHelpers/MMFF/AtomTyper.h>
 #include <GraphMol/ForceFieldHelpers/UFF/UFF.h>
-
-#include <GraphMol/FileParsers/MolWriters.h>
-
 #include <ForceField/MMFF/Params.h>
 
+// RDKit Writer
+#include <GraphMol/FileParsers/MolWriters.h>
+
+// RDkit subsearch
 #include <GraphMol/RDKitQueries.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <GraphMol/Substruct/SubstructUtils.h>
 
-#include <boost/tokenizer.hpp>
 
+// RDkit AlignMols
+#include <GraphMol/MolAlign/AlignMolecules.h>
 
-#include <emscripten/emscripten.h>
-
-#include <GraphMol/molAlign/AlignMolecules.h>
-
+// RDKit Charges
 #include <GraphMol/PartialCharges/GasteigerCharges.h>
 #include <GraphMol/PartialCharges/GasteigerParams.h>
-#include <map>
-#include <boost/cstdint.hpp>
-#include <typeinfo>
+
+// RDKit AutoCorr2d
+#include <GraphMol/Descriptors/AUTOCORR2D.h>
+// RDKit AutoCorr3D
+//#include <GraphMol/Descriptors/AUTOCORR3D.h>
 
 
 
@@ -131,6 +136,13 @@ Molecule::~Molecule() {
 }
 
 
+/**
+ * @brief [Similarity]
+ * @details [generate a molecule from a smile]
+ * 
+ * @param  [compar one molecule to another molecule object]
+ * @return [double]
+ */
 double Molecule::Similarity(const Molecule moltocompare, string similarityfunction,double a, double b) {
 
    RDKit::SparseIntVect< boost::uint32_t > * v1 =  RDKit::MorganFingerprints::getFingerprint(*rdmol,2);
@@ -156,7 +168,7 @@ double Molecule::Similarity(const Molecule moltocompare, string similarityfuncti
  * @param smiles [string]
  * @return [rdkit molecule object]
  */
-Molecule* Molecule::fromSmiles(string smiles) {
+Molecule* Molecule::smilesToMol(string smiles) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::SmilesToMol(smiles));
 }
@@ -187,13 +199,13 @@ Molecule* Molecule::MolBlockToMol(string molBlock) {
 
 
 /**
- * @brief [fromSmarts]
+ * @brief [smartsToMol]
  * @details [generate a molecule from a Smart]
  * 
  * @param smarts [string of smart]
  * @return [rdkit molecule object]
  */
-Molecule* Molecule::fromSmarts(string smarts) {
+Molecule* Molecule::smartsToMol(string smarts) {
   rdErrorLog->df_enabled = false;
   return new Molecule(RDKit::SmartsToMol(smarts));
 }
@@ -213,13 +225,13 @@ Molecule* Molecule::molFromPickle(string pickle) {
 
 
 /**
- * @brief [MurckofromSmiles]
+ * @brief [MurckosmilesToMol]
  * @details [generate the murcko structure from a smile]
  * 
  * @param smi [string of smile]
  * @return [rdkit molecule object]
  */
-Molecule* Molecule::MurckofromSmiles(string smi)
+Molecule* Molecule::MurckosmilesToMol(string smi)
 {
      ROMol *mol=RDKit::SmilesToMol(smi);
      return new Molecule(dynamic_cast<RWMol *>(RDKit::MurckoDecompose(*mol)));
@@ -410,10 +422,6 @@ Molecule::BFS(int StartIndex)
   }
 
 */
-
-
-
-
 
 
 
@@ -734,11 +742,11 @@ string Molecule::getHashedAtomPairFingerprintAsBitVect(int size, int atomid1, in
 
 
 /**
- * @brief [MolToBinary]
+ * @brief [pickleMol]
  * @details [convert molecule to binary code from storage of pickle]
  * @return [string pickle of the molecule]
  */
-string Molecule::MolToBinary()
+string Molecule::pickleMol()
 {
     string res;
     RDKit::MolPickler::pickleMol(*rdmol,res);
@@ -747,24 +755,24 @@ string Molecule::MolToBinary()
 
 
 /**
- * @brief [getRDKFP]
+ * @brief [getRDKFingerprintMol]
  * @details [get RDKit fingerprint string]
  * 
  * @return [string of fingerprint]
  */
-string Molecule::getRDKFP()
+string Molecule::getRDKFingerprintMol()
 {
     ExplicitBitVect* finger =  RDKit::RDKFingerprintMol(*rdmol);
     return BitVectToText(*finger);
 }
 
 /**
- * @brief [getLayeredFP]
+ * @brief [getLayeredFingerprintMol]
  * @details [get Layered fingerprint string]
  * 
  * @return [string of fingerprint]
  */
-string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int lengths)
+string Molecule::getLayeredFingerprintMol(unsigned int layer,unsigned int sizes,unsigned int lengths)
 {
     ExplicitBitVect* finger =  RDKit::LayeredFingerprintMol(*rdmol,layer, sizes,lengths);
     return BitVectToText(*finger);
@@ -772,12 +780,12 @@ string Molecule::getLayeredFP(unsigned int layer,unsigned int sizes,unsigned int
 
 
 /**
- * @brief [getMACCSFP]
+ * @brief [getMACCSFingerprints]
  * @details [get MACCS fingerprint string]
  * 
  * @return [string of fingerprint]
  */
-string Molecule::getMACCSFP()
+string Molecule::getMACCSFingerprints()
 {
     ExplicitBitVect* finger =  RDKit::MACCSFingerprints::getFingerprintAsBitVect(*rdmol);
     return BitVectToText(*finger);
@@ -785,12 +793,12 @@ string Molecule::getMACCSFP()
 
 
 /**
- * @brief [getPatternFP]
+ * @brief [getPatternFingerprintMol]
  * @details [get Pattern fingerprint string]
  * 
  * @return [string of fingerprint]
  */
-string Molecule::getPatternFP()
+string Molecule::getPatternFingerprintMol()
 {
     ExplicitBitVect* finger =  RDKit::PatternFingerprintMol(*rdmol);
     return BitVectToText(*finger);
@@ -798,12 +806,12 @@ string Molecule::getPatternFP()
 
 
 /**
- * @brief [getMorganFP]
+ * @brief [getMorganFingerprints]
  * @details [get Morgan fingerprint string]
  * 
  * @return [string of fingerprint]
  */
-string Molecule::getMorganFP(unsigned int sizes,unsigned int lengths)
+string Molecule::getMorganFingerprints(unsigned int sizes,unsigned int lengths)
 {
     ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,sizes, lengths);
     return BitVectToText(*finger);
@@ -817,7 +825,7 @@ string Molecule::getMorganFP(unsigned int sizes,unsigned int lengths)
 
  * @return [key getOnBit keys like getNonzeroElements().key()]
  */
-vector<boost::uint32_t> Molecule::getMorganUFPkeys(unsigned int sizes)
+vector<boost::uint32_t> Molecule::getMorganFingerprintsKeys(unsigned int sizes)
 {   int nbatoms=rdmol->getNumAtoms();
     std::vector<boost::uint32_t> *invars=0;
     bool useChirality=false;
@@ -846,14 +854,14 @@ vector<boost::uint32_t> Molecule::getMorganUFPkeys(unsigned int sizes)
 
 
 /**
- * @brief [getMorganFP_GetOnBits]
+ * @brief [getMorganFingerprints_getOnBbits]
  * @details [get Morgan fingerprint index vector of Bits]
  * 
  * @param sizes [length of the vector to be generated]
  * @param lengths [Morgan FP value]
  * @return [Morgan fingerprint index vector of Bits]
  */
-vector<int> Molecule::getMorganFP_GetOnBits(unsigned int sizes,unsigned int lengths)
+vector<int> Molecule::getMorganFingerprints_getOnBbits(unsigned int sizes,unsigned int lengths)
 {
     ExplicitBitVect* finger =  RDKit::MorganFingerprints::getFingerprintAsBitVect(*rdmol,sizes, lengths);
     IntVect onBits;
@@ -863,13 +871,13 @@ vector<int> Molecule::getMorganFP_GetOnBits(unsigned int sizes,unsigned int leng
 
 
 /**
- * @brief [getMorganFP_getNonzeroElements]
+ * @brief [getMorganFingerprints_getNonzeroElements]
  * @details [get Morgan fingerprint map of True Bits]
  * 
  * @param sizes [length of the vector to be generated]
  * @return [Morgan fingerprint map vector of True Bits]
  */
-map<boost::uint32_t, int> Molecule::getMorganFP_getNonzeroElements(unsigned int sizes)
+map<boost::uint32_t, int> Molecule::getMorganFingerprints_getNonzeroElements(unsigned int sizes)
 {
     RDKit::SparseIntVect<boost::uint32_t> * fp =  RDKit::MorganFingerprints::getFingerprint(*rdmol,sizes);
     RDKit::SparseIntVect<boost::uint32_t>::StorageType gnze = fp->getNonzeroElements();
@@ -900,13 +908,13 @@ map<boost::uint32_t, int> Molecule::getMorganFP_getNonzeroElements(unsigned int 
 
 
 /**
- * @brief [getMorganFPlist]
+ * @brief [getMorganFingerprintslist]
  * @details [get Morgan fingerprint vector of True Bits & values unfolded]
  * 
  * @param sizes [length of the vector to be generated]
  * @return [Morgan fingerprint map vector of True Bits]
  */
-vector<boost::uint32_t> Molecule::getMorganFPlist(unsigned int sizes)
+vector<boost::uint32_t> Molecule::getMorganFingerprintslist(unsigned int sizes)
 {
     RDKit::SparseIntVect<boost::uint32_t> * fp =  RDKit::MorganFingerprints::getFingerprint(*rdmol,sizes);
     RDKit::SparseIntVect<boost::uint32_t>::StorageType gnze = fp->getNonzeroElements();
@@ -930,13 +938,13 @@ vector<boost::uint32_t> Molecule::getMorganFPlist(unsigned int sizes)
 
 
 /**
- * @brief [FindMolChiralCenters]
+ * @brief [findMolChiralCenters]
  * @details [find all molecule chiral centers]
  * 
  * @param includeUnassigned [boolean value option]
  * @return [return the list chiral centers]
  */
-vector<string> Molecule::FindMolChiralCenters(bool includeUnassigned)
+vector<string> Molecule::findMolChiralCenters(bool includeUnassigned)
 {
   RDKit::MolOps::assignStereochemistry(*rdmol,false,true,true);
   int p = 0;
@@ -1059,12 +1067,12 @@ vector<string> Molecule::getproplist()
 }
 
 /**
- * @brief [toSmiles]
+ * @brief [molToSmiles]
  * @details [convert molecule to smile string]
  * 
  * @return [smile string]
  */
-string Molecule::toSmiles()
+string Molecule::molToSmiles()
 {
     string smile =  RDKit::MolToSmiles(*rdmol);  
     return smile;
@@ -1072,12 +1080,12 @@ string Molecule::toSmiles()
 }
 
 /**
- * @brief [toMolfile]
+ * @brief [molToMolfile]
  * @details [convert molecule to Molfile string]
  * 
  * @return [Molfile string]
  */
-string Molecule::toMolfile()
+string Molecule::molToMolfile()
 {
     stringstream ss;
     RDKit::SDWriter *writer = new RDKit::SDWriter(&ss);
@@ -2009,6 +2017,31 @@ vector<double>  Molecule::getTPSAAtomContribs() {
 
 
 /**
+ * @brief [getAutoCorr2D]
+ * @details [Generate AUTOCORR2D vector]
+ * @return [array of autoccorelation 2D]
+ */
+vector<double>  Molecule::getAutoCorr2D() {
+    vector<double> contribs(192);
+    RDKit::Descriptors::AUTOCORR2D(*rdmol,contribs);
+    return contribs;
+}
+
+
+/**
+ * @brief [getAutoCorr3D]
+ * @details [Generate AUTOCORR3D vector]
+ * @return [array of autoccorelation 3D]
+
+vector<double>  Molecule::getAutoCorr3D() {
+    vector<double> contribs(80);
+    RDKit::Descriptors::AUTOCORR3D(*rdmol,contribs, -1);
+    return contribs;
+}
+ */
+
+
+/**
  * @brief [SlogP_VSA]
  * @details [SlogP_VSA]
  * 
@@ -2052,14 +2085,15 @@ vector< unsigned int > Molecule::MQNs()
 }
 
 
+
 /**
- * @brief [GetSubstructMatches]
+ * @brief [getSubstructMatches]
  * @details [determine the Substruct Matches from a smile reference numbers as vector of int (3 consecutive ints define a sub match group)]
  * 
  * @param smilesref [string]
  * @return [vector of int]
  */
-vector<int> Molecule::GetSubstructMatches(string smilesref)
+vector<int> Molecule::getSubstructMatches(string smilesref)
 {
     vector< RDKit::MatchVectType > matches;
     rdErrorLog->df_enabled = false;
@@ -2079,13 +2113,13 @@ vector<int> Molecule::GetSubstructMatches(string smilesref)
 }
 
 /**
- * @brief [GetSubstructMatchesNumber]
+ * @brief [getSubstructMatchesNumber]
  * @details [determine the Substruct Matches from a smile reference total number]
  * 
  * @param smilesref [string]
  * @return [int]
  */
-int Molecule::GetSubstructMatchesNumber(string smilesref)
+int Molecule::getSubstructMatchesNumber(string smilesref)
 {
     vector< RDKit::MatchVectType > matches;
     rdErrorLog->df_enabled = false;

@@ -28,7 +28,7 @@ var Polcoef =  [10.152, 8.765, 5.702, 3.833, 16.557, 24.123, 38.506, 10.488, 6.3
 function fragpresent (smarts, functions, mol) {
   var desc = [];
   for (i=0; i<smarts.length;i++) {
-     var v = mol.GetSubstructMatchesNumber(smarts[i]);
+     var v = mol.getSubstructMatchesNumber(smarts[i]);
   	 if (v>0) desc[i]=1;
   	 else desc[i]=0;
 	}
@@ -40,7 +40,7 @@ function fragpresent (smarts, functions, mol) {
 function fragnum(smarts, functions, mol) {
   var desc = [];
   for (i=0; i<smarts.length;i++) {
-     var v = mol.GetSubstructMatchesNumber(smarts[i]);
+     var v = mol.getSubstructMatchesNumber(smarts[i]);
   	 //console.log(smarts[i],functions[i],v);
 
      desc[i]=v;
@@ -169,7 +169,7 @@ return {A,Bh,Bo,L,S,E,logODT}
 
 ////////////// the main script!
 smi = 'C#CCCl'; // coumarine
-var mol = RDKit.Molecule.fromSmiles(smi);	
+var mol = RDKit.Molecule.smilesToMol(smi);	
 var res1= Ahrahams(smartsA, functionA, smartsB, functionB,smartsODT,functionODT, mol);
 console.log(res1);
 

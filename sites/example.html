@@ -4,7 +4,7 @@
 <script>
 function molwt( smi ){
     R= RDKit;
-    var mol = R.Molecule.fromSmiles(smi);
+    var mol = R.Molecule.smilesToMol(smi);
     var mw = mol.getMW();
     document.getElementById( 'MW' ).innerHTML = 'The molweight is : '+ '  '+ mw;
     mol.delete();
@@ -12,7 +12,7 @@ function molwt( smi ){
 }
 function moldraw( smi ){
     R= RDKit;
-    var mol = R.Molecule.fromSmiles(smi);
+    var mol = R.Molecule.smilesToMol(smi);
     mol.Kekulize();
     var mol2d = mol.Drawing2D();
     var remol = mol2d.replace( /svg:/g, '' );

@@ -155,7 +155,7 @@ var Polcoef =  [10.152, 8.765, 5.702, 3.833, 16.557, 24.123, 38.506, 10.488, 6.3
 function fragpresent (smarts, functions, mol) {
 var desc = [];
 for (i=0; i<smarts.length;i++) {
-    var v = mol.GetSubstructMatchesNumber(smarts[i]);
+    var v = mol.getSubstructMatchesNumber(smarts[i]);
     if (v>0) desc[i]=1;
     else desc[i]=0;
   }
@@ -167,7 +167,7 @@ return desc
 function fragnum(smarts, functions, mol) {
 var desc = [];
 for (i=0; i<smarts.length;i++) {
-    var v = mol.GetSubstructMatchesNumber(smarts[i]);
+    var v = mol.getSubstructMatchesNumber(smarts[i]);
     //console.log(smarts[i],functions[i],v);
 
     desc[i]=v;

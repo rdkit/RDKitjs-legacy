@@ -12,8 +12,8 @@ console.log(Object.keys(dict2).length);
 
 var RDKit = require ('rdkit');
 var R = RDKit;
-m=R.Molecule.fromSmiles('Cc1ccccc1');
-var u =m.getMorganFPlist(2);
+m=R.Molecule.smilesToMol('Cc1ccccc1');
+var u =m.getMorganFingerprintslist(2);
 var fplen =  u.size()/2;
 var nf = 0;
 var score1=0;
@@ -28,7 +28,7 @@ score1=score1/nf;
 console.log(score1);
 
 var nAtoms = m.getNumAtoms();
-var p = m.FindMolChiralCenters(true);
+var p = m.findMolChiralCenters(true);
 var nChiralCenters = p.size();
 var SBM = m.getSpiroBridgeMacrocycles();
 var nBridgeheads = SBM.get(0);

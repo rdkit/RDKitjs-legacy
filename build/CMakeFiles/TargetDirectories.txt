@@ -1,0 +1,5 @@
+/Users/GVALMTGG/Github/emsdk/rdkit2015/RDKitjs/build/CMakeFiles/rebuild_cache.dir
+/Users/GVALMTGG/Github/emsdk/rdkit2015/RDKitjs/build/CMakeFiles/edit_cache.dir
+/Users/GVALMTGG/Github/emsdk/rdkit2015/RDKitjs/build/src/CMakeFiles/rebuild_cache.dir
+/Users/GVALMTGG/Github/emsdk/rdkit2015/RDKitjs/build/src/CMakeFiles/edit_cache.dir
+/Users/GVALMTGG/Github/emsdk/rdkit2015/RDKitjs/build/src/CMakeFiles/rdkitjs.dir
