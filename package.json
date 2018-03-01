@@ -2,7 +2,9 @@
   "name": "rdkit",
   "version": "0.4.0",
   "description": "RDKit port to JS using emscripten",
-  "keywords": ["rdkit"],
+  "keywords": [
+    "rdkit"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "build": "npm run compile-emcc && npm run build-dist",
@@ -22,7 +24,11 @@
   ],
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/node_modules/", "/deps/", "/old/"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/deps/",
+      "/old/"
+    ]
   },
   "repository": "cheminfo/RDKitjs",
   "author": "Guillaume Godin",
