@@ -5,7 +5,6 @@
 
 #include <GraphMol/FileParsers/MolWriters.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
-#include <GraphMol/ROMol.h>
 #include <GraphMol/RWMol.h>
 #include <GraphMol/MolOps.h>
 // RDkit 3D
@@ -23,12 +22,7 @@ using emscripten::class_;
 using emscripten::function;
 using emscripten::register_vector;
 
-using RDKit::DGeomHelpers;
-using RDKit::MMFF;
-using RDKit::MolOps;
-using RDKit::ROMol;
 using RDKit::RWMol;
-using RDKit::SDWriter;
 
 RWMol *smilesToMol(std::string smiles)
 {
@@ -38,7 +32,7 @@ RWMol *smilesToMol(std::string smiles)
 std::string molToMolfile2D(RWMol *mol)
 {
   std::stringstream ss;
-  SDWriter writer(&ss);
+  RDKit::SDWriter writer(&ss);
   writer.write(*mol);
   writer.flush();
   return ss.str();
@@ -46,18 +40,18 @@ std::string molToMolfile2D(RWMol *mol)
 
 void addHs(RWMol mol)
 {
-  return MolOps::addHs(mol);
+  return RDKit::MolOps::addHs(mol);
 }
 
 int EmbedMolecule(RWMol mol, unsigned int maxIterations, int seed)
 {
-  return DGeomHelpers::EmbedMolecule(mol, maxIterations, seed);
+  return RDKit::DGeomHelpers::EmbedMolecule(mol, maxIterations, seed);
 }
 
 std::vector<double> MMFFoptimizeMolecule(RWMol mol)
 {
   std::vector<double> res(2);
-  std::pair<int, double> p = MMFF::MMFFOptimizeMolecule(mol, res);
+  std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(mol, res);
   res[0] = static_cast<double>(p.first);
   res[1] = p.second;
   return res;
