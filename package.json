@@ -8,7 +8,7 @@
     "test": "npm run build && npm run test-only",
     "test-only": "jest",
     "build": "mkdir -p dist && cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js && cp build/src/rdkit.wasm dist/rdkit.wasm",
-    "build-new": "cat javascript/pre.js out/rdkit.js javascript/post.js > dist/rdkit.js && cp out/rdkit.wasm dist/rdkit.wasm",
+    "build-new": "mkdir -p dist && cat javascript/pre.js out/rdkit.js javascript/post.js > dist/rdkit.js && cp out/rdkit.wasm dist/rdkit.wasm",
     "install-deps": "node scripts/install",
     "compile": "node scripts/compile",
     "eslint": "eslint scripts",

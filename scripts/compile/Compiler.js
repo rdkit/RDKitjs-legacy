@@ -18,7 +18,7 @@ class Compiler extends Runner {
       'WASM=1',
       'NODEJS_CATCH_EXIT=0',
       'MODULARIZE=1',
-      "EXPORT_NAME='\"'RDK'\"'"
+      "EXPORT_NAME='\"'rdk'\"'"
     ]
       .map((s) => `-s ${s}`)
       .join(' ');

@@ -28,4 +28,4 @@ lib.then((rdkit) => {
 
   mol.delete();
 
-});
+}).catch(console.error);
