@@ -57,7 +57,7 @@ class Compiler extends Runner {
 
     childProcess.execSync(
       `source '${emscriptenScript}'  && ${emcc.join(' ')}`,
-      { shell: '/bin/bash' }
+      { shell: '/bin/bash', stdio: 'inherit' }
     );
   }
 }
