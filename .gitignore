@@ -5,3 +5,5 @@ test/rdkit.*
 node_modules
 /dist/
 /rdkit-*
+/deps/
+/out/
