@@ -63,7 +63,7 @@ class Compiler extends Runner {
       '-o out/rdkit.js',
       includes,
       libFiles,
-      'rdkit.cc'
+      'src/rdkit.cc'
     ];
 
     childProcess.execSync(

@@ -1,23 +1,24 @@
 {
   "name": "rdkit",
   "version": "0.4.0",
-  "description": "port RDKit to js using emscripten",
-  "keywords": [],
-  "main": "dist/rdkit.js",
+  "description": "RDKit port to JS using emscripten",
+  "keywords": ["rdkit"],
+  "main": "lib/index.js",
   "scripts": {
-    "test": "npm run build && npm run test-only",
-    "test-only": "jest",
-    "build": "mkdir -p dist && cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js && cp build/src/rdkit.wasm dist/rdkit.wasm",
-    "build-new": "mkdir -p dist && cat javascript/pre.js out/rdkit.js javascript/post.js > dist/rdkit.js && cp out/rdkit.wasm dist/rdkit.wasm",
-    "install-deps": "node scripts/install",
-    "compile": "npm run compile-emcc && npm run build-new",
-    "compile-debug": "npm run compile-emcc -- --debug && npm run build-new",
+    "build": "npm run compile-emcc && npm run build-dist",
+    "build-dist": "mkdir -p dist && cat javascript/pre.js out/rdkit.js javascript/post.js > dist/rdkit.js && cp out/rdkit.wasm dist/rdkit.wasm",
+    "compile-debug": "npm run compile-emcc -- --debug",
     "compile-emcc": "node scripts/compile",
+    "clean": "rm -rf dist out",
     "eslint": "eslint scripts",
-    "eslint-fix": "npm run eslint -- --fix"
+    "eslint-fix": "npm run eslint -- --fix",
+    "install-deps": "node scripts/install",
+    "test": "npm run build && npm run test-only",
+    "test-only": "jest"
   },
   "files": [
-    "dist"
+    "dist",
+    "lib"
   ],
   "jest": {
     "testEnvironment": "node"
@@ -34,7 +35,6 @@
   },
   "homepage": "https://github.com/cheminfo/RDKitjs",
   "devDependencies": {
-    "async": "^1.4.2",
     "eslint": "^4.18.1",
     "eslint-config-cheminfo": "^1.17.0",
     "eslint-plugin-import": "^2.9.0",
@@ -42,11 +42,7 @@
     "fs-extra": "^5.0.0",
     "jest": "^22.3.0",
     "make-promises-safe": "^1.1.0",
-    "mongodb": "^2.0.42",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2",
-    "tar": "^4.4.0",
-    "underscore": "^1.8.3",
-    "victor": "^1.1.0"
+    "tar": "^4.4.0"
   }
 }
