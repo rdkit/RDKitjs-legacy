@@ -1,21 +1,19 @@
-var lib = require('..');
+'use strict';
 
-lib.then((rdkit) => {
-
-function test() {
-  for (var i = 0; i < 100; i++) {
-    rdkit.Molecule.fromSmiles('CCOOCCOCOCOCOCCOOCCCCOC');
+require('..').then((rdkit) => {
+  function test() {
+    for (var i = 0; i < 100; i++) {
+      rdkit.Molecule.fromSmiles('CCOOCCOCOCOCOCCOOCCCCOC');
+    }
   }
-}
 
-test();
+  test();
 
-console.time('test');
-test();
-test();
-test();
-test();
-test();
-console.timeEnd('test');
-
+  console.time('parse a SMILES 500 times');
+  test();
+  test();
+  test();
+  test();
+  test();
+  console.timeEnd('parse a SMILES 500 times');
 });
