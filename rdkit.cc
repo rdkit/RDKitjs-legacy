@@ -21,6 +21,7 @@
 using emscripten::allow_raw_pointers;
 using emscripten::class_;
 using emscripten::function;
+using emscripten::register_vector;
 
 using RDKit::ROMol;
 using RDKit::RWMol;
@@ -40,30 +41,31 @@ std::string molToMolfile2D(RWMol *mol)
   return ss.str();
 }
 
-
 void addHs(RWMol mol)
 {
-    return RDKit::MolOps::addHs(mol);
+  return RDKit::MolOps::addHs(mol);
 }
 
-
 int EmbedMolecule(ROMol mol, unsigned int maxIterations, int seed)
-{   
-    return RDKit::DGeomHelpers::EmbedMolecule(mol,maxIterations,seed);
+{
+  return RDKit::DGeomHelpers::EmbedMolecule(mol, maxIterations, seed);
 }
 
 std::vector<double> MMFFoptimizeMolecule(ROMol mol)
 {
-    std::vector<double> res(2);
-    std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(mol);
-    res[0] = static_cast<double>(p.first);
-    res[1] = p.second;
-    return res;
+  std::vector<double> res(2);
+  std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(mol);
+  res[0] = static_cast<double>(p.first);
+  res[1] = p.second;
+  return res;
 }
 
 EMSCRIPTEN_BINDINGS(module)
 {
   class_<RWMol>("RWMol");
+
+  register_vector<double>("VectorDouble");
+
   function("smilesToMol", &smilesToMol, allow_raw_pointers());
   function("molToMolfile2D", &molToMolfile2D, allow_raw_pointers());
   function("addHs", &addHs, allow_raw_pointers());
