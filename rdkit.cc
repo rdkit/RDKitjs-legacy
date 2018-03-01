@@ -38,20 +38,20 @@ std::string molToMolfile2D(RWMol *mol)
   return ss.str();
 }
 
-void addHs(RWMol *mol)
+void addHs(RWMol *mol, bool explicitOnly, bool addCoords)
 {
-  return RDKit::MolOps::addHs(mol);
+  return RDKit::MolOps::addHs(*mol, explicitOnly, addCoords);
 }
 
-int EmbedMolecule(RWMol *mol, unsigned int maxIterations, int seed)
+int EmbedMolecule(RWMol *mol, unsigned int maxIterations, int seed, bool clearConfs)
 {
-  return RDKit::DGeomHelpers::EmbedMolecule(mol, maxIterations, seed);
+  return RDKit::DGeomHelpers::EmbedMolecule(*mol, maxIterations, seed, clearConfs);
 }
 
-std::vector<double> MMFFoptimizeMolecule(RWMol *mol)
+std::vector<double> MMFFoptimizeMolecule(RWMol *mol, int maxIters, std::string mmffVariant, double nonBondedThresh)
 {
   std::vector<double> res(2);
-  std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*mol);
+  std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(*mol, maxIters, mmffVariant, nonBondedThresh);
   res[0] = static_cast<double>(p.first);
   res[1] = p.second;
   return res;
