@@ -10,7 +10,8 @@
     "build": "mkdir -p dist && cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js && cp build/src/rdkit.wasm dist/rdkit.wasm",
     "build-new": "mkdir -p dist && cat javascript/pre.js out/rdkit.js javascript/post.js > dist/rdkit.js && cp out/rdkit.wasm dist/rdkit.wasm",
     "install-deps": "node scripts/install",
-    "compile": "node scripts/compile",
+    "compile": "npm run compile-emcc && npm run build-new",
+    "compile-emcc": "node scripts/compile",
     "eslint": "eslint scripts",
     "eslint-fix": "npm run eslint -- --fix"
   },
