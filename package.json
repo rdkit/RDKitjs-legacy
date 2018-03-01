@@ -7,18 +7,22 @@
   "scripts": {
     "test": "npm run build && npm run test-only",
     "test-only": "jest",
-    "build":
-      "mkdir -p dist && cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js && cp build/src/rdkit.wasm dist/rdkit.wasm",
-    "build-new":
-      "cat javascript/pre.js out/rdkit.js javascript/post.js > dist/rdkit.js && cp out/rdkit.wasm dist/rdkit.wasm"
+    "build": "mkdir -p dist && cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js && cp build/src/rdkit.wasm dist/rdkit.wasm",
+    "build-new": "cat javascript/pre.js out/rdkit.js javascript/post.js > dist/rdkit.js && cp out/rdkit.wasm dist/rdkit.wasm",
+    "install-deps": "node scripts/install"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "jest": {
     "testEnvironment": "node"
   },
   "repository": "cheminfo/RDKitjs",
   "author": "Guillaume Godin",
-  "contributors": ["Michaël Zasso", "Giuseppe Marco Randazzo"],
+  "contributors": [
+    "Michaël Zasso",
+    "Giuseppe Marco Randazzo"
+  ],
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/cheminfo/RDKitjs/issues"
@@ -26,8 +30,13 @@
   "homepage": "https://github.com/cheminfo/RDKitjs",
   "devDependencies": {
     "async": "^1.4.2",
+    "fs-extra": "^5.0.0",
     "jest": "^22.3.0",
+    "make-promises-safe": "^1.1.0",
     "mongodb": "^2.0.42",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "tar": "^4.4.0",
     "underscore": "^1.8.3",
     "victor": "^1.1.0"
   }
