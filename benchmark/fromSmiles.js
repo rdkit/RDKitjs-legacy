@@ -1,10 +1,10 @@
-var rdkit = require('..');
+var lib = require('..');
 
-rdkit.load().then(() => {
+lib.then((rdkit) => {
 
 function test() {
   for (var i = 0; i < 100; i++) {
-    rdkit.Molecule.smilesToMol('CCOOCCOCOCOCOCCOOCCCCOC');
+    rdkit.Molecule.fromSmiles('CCOOCCOCOCOCOCCOOCCCCOC');
   }
 }
 
