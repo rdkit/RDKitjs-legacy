@@ -55,7 +55,10 @@ class Compiler extends Runner {
       'rdkit.cc'
     ];
 
-    childProcess.execSync(`source '${emscriptenScript}'  && ${emcc.join(' ')}`);
+    childProcess.execSync(
+      `source '${emscriptenScript}'  && ${emcc.join(' ')}`,
+      { shell: '/bin/bash' }
+    );
   }
 }
 
