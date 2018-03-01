@@ -51,7 +51,7 @@ int EmbedMolecule(RWMol mol, unsigned int maxIterations, int seed)
 std::vector<double> MMFFoptimizeMolecule(RWMol mol)
 {
   std::vector<double> res(2);
-  std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(mol, res);
+  std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(mol);
   res[0] = static_cast<double>(p.first);
   res[1] = p.second;
   return res;

@@ -7,6 +7,8 @@ const fs = require('fs-extra');
 
 const Runner = require('../utils/Runner');
 
+const debug = process.argv.includes('--debug');
+
 class Compiler extends Runner {
   async compile() {
     const emscriptenRoot = join(this.emscriptenPath, '../..');
@@ -14,12 +16,18 @@ class Compiler extends Runner {
     const out = join(this.projectDir, 'out');
     await fs.ensureDir(out);
 
-    const jsConfig = [
+    const jsConfigFlags = [
       'WASM=1',
       'NODEJS_CATCH_EXIT=0',
       'MODULARIZE=1',
       "EXPORT_NAME='\"'rdk'\"'"
-    ]
+    ];
+
+    if (debug) {
+      jsConfigFlags.push('DISABLE_EXCEPTION_CATCHING=0');
+    }
+
+    const jsConfig = jsConfigFlags
       .map((s) => `-s ${s}`)
       .join(' ');
 
@@ -46,8 +54,11 @@ class Compiler extends Runner {
       .map((s) => join(rdkitPath, 'build/lib', s))
       .join(' ');
 
+    const optimize = debug ? '-O1' : '-Os';
+
     const emcc = [
-      'emcc --bind -Os',
+      'emcc --bind',
+      optimize,
       jsConfig,
       '-o out/rdkit.js',
       includes,

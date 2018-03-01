@@ -11,7 +11,7 @@ lib
     console.log(mol.toMolfile());
 
     console.log('ici');
-    console.log(rdkit.smilesTo3D('COCO').toMolfile());
+//    console.log(rdkit.smilesTo3D('COCO').toMolfile());
 
     console.log(mol.addHs());
     console.log('la');
