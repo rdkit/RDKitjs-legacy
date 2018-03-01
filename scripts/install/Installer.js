@@ -1,12 +1,14 @@
 'use strict';
 
-const child_process = require('child_process');
+const childProcess = require('child_process');
 const os = require('os');
-const { join, normalize, relative } = require('path');
+const { join, relative } = require('path');
 
 const request = require('request');
 const fs = require('fs-extra');
 const tar = require('tar');
+
+const Runner = require('../utils/Runner');
 
 const deps = require('./deps');
 
@@ -14,17 +16,10 @@ const isWindows = process.platform === 'win32';
 const cpus = os.cpus().length;
 const parallel = cpus > 1 ? cpus - 1 : 1;
 
-class Installer {
+class Installer extends Runner {
   constructor() {
-    this.projectDir = join(__dirname, '../..');
+    super();
     this.deps = {};
-  }
-
-  init() {
-    if (isWindows) {
-      console.error('Building on Windows in not supported yet');
-      return false;
-    }
   }
 
   async installDeps() {
@@ -38,9 +33,7 @@ class Installer {
       const fileCheck = join(depFolder, dep.fileCheck);
       const depExists = await fs.exists(fileCheck);
       if (!depExists) {
-        console.log(
-          'Downloading ' + dep.name + ' version ' + dep.version + ' ...'
-        );
+        console.log(`Downloading ${dep.name} version ${dep.version} ...`);
         await getDep(dep.url, depFolder);
         console.log(
           `${dep.name} extracted to ${relative(this.projectDir, depFolder)}`
@@ -50,32 +43,10 @@ class Installer {
     console.log('All dependencies installed');
   }
 
-  async findEmscripten() {
-    console.log('Searching for emscripten');
-    const emscriptenConfigFile = join(os.homedir(), '.emscripten');
-    let emscriptenConfig;
-    try {
-      emscriptenConfig = await fs.readFile(emscriptenConfigFile, 'utf8');
-    } catch (e) {
-      console.error(
-        'Could not find emscripten config file in ' + emscriptenConfigFile
-      );
-      console.error(
-        'Follow the installation instructions at https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html#installation-instructions'
-      );
-    }
-    const split = emscriptenConfig.split(/[\r\n]+/);
-    const root = split.find((line) => line.includes('EMSCRIPTEN_ROOT'));
-    const end = root.substring(17);
-    const path = end.substring(0, end.length - 1);
-    this.emscriptenPath = normalize(path);
-    console.log('Found at ' + path);
-  }
-
-  async findMSBuild() {
+  findMSBuild() {
     if (isWindows) {
       try {
-        child_process.execSync('MSBuild /version');
+        childProcess.execSync('MSBuild /version');
       } catch (e) {
         console.error('MSBuild.exe not found');
         console.error('You must install Visual Studio');
@@ -85,12 +56,14 @@ class Installer {
         return false;
       }
     }
+
+    return true;
   }
 
   async compileRdkit() {
     console.log('Compiling RDKit');
     try {
-      child_process.execSync('cmake --version');
+      childProcess.execSync('cmake --version');
     } catch (e) {
       console.error('cmake not found');
       return false;
@@ -101,23 +74,25 @@ class Installer {
 
     const cmakeCommand = [
       'cmake ..',
-      '-DCMAKE_TOOLCHAIN_FILE=' +
-        join(this.emscriptenPath, 'cmake/Modules/Platform/Emscripten.cmake'),
-      '-DBoost_INCLUDE_DIR=' + this.deps.boost,
-      '-DEIGEN3_INCLUDE_DIR=' + this.deps.eigen,
+      `-DCMAKE_TOOLCHAIN_FILE=${join(
+        this.emscriptenPath,
+        'cmake/Modules/Platform/Emscripten.cmake'
+      )}`,
+      `-DBoost_INCLUDE_DIR=${this.deps.boost}`,
+      `-DEIGEN3_INCLUDE_DIR=${this.deps.eigen}`,
       '-DRDK_BUILD_PYTHON_WRAPPERS=OFF',
       '-DRDK_BUILD_CPP_TESTS=OFF',
       '-DRDK_BUILD_SLN_SUPPORT=OFF',
       '-DTHREADS_PTHREAD_ARG=OFF'
     ];
 
-    child_process.execSync(cmakeCommand.join(' '), {
+    childProcess.execSync(cmakeCommand.join(' '), {
       cwd: rdkitBuildDir,
       stdio: 'inherit'
     });
 
     if (isWindows) {
-      child_process.execSync(
+      childProcess.execSync(
         `MSBuild.exe /m:${parallel} /p:Configuration=Release INSTALL.vcxproj`,
         {
           cwd: rdkitBuildDir,
@@ -125,11 +100,13 @@ class Installer {
         }
       );
     } else {
-      child_process.execSync(`make -j${parallel}`, {
+      childProcess.execSync(`make -j${parallel}`, {
         cwd: rdkitBuildDir,
         stdio: 'inherit'
       });
     }
+
+    return true;
   }
 }
 

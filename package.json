@@ -9,7 +9,10 @@
     "test-only": "jest",
     "build": "mkdir -p dist && cat javascript/pre.js build/src/rdkit.js javascript/post.js > dist/rdkit.js && cp build/src/rdkit.wasm dist/rdkit.wasm",
     "build-new": "cat javascript/pre.js out/rdkit.js javascript/post.js > dist/rdkit.js && cp out/rdkit.wasm dist/rdkit.wasm",
-    "install-deps": "node scripts/install"
+    "install-deps": "node scripts/install",
+    "compile": "node scripts/compile",
+    "eslint": "eslint scripts",
+    "eslint-fix": "npm run eslint -- --fix"
   },
   "files": [
     "dist"
@@ -30,6 +33,10 @@
   "homepage": "https://github.com/cheminfo/RDKitjs",
   "devDependencies": {
     "async": "^1.4.2",
+    "eslint": "^4.18.1",
+    "eslint-config-cheminfo": "^1.17.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jest": "^21.12.2",
     "fs-extra": "^5.0.0",
     "jest": "^22.3.0",
     "make-promises-safe": "^1.1.0",
