@@ -53,8 +53,9 @@ class Installer {
   async findEmscripten() {
     console.log('Searching for emscripten');
     const emscriptenConfigFile = join(os.homedir(), '.emscripten');
+    let emscriptenConfig;
     try {
-      const emscriptenConfig = await fs.readFile(emscriptenConfigFile, 'utf8');
+      emscriptenConfig = await fs.readFile(emscriptenConfigFile, 'utf8');
     } catch (e) {
       console.error(
         'Could not find emscripten config file in ' + emscriptenConfigFile
