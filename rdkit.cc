@@ -23,9 +23,11 @@ using emscripten::class_;
 using emscripten::function;
 using emscripten::register_vector;
 
+using RDKit::DGeomHelpers;
+using RDKit::MMFF;
+using RDKit::MolOps;
 using RDKit::ROMol;
 using RDKit::RWMol;
-using RDKit::MolOps;
 using RDKit::SDWriter;
 
 RWMol *smilesToMol(std::string smiles)
@@ -49,13 +51,13 @@ void addHs(RWMol mol)
 
 int EmbedMolecule(RWMol mol, unsigned int maxIterations, int seed)
 {
-  return RDKit::DGeomHelpers::EmbedMolecule(mol, maxIterations, seed);
+  return DGeomHelpers::EmbedMolecule(mol, maxIterations, seed);
 }
 
 std::vector<double> MMFFoptimizeMolecule(RWMol mol)
 {
   std::vector<double> res(2);
-  std::pair<int, double> p = RDKit::MMFF::MMFFOptimizeMolecule(mol);
+  std::pair<int, double> p = MMFF::MMFFOptimizeMolecule(mol, res);
   res[0] = static_cast<double>(p.first);
   res[1] = p.second;
   return res;
