@@ -1,133 +1,57 @@
 # RDKitjs
 
-Port RDKit to js using emscripten with ASM & WASM
+Port of RDKit to JavaScript using emscripten and WebAssembly.
 
-# Emscripten installation & activation
-
-Install emscripten (1.37.33 or higher).
-https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html
-
-# RDKit emscripten binding
-
-install RDKit 2015.3.1, 2016.3.5, 2016.9.4 (old version of Libraries).
-or
-install RDKit 2017.3.3, 2017.9.3 (New version of Libraries).
-
-you need to add eigen3 include files for 3Ddescriptors (since RDkit 2017.3)
+# Installation
 
 ```bash
-wget https://github.com/rdkit/rdkit/archive/Release_2017_09_3.tar.gz
-wget https://github.com/rdkit/rdkit/archive/Release_2017_03_3.tar.gz
-wget https://github.com/rdkit/rdkit/archive/Release_2016_09_4.tar.gz
-wget https://github.com/rdkit/rdkit/archive/Release_2016_03_5.tar.gz
-wget http://downloads.sourceforge.net/project/rdkit/rdkit/Q1_2015/RDKit_2015_03_1.tgz
+npm install rdkit
 ```
 
-Choose your version based on required RDkit functionnalities and compile RDKit first for emscripten:
+# Usage
+
+TODO
+
+# Development
+
+## Prerequisites
+
+For now, this library can only be compiled from a Unix system (no Windows).
+You need to have on your system:
+
+* Node.js 8 or later
+* cmake
+* make
+
+## Emscripten installation & activation
+
+Install emscripten using those instructions: https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html#linux-and-mac-os-x  
+Do not forget to activate it with `./emsdk activate latest`.
+
+## Installation of dependencies
 
 ```bash
-tar -xf RDKit_20YY_0M_V.tgz
-cd rdkit-Release_20YY_0M_V
-mkdir build
-cd build
-
-
-cmake  .. \
--DCMAKE_TOOLCHAIN_FILE=/path/to/emsdk/emscripten/1.37.33/cmake/Modules/Platform/Emscripten.cmake \
--DRDK_BUILD_PYTHON_WRAPPERS=OFF \
--DRDK_BUILD_CPP_TESTS=OFF \
--DRDK_BUILD_SLN_SUPPORT=OFF \
--DBoost_INCLUDE_DIR=/path/to/boost/boost@1.60/1.60.0/include/ \
--DEIGEN3_INCLUDE_DIR=/path/to/eigen/3.3.4/include/eigen3/ \
--DTHREADS_PTHREAD_ARG=OFF
+npm install
+npm run install-deps
 ```
 
-based on your number of CPU:
+This will install all required dependencies (including RDKit itself) and compile
+the RDKit library files.
+
+## Compilation of WebAssembly module
 
 ```bash
-make -jX
+npm run build
 ```
 
-# Install RDKitjs
-
-clone this repository
+## Execute tests
 
 ```bash
-git clone https://github.com/thegodone/RDKitjs.git
+# compiles the project and executes tests
+npm run test
 
-
-cd /path/to/RDKitjs/
-rm -rf build
-mkdir build
-cd build
-```
-
-### for OSX
-
-```bash
-cmake .. \
--DCMAKE_TOOLCHAIN_FILE=/path/to/emscripten/1.37.33/cmake/Modules/Platform/Emscripten.cmake \
--DRDKIT_INCLUDE_DIR=/path/to/rdkitversion/rdkit-Release_2017_09_3/Code/ \
--DBoost_INCLUDE_DIR=/path/to/boost@1.60/1.60.0/include/  \
--DRDKIT_LIB_DIR=/path/to/rdkitversion/rdkit-Release_2017_09_3/build/lib/ \
--DRDKitNEWLIB=ON \
--DEMSCRIPTEN_BIN=/path/to/emscripten/1.37.33/
-```
-
-### for Linux
-
-```bash
-cmake .. \
--DCMAKE_TOOLCHAIN_FILE=/path/to/emscripten/1.37.33/cmake/Modules/Platform/Emscripten.cmake \
--DRDKIT_INCLUDE_DIR=/path/to/rdkitversion/rdkit-Release_2015_03_1/Code \
--DBoost_INCLUDE_DIR=/path/to/boost/include \
--DRDKIT_LIB_DIR=/path/to/rdkitversion/rdkit-Release_2015_03_1/lib \
--DEMSCRIPTEN_BIN=/path/to/emscripten/1.37.33/
-```
-
-```bash
-rm src/rdkit.js
-
-make
-
-cp src/rdkit.js ../build/src/rdkit.js
-
-# create a web loading file
-npm run build-test
-
-# copy web loading file into the localhost folder
-cp ../test/rdkit.js /path/to/localhostcode/rdkitjs/rdkit.js
-```
-
-Please take a look at those references:
-
-=> Ubuntu 14.04:  
-http://baoilleach.blogspot.ch/2015/02/cheminformaticsjs-rdkit.html
-
-http://gmrand.blogspot.ch/2015/03/howto-install-rdkit-and-emscripten-on.html
-
-=> OSX:
-http://gmrand.blogspot.ch/2015/05/howto-install-rdkit-and-emscripten-on.html
-
-P.S.: CAUTION due to a bug report we suggest to apply this patch to rdkit
-
-# ONLY for RDKIT version 2015.03.1 : Patching of RDKit files for emscripten binding
-
-* adding class MMFFMolProperties in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/Builder.h
-
-```bash
-  namespace RDKit {
-    class ROMol;
-    namespace MMFF {
-+     class MMFFMolProperties;
-```
-
-* adding AtomTyper.h in rdkit/Code/GraphMol/ForceFieldHelpers/MMFF/MMFF.h
-
-```bash
-  #include <ForceField/ForceField.h>
-+ #include "AtomTyper.h"
-  #include "Builder.h"
+# executes tests without compiling (faster if compilation was already done)
+npm run test-only
 ```
 
 # Want to try it without compilation ? It's already possible
@@ -149,17 +73,9 @@ https://www.npmjs.com/package/rdkit
 
 # Current stability status
 
-This project is not stable but lot of basic RDKit functions are already ported look at the test/exemple.txt file for a example of function availables
+This project is not stable and still under heavy development.
 
-to have a complete list of available function look at the EMSCRIPTEN_BINDINGS section in rdmol.h
+# Feature requests / help / missing RDKit functions
 
-there are two type of methods:
-
-* create a molecule (class_function)
-* apply functions on a created molecule (function)
-
-# Future requests / help / missing RDKit functions
-
-If you want to contribute or need RDKit functions not already mapped please add a comment in the issues of this project.
-
-Guillaume Godin
+If you want to contribute or need RDKit functions not already mapped please add
+a comment in the issues of this project.
