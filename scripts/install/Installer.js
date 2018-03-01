@@ -11,6 +11,8 @@ const tar = require('tar');
 const deps = require('./deps');
 
 const isWindows = process.platform === 'win32';
+const cpus = os.cpus().length;
+const parallel = cpus > 1 ? cpus - 1 : 1;
 
 class Installer {
   constructor() {
@@ -115,14 +117,17 @@ class Installer {
 
     if (isWindows) {
       child_process.execSync(
-        'MSBuild.exe /m:4 /p:Configuration=Release INSTALL.vcxproj',
+        `MSBuild.exe /m:${parallel} /p:Configuration=Release INSTALL.vcxproj`,
         {
           cwd: rdkitBuildDir,
           stdio: 'inherit'
         }
       );
     } else {
-      child_process.execSync('make', { cwd: rdkitBuildDir, stdio: 'inherit' });
+      child_process.execSync(`make -j${parallel}`, {
+        cwd: rdkitBuildDir,
+        stdio: 'inherit'
+      });
     }
   }
 }
