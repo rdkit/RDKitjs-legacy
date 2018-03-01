@@ -37,7 +37,7 @@ class Installer {
       const depExists = await fs.exists(fileCheck);
       if (!depExists) {
         console.log(
-          'Downloading ' + dep.name + ' version ' + dep.version + '...'
+          'Downloading ' + dep.name + ' version ' + dep.version + ' ...'
         );
         await getDep(dep.url, depFolder);
         console.log(
@@ -49,9 +49,18 @@ class Installer {
   }
 
   async findEmscripten() {
-    console.log('Searching for Emscripten');
+    console.log('Searching for emscripten');
     const emscriptenConfigFile = join(os.homedir(), '.emscripten');
-    const emscriptenConfig = await fs.readFile(emscriptenConfigFile, 'utf8');
+    try {
+      const emscriptenConfig = await fs.readFile(emscriptenConfigFile, 'utf8');
+    } catch (e) {
+      console.error(
+        'Could not find emscripten config file in ' + emscriptenConfigFile
+      );
+      console.error(
+        'Follow the installation instructions at https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html#installation-instructions'
+      );
+    }
     const split = emscriptenConfig.split(/[\r\n]+/);
     const root = split.find((line) => line.includes('EMSCRIPTEN_ROOT'));
     const end = root.substring(17);
