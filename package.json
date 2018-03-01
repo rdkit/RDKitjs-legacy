@@ -10,10 +10,10 @@
     "compile-debug": "npm run compile-emcc -- --debug",
     "compile-emcc": "node scripts/compile",
     "clean": "rm -rf dist out",
-    "eslint": "eslint scripts",
+    "eslint": "eslint scripts lib __tests__",
     "eslint-fix": "npm run eslint -- --fix",
     "install-deps": "node scripts/install",
-    "test": "npm run build && npm run test-only",
+    "test": "npm run build && npm run test-only && npm run eslint",
     "test-only": "jest"
   },
   "files": [
@@ -21,7 +21,8 @@
     "lib"
   ],
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["/node_modules/", "/deps/", "/old/"]
   },
   "repository": "cheminfo/RDKitjs",
   "author": "Guillaume Godin",
