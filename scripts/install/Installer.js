@@ -10,26 +10,18 @@ const tar = require('tar');
 
 const Runner = require('../utils/Runner');
 
-const deps = require('./deps');
-
-const isWindows = process.platform === 'win32';
 const cpus = os.cpus().length;
 const parallel = cpus > 1 ? cpus - 1 : 1;
 
 class Installer extends Runner {
-  constructor() {
-    super();
-    this.deps = {};
-  }
-
   async installDeps() {
     const depsDir = join(this.projectDir, 'deps');
 
     await fs.ensureDir(depsDir);
     console.log('Checking dependencies');
-    for (const dep of deps) {
-      const depFolder = join(depsDir, dep.name, dep.version);
-      this.deps[dep.name] = depFolder;
+    for (const depName in this.deps) {
+      const dep = this.deps[depName];
+      const depFolder = dep.path;
       const fileCheck = join(depFolder, dep.fileCheck);
       const depExists = await fs.exists(fileCheck);
       if (!depExists) {
@@ -44,7 +36,7 @@ class Installer extends Runner {
   }
 
   findMSBuild() {
-    if (isWindows) {
+    if (this.isWindows) {
       try {
         childProcess.execSync('MSBuild /version');
       } catch (e) {
@@ -69,7 +61,7 @@ class Installer extends Runner {
       return false;
     }
 
-    const rdkitBuildDir = join(this.deps.rdkit, 'build');
+    const rdkitBuildDir = join(this.deps.rdkit.path, 'build');
     await fs.ensureDir(rdkitBuildDir);
 
     const cmakeCommand = [
@@ -78,8 +70,8 @@ class Installer extends Runner {
         this.emscriptenPath,
         'cmake/Modules/Platform/Emscripten.cmake'
       )}`,
-      `-DBoost_INCLUDE_DIR=${this.deps.boost}`,
-      `-DEIGEN3_INCLUDE_DIR=${this.deps.eigen}`,
+      `-DBoost_INCLUDE_DIR=${this.deps.boost.path}`,
+      `-DEIGEN3_INCLUDE_DIR=${this.deps.eigen.path}`,
       '-DRDK_BUILD_PYTHON_WRAPPERS=OFF',
       '-DRDK_BUILD_CPP_TESTS=OFF',
       '-DRDK_BUILD_SLN_SUPPORT=OFF',
@@ -91,7 +83,7 @@ class Installer extends Runner {
       stdio: 'inherit'
     });
 
-    if (isWindows) {
+    if (this.isWindows) {
       childProcess.execSync(
         `MSBuild.exe /m:${parallel} /p:Configuration=Release INSTALL.vcxproj`,
         {

@@ -5,10 +5,17 @@ const { join, normalize } = require('path');
 
 const fs = require('fs-extra');
 
+const deps = require('./deps');
+
 class Runner {
   constructor() {
     this.projectDir = join(__dirname, '../..');
     this.isWindows = os.platform === 'win32';
+    this.deps = {};
+    for (const dep of deps) {
+      this.deps[dep.name] = dep;
+      dep.path = join(this.projectDir, 'deps', dep.name, dep.version);
+    }
   }
 
   init() {
