@@ -19,8 +19,32 @@ std::string pickleMol(RWMol *mol)
   return res;
 }
 
-#define BIND_Chem_rdchem()                                           \
-  {                                                                  \
-    function("molFromPickle", &molFromPickle, allow_raw_pointers()); \
-    function("pickleMol", &pickleMol, allow_raw_pointers());         \
+unsigned int getNumAtoms(RWMol *mol, bool onlyExplicit)
+{
+  return mol->getNumAtoms(onlyExplicit);
+}
+
+unsigned int getNumBonds(RWMol *mol, bool onlyHeavy)
+{
+  return mol->getNumBonds(onlyHeavy);
+}
+
+unsigned int getNumConformers(RWMol *mol)
+{
+  return mol->getNumConformers();
+}
+
+unsigned int getNumHeavyAtoms(RWMol *mol)
+{
+  return mol->getNumHeavyAtoms();
+}
+
+#define BIND_Chem_rdchem()                                                 \
+  {                                                                        \
+    function("molFromPickle", &molFromPickle, allow_raw_pointers());       \
+    function("pickleMol", &pickleMol, allow_raw_pointers());               \
+    function("getNumAtoms", &getNumAtoms, allow_raw_pointers());           \
+    function("getNumBonds", &getNumBonds, allow_raw_pointers());           \
+    function("getNumConformers", &getNumConformers, allow_raw_pointers()); \
+    function("getNumHeavyAtoms", &getNumHeavyAtoms, allow_raw_pointers()); \
   }
