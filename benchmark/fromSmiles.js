@@ -3,7 +3,7 @@
 require('..').then((rdkit) => {
   function test() {
     for (var i = 0; i < 100; i++) {
-      rdkit.Molecule.fromSmiles('CCOOCCOCOCOCOCCOOCCCCOC');
+      rdkit.Mol.fromSmiles('CCOOCCOCOCOCOCCOOCCCCOC');
     }
   }
 
