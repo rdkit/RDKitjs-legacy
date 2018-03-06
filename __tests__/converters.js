@@ -1,7 +1,7 @@
 'use strict';
 
 let RDKit;
-beforeEach(async () => RDKit = await require('..'));
+beforeEach(async () => (RDKit = await require('..')));
 
 test('smilesToMolfile', () => {
   const smiles = 'COCO';

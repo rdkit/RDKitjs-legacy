@@ -1,5 +1,6 @@
 'use strict';
 
+// eslint-disable-next-line import/no-unassigned-import
 require('make-promises-safe');
 
 const Installer = require('./Installer');

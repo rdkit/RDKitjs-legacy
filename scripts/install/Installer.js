@@ -23,9 +23,11 @@ class Installer extends Runner {
       const dep = this.deps[depName];
       const depFolder = dep.path;
       const fileCheck = join(depFolder, dep.fileCheck);
+      // eslint-disable-next-line no-await-in-loop
       const depExists = await fs.exists(fileCheck);
       if (!depExists) {
         console.log(`Downloading ${dep.name} version ${dep.version} ...`);
+        // eslint-disable-next-line no-await-in-loop
         await getDep(dep.url, depFolder);
         console.log(
           `${dep.name} extracted to ${relative(this.projectDir, depFolder)}`
