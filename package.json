@@ -15,6 +15,7 @@
     "eslint": "eslint scripts lib __tests__",
     "eslint-fix": "npm run eslint -- --fix",
     "install-deps": "node scripts/install",
+    "prepublishOnly": "npm run build",
     "test": "npm run build && npm run test-only",
     "test-coverage": "npm run test-jest -- --coverage",
     "test-jest": "jest",
