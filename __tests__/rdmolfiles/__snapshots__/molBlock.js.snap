@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`smiles to molBlock 1`] = `
+exports[`toMolBlock 1`] = `
 "
      RDKit          
 

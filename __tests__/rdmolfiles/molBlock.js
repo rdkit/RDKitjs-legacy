@@ -1,9 +1,9 @@
 'use strict';
 
 let RDKit;
-beforeEach(async () => (RDKit = await require('..')));
+beforeEach(async () => (RDKit = await require('../..')));
 
-test('smiles to molBlock', () => {
+test('toMolBlock', () => {
   const smiles = 'COCO';
   const molfile = RDKit.Mol.fromSmiles(smiles).toMolBlock();
   expect(molfile).toMatchSnapshot();
