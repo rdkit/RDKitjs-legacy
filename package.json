@@ -15,8 +15,10 @@
     "eslint": "eslint scripts lib __tests__",
     "eslint-fix": "npm run eslint -- --fix",
     "install-deps": "node scripts/install",
-    "test": "npm run build && npm run test-only && npm run eslint",
-    "test-only": "jest"
+    "test": "npm run build && npm run test-only",
+    "test-coverage": "npm run test-jest -- --coverage",
+    "test-jest": "jest",
+    "test-only": "npm run test-jest && npm run eslint"
   },
   "files": [
     "dist",

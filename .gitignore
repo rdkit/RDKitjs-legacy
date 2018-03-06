@@ -8,3 +8,4 @@ node_modules
 /deps/
 /out/
 build
+/coverage/
