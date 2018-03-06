@@ -3,12 +3,28 @@
 
 using RDKit::RWMol;
 
-void addHs(RWMol *mol, bool explicitOnly, bool addCoords)
+void addHs(RWMol *mol,
+           bool explicitOnly,
+           bool addCoords)
 {
-  return RDKit::MolOps::addHs(*mol, explicitOnly, addCoords);
+  return RDKit::MolOps::addHs(*mol,
+                              explicitOnly,
+                              addCoords);
 }
 
-#define BIND_Chem_rdmolops()                         \
-  {                                                  \
-    function("addHs", &addHs, allow_raw_pointers()); \
+void removeHs(RWMol *mol,
+              bool implicitOnly,
+              bool updateExplicitCount,
+              bool sanitize)
+{
+  return RDKit::MolOps::removeHs(*mol,
+                                 implicitOnly,
+                                 updateExplicitCount,
+                                 sanitize);
+}
+
+#define BIND_Chem_rdmolops()                               \
+  {                                                        \
+    function("addHs", &addHs, allow_raw_pointers());       \
+    function("removeHs", &removeHs, allow_raw_pointers()); \
   }
