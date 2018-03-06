@@ -37,6 +37,7 @@ class Compiler extends Runner {
 
     const libFiles = [
       'libRDKitAlignment.so',
+      'libRDKitChemTransforms.so',
       'libRDKitDistGeometry.so',
       'libRDKitDistGeomHelpers.so',
       'libRDKitEigenSolvers.so',

@@ -1,6 +1,9 @@
+#include <GraphMol/ChemTransforms/ChemTransforms.h>
 #include <GraphMol/MolOps.h>
+#include <GraphMol/ROMol.h>
 #include <GraphMol/RWMol.h>
 
+using RDKit::ROMol;
 using RDKit::RWMol;
 
 void addHs(RWMol *mol,
@@ -10,6 +13,18 @@ void addHs(RWMol *mol,
   return RDKit::MolOps::addHs(*mol,
                               explicitOnly,
                               addCoords);
+}
+
+RWMol *deleteSubstructs(RWMol *mol,
+                        RWMol *query,
+                        bool onlyFrags,
+                        bool useChirality)
+{
+  ROMol *result = RDKit::deleteSubstructs(*mol,
+                                          *query,
+                                          onlyFrags,
+                                          useChirality);
+  return new RWMol(*result);
 }
 
 void removeHs(RWMol *mol,
@@ -23,8 +38,9 @@ void removeHs(RWMol *mol,
                                  sanitize);
 }
 
-#define BIND_Chem_rdmolops()                               \
-  {                                                        \
-    function("addHs", &addHs, allow_raw_pointers());       \
-    function("removeHs", &removeHs, allow_raw_pointers()); \
+#define BIND_Chem_rdmolops()                                               \
+  {                                                                        \
+    function("addHs", &addHs, allow_raw_pointers());                       \
+    function("deleteSubstructs", &deleteSubstructs, allow_raw_pointers()); \
+    function("removeHs", &removeHs, allow_raw_pointers());                 \
   }

@@ -22,6 +22,17 @@ RWMol *MolBlockToMol(string molBlock,
                               strictParsing);
 }
 
+RWMol *SmartsToMol(string smarts,
+                   int debugParse,
+                   bool mergeHs,
+                   std::map<string, string> *replacements)
+{
+  return RDKit::SmartsToMol(smarts,
+                            debugParse,
+                            mergeHs,
+                            replacements);
+}
+
 RWMol *SmilesToMol(string smiles,
                    int debugParse,
                    bool sanitize,
@@ -90,6 +101,7 @@ string MolToSmiles(RWMol *mol,
 #define BIND_Chem_rdmolfiles()                                       \
   {                                                                  \
     function("MolBlockToMol", &MolBlockToMol, allow_raw_pointers()); \
+    function("SmartsToMol", &SmartsToMol, allow_raw_pointers());     \
     function("SmilesToMol", &SmilesToMol, allow_raw_pointers());     \
     function("MolToFASTA", &MolToFASTA, allow_raw_pointers());       \
     function("MolToHELM", &MolToHELM, allow_raw_pointers());         \
