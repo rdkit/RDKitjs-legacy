@@ -27,9 +27,7 @@ class Compiler extends Runner {
       jsConfigFlags.push('DISABLE_EXCEPTION_CATCHING=0');
     }
 
-    const jsConfig = jsConfigFlags
-      .map((s) => `-s ${s}`)
-      .join(' ');
+    const jsConfig = jsConfigFlags.map((s) => `-s ${s}`).join(' ');
 
     const rdkitPath = this.deps.rdkit.path;
 
@@ -38,17 +36,19 @@ class Compiler extends Runner {
       .join(' ');
 
     const libFiles = [
-      'libRDKitSmilesParse.so',
-      'libRDKitGraphMol.so',
-      'libRDKitRDGeneral.so',
-      'libRDKitFileParsers.so',
-      'libRDKitDistGeometry.so',
-      'libRDKitForceFieldHelpers.so',
-      'libRDKitRDGeometryLib.so',
-      'libRDKitDistGeomHelpers.so',
-      'libRDKitForceField.so',
-      'libRDKitEigenSolvers.so',
       'libRDKitAlignment.so',
+      'libRDKitDistGeometry.so',
+      'libRDKitDistGeomHelpers.so',
+      'libRDKitEigenSolvers.so',
+      'libRDKitFileParsers.so',
+      'libRDKitForceField.so',
+      'libRDKitForceFieldHelpers.so',
+      'libRDKitGraphMol.so',
+      'libRDKitMolAlign.so',
+      'libRDKitMolTransforms.so',
+      'libRDKitRDGeneral.so',
+      'libRDKitRDGeometryLib.so',
+      'libRDKitSmilesParse.so',
       'libRDKitSubstructMatch.so'
     ]
       .map((s) => join(rdkitPath, 'build/lib', s))

@@ -8,7 +8,7 @@ using std::vector;
 
 using RDKit::RWMol;
 
-vector<double> MMFFoptimizeMolecule(RWMol *mol,
+vector<double> MMFFOptimizeMolecule(RWMol *mol,
                                     int maxIters,
                                     string mmffVariant,
                                     double nonBondedThresh,
@@ -29,5 +29,5 @@ vector<double> MMFFoptimizeMolecule(RWMol *mol,
 
 #define BIND_Chem_rdForceFieldHelpers()                                            \
   {                                                                                \
-    function("MMFFoptimizeMolecule", &MMFFoptimizeMolecule, allow_raw_pointers()); \
+    function("MMFFOptimizeMolecule", &MMFFOptimizeMolecule, allow_raw_pointers()); \
   }

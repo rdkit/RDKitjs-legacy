@@ -21,7 +21,14 @@ lib
     var otherMol = rdkit.Mol.fromMolBlock(mol.toMolBlock());
     console.log(otherMol.toSmiles());
 
+    const pickle = otherMol.toPickle();
+    console.log(pickle);
+
+    var thirdMol = rdkit.Mol.fromPickle(pickle);
+    console.log(thirdMol.toSmiles());
+
     mol.delete();
     otherMol.delete();
+    thirdMol.delete();
   })
   .catch(console.error);

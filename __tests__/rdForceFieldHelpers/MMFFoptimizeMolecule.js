@@ -8,7 +8,7 @@ test('default parameters', () => {
   const mol = RDKit.Mol.fromSmiles(smiles);
   mol.addHs();
   mol.embedMolecule();
-  const result = mol.MMFFoptimizeMolecule();
+  const result = mol.MMFFOptimizeMolecule();
   expect(result).toHaveLength(2);
   expect(result[0]).toBe(0);
   expect(result[1]).toBeCloseTo(-19.4, 1);
