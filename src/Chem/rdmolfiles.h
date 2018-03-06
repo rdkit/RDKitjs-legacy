@@ -11,13 +11,14 @@ using std::string;
 
 using RDKit::RWMol;
 
-RWMol* MolBlockToMol(string molBlock,
-                     bool sanitize, 
-                     bool removeHs, 
-                     bool strictParsing) {
-  return RDKit::MolBlockToMol(molBlock, 
-                              sanitize, 
-                              removeHs, 
+RWMol *MolBlockToMol(string molBlock,
+                     bool sanitize,
+                     bool removeHs,
+                     bool strictParsing)
+{
+  return RDKit::MolBlockToMol(molBlock,
+                              sanitize,
+                              removeHs,
                               strictParsing);
 }
 

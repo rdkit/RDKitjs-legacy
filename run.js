@@ -9,6 +9,9 @@ lib
     var mol = rdkit.Mol.fromSmiles('CCOCOPhe', {
       replacements: { Phe: 'c1ccccc1' }
     });
+
+    mol.addHs();
+
     console.log(mol.toFASTA());
     console.log(mol.toHELM());
     console.log(mol.toMolBlock());
