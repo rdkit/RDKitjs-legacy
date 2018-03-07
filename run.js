@@ -2,10 +2,11 @@
 
 'use strict';
 
-const lib = require('./lib/index');
+const rdkit = require('./lib/index');
 
-lib
-  .then((rdkit) => {
+rdkit
+  .load()
+  .then(() => {
     var mol = rdkit.Mol.fromSmiles('CCOCOPhe', {
       replacements: { Phe: 'c1ccccc1' }
     });

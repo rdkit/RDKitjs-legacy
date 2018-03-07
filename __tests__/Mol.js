@@ -1,7 +1,8 @@
 'use strict';
 
-let RDKit;
-beforeEach(async () => (RDKit = await require('..')));
+const RDKit = require('..');
+
+beforeEach(() => RDKit.load());
 
 test('Mol delete', () => {
   const mol = RDKit.Mol.fromSmiles('CC');

@@ -1,7 +1,8 @@
 'use strict';
 
-let RDKit;
-beforeEach(async () => (RDKit = await require('../..')));
+const RDKit = require('../..');
+
+beforeEach(() => RDKit.load());
 
 test('delete substructure from smarts', () => {
   const m = RDKit.Mol.fromSmiles('CC(=O)O');

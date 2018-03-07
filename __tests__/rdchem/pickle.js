@@ -1,7 +1,8 @@
 'use strict';
 
-let RDKit;
-beforeEach(async () => (RDKit = await require('../..')));
+const RDKit = require('../..');
+
+beforeEach(() => RDKit.load());
 
 test('from and to pickle', () => {
   const smiles = 'COCO';

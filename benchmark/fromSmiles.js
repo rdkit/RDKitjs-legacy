@@ -1,6 +1,8 @@
 'use strict';
 
-require('..').then((rdkit) => {
+const rdkit = require('..');
+
+rdkit.load().then(() => {
   function test() {
     for (var i = 0; i < 100; i++) {
       rdkit.Mol.fromSmiles('CCOOCCOCOCOCOCCOOCCCCOC');
