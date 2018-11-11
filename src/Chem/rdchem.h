@@ -5,12 +5,14 @@
 
 using RDKit::RWMol;
 
+
 RWMol *molFromPickle(std::string pickle)
 {
-  RWMol *result = new RWMol();
-  RDKit::MolPickler::molFromPickle(pickle, result);
-  return result;
+  RWMol *mol = new RWMol();
+  RDKit::MolPickler::molFromPickle(pickle, mol);
+  return mol;
 }
+
 
 std::string pickleMol(RWMol *mol)
 {

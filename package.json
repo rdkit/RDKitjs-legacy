@@ -52,7 +52,7 @@
     "fs-extra": "^5.0.0",
     "jest": "^22.3.0",
     "make-promises-safe": "^1.1.0",
-    "request": "^2.83.0",
+    "request": "^2.88.0",
     "tar": "^4.4.0"
   }
 }

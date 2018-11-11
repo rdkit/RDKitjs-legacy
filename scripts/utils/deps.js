@@ -3,9 +3,9 @@
 const deps = [
   {
     name: 'rdkit',
-    version: '2017_09_3',
+    version: '2018_09_1',
     fileCheck: 'license.txt',
-    url: 'https://github.com/rdkit/rdkit/archive/Release_2017_09_3.tar.gz'
+    url: 'https://github.com/rdkit/rdkit/archive/Release_2018_09_1.tar.gz'
   },
   {
     name: 'boost',

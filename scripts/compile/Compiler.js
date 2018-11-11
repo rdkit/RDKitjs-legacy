@@ -18,6 +18,8 @@ class Compiler extends Runner {
 
     const jsConfigFlags = [
       'WASM=1',
+      'ERROR_ON_UNDEFINED_SYMBOLS=0',
+      'DISABLE_EXCEPTION_CATCHING=0',
       'NODEJS_CATCH_EXIT=0',
       'MODULARIZE=1',
       "EXPORT_NAME='\"'rdk'\"'"
@@ -47,6 +49,9 @@ class Compiler extends Runner {
       'libRDKitGraphMol.so',
       'libRDKitMolAlign.so',
       'libRDKitMolTransforms.so',
+      'libRDKitDepictor.so',
+      'libRDKitcoordgenlib.so',
+      'libRDKitmaeparser.so',
       'libRDKitRDGeneral.so',
       'libRDKitRDGeometryLib.so',
       'libRDKitSmilesParse.so',
