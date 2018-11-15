@@ -1,3 +1,11 @@
+-------- Update 15/11/2018
+Dear All,
+
+Greg and I, consider this project is important for the community. 
+We will transfer it to RDKit repo in coming months.
+
+---------
+
 # RDKitjs
 
 Port of RDKit to JavaScript using emscripten and WebAssembly.
