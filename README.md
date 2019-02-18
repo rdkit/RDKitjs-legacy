@@ -1,7 +1,7 @@
 -------- Update 15/11/2018
 Dear All,
 
-Greg and I, consider this project is important for the community. 
+Greg and I, consider this project is important for the community.
 We will transfer it to RDKit repo in coming months.
 
 ---------
@@ -18,7 +18,25 @@ npm install rdkit
 
 # Usage
 
-TODO
+Using NodeJS
+
+```js
+// applications.js
+const RDKit = require('RDKit');
+await RDKit.load();
+
+var my_mol = "COc1ccc(CCN(C(=O)CCCBr)C2c3cc(NC(C)=O)c([N+](=O)[O-])cc3OC(C)(C)C2O)cc1";
+
+function atoms(smi) {
+  var mol = RDKit.Mol.fromSmiles(smi);
+  var num_atoms = mol.getNumAtoms();
+  console.log( num_atoms );
+}
+
+atoms(my_mol)
+
+// returns 37
+```
 
 # Development
 
@@ -64,16 +82,18 @@ npm run test-only
 
 # Want to try it without compilation ? It's already possible
 
-Thers is a first example in the visualizer project there:
+There is the first example in the visualizer project there:
 
 https://www.cheminfo.org/Chemistry/Cheminformatics/RDKit_demo/index.html
 
-You can draw a molecule in the botton module which will generate the 3D model using MMFF force field.
+You can draw a molecule in the bottom module which will generate the 3D model using MMFF force field.
 
 another example of javascript can be found there:  
 https://iwatobipen.wordpress.com/2015/05/21/rdkit-in-javascript/  
 thanks to iwatobipen!  
 source code: https://github.com/iwatobipen/rdkit_javascript
+
+Try RDKitjs interactively with [RunKit](https://npm.runkit.com/rdkit)
 
 You can also use nodejs:  
 the current module is available for npm / nodejs:  
