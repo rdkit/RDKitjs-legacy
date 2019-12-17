@@ -9,7 +9,7 @@ We will transfer it to RDKit repo in coming months.
 # RDKitjs
 
 Port of RDKit to JavaScript using emscripten and WebAssembly.
-
+> Note, this has been added to the RDKit repo. Please see the blog post [here](http://rdkit.blogspot.com/2019/11/introducing-new-rdkit-javascript.html), which has code [here](https://github.com/rdkit/rdkit/tree/Release_2019_09_1/Code/MinimalLib/demo). 
 # Installation
 
 ```bash
