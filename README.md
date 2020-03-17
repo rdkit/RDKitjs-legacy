@@ -1,10 +1,10 @@
--------- Update 15/11/2018
-Dear All,
+# Update 17/12/2019
 
-Greg and I, consider this project is important for the community.
-We will transfer it to RDKit repo in coming months.
+This project is not currently active. We have switched to bundling a JS wrapper into the core 
+RDKit suite (https://github.com/rdkit/rdkit/tree/master/Code/MinimalLib) and currently plan to focus our efforts there.
 
----------
+More information is available in [this RDKit blog post](http://rdkit.blogspot.com/2019/11/introducing-new-rdkit-javascript.html).
+
 
 # RDKitjs
 
